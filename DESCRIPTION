@@ -1,0 +1,25 @@
+Package: idiolect
+Type: Package
+Title: What the Package Does (Title Case)
+Version: 0.1.0
+Author: Who wrote it
+Maintainer: The package maintainer <yourself@somewhere.net>
+Description: More about what it does (maybe more than one line)
+    Use four spaces when indenting paragraphs within the Description.
+License: GPL (>= 2)
+Encoding: UTF-8
+LazyData: true
+Imports: 
+    caret,
+    dplyr,
+    pbapply,
+    proxy,
+    quanteda,
+    readtext,
+    ROC (>= 0.11)
+RoxygenNote: 7.2.3
+Suggests: 
+    testthat (>= 3.0.0)
+Config/testthat/edition: 3
+Remotes:  
+    https://github.com/davidavdav/ROC

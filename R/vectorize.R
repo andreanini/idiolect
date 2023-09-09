@@ -1,0 +1,76 @@
+#' Vectorize data
+#'
+#' @param input This should be either a quanteda corpus object with the author names as docvars or a folder of plain text (.txt) files that have the structure: author_textname.txt
+#' @param tokens The type of tokens to extract, either "character" (default) or "word".
+#' @param remove_punct A logical value. FALSE (default) keeps punctuation marks.
+#' @param remove_symbols A logical value. TRUE (default) removes symbols.
+#' @param remove_numbers A logical value. TRUE (default) removes numbers
+#' @param lowercase A logical value. TRUE (default) transforms all tokens to lower case.
+#' @param n The order or size of the n-grams being extracted. Default is 5.
+#' @param weighting The type of weighting to use, either "rel" for relative frequencies or "tf-idf".
+#' @param trim A logical value. If TRUE (default) then only the most frequent tokens are kept.
+#' @param threshold A numeric value indicating how many most frequent tokens to keep. The default is 1500.
+#'
+#' @return A dfm (document-feature matrix) containing each text as a feature vector.
+#' @export
+#'
+#' @examples
+#' mycorpus <- quanteda::corpus("The cat sat on the mat.")
+#' quanteda::docvars(mycorpus, "author") <- "author1"
+#' matrix <- vectorize(mycorpus)
+vectorize = function(input, tokens = "character", remove_punct = F, remove_symbols = T, remove_numbers = T, lowercase = T, n = 5, weighting = "rel", trim = T, threshold = 1500){
+
+  if(quanteda::is.corpus(input)){
+
+    corpus = input
+
+  }else{
+
+    corpus = readtext::readtext(file = paste0(input, "/*.txt"),
+                                docvarsfrom = "filenames", docvarnames = c("author", "textname"))
+
+  }
+
+  if(tokens == "character"){
+
+    corpus |>
+      quanteda::tokens(what = tokens, remove_punct = remove_punct, remove_symbols = remove_symbols,
+                       remove_url = T, remove_numbers = remove_numbers, split_hyphens = T,
+                       remove_separators = F) |>
+      quanteda::tokens_ngrams(n, concatenator = "") |>
+      quanteda::dfm(tolower = lowercase) -> d
+
+  }
+
+  if(tokens == "word"){
+
+    corpus |>
+      quanteda::tokens(what = tokens, remove_punct = remove_punct, remove_symbols = remove_symbols,
+                       remove_url = T, remove_numbers = remove_numbers, split_hyphens = T,
+                       remove_separators = T) |>
+      quanteda::tokens_ngrams(n, concatenator = "_") |>
+      quanteda::dfm(tolower = lowercase) -> d
+
+  }
+
+  if(trim == T){
+
+    d = quanteda::dfm_trim(d, min_termfreq = threshold, termfreq_type = "rank")
+
+  }
+
+  if(weighting == "tf-idf"){
+
+    d.f = quanteda::dfm_tfidf(d, scheme_tf = "prop")
+
+  }
+
+  if(weighting == "rel"){
+
+    d.f = quanteda::dfm_weight(d, scheme = "prop")
+
+  }
+
+  return(d.f)
+
+}
