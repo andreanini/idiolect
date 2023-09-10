@@ -1,9 +1,7 @@
-test_that("tokenisation and vectorisation are correct", {
+test_that("vectorisation works", {
 
-  mycorpus = readtext::readtext(testthat::test_path("data", "texts"),
-                                docvarsfrom = "filenames",
-                                docvarnames = c("author", "textname")) |> quanteda::corpus()
+  enron <- readRDS(testthat::test_path("data", "enron.rds"))
 
-  testthat::expect_snapshot(vectorize(mycorpus))
+  testthat::expect_snapshot(vectorize(enron))
 
 })

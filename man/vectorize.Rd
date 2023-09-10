@@ -18,7 +18,7 @@ vectorize(
 )
 }
 \arguments{
-\item{input}{This should be either a quanteda corpus object with the author names as docvars or a folder of plain text (.txt) files that have the structure: author_textname.txt}
+\item{input}{This should be a \code{quanteda} corpus object with the author names as a docvar called "author".}
 
 \item{tokens}{The type of tokens to extract, either "character" (default) or "word".}
 
@@ -42,7 +42,10 @@ vectorize(
 A dfm (document-feature matrix) containing each text as a feature vector.
 }
 \description{
-Vectorize data
+This function turns the texts into n-gram vectors.
+}
+\details{
+More information about the literature will go here.
 }
 \examples{
 mycorpus <- quanteda::corpus("The cat sat on the mat.")

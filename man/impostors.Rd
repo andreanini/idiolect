@@ -2,7 +2,7 @@
 % Please edit documentation in R/impostors.R
 \name{impostors}
 \alias{impostors}
-\title{Impostors method}
+\title{Impostors Method}
 \usage{
 impostors(
   qs,
@@ -17,21 +17,21 @@ impostors(
 )
 }
 \arguments{
-\item{qs}{The quanteda dfm containing the disputed texts.}
+\item{qs}{The \code{quanteda} dfm containing the disputed texts.}
 
-\item{candidate}{The quanteda dfm containing the data belonging to the candidate author.}
+\item{candidate}{The \code{quanteda} dfm containing the data belonging to the candidate author.}
 
-\item{cand.imps}{The quanteda dfm containing the impostors (or only the impostors for the candidate data if the algorithm is IM)}
+\item{cand.imps}{The \code{quanteda} dfm containing the impostors (or only the impostors for the candidate data if the algorithm is IM)}
 
-\item{q.imps}{The quanteda dfm containing the impostors for the disputed text (only applicable for the IM algorithm)}
+\item{q.imps}{The \code{quanteda} dfm containing the impostors for the disputed text (only applicable for the IM algorithm)}
 
 \item{algorithm}{A string specifying which impostors algorithm to use, either "RBI", "KGI", or "IM".}
 
-\item{k}{The k parameters for the RBI algorithm. Not used by other algorithms. The default is 300.}
+\item{k}{The \emph{k} parameters for the RBI algorithm. Not used by other algorithms. The default is 300.}
 
-\item{m}{The m parameter for the IM algorithm. Not used by other algorithms. The default is 100.}
+\item{m}{The \emph{m} parameter for the IM algorithm. Not used by other algorithms. The default is 100.}
 
-\item{n}{The n parameter for the IM algorithm. Not used by other algorithms. The default is 25.}
+\item{n}{The \emph{n} parameter for the IM algorithm. Not used by other algorithms. The default is 25.}
 
 \item{cores}{The number of cores to use for parallel processing (the default is one).}
 }
@@ -39,7 +39,10 @@ impostors(
 A data frame containing the score ranging from 0 to 1 representing the degree of confidence that the candidate is the author of the Q text. The data frame contains a column called "target" with a logical value which is TRUE if the author of the Q text is the candidate and FALSE otherwise.
 }
 \description{
-Impostors method
+This function runs the authorship verification method \emph{Impostors Method}.
+}
+\details{
+More details here.
 }
 \examples{
 library(quanteda)

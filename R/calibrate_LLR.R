@@ -1,9 +1,13 @@
 #' Calibrate scores into Log-Likelihood Ratios
 #'
-#' @param calibration.dataset A data frame containing scores to calibrate. This is the result of a function like impostors().
-#' @param dataset A data frame containing only one row with the score that will be calibrated into a LLR using the calibration data. This is typically the result of applying a function like impostors() to the Q text.
+#' This function is used to transform the scores returned by a verification function into a Log-Likelihood Ratio (LLR).
 #'
-#' @return The function returns a list containing two data frames: the log-likelihood ratio for the Q text and a table showing some hypothetical scenarios with prior probabilities/odds being turned into posterior probabilities/odds according to the likelihood ratio obtained.
+#' More details here.
+#'
+#' @param calibration.dataset A data frame containing scores to calibrate. This is the result of a function like [impostors()].
+#' @param dataset A data frame containing only one row with the score that will be calibrated into a LLR using the calibration data. This is typically the result of applying a function like [impostors()] to the Q text.
+#'
+#' @return The function returns a list containing two data frames: the LLR for the Q text and a table showing some hypothetical scenarios with prior probabilities/odds being turned into posterior probabilities/odds according to the likelihood ratio obtained.
 #' @export
 #'
 #' @examples

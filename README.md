@@ -1,53 +1,60 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# idiolect
+# *idiolect*: An R package for forensic authorship verification
 
 <!-- badges: start -->
 <!-- badges: end -->
 
-The goal of idiolect is to …
+The `idiolect` R package is designed to provide a framework for
+performing comparative authorship analysis within a forensic context and
+using the likelihood ratio framework. The package contains a set of
+authorship verification functions that take a set of texts as input and
+output scores that can then be calibrated into likelihood ratios. The
+package is dependent on [`quanteda`](https://quanteda.io) (Benoit et al.
+2018) for the Natural Language Processing functions.
 
 ## Installation
 
-You can install the development version of idiolect like so:
+You can install the development version of `idiolect` using the
+`install_github()` function of the `devtools` package:
 
 ``` r
-# FILL THIS IN! HOW CAN PEOPLE INSTALL YOUR DEV PACKAGE?
+devtools::install_github("https://github.com/andreanini/idiolect")
 ```
 
 ## Example
 
-This is a basic example which shows you how to solve a common problem:
+The main functions contained in the package reflect the typical workflow
+for the use of authorship verification methods for forensic problems:
 
-``` r
-library(idiolect)
-## basic example code
-```
+1.  Input data using `create_corpus()`;
 
-What is special about using `README.Rmd` instead of just `README.md`?
-You can include R chunks like so:
+2.  Optionally mask the content/topic of the texts using
+    `contentmask()`;
 
-``` r
-summary(cars)
-#>      speed           dist       
-#>  Min.   : 4.0   Min.   :  2.00  
-#>  1st Qu.:12.0   1st Qu.: 26.00  
-#>  Median :15.0   Median : 36.00  
-#>  Mean   :15.4   Mean   : 42.98  
-#>  3rd Qu.:19.0   3rd Qu.: 56.00  
-#>  Max.   :25.0   Max.   :120.00
-```
+3.  Turn the texts into feature vectors with `vectorize()`;
 
-You’ll still need to render `README.Rmd` regularly, to keep `README.md`
-up-to-date. `devtools::build_readme()` is handy for this. You could also
-use GitHub Actions to re-render `README.Rmd` every time you push. An
-example workflow can be found here:
-<https://github.com/r-lib/actions/tree/v1/examples>.
+4.  Run a verification function. At the moment the only implemented one
+    is the *Impostors Method* in `impostors()`;
 
-You can also embed plots, for example:
+5.  Test the performance of the method on known data using
+    `performance()`;
 
-<img src="man/figures/README-pressure-1.png" width="100%" />
+6.  Finally, apply the method to the questioned text and generate a
+    likelihood ratio with `calibrate_LLR()`.
 
-In that case, don’t forget to commit and push the resulting figure
-files, so they display on GitHub and CRAN.
+## References
+
+<div id="refs" class="references csl-bib-body hanging-indent">
+
+<div id="ref-benoit2018" class="csl-entry">
+
+Benoit, Kenneth, Kohei Watanabe, Haiyan Wang, Paul Nulty, Adam Obeng,
+Stefan Müller, and Akitaka Matsuo. 2018. “Quanteda: An r Package for the
+Quantitative Analysis of Textual Data.” *Journal of Open Source
+Software* 3 (30). <https://doi.org/10.21105/joss.00774>.
+
+</div>
+
+</div>

@@ -1,6 +1,10 @@
 #' Vectorize data
 #'
-#' @param input This should be either a quanteda corpus object with the author names as docvars or a folder of plain text (.txt) files that have the structure: author_textname.txt
+#' This function turns the texts into n-gram vectors.
+#'
+#' More information about the literature will go here.
+#'
+#' @param input This should be a `quanteda` corpus object with the author names as a docvar called "author".
 #' @param tokens The type of tokens to extract, either "character" (default) or "word".
 #' @param remove_punct A logical value. FALSE (default) keeps punctuation marks.
 #' @param remove_symbols A logical value. TRUE (default) removes symbols.
@@ -20,20 +24,9 @@
 #' matrix <- vectorize(mycorpus)
 vectorize = function(input, tokens = "character", remove_punct = F, remove_symbols = T, remove_numbers = T, lowercase = T, n = 5, weighting = "rel", trim = T, threshold = 1500){
 
-  if(quanteda::is.corpus(input)){
-
-    corpus = input
-
-  }else{
-
-    corpus = readtext::readtext(file = paste0(input, "/*.txt"),
-                                docvarsfrom = "filenames", docvarnames = c("author", "textname"))
-
-  }
-
   if(tokens == "character"){
 
-    corpus |>
+    input |>
       quanteda::tokens(what = tokens, remove_punct = remove_punct, remove_symbols = remove_symbols,
                        remove_url = T, remove_numbers = remove_numbers, split_hyphens = T,
                        remove_separators = F) |>
@@ -44,7 +37,7 @@ vectorize = function(input, tokens = "character", remove_punct = F, remove_symbo
 
   if(tokens == "word"){
 
-    corpus |>
+    input |>
       quanteda::tokens(what = tokens, remove_punct = remove_punct, remove_symbols = remove_symbols,
                        remove_url = T, remove_numbers = remove_numbers, split_hyphens = T,
                        remove_separators = T) |>

@@ -215,17 +215,21 @@ IM = function(x, qs, candidate, cand.imps, q.imps, m, n){
   return(results)
 
 }
-#' Impostors method
+#' Impostors Method
 #'
-#' @param candidate The quanteda dfm containing the data belonging to the candidate author.
+#' This function runs the authorship verification method *Impostors Method*.
+#'
+#' More details here.
+#'
+#' @param candidate The `quanteda` dfm containing the data belonging to the candidate author.
 #' @param algorithm A string specifying which impostors algorithm to use, either "RBI", "KGI", or "IM".
-#' @param k The k parameters for the RBI algorithm. Not used by other algorithms. The default is 300.
-#' @param m The m parameter for the IM algorithm. Not used by other algorithms. The default is 100.
-#' @param qs The quanteda dfm containing the disputed texts.
-#' @param cand.imps The quanteda dfm containing the impostors (or only the impostors for the candidate data if the algorithm is IM)
-#' @param q.imps The quanteda dfm containing the impostors for the disputed text (only applicable for the IM algorithm)
+#' @param k The *k* parameters for the RBI algorithm. Not used by other algorithms. The default is 300.
+#' @param m The *m* parameter for the IM algorithm. Not used by other algorithms. The default is 100.
+#' @param qs The `quanteda` dfm containing the disputed texts.
+#' @param cand.imps The `quanteda` dfm containing the impostors (or only the impostors for the candidate data if the algorithm is IM)
+#' @param q.imps The `quanteda` dfm containing the impostors for the disputed text (only applicable for the IM algorithm)
 #' @param cores The number of cores to use for parallel processing (the default is one).
-#' @param n The n parameter for the IM algorithm. Not used by other algorithms. The default is 25.
+#' @param n The *n* parameter for the IM algorithm. Not used by other algorithms. The default is 25.
 #'
 #' @return A data frame containing the score ranging from 0 to 1 representing the degree of confidence that the candidate is the author of the Q text. The data frame contains a column called "target" with a logical value which is TRUE if the author of the Q text is the candidate and FALSE otherwise.
 #' @export

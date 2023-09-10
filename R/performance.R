@@ -28,7 +28,11 @@ leave_one_out_llr = function(df){
 }
 #' Performance evaluation
 #'
-#' @param training The data frame with the results to evaluate, typically the output of an authorship verification experiment. If only training is present then the function will perform a leave-one-out cross-validation.
+#' This function is used to the test the performance of a verification function, such as the *Impostors Method*.
+#'
+#' More details here.
+#'
+#' @param training The data frame with the results to evaluate, typically the output of an authorship verification function, such as [impostors()]. If only training is present then the function will perform a leave-one-out cross-validation.
 #' @param test Optional data frame of results. If present then a calibration model is extracted from training and its performance is evaluated on this data set.
 #'
 #' @return The function returns a data frame with performance statistics, including the C_llr. The binary classification statistics are all calculated considering a Log-Likelihood Ratio score of 0 as a threshold.
