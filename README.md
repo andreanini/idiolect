@@ -6,6 +6,8 @@
 <!-- badges: start -->
 <!-- badges: end -->
 
+---------- !!! WARNING: CURRENTLY IN DEVELOPMENT !!! ----------
+
 The `idiolect` R package is designed to provide a framework for
 performing comparative authorship analysis within a forensic context and
 using the likelihood ratio framework. The package contains a set of
