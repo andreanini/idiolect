@@ -1,9 +1,9 @@
 test_that("content masking works", {
 
-  enron.parsed <- readRDS(testthat::test_path("data", "enron_parsed.rds"))
+  enron.corpus <- readRDS(testthat::test_path("data", "enron_corpus.rds"))
 
-  expect_snapshot(contentmask(enron.parsed, algorithm = "POSnoise"))
+  expect_snapshot(contentmask(enron.corpus, algorithm = "POSnoise"))
 
-  expect_snapshot(contentmask(enron.parsed, algorithm = "framenoise"))
+  expect_snapshot(contentmask(enron.corpus, algorithm = "framenoise"))
 
 })

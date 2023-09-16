@@ -4,15 +4,15 @@
 \alias{contentmask}
 \title{Content masking}
 \usage{
-contentmask(parsed.corpus, algorithm = "POSnoise")
+contentmask(corpus, algorithm = "POSnoise")
 }
 \arguments{
-\item{parsed.corpus}{A data frame containing a \code{spacyr} Part of Speech tagged corpus. Typically the output of the \code{\link[=create_corpus]{create_corpus()}} function with the pos_tag argument switched to TRUE.}
+\item{corpus}{A \code{quanteda} corpus object, typically the output of the \code{\link[=create_corpus]{create_corpus()}} function.}
 
 \item{algorithm}{A string, either "POSnoise" (default) or "frames".}
 }
 \value{
-A \code{quanteda} corpus object only containing functional tokens, depending on the algorithm chosen. The corpus also contains the author names as a docvar.
+A \code{quanteda} corpus object only containing functional tokens, depending on the algorithm chosen. The corpus contains the same docvars as the input.
 }
 \description{
 This function offers two algorithms for topic/content masking. See Details below.
@@ -22,9 +22,7 @@ References to algorithms to appear here.
 }
 \examples{
 text <- "The elegant cat was forcefully put on the chair."
-spacyr::spacy_initialize()
-parsed.text <- spacyr::spacy_parse(text)
-spacyr::spacy_finalize()
-posnoise.text <- contentmask(parsed.text, algorithm = "POSnoise")
-frames.text <- contentmask(parsed.text, algorithm = "framenoise")
+toy.corpus <- quanteda::corpus(text)
+contentmask(toy.corpus, algorithm = "POSnoise")
+contentmask(toy.corpus, algorithm = "framenoise")
 }

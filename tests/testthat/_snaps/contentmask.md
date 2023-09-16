@@ -1,9 +1,13 @@
 # content masking works
 
     Code
-      contentmask(enron.parsed, algorithm = "POSnoise")
+      contentmask(enron.corpus, algorithm = "POSnoise")
+    Message <simpleMessage>
+      Found 'spacy_condaenv'. spacyr will use this environment
+      successfully initialized (spaCy Version: 3.3.1, language model: en_core_web_sm)
+      (python options: type = "condaenv", value = "spacy_condaenv")
     Output
-      Corpus consisting of 6 documents and 1 docvar.
+      Corpus consisting of 6 documents and 2 docvars.
       allen-p_16.txt :
       "P , the J N is having a J N V with the D N that is to be V a..."
       
@@ -26,9 +30,13 @@
 ---
 
     Code
-      contentmask(enron.parsed, algorithm = "framenoise")
+      contentmask(enron.corpus, algorithm = "framenoise")
+    Message <simpleMessage>
+      Python space is already attached.  If you want to switch to a different Python, please restart R.
+      successfully initialized (spaCy Version: 3.3.1, language model: en_core_web_sm)
+      (python options: type = "condaenv", value = "spacy_condaenv")
     Output
-      Corpus consisting of 6 documents and 1 docvar.
+      Corpus consisting of 6 documents and 2 docvars.
       allen-p_16.txt :
       "P , the back N is V a hard N V with the D N that is to be V ..."
       

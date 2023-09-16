@@ -4,20 +4,24 @@
 #'
 #' References to algorithms to appear here.
 #'
-#' @param parsed.corpus A data frame containing a `spacyr` Part of Speech tagged corpus. Typically the output of the [create_corpus()] function with the pos_tag argument switched to TRUE.
+#' @param corpus A `quanteda` corpus object, typically the output of the [create_corpus()] function.
 #' @param algorithm A string, either "POSnoise" (default) or "frames".
 #'
-#' @return A `quanteda` corpus object only containing functional tokens, depending on the algorithm chosen. The corpus also contains the author names as a docvar.
+#' @return A `quanteda` corpus object only containing functional tokens, depending on the algorithm chosen. The corpus contains the same docvars as the input.
 #' @export
 #'
 #' @examples
 #' text <- "The elegant cat was forcefully put on the chair."
-#' spacyr::spacy_initialize()
-#' parsed.text <- spacyr::spacy_parse(text)
-#' spacyr::spacy_finalize()
-#' posnoise.text <- contentmask(parsed.text, algorithm = "POSnoise")
-#' frames.text <- contentmask(parsed.text, algorithm = "framenoise")
-contentmask <- function(parsed.corpus, algorithm = "POSnoise"){
+#' toy.corpus <- quanteda::corpus(text)
+#' contentmask(toy.corpus, algorithm = "POSnoise")
+#' contentmask(toy.corpus, algorithm = "framenoise")
+contentmask <- function(corpus, algorithm = "POSnoise"){
+
+  meta <- quanteda::docvars(corpus)
+
+  spacyr::spacy_initialize()
+  parsed.corpus <- spacyr::spacy_parse(corpus, lemma = F, entity = F)
+  spacyr::spacy_finalize()
 
   if(algorithm == "POSnoise"){
 
@@ -43,8 +47,6 @@ contentmask <- function(parsed.corpus, algorithm = "POSnoise"){
 
     x.corp <- sapply(x.pos, function(x) { paste(x, collapse = " ") }) |> quanteda::corpus()
 
-    quanteda::docvars(x.corp, field = 'author') <- gsub('(\\w+)_\\w+\\.txt', '\\1', quanteda::docid(x.corp))
-
   }
 
   if(algorithm == "framenoise"){
@@ -68,9 +70,9 @@ contentmask <- function(parsed.corpus, algorithm = "POSnoise"){
 
     x.corp <- sapply(x.pos, function(x) { paste(x, collapse = " ") }) |> quanteda::corpus()
 
-    quanteda::docvars(x.corp, field = 'author') <- gsub('(\\w+)_\\w+\\.txt', '\\1', quanteda::docid(x.corp))
-
   }
+
+  quanteda::docvars(x.corp) <- meta
 
   return(x.corp)
 
