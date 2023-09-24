@@ -12,7 +12,7 @@ calibrate_LLR(calibration.dataset, dataset)
 \item{dataset}{A data frame containing only one row with the score that will be calibrated into a LLR using the calibration data. This is typically the result of applying a function like \code{\link[=impostors]{impostors()}} to the Q text.}
 }
 \value{
-The function returns a list containing two data frames: the LLR for the Q text and a table showing some hypothetical scenarios with prior probabilities/odds being turned into posterior probabilities/odds according to the likelihood ratio obtained.
+The function returns a list containing two data frames: a first data frame with the LLR, as well as the verbal label according to Marquis et al (2016) and a verbal interpretation of the results; and a second data frame showing some hypothetical scenarios with prior probabilities/odds being turned into posterior probabilities/odds according to the likelihood ratio obtained.
 }
 \description{
 This function is used to transform the scores returned by a verification function into a Log-Likelihood Ratio (LLR).
