@@ -11,11 +11,11 @@
 #' @param remove_numbers A logical value. TRUE (default) removes numbers
 #' @param lowercase A logical value. TRUE (default) transforms all tokens to lower case.
 #' @param n The order or size of the n-grams being extracted. Default is 5.
-#' @param weighting The type of weighting to use, either "rel" for relative frequencies or "tf-idf".
+#' @param weighting The type of weighting to use, "rel" for relative frequencies, "tf-idf", or "boolean".
 #' @param trim A logical value. If TRUE (default) then only the most frequent tokens are kept.
 #' @param threshold A numeric value indicating how many most frequent tokens to keep. The default is 1500.
 #'
-#' @return A dfm (document-feature matrix) containing each text as a feature vector.
+#' @return A dfm (document-feature matrix) containing each text as a feature vector. N-gram tokenisation does not cross sentence boundaries.
 #' @export
 #'
 #' @examples
@@ -24,27 +24,29 @@
 #' matrix <- vectorize(mycorpus)
 vectorize = function(input, tokens = "character", remove_punct = F, remove_symbols = T, remove_numbers = T, lowercase = T, n = 5, weighting = "rel", trim = T, threshold = 1500){
 
+  sents <- quanteda::corpus_reshape(input, to = "sentences")
+
   if(tokens == "character"){
 
-    input |>
+    sents |>
       quanteda::tokens(what = tokens, remove_punct = remove_punct, remove_symbols = remove_symbols,
                        remove_url = T, remove_numbers = remove_numbers, split_hyphens = T,
                        remove_separators = F) |>
-      quanteda::tokens_ngrams(n, concatenator = "") |>
-      quanteda::dfm(tolower = lowercase) -> d
+      quanteda::tokens_ngrams(n, concatenator = "") -> toks
 
   }
 
   if(tokens == "word"){
 
-    input |>
+    sents |>
       quanteda::tokens(what = tokens, remove_punct = remove_punct, remove_symbols = remove_symbols,
                        remove_url = T, remove_numbers = remove_numbers, split_hyphens = T,
                        remove_separators = T) |>
-      quanteda::tokens_ngrams(n, concatenator = "_") |>
-      quanteda::dfm(tolower = lowercase) -> d
+      quanteda::tokens_ngrams(n, concatenator = "_") -> toks
 
   }
+
+  d <- quanteda::tokens_group(toks) |> quanteda::dfm(tolower = lowercase)
 
   if(trim == T){
 
@@ -61,6 +63,12 @@ vectorize = function(input, tokens = "character", remove_punct = F, remove_symbo
   if(weighting == "rel"){
 
     d.f = quanteda::dfm_weight(d, scheme = "prop")
+
+  }
+
+  if(weighting == "boolean"){
+
+    d.f = quanteda::dfm_weight(d, scheme = "boolean")
 
   }
 

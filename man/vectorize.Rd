@@ -32,14 +32,14 @@ vectorize(
 
 \item{n}{The order or size of the n-grams being extracted. Default is 5.}
 
-\item{weighting}{The type of weighting to use, either "rel" for relative frequencies or "tf-idf".}
+\item{weighting}{The type of weighting to use, "rel" for relative frequencies, "tf-idf", or "boolean".}
 
 \item{trim}{A logical value. If TRUE (default) then only the most frequent tokens are kept.}
 
 \item{threshold}{A numeric value indicating how many most frequent tokens to keep. The default is 1500.}
 }
 \value{
-A dfm (document-feature matrix) containing each text as a feature vector.
+A dfm (document-feature matrix) containing each text as a feature vector. N-gram tokenisation does not cross sentence boundaries.
 }
 \description{
 This function turns the texts into n-gram vectors.
