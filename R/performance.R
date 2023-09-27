@@ -13,7 +13,7 @@ leave_one_out_llr = function(df){
 
     stats::predict(calibration.model, newdata = left) -> llr
 
-    final.llr[i, "llr"] = llr
+    final.llr[i, "llr"] = llr/log(10)
 
     utils::setTxtProgressBar(pb, i)
 
@@ -81,6 +81,10 @@ performance = function(training, test = NULL){
   evaluation.res[1, "Cllr"] = roc.res$Cllr
   evaluation.res[1, "Cllr_min"] = roc.res$Cllr.min
   evaluation.res[1, "EER"] = roc.res$eer
+  evaluation.res[1, "Mean TRUE LLR"] = roc.res$mt
+  evaluation.res[1, "Mean FALSE LLR"] = roc.res$mn
+  evaluation.res[1, "TRUE cases"] = roc.res$nt
+  evaluation.res[1, "FALSE cases"] = roc.res$nn
   evaluation.res[1, "Accuracy"] = as.numeric(cm$overall["Accuracy"])
   evaluation.res[1, "Precision"] = as.numeric(cm$byClass["Precision"])
   evaluation.res[1, "Recall"] = as.numeric(cm$byClass["Recall"])
