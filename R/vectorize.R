@@ -24,7 +24,8 @@
 #' matrix <- vectorize(mycorpus)
 vectorize = function(input, tokens = "character", remove_punct = F, remove_symbols = T, remove_numbers = T, lowercase = T, n = 5, weighting = "rel", trim = T, threshold = 1500){
 
-  sents <- quanteda::corpus_reshape(input, to = "sentences")
+  sents <- quanteda::corpus_segment(input, pattern = "[.?!]+( \\n+)*|\\n+", valuetype = "regex",
+                                    extract_pattern = F, pattern_position = "after")
 
   if(tokens == "character"){
 
