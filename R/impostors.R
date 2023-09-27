@@ -1,12 +1,12 @@
-minmax = function(m, q){
+minmax <- function(m, q){
 
   dist = proxy::dist(x = as.matrix(m), y = as.matrix(q), method = "fJaccard")
-  ranking = rank(as.matrix(dist)[,1], ties.method = "min") |>  sort()
+  ranking = rank(as.matrix(dist)[,1], ties.method = "max") |>  sort()
 
   return(ranking)
 
 }
-top_imps = function(k.sample, poss.imps, n){
+top_imps <- function(k.sample, poss.imps, n){
 
   if(nrow(k.sample) > 1){
 
@@ -21,13 +21,25 @@ top_imps = function(k.sample, poss.imps, n){
   return(imps)
 
 }
-RBI = function(x, qs, candidate, cand.imps, k){
+overlap <- function(m1, m2){
+
+  m <- rbind(m1, m2)
+
+  features <- apply(m, 2, min) |> sort(decreasing = T)
+
+  overlap <- names(features[features > 0])
+
+  return(overlap)
+
+}
+RBI <- function(x, qs, candidate, cand.imps, k){
 
   q = qs[x,]
 
   r = k/5
   r.imps = k/10
   score.sum = 0
+  feat.vector <- c()
 
   for(i in 1:nrow(candidate)){
 
@@ -56,6 +68,8 @@ RBI = function(x, qs, candidate, cand.imps, k){
 
       score = score + 1/(r*k.rank)
 
+      feat.vector <- c(feat.vector, overlap(f.q, f.m[1,]))
+
     }
 
     score.sum = score.sum + score
@@ -63,6 +77,7 @@ RBI = function(x, qs, candidate, cand.imps, k){
   }
 
   final.score = round(score.sum/nrow(candidate), 3)
+  final.feats <- table(feat.vector) |> sort(decreasing = T)
 
   results = data.frame()
   results[1,"candidate"] = quanteda::docvars(candidate[1,], "author")
@@ -79,11 +94,12 @@ RBI = function(x, qs, candidate, cand.imps, k){
   }
 
   results[1,"score"] = final.score
+  results[1, "important_features"] = paste0(names(final.feats[1:30]), collapse = "|")
 
   return(results)
 
 }
-KGI = function(x, qs, candidate, cand.imps){
+KGI <- function(x, qs, candidate, cand.imps){
 
   q = qs[x,]
 
@@ -141,7 +157,7 @@ KGI = function(x, qs, candidate, cand.imps){
   return(results)
 
 }
-IM = function(x, qs, candidate, cand.imps, q.imps, m, n){
+IM <- function(x, qs, candidate, cand.imps, q.imps, m, n){
 
   q = qs[x,]
 
@@ -231,7 +247,7 @@ IM = function(x, qs, candidate, cand.imps, q.imps, m, n){
 #' @param cores The number of cores to use for parallel processing (the default is one).
 #' @param n The *n* parameter for the IM algorithm. Not used by other algorithms. The default is 25.
 #'
-#' @return A data frame containing the score ranging from 0 to 1 representing the degree of confidence that the candidate is the author of the Q text. The data frame contains a column called "target" with a logical value which is TRUE if the author of the Q text is the candidate and FALSE otherwise.
+#' @return A data frame containing the score ranging from 0 to 1 representing the degree of confidence that the candidate is the author of the Q text. The data frame contains a column called "target" with a logical value which is TRUE if the author of the Q text is the candidate and FALSE otherwise. For the RBI algorithm, the table contains a final column contains the most important features, which are the top 30 features in terms of how often they are found in the overlap between candidate and each Q text tested.
 #' @export
 #'
 #' @examples

@@ -36,7 +36,7 @@ impostors(
 \item{cores}{The number of cores to use for parallel processing (the default is one).}
 }
 \value{
-A data frame containing the score ranging from 0 to 1 representing the degree of confidence that the candidate is the author of the Q text. The data frame contains a column called "target" with a logical value which is TRUE if the author of the Q text is the candidate and FALSE otherwise.
+A data frame containing the score ranging from 0 to 1 representing the degree of confidence that the candidate is the author of the Q text. The data frame contains a column called "target" with a logical value which is TRUE if the author of the Q text is the candidate and FALSE otherwise. For the RBI algorithm, the table contains a final column contains the most important features, which are the top 30 features in terms of how often they are found in the overlap between candidate and each Q text tested.
 }
 \description{
 This function runs the authorship verification method \emph{Impostors Method}.
