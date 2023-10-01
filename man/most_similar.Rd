@@ -20,7 +20,10 @@ The function returns a dfm containing the top n most similar rows to the input s
 Select most similar texts to a specific text
 }
 \examples{
-c <- quanteda::corpus(c("The cat sat on the mat", "The dog sat on the chair", "Violence is the last refuge of the incompetent"))
+text1 <- "The cat sat on the mat"
+text2 <- "The dog sat on the chair"
+text3 <- "Violence is the last refuge of the incompetent"
+c <- quanteda::corpus(c(text1, text2, text3))
 d <- quanteda::tokens(c) |> quanteda::dfm() |> quanteda::dfm_weight(scheme = "prop")
 most_similar(d[1,], d[-1,], n = 1)
 }

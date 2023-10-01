@@ -1,14 +1,3 @@
-overlap <- function(m1, m2){
-
-  m <- rbind(m1, m2)
-
-  features <- apply(m, 2, min) |> sort(decreasing = T)
-
-  overlap <- names(features[features > 0])
-
-  return(overlap)
-
-}
 RBI <- function(x, qs, candidates, cand.imps, k){
 
   q.name = as.character(x["q"])
@@ -49,8 +38,6 @@ RBI <- function(x, qs, candidates, cand.imps, k){
 
       score = score + 1/(r*k.rank)
 
-      feat.vector <- c(feat.vector, overlap(f.q, f.m[1,]))
-
     }
 
     score.sum = score.sum + score
@@ -58,7 +45,6 @@ RBI <- function(x, qs, candidates, cand.imps, k){
   }
 
   final.score = round(score.sum/nrow(candidate), 3)
-  final.feats <- table(feat.vector) |> sort(decreasing = T)
 
   results = data.frame()
   results[1,"candidate"] = quanteda::docvars(candidate[1,], "author")
@@ -75,7 +61,6 @@ RBI <- function(x, qs, candidates, cand.imps, k){
   }
 
   results[1,"score"] = final.score
-  results[1, "important_features"] = paste0(names(final.feats[1:30]), collapse = "|")
 
   return(results)
 
@@ -237,7 +222,7 @@ IM <- function(x, qs, candidates, cand.imps, q.imps, m, n){
 #' @param n The *n* parameter for the IM algorithm. Not used by other algorithms. The default is 25.
 #'
 #' @return The function will test all possible combinations of q texts and candidate authors and return a
-#' data frame containing the score ranging from 0 to 1 representing the degree of confidence that the candidate is the author of the Q text. The data frame contains a column called "target" with a logical value which is TRUE if the author of the Q text is the candidate and FALSE otherwise. For the RBI algorithm, the table contains a final column contains the most important features, which are the top 30 features in terms of how often they are found in the overlap between candidate and each Q text tested.
+#' data frame containing the score ranging from 0 to 1 representing the degree of confidence that the candidate is the author of the Q text. The data frame contains a column called "target" with a logical value which is TRUE if the author of the Q text is the candidate and FALSE otherwise.
 #' @export
 #'
 #' @examples

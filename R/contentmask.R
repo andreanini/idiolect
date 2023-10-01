@@ -14,7 +14,6 @@
 #' text <- "The elegant cat was forcefully put on the chair."
 #' toy.corpus <- quanteda::corpus(text)
 #' contentmask(toy.corpus, algorithm = "POSnoise")
-#' contentmask(toy.corpus, algorithm = "framenoise")
 contentmask <- function(corpus, algorithm = "POSnoise"){
 
   meta <- quanteda::docvars(corpus)

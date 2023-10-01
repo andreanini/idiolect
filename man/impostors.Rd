@@ -6,7 +6,7 @@
 \usage{
 impostors(
   qs,
-  candidate,
+  candidates,
   cand.imps,
   q.imps,
   algorithm = "RBI",
@@ -17,9 +17,9 @@ impostors(
 )
 }
 \arguments{
-\item{qs}{The \code{quanteda} dfm containing the disputed texts.}
+\item{qs}{The \code{quanteda} dfm containing the disputed texts to test.}
 
-\item{candidate}{The \code{quanteda} dfm containing the data belonging to the candidate author.}
+\item{candidates}{The \code{quanteda} dfm containing the data belonging to the candidate authors to test.}
 
 \item{cand.imps}{The \code{quanteda} dfm containing the impostors (or only the impostors for the candidate data if the algorithm is IM)}
 
@@ -36,7 +36,8 @@ impostors(
 \item{cores}{The number of cores to use for parallel processing (the default is one).}
 }
 \value{
-A data frame containing the score ranging from 0 to 1 representing the degree of confidence that the candidate is the author of the Q text. The data frame contains a column called "target" with a logical value which is TRUE if the author of the Q text is the candidate and FALSE otherwise. For the RBI algorithm, the table contains a final column contains the most important features, which are the top 30 features in terms of how often they are found in the overlap between candidate and each Q text tested.
+The function will test all possible combinations of q texts and candidate authors and return a
+data frame containing the score ranging from 0 to 1 representing the degree of confidence that the candidate is the author of the Q text. The data frame contains a column called "target" with a logical value which is TRUE if the author of the Q text is the candidate and FALSE otherwise.
 }
 \description{
 This function runs the authorship verification method \emph{Impostors Method}.
