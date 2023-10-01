@@ -9,9 +9,13 @@ overlap <- function(m1, m2){
   return(overlap)
 
 }
-RBI <- function(x, qs, candidate, cand.imps, k){
+RBI <- function(x, qs, candidates, cand.imps, k){
 
-  q = qs[x,]
+  q.name = as.character(x["q"])
+  q = quanteda::dfm_subset(qs, quanteda::docnames(qs) == q.name)
+
+  candidate.name = as.character(x["candidate"])
+  candidate = quanteda::dfm_subset(candidates, author == candidate.name)
 
   r = k/5
   r.imps = k/10
@@ -76,9 +80,13 @@ RBI <- function(x, qs, candidate, cand.imps, k){
   return(results)
 
 }
-KGI <- function(x, qs, candidate, cand.imps){
+KGI <- function(x, qs, candidates, cand.imps){
 
-  q = qs[x,]
+  q.name = as.character(x["q"])
+  q = quanteda::dfm_subset(qs, quanteda::docnames(qs) == q.name)
+
+  candidate.name = as.character(x["candidate"])
+  candidate = quanteda::dfm_subset(candidates, author == candidate.name)
 
   score = 0
   r.imps = nrow(cand.imps)/2
@@ -134,9 +142,13 @@ KGI <- function(x, qs, candidate, cand.imps){
   return(results)
 
 }
-IM <- function(x, qs, candidate, cand.imps, q.imps, m, n){
+IM <- function(x, qs, candidates, cand.imps, q.imps, m, n){
 
-  q = qs[x,]
+  q.name = as.character(x["q"])
+  q = quanteda::dfm_subset(qs, quanteda::docnames(qs) == q.name)
+
+  candidate.name = as.character(x["candidate"])
+  candidate = quanteda::dfm_subset(candidates, author == candidate.name)
 
   score_a = 0
 
@@ -214,17 +226,18 @@ IM <- function(x, qs, candidate, cand.imps, q.imps, m, n){
 #'
 #' More details here.
 #'
-#' @param candidate The `quanteda` dfm containing the data belonging to the candidate author.
+#' @param candidates The `quanteda` dfm containing the data belonging to the candidate authors to test.
 #' @param algorithm A string specifying which impostors algorithm to use, either "RBI", "KGI", or "IM".
 #' @param k The *k* parameters for the RBI algorithm. Not used by other algorithms. The default is 300.
 #' @param m The *m* parameter for the IM algorithm. Not used by other algorithms. The default is 100.
-#' @param qs The `quanteda` dfm containing the disputed texts.
+#' @param qs The `quanteda` dfm containing the disputed texts to test.
 #' @param cand.imps The `quanteda` dfm containing the impostors (or only the impostors for the candidate data if the algorithm is IM)
 #' @param q.imps The `quanteda` dfm containing the impostors for the disputed text (only applicable for the IM algorithm)
 #' @param cores The number of cores to use for parallel processing (the default is one).
 #' @param n The *n* parameter for the IM algorithm. Not used by other algorithms. The default is 25.
 #'
-#' @return A data frame containing the score ranging from 0 to 1 representing the degree of confidence that the candidate is the author of the Q text. The data frame contains a column called "target" with a logical value which is TRUE if the author of the Q text is the candidate and FALSE otherwise. For the RBI algorithm, the table contains a final column contains the most important features, which are the top 30 features in terms of how often they are found in the overlap between candidate and each Q text tested.
+#' @return The function will test all possible combinations of q texts and candidate authors and return a
+#' data frame containing the score ranging from 0 to 1 representing the degree of confidence that the candidate is the author of the Q text. The data frame contains a column called "target" with a logical value which is TRUE if the author of the Q text is the candidate and FALSE otherwise. For the RBI algorithm, the table contains a final column contains the most important features, which are the top 30 features in terms of how often they are found in the overlap between candidate and each Q text tested.
 #' @export
 #'
 #' @examples
@@ -250,32 +263,36 @@ IM <- function(x, qs, candidate, cand.imps, q.imps, m, n){
 #' q.dfm <- dfm_match(q.dfm, featnames(k.dfm))
 #'
 #' results <- impostors(q.dfm, k.dfm, imp.dfm, algorithm = "KGI")
-impostors = function(qs, candidate, cand.imps, q.imps, algorithm = "RBI", k = 300, m = 100, n = 25, cores = NULL){
+impostors = function(qs, candidates, cand.imps, q.imps, algorithm = "RBI", k = 300, m = 100, n = 25, cores = NULL){
+
+  q.list <- rownames(qs)
+  candidate.authors <- quanteda::docvars(candidates, "author") |> unique()
+
+  tests <- expand.grid(q.list, candidate.authors, stringsAsFactors = F) |>
+    dplyr::rename(q = Var1, candidate = Var2)
+
 
   if(algorithm == "RBI"){
 
-    results = pbapply::pblapply(as.list(1:nrow(qs)), RBI, qs, candidate, cand.imps, k,
-                                cl = cores)
+    results = pbapply::pbapply(tests, 1, RBI, qs, candidates, cand.imps, k, cl = cores)
 
   }
 
   if(algorithm == "KGI"){
 
-    results = pbapply::pblapply(as.list(1:nrow(qs)), KGI, qs, candidate, cand.imps,
-                                cl = cores)
+    results = pbapply::pbapply(tests, 1, KGI, qs, candidates, cand.imps, cl = cores)
 
   }
 
   if(algorithm == "IM"){
 
-    if(nrow(candidate) > 1){
+    if(nrow(candidates) > length(candidate.authors)){
 
       stop("The IM algorithm can only be applied in the case of one single candidate sample.\n")
 
     }
 
-    results = pbapply::pblapply(as.list(1:nrow(qs)), IM, qs, candidate, cand.imps, q.imps, m, n,
-                                cl = cores)
+    results = pbapply::pbapply(tests, 1, IM, qs, candidates, cand.imps, q.imps, m, n, cl = cores)
 
   }
 
