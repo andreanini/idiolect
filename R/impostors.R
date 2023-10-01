@@ -1,26 +1,3 @@
-minmax <- function(m, q){
-
-  dist = proxy::dist(x = as.matrix(m), y = as.matrix(q), method = "fJaccard")
-  ranking = rank(as.matrix(dist)[,1], ties.method = "max") |>  sort()
-
-  return(ranking)
-
-}
-top_imps <- function(k.sample, poss.imps, n){
-
-  if(nrow(k.sample) > 1){
-
-    stop("Multiple K samples in the top_imps function\n")
-
-  }
-
-  ranking = minmax(poss.imps, k.sample)
-  imp.list = names(ranking[1:n])
-  imps = quanteda::dfm_subset(poss.imps, quanteda::docnames(poss.imps) %in% imp.list)
-
-  return(imps)
-
-}
 overlap <- function(m1, m2){
 
   m <- rbind(m1, m2)
@@ -49,7 +26,7 @@ RBI <- function(x, qs, candidate, cand.imps, k){
 
     for(j in 1:r){
 
-      cons.imps = top_imps(cons.k, cand.imps, k)
+      cons.imps = most_similar(cons.k, cand.imps, k)
 
       #r impostors
       cons.imps.f = quanteda::dfm_sample(cons.imps, size = r.imps)
@@ -164,7 +141,7 @@ IM <- function(x, qs, candidate, cand.imps, q.imps, m, n){
   score_a = 0
 
   candidate |>
-    top_imps(cand.imps, m) |>
+    most_similar(cand.imps, m) |>
     quanteda::dfm_sample(n) -> cons.imps.f
 
   for (i in 1:100) {
@@ -189,7 +166,7 @@ IM <- function(x, qs, candidate, cand.imps, q.imps, m, n){
   score_b = 0
 
   q |>
-    top_imps(q.imps, m) |>
+    most_similar(q.imps, m) |>
     quanteda::dfm_sample(n) -> cons.imps.f
 
   for (i in 1:100) {

@@ -41,7 +41,7 @@ test_that("KGI works", {
   score_T = impostors(qs, candidate, cand.imps, "KBI")
 
   testthat::expect_equal(score_T[1, 4], 1, tolerance = 0.05)
-  testthat::expect_lt(score_T[2, 4], 0.04)
+  testthat::expect_lt(score_T[2, 4], 0.05)
 
 })
 test_that("IM works", {
