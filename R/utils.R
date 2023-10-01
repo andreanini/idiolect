@@ -5,3 +5,13 @@ list_to_df = function(list){
   return(final.df)
 
 }
+detokenize <- function(tok){
+
+  meta <- quanteda::docvars(tok)
+
+  sapply(tok, function(x) { paste(x, collapse = " ") }) |> quanteda::corpus() -> c
+
+  quanteda::docvars(c) <- meta
+
+  return(c)
+}

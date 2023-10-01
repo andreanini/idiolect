@@ -277,13 +277,15 @@ impostors = function(qs, candidate, cand.imps, q.imps, algorithm = "RBI", k = 30
 
   if(algorithm == "RBI"){
 
-    results = pbapply::pblapply(as.list(1:nrow(qs)), RBI, qs, candidate, cand.imps, k, cl = cores)
+    results = pbapply::pblapply(as.list(1:nrow(qs)), RBI, qs, candidate, cand.imps, k,
+                                cl = cores)
 
   }
 
   if(algorithm == "KGI"){
 
-    results = pbapply::pblapply(as.list(1:nrow(qs)), KGI, qs, candidate, cand.imps, cl = cores)
+    results = pbapply::pblapply(as.list(1:nrow(qs)), KGI, qs, candidate, cand.imps,
+                                cl = cores)
 
   }
 
@@ -295,7 +297,8 @@ impostors = function(qs, candidate, cand.imps, q.imps, algorithm = "RBI", k = 30
 
     }
 
-    results = pbapply::pblapply(as.list(1:nrow(qs)), IM, qs, candidate, cand.imps, q.imps, m, n, cl = cores)
+    results = pbapply::pblapply(as.list(1:nrow(qs)), IM, qs, candidate, cand.imps, q.imps, m, n,
+                                cl = cores)
 
   }
 
