@@ -47,7 +47,9 @@ vectorize = function(input, tokens = "character", remove_punct = F, remove_symbo
 
   }
 
-  d <- quanteda::tokens_group(toks) |> quanteda::dfm(tolower = lowercase)
+  d <- quanteda::tokens_group(toks) |>
+    quanteda::dfm(tolower = lowercase) |>
+    quanteda::dfm_trim(min_docfreq = 2)
 
   if(trim == T){
 
