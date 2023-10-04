@@ -9,7 +9,6 @@ RBI <- function(x, qs, candidates, cand.imps, k){
   r = k/5
   r.imps = k/10
   score.sum = 0
-  feat.vector <- c()
 
   for(i in 1:nrow(candidate)){
 
