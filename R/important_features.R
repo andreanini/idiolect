@@ -2,11 +2,12 @@ overlap <- function(m1, m2){
 
   m <- rbind(m1, m2)
 
-  features <- apply(m, 2, min) |> sort(decreasing = T)
+  mins <- apply(m, 2, min)
+  maxs <- apply(m, 2, max)
 
-  overlap <- names(features[features > 0])
+  ratios <- mins/maxs
 
-  return(overlap)
+  return(ratios)
 
 }
 #' Important features
@@ -35,19 +36,16 @@ important_features <- function(q, candidate, impostors){
 
   }
 
-  int <- overlap(q, candidate)
+  cand.overlap <- overlap(q, candidate)
 
-  imp.means.full <- quanteda::colMeans(impostors)
-  imp.means <- imp.means.full[names(imp.means.full) %in% int]
+  imp.means <- quanteda::colMeans(impostors)
   imp.matrix <- quanteda::as.dfm(t(as.matrix(imp.means)))
 
-  overlap.matrix <- quanteda::dfm_match(candidate, int)
+  imp.overlap <- overlap(q, imp.matrix)
 
-  full.matrix <- rbind(overlap.matrix, imp.matrix)
+  odds <- cand.overlap/imp.overlap
 
-  ratio <- quanteda::as.dfm(full.matrix[1,]/full.matrix[2,])
-
-  important.features <- quanteda::topfeatures(ratio, n = ncol(ratio))
+  important.features <- odds[is.na(odds) == F & odds != 0]
 
   return(important.features)
 
