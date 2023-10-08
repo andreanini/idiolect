@@ -45,7 +45,7 @@ calibrate_LLR = function(calibration.dataset, dataset){
                                             llr == 0 ~ "Hp is as likely as Hd",
                                             llr < 0 ~ paste("The similarity is", round(10^abs(llr), 2), "times more likely to be observed in the case of Hd than in the case of Hp"))) -> newdata
 
-  dplyr::tibble(prosecution_prior_probs = seq(0.1, 0.9, 0.1),) |>
+  dplyr::tibble(prosecution_prior_probs = c(0.000001, seq(0.1, 0.9, 0.1))) |>
     dplyr::mutate(prior_odds = prosecution_prior_probs/(1-prosecution_prior_probs)) |>
     dplyr::mutate(LLR = as.numeric(newdata$llr)) |>
     dplyr::mutate(LR = 10^LLR) |>
