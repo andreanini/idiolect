@@ -6,6 +6,7 @@
 #'
 #' @param corpus A `quanteda` corpus object, typically the output of the [create_corpus()] function.
 #' @param algorithm A string, either "POSnoise" (default) or "frames".
+#' @param model The spacy model to use. The default is en_core_web_sm.
 #'
 #' @return A `quanteda` corpus object only containing functional tokens, depending on the algorithm chosen. The corpus contains the same docvars as the input.
 #' @export
@@ -14,11 +15,14 @@
 #' text <- "The elegant cat was forcefully put on the chair."
 #' toy.corpus <- quanteda::corpus(text)
 #' contentmask(toy.corpus, algorithm = "POSnoise")
-contentmask <- function(corpus, algorithm = "POSnoise"){
+contentmask <- function(corpus, model = "en_core_web_sm", algorithm = "POSnoise"){
+
+  # this removes potential empty documents in the corpus, which are anyway removed by spacy
+  corpus <- quanteda::corpus_subset(corpus, quanteda::ntoken(corpus) > 0)
 
   meta <- quanteda::docvars(corpus)
 
-  spacyr::spacy_initialize()
+  spacyr::spacy_initialize(model = model, entity = F)
   parsed.corpus <- spacyr::spacy_parse(corpus, lemma = F, entity = F)
   spacyr::spacy_finalize()
 

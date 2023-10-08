@@ -4,10 +4,12 @@
 \alias{contentmask}
 \title{Content masking}
 \usage{
-contentmask(corpus, algorithm = "POSnoise")
+contentmask(corpus, model = "en_core_web_sm", algorithm = "POSnoise")
 }
 \arguments{
 \item{corpus}{A \code{quanteda} corpus object, typically the output of the \code{\link[=create_corpus]{create_corpus()}} function.}
+
+\item{model}{The spacy model to use. The default is en_core_web_sm.}
 
 \item{algorithm}{A string, either "POSnoise" (default) or "frames".}
 }
