@@ -14,11 +14,11 @@ RBI <- function(x, qs, candidates, cand.imps, k){
 
     cons.k = candidate[i,]
 
+    cons.imps = most_similar(cons.k, cand.imps, k)
+
     score = 0
 
     for(j in 1:r){
-
-      cons.imps = most_similar(cons.k, cand.imps, k)
 
       #r impostors
       cons.imps.f = quanteda::dfm_sample(cons.imps, size = r.imps)

@@ -3,9 +3,7 @@
     Code
       contentmask(enron.small, algorithm = "POSnoise")
     Message <simpleMessage>
-      Found 'spacy_condaenv'. spacyr will use this environment
-      successfully initialized (spaCy Version: 3.3.1, language model: en_core_web_sm)
-      (python options: type = "condaenv", value = "spacy_condaenv")
+      successfully initialized (spaCy Version: 3.7.1, language model: en_core_web_sm)
     Output
       Corpus consisting of 1 document and 2 docvars.
       allen-p_16.txt :
