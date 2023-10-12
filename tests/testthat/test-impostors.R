@@ -16,7 +16,7 @@ test_that("RBI works", {
                                      quanteda::docnames(d) != "Larry.campbell" &
                                      texttype == "known")
 
-  score_T = impostors(qs, candidates, cand.imps, "RBI", k = 100)
+  score_T = impostors(qs, candidates, cand.imps, algorithm = "RBI", k = 100)
 
   testthat::expect_equal(score_T[1, 4], 1, tolerance = 0.05)
   testthat::expect_equal(score_T[2, 4], 0.1, tolerance = 0.1)
@@ -42,7 +42,7 @@ test_that("KGI works", {
                                      quanteda::docnames(d) != "Larry.campbell" &
                                      texttype == "known")
 
-  score_T = impostors(qs, candidates, cand.imps, "KBI")
+  score_T = impostors(qs, candidates, cand.imps, algorithm = "KGI")
 
   testthat::expect_equal(score_T[1, 4], 1)
   testthat::expect_lt(score_T[2, 4], 0.1)
@@ -70,7 +70,7 @@ test_that("IM works", {
   q.imps = quanteda::dfm_subset(d, !(quanteda::docnames(d) %in% quanteda::docnames(qs)) &
                                      texttype == "unknown")
 
-  score_T = impostors(qs, candidates, cand.imps, q.imps, "IM", m = 100, n = 25)
+  score_T = impostors(qs, candidates, cand.imps, q.imps, algorithm = "IM", m = 100, n = 25)
 
   testthat::expect_gt(score_T[1, 4], 0.8)
   testthat::expect_equal(score_T[2, 4], 0, tolerance = 0.01)

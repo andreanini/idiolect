@@ -10,11 +10,26 @@ RBI <- function(x, qs, candidates, cand.imps, k){
   r.imps = k/10
   score.sum = 0
 
+  if(k >= nrow(cand.imps)){
+
+    warning("K is greater than or equal to the number of available impostors.")
+
+  }
+
   for(i in 1:nrow(candidate)){
 
     cons.k = candidate[i,]
 
-    cons.imps = most_similar(cons.k, cand.imps, k)
+    if(k < nrow(cand.imps)){
+
+      cons.imps = most_similar(cons.k, cand.imps, k)
+
+    }else{
+
+      cons.imps = cand.imps
+
+    }
+
 
     score = 0
 
