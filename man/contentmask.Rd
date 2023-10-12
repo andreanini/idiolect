@@ -14,7 +14,7 @@ contentmask(corpus, model = "en_core_web_sm", algorithm = "POSnoise")
 \item{algorithm}{A string, either "POSnoise" (default) or "frames".}
 }
 \value{
-A \code{quanteda} corpus object only containing functional tokens, depending on the algorithm chosen. The corpus contains the same docvars as the input.
+A \code{quanteda} corpus object only containing functional tokens, depending on the algorithm chosen. The corpus contains the same docvars as the input. Email addresses or URLs are treated like nouns.
 }
 \description{
 This function offers two algorithms for topic/content masking. See Details below.
@@ -23,7 +23,7 @@ This function offers two algorithms for topic/content masking. See Details below
 References to algorithms to appear here.
 }
 \examples{
-text <- "The elegant cat was forcefully put on the chair."
+text <- "The elegant cat was forcefully put on the chair. cat@pets.com; http://quanteda.io/"
 toy.corpus <- quanteda::corpus(text)
 contentmask(toy.corpus, algorithm = "POSnoise")
 }

@@ -8,11 +8,11 @@
 #' @param algorithm A string, either "POSnoise" (default) or "frames".
 #' @param model The spacy model to use. The default is en_core_web_sm.
 #'
-#' @return A `quanteda` corpus object only containing functional tokens, depending on the algorithm chosen. The corpus contains the same docvars as the input.
+#' @return A `quanteda` corpus object only containing functional tokens, depending on the algorithm chosen. The corpus contains the same docvars as the input. Email addresses or URLs are treated like nouns.
 #' @export
 #'
 #' @examples
-#' text <- "The elegant cat was forcefully put on the chair."
+#' text <- "The elegant cat was forcefully put on the chair. cat@pets.com; http://quanteda.io/"
 #' toy.corpus <- quanteda::corpus(text)
 #' contentmask(toy.corpus, algorithm = "POSnoise")
 contentmask <- function(corpus, model = "en_core_web_sm", algorithm = "POSnoise"){
@@ -23,7 +23,8 @@ contentmask <- function(corpus, model = "en_core_web_sm", algorithm = "POSnoise"
   meta <- quanteda::docvars(corpus)
 
   spacyr::spacy_initialize(model = model, entity = F)
-  parsed.corpus <- spacyr::spacy_parse(corpus, lemma = F, entity = F)
+  parsed.corpus <- spacyr::spacy_parse(corpus, lemma = F, entity = F,
+                                       additional_attributes = c("like_url", "like_email"))
   spacyr::spacy_finalize()
 
   if(algorithm == "POSnoise"){
@@ -32,7 +33,9 @@ contentmask <- function(corpus, model = "en_core_web_sm", algorithm = "POSnoise"
 
     parsed.corpus |>
       dplyr::mutate(token = tolower(token)) |>
-      dplyr::mutate(pos = dplyr::case_when(pos == "NOUN" ~ "N",
+      dplyr::mutate(pos = dplyr::case_when(like_email == T ~ "N",
+                                           like_url == T ~ "N",
+                                           pos == "NOUN" ~ "N",
                                            pos == "PROPN" ~ "P",
                                            pos == "VERB" ~ "V",
                                            pos == "ADJ" ~ "J",
