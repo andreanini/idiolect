@@ -1,4 +1,4 @@
-overlap <- function(m1, m2){
+minmax_overlap <- function(m1, m2){
 
   m <- rbind(m1, m2)
 
@@ -36,16 +36,16 @@ important_features <- function(q, candidate, impostors){
 
   }
 
-  cand.overlap <- overlap(q, candidate)
+  cand.overlap <- minmax_overlap(q, candidate)
 
   imp.means <- quanteda::colMeans(impostors)
   imp.matrix <- quanteda::as.dfm(t(as.matrix(imp.means)))
 
-  imp.overlap <- overlap(q, imp.matrix)
+  imp.overlap <- minmax_overlap(q, imp.matrix)
 
   odds <- cand.overlap/imp.overlap
 
-  important.features <- odds[is.na(odds) == F & odds != 0]
+  important.features <- odds[is.na(odds) == F & odds != 0] |> sort(decreasing = T)
 
   return(important.features)
 

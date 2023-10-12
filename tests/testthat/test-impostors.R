@@ -16,7 +16,7 @@ test_that("RBI works", {
                                      quanteda::docnames(d) != "Larry.campbell" &
                                      texttype == "known")
 
-  score_T = impostors(qs, candidates, cand.imps, algorithm = "RBI", k = 100)
+  score_T = impostors(qs, candidates, cand.imps, algorithm = "RBI", k = 100) |> suppressWarnings()
 
   testthat::expect_equal(score_T[1, 4], 1, tolerance = 0.05)
   testthat::expect_equal(score_T[2, 4], 0.1, tolerance = 0.1)
