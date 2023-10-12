@@ -32,7 +32,7 @@ vectorize(
 
 \item{n}{The order or size of the n-grams being extracted. Default is 5.}
 
-\item{weighting}{The type of weighting to use, "rel" for relative frequencies, "tf-idf", or "boolean".}
+\item{weighting}{The type of weighting to use, "rel" for relative frequencies, "tf-idf".}
 
 \item{trim}{A logical value. If TRUE (default) then only the most frequent tokens are kept.}
 

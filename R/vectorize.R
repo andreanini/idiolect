@@ -11,7 +11,7 @@
 #' @param remove_numbers A logical value. TRUE (default) removes numbers
 #' @param lowercase A logical value. TRUE (default) transforms all tokens to lower case.
 #' @param n The order or size of the n-grams being extracted. Default is 5.
-#' @param weighting The type of weighting to use, "rel" for relative frequencies, "tf-idf", or "boolean".
+#' @param weighting The type of weighting to use, "rel" for relative frequencies, "tf-idf".
 #' @param trim A logical value. If TRUE (default) then only the most frequent tokens are kept.
 #' @param threshold A numeric value indicating how many most frequent tokens to keep. The default is 1500.
 #'
@@ -66,12 +66,6 @@ vectorize = function(input, tokens = "character", remove_punct = F, remove_symbo
   if(weighting == "rel"){
 
     d.f = quanteda::dfm_weight(d, scheme = "prop")
-
-  }
-
-  if(weighting == "boolean"){
-
-    d.f = quanteda::dfm_weight(d, scheme = "boolean")
 
   }
 
