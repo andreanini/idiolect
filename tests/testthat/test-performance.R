@@ -2,7 +2,9 @@ test_that("performance evaluation works", {
 
   res = readRDS(testthat::test_path("data", "res.rds"))
 
-  only.training = performance(res)
+  results = performance(res)
+
+  only.training <- results$evaluation
 
   testthat::expect_equal(only.training[1, 8], 0.84, tolerance = 0.01)
 
@@ -14,7 +16,9 @@ test_that("performance evaluation works", {
   training = rbind(same[1:35,], diff[1:35,])
   test = rbind(same[35:48,], diff[35:48,])
 
-  train.test.perf = performance(training, test)
+  results = performance(training, test)
+
+  train.test.perf <- results$evaluation
 
   testthat::expect_equal(train.test.perf[1, 8], 0.785, tolerance = 0.01)
 

@@ -35,12 +35,14 @@ leave_one_out_llr = function(df){
 #' @param training The data frame with the results to evaluate, typically the output of an authorship verification function, such as [impostors()]. If only training is present then the function will perform a leave-one-out cross-validation.
 #' @param test Optional data frame of results. If present then a calibration model is extracted from training and its performance is evaluated on this data set.
 #'
-#' @return The function returns a data frame with performance statistics, including the C_llr. The binary classification statistics are all calculated considering a Log-Likelihood Ratio score of 0 as a threshold.
+#' @return The function returns a list containing a data frame with performance statistics, including the C_llr, and a ROC object that can be used to make a tippet plot using the `tippet.plot()` function from `ROC`. The binary classification statistics are all calculated considering a Log-Likelihood Ratio score of 0 as a threshold.
 #' @export
 #'
 #' @examples
 #' results <- data.frame(score = c(0.5, 0.2, 0.8, 0.01), target = c(TRUE, FALSE, TRUE, FALSE))
-#' performance(results)
+#' perf <- performance(results)
+#' perf$evaluation
+#' ROC::tippet.plot(perf$roc)
 performance = function(training, test = NULL){
 
   if(is.null(test)){
@@ -50,13 +52,17 @@ performance = function(training, test = NULL){
     res.llr |>
       dplyr::select(llr, target) |>
       dplyr::rename(score = llr) |>
-      ROC::roc() |>
+      ROC::roc() -> roc.object
+
+    roc.object |>
       ROC::summary.roc() -> roc.res
 
     res.llr |>
       dplyr::mutate(predicted = dplyr::if_else(llr > 0, T, F)) -> res.res
 
-    cm = caret::confusionMatrix(as.factor(res.res$predicted), as.factor(res.res$target), positive = "TRUE")
+    cm = caret::confusionMatrix(as.factor(res.res$predicted),
+                                as.factor(res.res$target),
+                                positive = "TRUE")
 
   }else{
 
@@ -67,13 +73,17 @@ performance = function(training, test = NULL){
     res.llr |>
       dplyr::select(llr, target) |>
       dplyr::rename(score = llr) |>
-      ROC::roc() |>
+      ROC::roc() -> roc.object
+
+    roc.object |>
       ROC::summary.roc() -> roc.res
 
     res.llr |>
       dplyr::mutate(predicted = dplyr::if_else(llr > 0, T, F)) -> res.res
 
-    cm = caret::confusionMatrix(as.factor(res.res$predicted), as.factor(res.res$target), positive = "TRUE")
+    cm = caret::confusionMatrix(as.factor(res.res$predicted),
+                                as.factor(res.res$target),
+                                positive = "TRUE")
 
   }
 
@@ -94,6 +104,8 @@ performance = function(training, test = NULL){
   evaluation.res[1, "FP"] = cm$table[2,1]
   evaluation.res[1, "TN"] = cm$table[1,1]
 
-  return(evaluation.res)
+  result.list <- list(evaluation = evaluation.res, roc = roc.object)
+
+  return(result.list)
 
 }
