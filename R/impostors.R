@@ -1,3 +1,41 @@
+minmax_overlap <- function(m1, m2){
+
+  m <- rbind(m1, m2)
+
+  mins <- apply(m, 2, min)
+  maxs <- apply(m, 2, max)
+
+  ratios <- mins/maxs
+
+  return(ratios)
+
+}
+important_features <- function(q, candidate, impostors){
+
+  important.features = c()
+
+  for(i in 1:nrow(candidate)){
+
+    cand.overlap <- minmax_overlap(q, candidate[i,])
+
+    imp.means <- quanteda::colMeans(impostors)
+    imp.matrix <- quanteda::as.dfm(t(as.matrix(imp.means)))
+
+    imp.overlap <- minmax_overlap(q, imp.matrix)
+
+    odds <- cand.overlap/imp.overlap
+
+    temp <- odds[is.na(odds) == F & odds != 0]
+
+    important.features <- c(important.features, temp)
+
+  }
+
+  final.features <- important.features |> names() |> unique()
+
+  return(final.features)
+
+}
 RBI <- function(x, qs, candidates, cand.imps, k){
 
   q.name = as.character(x["q"])
@@ -9,6 +47,7 @@ RBI <- function(x, qs, candidates, cand.imps, k){
   r = k/5
   r.imps = k/10
   score.sum = 0
+  feats <- c()
 
   if(k >= nrow(cand.imps)){
 
@@ -54,6 +93,8 @@ RBI <- function(x, qs, candidates, cand.imps, k){
 
     }
 
+    feats <- c(feats, important_features(q, cons.k, cons.imps))
+
     score.sum = score.sum + score
 
   }
@@ -75,6 +116,7 @@ RBI <- function(x, qs, candidates, cand.imps, k){
   }
 
   results[1,"score"] = final.score
+  results[1, "features"] = paste(feats, collapse = "|")
 
   return(results)
 
@@ -236,7 +278,7 @@ IM <- function(x, qs, candidates, cand.imps, q.imps, m, n){
 #' @param n The *n* parameter for the IM algorithm. Not used by other algorithms. The default is 25.
 #'
 #' @return The function will test all possible combinations of q texts and candidate authors and return a
-#' data frame containing the score ranging from 0 to 1 representing the degree of confidence that the candidate is the author of the Q text. The data frame contains a column called "target" with a logical value which is TRUE if the author of the Q text is the candidate and FALSE otherwise.
+#' data frame containing the score ranging from 0 to 1 representing the degree of confidence that the candidate is the author of the Q text. The data frame contains a column called "target" with a logical value which is TRUE if the author of the Q text is the candidate and FALSE otherwise. If the RBI algorithm is selected then the data frame will also contain a column with the features that are likely to have had an impact on the score.
 #' @export
 #'
 #' @examples
