@@ -7,6 +7,6 @@ test_that("calibration works", {
 
   results = calibrate_LLR(calibration.data, fake.q)
 
-  expect_equal(results$calibrated.data$llr, 0.039982208)
+  expect_equal(results$llr, 0.039982208)
 
 })
