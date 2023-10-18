@@ -15,7 +15,7 @@ minmax_overlap <- function(m1, m2){
 #' This function shows the most important features used by any of the impostors algorithms that adopt the minmax distance.
 #'
 #' @param q This is one `quanteda` dfm row corresponding to the Q text.
-#' @param candidate This is one `quanteda` dfm row corresponding to the candidate text(s).
+#' @param candidate This is the `quanteda` dfm corresponding to the candidate text(s).
 #' @param impostors This is the `quanteda` dfm with the impostors' data.
 #'
 #' @return One named vector of features that belong to the overlap between the Q text and the candidate containing the ratio between candidate and impostors
@@ -30,23 +30,27 @@ minmax_overlap <- function(m1, m2){
 #' important_features(d[1,], d[2,], d[3,])
 important_features <- function(q, candidate, impostors){
 
-  if(nrow(candidate) > 1){
+  important.features = c()
 
-    stop("The important_features function only accepts one row for the candidate author.")
+  for(i in 1:nrow(candidate)){
+
+    cand.overlap <- minmax_overlap(q, candidate[i,])
+
+    imp.means <- quanteda::colMeans(impostors)
+    imp.matrix <- quanteda::as.dfm(t(as.matrix(imp.means)))
+
+    imp.overlap <- minmax_overlap(q, imp.matrix)
+
+    odds <- cand.overlap/imp.overlap
+
+    temp <- odds[is.na(odds) == F & odds != 0]
+
+    important.features <- c(important.features, temp)
 
   }
 
-  cand.overlap <- minmax_overlap(q, candidate)
+  final.features <- sort(important.features, decreasing = T)
 
-  imp.means <- quanteda::colMeans(impostors)
-  imp.matrix <- quanteda::as.dfm(t(as.matrix(imp.means)))
-
-  imp.overlap <- minmax_overlap(q, imp.matrix)
-
-  odds <- cand.overlap/imp.overlap
-
-  important.features <- odds[is.na(odds) == F & odds != 0] |> sort(decreasing = T)
-
-  return(important.features)
+  return(final.features)
 
 }

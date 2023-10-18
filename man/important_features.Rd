@@ -9,7 +9,7 @@ important_features(q, candidate, impostors)
 \arguments{
 \item{q}{This is one \code{quanteda} dfm row corresponding to the Q text.}
 
-\item{candidate}{This is one \code{quanteda} dfm row corresponding to the candidate text(s).}
+\item{candidate}{This is the \code{quanteda} dfm corresponding to the candidate text(s).}
 
 \item{impostors}{This is the \code{quanteda} dfm with the impostors' data.}
 }
