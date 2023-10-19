@@ -17,7 +17,7 @@ impostors(
 )
 }
 \arguments{
-\item{qs}{The \code{quanteda} dfm containing the disputed texts to test.}
+\item{qs}{The \code{quanteda} dfm containing the disputed texts to test. With the exception of the "IM" algorithm, this data frame can contain the same texts that are also in the candidate data frame, for example, for leave-one-out testing.}
 
 \item{candidates}{The \code{quanteda} dfm containing the data belonging to the candidate authors to test.}
 

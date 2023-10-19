@@ -74,7 +74,7 @@ test_that("IM works", {
 
   testthat::expect_gt(score_T[1, 4], 0.8)
   testthat::expect_equal(score_T[2, 4], 0, tolerance = 0.01)
-  testthat::expect_equal(score_T[3, 4], 0.0, tolerance = 0.01)
+  testthat::expect_equal(score_T[3, 4], 0.0, tolerance = 0.05)
   testthat::expect_gt(score_T[4, 4], 0.1)
 
 })

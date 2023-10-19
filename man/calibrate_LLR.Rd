@@ -7,7 +7,7 @@
 calibrate_LLR(calibration.dataset, dataset)
 }
 \arguments{
-\item{calibration.dataset}{A data frame containing only one score to calibrate. This is the result of a function like \code{\link[=impostors]{impostors()}}.}
+\item{calibration.dataset}{A data frame containing the calibration data, typically the output of an authorship analysis function like \code{\link[=impostors]{impostors()}}.}
 
 \item{dataset}{A data frame containing only one row with the score that will be calibrated into a LLR using the calibration data. This is typically the result of applying a function like \code{\link[=impostors]{impostors()}} to the Q text.}
 }

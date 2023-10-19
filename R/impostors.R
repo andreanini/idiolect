@@ -42,7 +42,8 @@ RBI <- function(x, qs, candidates, cand.imps, k){
   q = quanteda::dfm_subset(qs, quanteda::docnames(qs) == q.name)
 
   candidate.name = as.character(x["candidate"])
-  candidate = quanteda::dfm_subset(candidates, author == candidate.name)
+  candidate = quanteda::dfm_subset(candidates, author == candidate.name &
+                                               quanteda::docnames(candidates) != q.name)
 
   r = k/5
   r.imps = k/10
@@ -100,6 +101,7 @@ RBI <- function(x, qs, candidates, cand.imps, k){
   }
 
   final.score = round(score.sum/nrow(candidate), 3)
+  final.feats <- unique(feats)
 
   results = data.frame()
   results[1,"candidate"] = quanteda::docvars(candidate[1,], "author")
@@ -116,7 +118,7 @@ RBI <- function(x, qs, candidates, cand.imps, k){
   }
 
   results[1,"score"] = final.score
-  results[1, "features"] = paste(feats, collapse = "|")
+  results[1, "features"] = paste(final.feats, collapse = "|")
 
   return(results)
 
@@ -127,7 +129,8 @@ KGI <- function(x, qs, candidates, cand.imps){
   q = quanteda::dfm_subset(qs, quanteda::docnames(qs) == q.name)
 
   candidate.name = as.character(x["candidate"])
-  candidate = quanteda::dfm_subset(candidates, author == candidate.name)
+  candidate = quanteda::dfm_subset(candidates, author == candidate.name &
+                                               quanteda::docnames(candidates) != q.name)
 
   score = 0
   r.imps = nrow(cand.imps)/2
@@ -189,7 +192,8 @@ IM <- function(x, qs, candidates, cand.imps, q.imps, m, n){
   q = quanteda::dfm_subset(qs, quanteda::docnames(qs) == q.name)
 
   candidate.name = as.character(x["candidate"])
-  candidate = quanteda::dfm_subset(candidates, author == candidate.name)
+  candidate = quanteda::dfm_subset(candidates, author == candidate.name &
+                                               quanteda::docnames(candidates) != q.name)
 
   score_a = 0
 
@@ -271,7 +275,7 @@ IM <- function(x, qs, candidates, cand.imps, q.imps, m, n){
 #' @param algorithm A string specifying which impostors algorithm to use, either "RBI", "KGI", or "IM".
 #' @param k The *k* parameters for the RBI algorithm. Not used by other algorithms. The default is 300.
 #' @param m The *m* parameter for the IM algorithm. Not used by other algorithms. The default is 100.
-#' @param qs The `quanteda` dfm containing the disputed texts to test.
+#' @param qs The `quanteda` dfm containing the disputed texts to test. With the exception of the "IM" algorithm, this data frame can contain the same texts that are also in the candidate data frame, for example, for leave-one-out testing.
 #' @param cand.imps The `quanteda` dfm containing the impostors (or only the impostors for the candidate data if the algorithm is IM)
 #' @param q.imps The `quanteda` dfm containing the impostors for the disputed text (only applicable for the IM algorithm)
 #' @param cores The number of cores to use for parallel processing (the default is one).
