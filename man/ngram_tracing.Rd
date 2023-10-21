@@ -19,7 +19,7 @@ ngram_tracing(qs, candidates, coefficient, features = F, cores = NULL)
 }
 \value{
 The function will test all possible combinations of q texts and candidate authors and return a
-data frame containing the value of the similarity coefficient selected called 'score' and an optional column with the overlapping features. The data frame contains a column called 'target' with a logical value which is TRUE if the author of the Q text is the candidate and FALSE otherwise.
+data frame containing the value of the similarity coefficient selected called 'score' and an optional column with the overlapping features that only occur in the Q and candidate considered and in no other Qs (ordered by length if the n-gram is of variable length). The data frame contains a column called 'target' with a logical value which is TRUE if the author of the Q text is the candidate and FALSE otherwise.
 }
 \description{
 This function performs n-gram tracing.

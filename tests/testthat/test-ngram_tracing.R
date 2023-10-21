@@ -1,4 +1,4 @@
-test_that("multiplication works", {
+test_that("ngram tracing works", {
 
   corpus = readRDS(testthat::test_path("data", "enron.rds"))
 

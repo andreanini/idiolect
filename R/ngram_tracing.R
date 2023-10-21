@@ -1,14 +1,39 @@
-overlap <- function(m1, m2){
+overlap <- function(m1, m2, rest.m){
 
   m <- rbind(m1, m2)
 
-  overlap.matrix <- quanteda::dfm_trim(m, min_docfreq = 2)
+  overlap <- quanteda::dfm_trim(m, min_docfreq = 2) |> quanteda::featnames()
 
-  overlap <- quanteda::featnames(overlap.matrix) |>
-    sort() |>
-    paste(collapse = "|")
+  to.remove <- quanteda::dfm_trim(rest.m, min_docfreq = 1) |> quanteda::featnames()
 
-  return(overlap)
+  unique.overlap <- overlap[!(overlap %in% to.remove)]
+
+
+  if(stringr::str_detect(paste(unique.overlap, collapse = " "), "_")){
+
+    # this means it's word n-grams
+
+    unique.overlap |>
+      as.data.frame() |>
+      dplyr::mutate(length = stringr::str_count(`unique.overlap`, "_")) |>
+      dplyr::arrange(dplyr::desc(length)) |>
+      dplyr::pull(`unique.overlap`) |>
+      paste(collapse = "|") -> output
+
+  }else{
+
+    # this is for char n-grams
+
+    unique.overlap |>
+      as.data.frame() |>
+      dplyr::mutate(length = stringr::str_count(`unique.overlap`, stringr::regex("."))) |>
+      dplyr::arrange(dplyr::desc(length)) |>
+      dplyr::pull(`unique.overlap`) |>
+      paste(collapse = "|") -> output
+
+  }
+
+  return(output)
 
 }
 similarity <- function(x, qs, candidates, coefficient, features){
@@ -22,6 +47,23 @@ similarity <- function(x, qs, candidates, coefficient, features){
                              quanteda::docnames(candidates) != q.name) |>
     quanteda::dfm_group(author) |>
     quanteda::dfm_weight(scheme = "boolean", force = T)
+
+  # this condition is needed in case there is only one Q text
+  if(nrow(qs) > 1){
+
+    rest <- quanteda::dfm_subset(qs, quanteda::docnames(qs) != q.name &
+                                   !(quanteda::docnames(qs) %in% quanteda::docnames(candidates)))
+    quanteda::docvars(rest, "author") <- "rest"
+    rest.m <- quanteda::dfm_group(rest, author) |> quanteda::dfm_weight("boolean", force = T)
+
+  }else{
+
+    rest.m <- matrix(c(0, 0)) |> quanteda::as.dfm()
+
+  }
+
+
+
 
   if(coefficient == "Phi"){
 
@@ -77,7 +119,7 @@ similarity <- function(x, qs, candidates, coefficient, features){
 
   if(features == T){
 
-    results[1, "overlap"] = overlap(q, k)
+    results[1, "overlap"] = overlap(q, k, rest.m)
 
   }
 
@@ -95,7 +137,7 @@ similarity <- function(x, qs, candidates, coefficient, features){
 #' @param features Logical with default FALSE. If TRUE then the result table will contain the features in the overlap.
 #'
 #' @return The function will test all possible combinations of q texts and candidate authors and return a
-#' data frame containing the value of the similarity coefficient selected called 'score' and an optional column with the overlapping features. The data frame contains a column called 'target' with a logical value which is TRUE if the author of the Q text is the candidate and FALSE otherwise.
+#' data frame containing the value of the similarity coefficient selected called 'score' and an optional column with the overlapping features that only occur in the Q and candidate considered and in no other Qs (ordered by length if the n-gram is of variable length). The data frame contains a column called 'target' with a logical value which is TRUE if the author of the Q text is the candidate and FALSE otherwise.
 #' @export
 #'
 #' @examples

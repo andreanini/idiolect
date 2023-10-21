@@ -17,7 +17,8 @@ Imports:
     quanteda.textstats,
     readtext,
     ROC (>= 0.11),
-    spacyr
+    spacyr,
+    stringr
 RoxygenNote: 7.2.3
 Roxygen: list(markdown = TRUE)
 Suggests: 
