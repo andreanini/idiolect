@@ -1,7 +1,7 @@
 # content masking works
 
     Code
-      contentmask(enron.small, algorithm = "POSnoise")
+      contentmask(enron.small, algorithm = "POSnoise", replace_non_ascii = F)
     Message <simpleMessage>
       successfully initialized (spaCy Version: 3.7.1, language model: en_core_web_sm)
     Output

@@ -4,7 +4,12 @@
 \alias{contentmask}
 \title{Content masking}
 \usage{
-contentmask(corpus, model = "en_core_web_sm", algorithm = "POSnoise")
+contentmask(
+  corpus,
+  model = "en_core_web_sm",
+  algorithm = "POSnoise",
+  replace_non_ascii
+)
 }
 \arguments{
 \item{corpus}{A \code{quanteda} corpus object, typically the output of the \code{\link[=create_corpus]{create_corpus()}} function.}
@@ -12,6 +17,8 @@ contentmask(corpus, model = "en_core_web_sm", algorithm = "POSnoise")
 \item{model}{The spacy model to use. The default is en_core_web_sm.}
 
 \item{algorithm}{A string, either "POSnoise" (default) or "frames".}
+
+\item{replace_non_ascii}{A boolean value. If this is TRUE then All non-ASCII characters are either substituted to ASCII ones or removed using the function \code{\link[textclean:replace_non_ascii]{textclean::replace_non_ascii()}}. This operation also removes all emojis.}
 }
 \value{
 A \code{quanteda} corpus object only containing functional tokens, depending on the algorithm chosen. The corpus contains the same docvars as the input. Email addresses or URLs are treated like nouns.
@@ -25,5 +32,5 @@ References to algorithms to appear here.
 \examples{
 text <- "The elegant cat was forcefully put on the chair. cat@pets.com; http://quanteda.io/"
 toy.corpus <- quanteda::corpus(text)
-contentmask(toy.corpus, algorithm = "POSnoise")
+contentmask(toy.corpus, algorithm = "POSnoise", replace_non_ascii = FALSE)
 }

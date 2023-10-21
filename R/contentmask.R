@@ -7,6 +7,7 @@
 #' @param corpus A `quanteda` corpus object, typically the output of the [create_corpus()] function.
 #' @param algorithm A string, either "POSnoise" (default) or "frames".
 #' @param model The spacy model to use. The default is en_core_web_sm.
+#' @param replace_non_ascii A boolean value. If this is TRUE then All non-ASCII characters are either substituted to ASCII ones or removed using the function [textclean::replace_non_ascii()]. This operation also removes all emojis.
 #'
 #' @return A `quanteda` corpus object only containing functional tokens, depending on the algorithm chosen. The corpus contains the same docvars as the input. Email addresses or URLs are treated like nouns.
 #' @export
@@ -14,16 +15,32 @@
 #' @examples
 #' text <- "The elegant cat was forcefully put on the chair. cat@pets.com; http://quanteda.io/"
 #' toy.corpus <- quanteda::corpus(text)
-#' contentmask(toy.corpus, algorithm = "POSnoise")
-contentmask <- function(corpus, model = "en_core_web_sm", algorithm = "POSnoise"){
+#' contentmask(toy.corpus, algorithm = "POSnoise", replace_non_ascii = FALSE)
+contentmask <- function(corpus, model = "en_core_web_sm", algorithm = "POSnoise", replace_non_ascii){
+
+
+  if(replace_non_ascii == T){
+
+    meta.p <- quanteda::docvars(corpus)
+
+    c.c <- textclean::replace_non_ascii(corpus) |> quanteda::corpus()
+
+    docvars(c.c) <- meta.p
+
+  }else{
+
+    c.c <- corpus
+
+  }
 
   # this removes potential empty documents in the corpus, which are anyway removed by spacy
-  corpus <- quanteda::corpus_subset(corpus, quanteda::ntoken(corpus) > 0)
+  c <- quanteda::corpus_subset(c.c, quanteda::ntoken(c.c) > 0)
 
-  meta <- quanteda::docvars(corpus)
+  meta <- quanteda::docvars(c)
+
 
   spacyr::spacy_initialize(model = model, entity = F)
-  parsed.corpus <- spacyr::spacy_parse(corpus, lemma = F, entity = F,
+  parsed.corpus <- spacyr::spacy_parse(c, lemma = F, entity = F,
                                        additional_attributes = c("like_url", "like_email"))
   spacyr::spacy_finalize()
 
