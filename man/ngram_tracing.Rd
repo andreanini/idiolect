@@ -9,7 +9,7 @@ ngram_tracing(qs, candidates, coefficient, features = F, cores = NULL)
 \arguments{
 \item{qs}{The \code{quanteda} dfm containing the disputed texts to test.}
 
-\item{candidates}{The \code{quanteda} dfm containing the data belonging to the candidate authors to test. This dfm can contain multiple samples but these will then be concatenated into one profile.}
+\item{candidates}{The \code{quanteda} dfm containing the data belonging to the candidate authors to test. This dfm can contain multiple samples but these will then be concatenated into one profile. This dfm can potentially contain the same rows as in q (e.g. for leave-one-out testing) as these are removed when identical.}
 
 \item{coefficient}{The coefficient to use to compare texts.}
 
@@ -35,6 +35,7 @@ docvars(k.dfm, 'author') <- 'K'
 q <- 'The dog sat on the chair?'
 q.dfm <- dfm(tokens(q))
 docvars(q.dfm, 'author') <- 'Q'
+docnames(q.dfm) <- 'Qtext' # document names should be distinct across all dfms used as input
 
 ngram_tracing(q.dfm, k.dfm, 'Phi')
 }

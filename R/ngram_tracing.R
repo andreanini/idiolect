@@ -18,7 +18,8 @@ similarity <- function(x, qs, candidates, coefficient, features){
     quanteda::dfm_weight(scheme = "boolean", force = T)
 
   candidate.name = as.character(x["candidate"])
-  k = quanteda::dfm_subset(candidates, author == candidate.name) |>
+  k = quanteda::dfm_subset(candidates, author == candidate.name &
+                             quanteda::docnames(candidates) != q.name) |>
     quanteda::dfm_group(author) |>
     quanteda::dfm_weight(scheme = "boolean", force = T)
 
@@ -88,7 +89,7 @@ similarity <- function(x, qs, candidates, coefficient, features){
 #' This function performs n-gram tracing.
 #'
 #' @param qs The `quanteda` dfm containing the disputed texts to test.
-#' @param candidates The `quanteda` dfm containing the data belonging to the candidate authors to test. This dfm can contain multiple samples but these will then be concatenated into one profile.
+#' @param candidates The `quanteda` dfm containing the data belonging to the candidate authors to test. This dfm can contain multiple samples but these will then be concatenated into one profile. This dfm can potentially contain the same rows as in q (e.g. for leave-one-out testing) as these are removed when identical.
 #' @param coefficient The coefficient to use to compare texts.
 #' @param cores The number of cores to use for parallel processing (the default is one).
 #' @param features Logical with default FALSE. If TRUE then the result table will contain the features in the overlap.
@@ -108,6 +109,7 @@ similarity <- function(x, qs, candidates, coefficient, features){
 #' q <- 'The dog sat on the chair?'
 #' q.dfm <- dfm(tokens(q))
 #' docvars(q.dfm, 'author') <- 'Q'
+#' docnames(q.dfm) <- 'Qtext' # document names should be distinct across all dfms used as input
 #'
 #' ngram_tracing(q.dfm, k.dfm, 'Phi')
 ngram_tracing <- function(qs, candidates, coefficient, features = F, cores = NULL){
