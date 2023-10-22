@@ -21,11 +21,14 @@ contentmask <- function(corpus, model = "en_core_web_sm", algorithm = "POSnoise"
 
   if(replace_non_ascii == T){
 
-    meta.p <- quanteda::docvars(corpus)
+    meta <- quanteda::docvars(corpus)
+    names <- quanteda::docnames(corpus)
 
     c.c <- textclean::replace_non_ascii(corpus) |> quanteda::corpus()
 
-    docvars(c.c) <- meta.p
+    quanteda::docvars(c.c) <- meta
+    quanteda::docnames(c.c) <- names
+
 
   }else{
 
@@ -37,7 +40,7 @@ contentmask <- function(corpus, model = "en_core_web_sm", algorithm = "POSnoise"
   c <- quanteda::corpus_subset(c.c, quanteda::ntoken(c.c) > 0)
 
   meta <- quanteda::docvars(c)
-
+  names <- quanteda::docnames(c)
 
   spacyr::spacy_initialize(model = model, entity = F)
   parsed.corpus <- spacyr::spacy_parse(c, lemma = F, entity = F,
@@ -96,6 +99,7 @@ contentmask <- function(corpus, model = "en_core_web_sm", algorithm = "POSnoise"
   }
 
   quanteda::docvars(x.corp) <- meta
+  quanteda::docnames(x.corp) <- names
 
   return(x.corp)
 
