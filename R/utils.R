@@ -23,3 +23,16 @@ minmax <- function(m, q){
   return(ranking)
 
 }
+phi <- function(m, q){
+
+  bm <- quanteda::dfm_weight(m, "boolean", force = T)
+  bq <- quanteda::dfm_weight(q, "boolean", force = T)
+
+  score <- quanteda.textstats::textstat_simil(bm, bq, method = "correlation") |>
+    suppressMessages()
+
+  ranking <- rank(-as.matrix(score)[,1], ties.method = "max") |>  sort()
+
+  return(ranking)
+
+}

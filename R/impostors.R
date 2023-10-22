@@ -62,7 +62,7 @@ RBI <- function(x, qs, candidates, cand.imps, k){
 
     if(k < nrow(cand.imps)){
 
-      cons.imps = most_similar(cons.k, cand.imps, k)
+      cons.imps = most_similar(cons.k, cand.imps, "minmax", k)
 
     }else{
 
@@ -198,7 +198,7 @@ IM <- function(x, qs, candidates, cand.imps, q.imps, m, n){
   score_a = 0
 
   candidate |>
-    most_similar(cand.imps, m) |>
+    most_similar(cand.imps, "minmax", m) |>
     quanteda::dfm_sample(n) -> cons.imps.f
 
   for (i in 1:100) {
@@ -223,7 +223,7 @@ IM <- function(x, qs, candidates, cand.imps, q.imps, m, n){
   score_b = 0
 
   q |>
-    most_similar(q.imps, m) |>
+    most_similar(q.imps, "minmax", m) |>
     quanteda::dfm_sample(n) -> cons.imps.f
 
   for (i in 1:100) {
