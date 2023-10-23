@@ -93,8 +93,8 @@ performance = function(training, test = NULL){
   evaluation.res[1, "EER"] = roc.res$eer
   evaluation.res[1, "Mean TRUE LLR"] = roc.res$mt
   evaluation.res[1, "Mean FALSE LLR"] = roc.res$mn
-  evaluation.res[1, "TRUE cases"] = roc.res$nt
-  evaluation.res[1, "FALSE cases"] = roc.res$nn
+  evaluation.res[1, "TRUE trials"] = roc.res$nt
+  evaluation.res[1, "FALSE trials"] = roc.res$nn
   evaluation.res[1, "Accuracy"] = as.numeric(cm$overall["Accuracy"])
   evaluation.res[1, "Precision"] = as.numeric(cm$byClass["Precision"])
   evaluation.res[1, "Recall"] = as.numeric(cm$byClass["Recall"])
