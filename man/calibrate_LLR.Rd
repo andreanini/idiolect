@@ -9,10 +9,10 @@ calibrate_LLR(calibration.dataset, dataset)
 \arguments{
 \item{calibration.dataset}{A data frame containing the calibration data, typically the output of an authorship analysis function like \code{\link[=impostors]{impostors()}}.}
 
-\item{dataset}{A data frame containing only one row with the score that will be calibrated into a LLR using the calibration data. This is typically the result of applying a function like \code{\link[=impostors]{impostors()}} to the Q text.}
+\item{dataset}{A data frame containing the scores that will be calibrated into LLRs using the calibration data. This is typically the result of applying a function like \code{\link[=impostors]{impostors()}} to the Q texts.}
 }
 \value{
-The function returns a list containing two data frames: a first data frame with the LLR, as well as the verbal label according to Marquis et al (2016) and a verbal interpretation of the results; and a second data frame showing some hypothetical scenarios with prior probabilities/odds being turned into posterior probabilities/odds according to the likelihood ratio obtained.
+The function returns a data frame with the LLRs, as well as the verbal label according to Marquis et al (2016) and a verbal interpretation of the results.
 }
 \description{
 This function is used to transform the scores returned by a verification function into a Log-Likelihood Ratio (LLR).
@@ -22,6 +22,6 @@ More details here.
 }
 \examples{
 calib <- data.frame(score = c(0.5, 0.2, 0.8, 0.01, 0.6), target = c(TRUE, FALSE, TRUE, FALSE, TRUE))
-q <- data.frame(score = c(0.35))
+q <- data.frame(score = c(0.6, 0.002))
 calibrate_LLR(calib, q)
 }

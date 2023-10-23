@@ -5,22 +5,16 @@
 #' More details here.
 #'
 #' @param calibration.dataset A data frame containing the calibration data, typically the output of an authorship analysis function like [impostors()].
-#' @param dataset A data frame containing only one row with the score that will be calibrated into a LLR using the calibration data. This is typically the result of applying a function like [impostors()] to the Q text.
+#' @param dataset A data frame containing the scores that will be calibrated into LLRs using the calibration data. This is typically the result of applying a function like [impostors()] to the Q texts.
 #'
-#' @return The function returns a list containing two data frames: a first data frame with the LLR, as well as the verbal label according to Marquis et al (2016) and a verbal interpretation of the results; and a second data frame showing some hypothetical scenarios with prior probabilities/odds being turned into posterior probabilities/odds according to the likelihood ratio obtained.
+#' @return The function returns a data frame with the LLRs, as well as the verbal label according to Marquis et al (2016) and a verbal interpretation of the results.
 #' @export
 #'
 #' @examples
 #'calib <- data.frame(score = c(0.5, 0.2, 0.8, 0.01, 0.6), target = c(TRUE, FALSE, TRUE, FALSE, TRUE))
-#'q <- data.frame(score = c(0.35))
+#'q <- data.frame(score = c(0.6, 0.002))
 #'calibrate_LLR(calib, q)
 calibrate_LLR = function(calibration.dataset, dataset){
-
-  if(nrow(dataset) > 1){
-
-    stop("Only one row containing one score is accepted.")
-
-  }
 
   llr.table <- data.frame()
 
@@ -29,7 +23,7 @@ calibrate_LLR = function(calibration.dataset, dataset){
   LLR <- stats::predict(calibration.model, newdata = dataset)/log(10)
 
   dataset |>
-    dplyr::mutate(llr = LLR[[1]],
+    dplyr::mutate(llr = LLR,
            Verbal = dplyr::case_when(llr > 4 ~ "Extremely strong support for Hp",
                                      llr <= 4 & llr >= 3 ~ "Very strong support for Hp",
                                      llr < 3 & llr >= 2 ~ "Strong support for Hp",

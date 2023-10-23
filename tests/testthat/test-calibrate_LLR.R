@@ -2,11 +2,11 @@ test_that("calibration works", {
 
   res = readRDS(testthat::test_path("data", "res.rds"))
 
-  fake.q = res[1,]
-  calibration.data = res[-1,]
+  fake.q = res[1:10,]
+  calibration.data = res[-c(1:10),]
 
   results = calibrate_LLR(calibration.data, fake.q)
 
-  expect_equal(results$llr, 0.039982208)
+  expect_snapshot(results)
 
 })
