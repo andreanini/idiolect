@@ -36,3 +36,13 @@ phi <- function(m, q){
   return(ranking)
 
 }
+cosine <- function(m, q){
+
+  score <- quanteda.textstats::textstat_simil(m, q, method = "cosine") |>
+    suppressMessages()
+
+  ranking <- rank(-as.matrix(score)[,1], ties.method = "max") |>  sort()
+
+  return(ranking)
+
+}

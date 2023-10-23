@@ -23,6 +23,14 @@ test_that("RBI works", {
   testthat::expect_equal(score_T[3, 4], 0.1, tolerance = 0.1)
   testthat::expect_equal(score_T[4, 4], 1, tolerance = 0.1)
 
+  score_T = impostors(qs, candidates, cand.imps, algorithm = "RBI", coefficient = "cosine",
+                      k = 100) |> suppressWarnings()
+
+  testthat::expect_equal(score_T[1, 4], 1, tolerance = 0.05)
+  testthat::expect_equal(score_T[2, 4], 0.1, tolerance = 0.1)
+  testthat::expect_equal(score_T[3, 4], 0.1, tolerance = 0.1)
+  testthat::expect_equal(score_T[4, 4], 1, tolerance = 0.1)
+
 })
 test_that("KGI works", {
 

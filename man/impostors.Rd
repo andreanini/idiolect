@@ -10,6 +10,7 @@ impostors(
   cand.imps,
   q.imps,
   algorithm = "RBI",
+  coefficient = "minmax",
   k = 300,
   m = 100,
   n = 25,
@@ -26,6 +27,8 @@ impostors(
 \item{q.imps}{The \code{quanteda} dfm containing the impostors for the disputed text (only applicable for the IM algorithm)}
 
 \item{algorithm}{A string specifying which impostors algorithm to use, either "RBI", "KGI", or "IM".}
+
+\item{coefficient}{A string indicating the coefficient to use, either "minmax" (default) or "cosine". This does not apply to the algorithm KGI, where the distance is "minmax".}
 
 \item{k}{The \emph{k} parameters for the RBI algorithm. Not used by other algorithms. The default is 300.}
 

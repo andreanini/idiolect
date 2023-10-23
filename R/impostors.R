@@ -36,7 +36,7 @@ important_features <- function(q, candidate, impostors){
   return(final.features[1:10])
 
 }
-RBI <- function(x, qs, candidates, cand.imps, k){
+RBI <- function(x, qs, candidates, cand.imps, coefficient, k){
 
   q.name = as.character(x["q"])
   q = quanteda::dfm_subset(qs, quanteda::docnames(qs) == q.name)
@@ -45,6 +45,7 @@ RBI <- function(x, qs, candidates, cand.imps, k){
   candidate = quanteda::dfm_subset(candidates, author == candidate.name &
                                                quanteda::docnames(candidates) != q.name)
 
+  f <- get(coefficient)
   r = k/5
   r.imps = k/10
   score.sum = 0
@@ -62,7 +63,7 @@ RBI <- function(x, qs, candidates, cand.imps, k){
 
     if(k < nrow(cand.imps)){
 
-      cons.imps = most_similar(cons.k, cand.imps, "minmax", k)
+      cons.imps = most_similar(cons.k, cand.imps, coefficient, k)
 
     }else{
 
@@ -86,7 +87,7 @@ RBI <- function(x, qs, candidates, cand.imps, k){
       #combining k and imps
       f.m = quanteda::dfm_match(rbind(cons.k, cons.imps.f), s)
 
-      ranking = minmax(f.m, f.q)
+      ranking = f(f.m, f.q)
 
       k.rank = ranking[quanteda::docnames(cons.k)] |>  as.numeric()
 
@@ -94,14 +95,14 @@ RBI <- function(x, qs, candidates, cand.imps, k){
 
     }
 
-    feats <- c(feats, important_features(q, cons.k, cons.imps))
+    #feats <- c(feats, important_features(q, cons.k, cons.imps))
 
     score.sum = score.sum + score
 
   }
 
   final.score = round(score.sum/nrow(candidate), 3)
-  final.feats <- unique(feats)
+  #final.feats <- unique(feats)
 
   results = data.frame()
   results[1,"candidate"] = quanteda::docvars(candidate[1,], "author")
@@ -118,7 +119,7 @@ RBI <- function(x, qs, candidates, cand.imps, k){
   }
 
   results[1,"score"] = final.score
-  results[1, "features"] = paste(final.feats, collapse = "|")
+  #results[1, "features"] = paste(final.feats, collapse = "|")
 
   return(results)
 
@@ -186,7 +187,7 @@ KGI <- function(x, qs, candidates, cand.imps){
   return(results)
 
 }
-IM <- function(x, qs, candidates, cand.imps, q.imps, m, n){
+IM <- function(x, qs, candidates, cand.imps, q.imps, coefficient, m, n){
 
   q.name = as.character(x["q"])
   q = quanteda::dfm_subset(qs, quanteda::docnames(qs) == q.name)
@@ -195,10 +196,12 @@ IM <- function(x, qs, candidates, cand.imps, q.imps, m, n){
   candidate = quanteda::dfm_subset(candidates, author == candidate.name &
                                                quanteda::docnames(candidates) != q.name)
 
+  f <- get(coefficient)
+
   score_a = 0
 
   candidate |>
-    most_similar(cand.imps, "minmax", m) |>
+    most_similar(cand.imps, coefficient, m) |>
     quanteda::dfm_sample(n) -> cons.imps.f
 
   for (i in 1:100) {
@@ -211,7 +214,7 @@ IM <- function(x, qs, candidates, cand.imps, q.imps, m, n){
     #combining k and imps
     f.m = quanteda::dfm_match(rbind(candidate, cons.imps.f), s)
 
-    ranking = minmax(f.m, f.q)
+    ranking = f(f.m, f.q)
 
     rank = ranking[quanteda::docnames(candidate)] |>  as.numeric()
 
@@ -223,7 +226,7 @@ IM <- function(x, qs, candidates, cand.imps, q.imps, m, n){
   score_b = 0
 
   q |>
-    most_similar(q.imps, "minmax", m) |>
+    most_similar(q.imps, coefficient, m) |>
     quanteda::dfm_sample(n) -> cons.imps.f
 
   for (i in 1:100) {
@@ -236,7 +239,7 @@ IM <- function(x, qs, candidates, cand.imps, q.imps, m, n){
     #combining q and imps
     f.m = quanteda::dfm_match(rbind(q, cons.imps.f), s)
 
-    ranking = minmax(f.m, f.k)
+    ranking = f(f.m, f.k)
 
     rank = ranking[quanteda::docnames(q)] |>  as.numeric()
 
@@ -280,6 +283,7 @@ IM <- function(x, qs, candidates, cand.imps, q.imps, m, n){
 #' @param q.imps The `quanteda` dfm containing the impostors for the disputed text (only applicable for the IM algorithm)
 #' @param cores The number of cores to use for parallel processing (the default is one).
 #' @param n The *n* parameter for the IM algorithm. Not used by other algorithms. The default is 25.
+#' @param coefficient A string indicating the coefficient to use, either "minmax" (default) or "cosine". This does not apply to the algorithm KGI, where the distance is "minmax".
 #'
 #' @return The function will test all possible combinations of q texts and candidate authors and return a
 #' data frame containing the score ranging from 0 to 1 representing the degree of confidence that the candidate is the author of the Q text. The data frame contains a column called "target" with a logical value which is TRUE if the author of the Q text is the candidate and FALSE otherwise. If the RBI algorithm is selected then the data frame will also contain a column with the features that are likely to have had an impact on the score.
@@ -308,7 +312,7 @@ IM <- function(x, qs, candidates, cand.imps, q.imps, m, n){
 #' q.dfm <- dfm_match(q.dfm, featnames(k.dfm))
 #'
 #' results <- impostors(q.dfm, k.dfm, imp.dfm, algorithm = "KGI")
-impostors = function(qs, candidates, cand.imps, q.imps, algorithm = "RBI", k = 300, m = 100, n = 25, cores = NULL){
+impostors = function(qs, candidates, cand.imps, q.imps, algorithm = "RBI", coefficient = "minmax", k = 300, m = 100, n = 25, cores = NULL){
 
   q.list <- rownames(qs)
   candidate.authors <- quanteda::docvars(candidates, "author") |> unique()
@@ -319,7 +323,7 @@ impostors = function(qs, candidates, cand.imps, q.imps, algorithm = "RBI", k = 3
 
   if(algorithm == "RBI"){
 
-    results = pbapply::pbapply(tests, 1, RBI, qs, candidates, cand.imps, k, cl = cores)
+    results = pbapply::pbapply(tests, 1, RBI, qs, candidates, cand.imps, coefficient, k, cl = cores)
 
   }
 
@@ -337,7 +341,8 @@ impostors = function(qs, candidates, cand.imps, q.imps, algorithm = "RBI", k = 3
 
     }
 
-    results = pbapply::pbapply(tests, 1, IM, qs, candidates, cand.imps, q.imps, m, n, cl = cores)
+    results = pbapply::pbapply(tests, 1, IM, qs, candidates, cand.imps, q.imps, coefficient, m, n,
+                               cl = cores)
 
   }
 
