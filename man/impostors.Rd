@@ -14,6 +14,7 @@ impostors(
   k = 300,
   m = 100,
   n = 25,
+  features = F,
   cores = NULL
 )
 }
@@ -36,11 +37,13 @@ impostors(
 
 \item{n}{The \emph{n} parameter for the IM algorithm. Not used by other algorithms. The default is 25.}
 
+\item{features}{A logical value indicating whether the important features should be retrieved or not. The default is FALSE. This only applies to the RBI algorithm.}
+
 \item{cores}{The number of cores to use for parallel processing (the default is one).}
 }
 \value{
 The function will test all possible combinations of q texts and candidate authors and return a
-data frame containing the score ranging from 0 to 1 representing the degree of confidence that the candidate is the author of the Q text. The data frame contains a column called "target" with a logical value which is TRUE if the author of the Q text is the candidate and FALSE otherwise. If the RBI algorithm is selected then the data frame will also contain a column with the features that are likely to have had an impact on the score.
+data frame containing the score ranging from 0 to 1 representing the degree of confidence that the candidate is the author of the Q text. The data frame contains a column called "target" with a logical value which is TRUE if the author of the Q text is the candidate and FALSE otherwise. If the RBI algorithm is selected and the features parameter is TRUE then the data frame will also contain a column with the features that are likely to have had an impact on the score.
 }
 \description{
 This function runs the authorship verification method \emph{Impostors Method}.

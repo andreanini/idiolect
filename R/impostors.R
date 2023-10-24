@@ -36,7 +36,7 @@ important_features <- function(q, candidate, impostors){
   return(final.features[1:10])
 
 }
-RBI <- function(x, qs, candidates, cand.imps, coefficient, k){
+RBI <- function(x, qs, candidates, cand.imps, coefficient, k, features){
 
   q.name = as.character(x["q"])
   q = quanteda::dfm_subset(qs, quanteda::docnames(qs) == q.name)
@@ -95,14 +95,14 @@ RBI <- function(x, qs, candidates, cand.imps, coefficient, k){
 
     }
 
-    #feats <- c(feats, important_features(q, cons.k, cons.imps))
+    if(features == T) { feats <- c(feats, important_features(q, cons.k, cons.imps)) }
 
     score.sum = score.sum + score
 
   }
 
   final.score = round(score.sum/nrow(candidate), 3)
-  #final.feats <- unique(feats)
+  if(features == T) { final.feats <- unique(feats) }
 
   results = data.frame()
   results[1,"candidate"] = quanteda::docvars(candidate[1,], "author")
@@ -119,7 +119,8 @@ RBI <- function(x, qs, candidates, cand.imps, coefficient, k){
   }
 
   results[1,"score"] = final.score
-  #results[1, "features"] = paste(final.feats, collapse = "|")
+
+  if(features == T) { results[1, "features"] = paste(final.feats, collapse = "|") }
 
   return(results)
 
@@ -284,9 +285,10 @@ IM <- function(x, qs, candidates, cand.imps, q.imps, coefficient, m, n){
 #' @param cores The number of cores to use for parallel processing (the default is one).
 #' @param n The *n* parameter for the IM algorithm. Not used by other algorithms. The default is 25.
 #' @param coefficient A string indicating the coefficient to use, either "minmax" (default) or "cosine". This does not apply to the algorithm KGI, where the distance is "minmax".
+#' @param features A logical value indicating whether the important features should be retrieved or not. The default is FALSE. This only applies to the RBI algorithm.
 #'
 #' @return The function will test all possible combinations of q texts and candidate authors and return a
-#' data frame containing the score ranging from 0 to 1 representing the degree of confidence that the candidate is the author of the Q text. The data frame contains a column called "target" with a logical value which is TRUE if the author of the Q text is the candidate and FALSE otherwise. If the RBI algorithm is selected then the data frame will also contain a column with the features that are likely to have had an impact on the score.
+#' data frame containing the score ranging from 0 to 1 representing the degree of confidence that the candidate is the author of the Q text. The data frame contains a column called "target" with a logical value which is TRUE if the author of the Q text is the candidate and FALSE otherwise. If the RBI algorithm is selected and the features parameter is TRUE then the data frame will also contain a column with the features that are likely to have had an impact on the score.
 #' @export
 #'
 #' @examples
@@ -312,7 +314,7 @@ IM <- function(x, qs, candidates, cand.imps, q.imps, coefficient, m, n){
 #' q.dfm <- dfm_match(q.dfm, featnames(k.dfm))
 #'
 #' results <- impostors(q.dfm, k.dfm, imp.dfm, algorithm = "KGI")
-impostors = function(qs, candidates, cand.imps, q.imps, algorithm = "RBI", coefficient = "minmax", k = 300, m = 100, n = 25, cores = NULL){
+impostors = function(qs, candidates, cand.imps, q.imps, algorithm = "RBI", coefficient = "minmax", k = 300, m = 100, n = 25, features = F, cores = NULL){
 
   q.list <- rownames(qs)
   candidate.authors <- quanteda::docvars(candidates, "author") |> unique()
@@ -323,7 +325,8 @@ impostors = function(qs, candidates, cand.imps, q.imps, algorithm = "RBI", coeff
 
   if(algorithm == "RBI"){
 
-    results = pbapply::pbapply(tests, 1, RBI, qs, candidates, cand.imps, coefficient, k, cl = cores)
+    results = pbapply::pbapply(tests, 1, RBI, qs, candidates, cand.imps, coefficient, k, features,
+                               cl = cores)
 
   }
 
