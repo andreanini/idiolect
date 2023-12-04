@@ -63,8 +63,6 @@ similarity <- function(x, qs, candidates, coefficient, features){
   }
 
 
-
-
   if(coefficient == "Phi"){
 
     score <- quanteda.textstats::textstat_simil(k, q, method = "correlation") |>
@@ -78,28 +76,11 @@ similarity <- function(x, qs, candidates, coefficient, features){
   # p = as.double(ncol(k))
   # d = as.double(p - (a+b+c))
   #
-  # results[i-1, 'matching'] = round((a+d)/p, 4)
   # results[i-1, 'overlap'] = round(a/(a+b), 4)
   # results[i-1, 'phi'] = round((a*d - b*c)/sqrt((a+b)*(a+c)*(c+d)*(b+d)), 4)
   # results[i-1, 'jaccard'] = round(a/(a+b+c), 4)
-  # results[i-1, 'rao'] = round(a/p, 4)
-  # results[i-1, 'sokal_sneath'] = round((a/sqrt((a+b)*(a+c)))*(d/sqrt((d+b)*(d+c))), 4)
-  # results[i-1, 'cohen'] = round((2*(a*d - b*c))/(((a+b)*(b+d))+((a+c)*(c+d))), 4)
-  # results[i-1, 'ochiai'] = round(a/sqrt((a+b)*(a+c)), 4)
   # results[i-1, 'kulczynski'] = round(((a/(a+b))+(a/(a+c)))/2, 4)
-  # results[i-1, 'dice'] = round(2*a/(2*a + b + c), 4)
-  # results[i-1, 'mountford'] = round(2*a/(a*b + a*c + 2*b*c), 4)
-  # results[i-1, 'rogot_goldberg'] = round((a/(2*a + b + c))+(d/(2*d + b +c)), 4)
-  # results[i-1, 'hawkins_dotson'] = round(((a/(a+b+c))+(d/(b+c+d)))/2, 4)
-  # results[i-1, 'sorgenfrei'] = round(a**2/((a+b)*(a+c)), 4)
-  # results[i-1, 'ct3'] = round(log(1+a)/log(1+p), 4)
-  # results[i-1, 'log_overlap'] = round(log(1+a)/log(1+b), 4)
-  # results[i-1, 'bub'] = round((sqrt(a*d)+a)/(sqrt(a*d)+a+b+c), 4)
   # results[i-1, 'cole'] = round((a*d - b*c)/((a+b)*(b+d)), 4)
-  # results[i-1, 'ct5'] = round((log(1 + a*d) - log(1 + b*c))/log(1 + p**2/4), 4)
-  # results[i-1, 'gk'] = round((2 * min(a, d) - b - c)/(2 * min(a, d) + b + c), 4)
-  # results[i-1, 'loevinger'] = round((a*d - b*c)/min(b * (b+d), c * (c+d)), 4)
-  # results[i-1, 'yule'] = round((a*d - b*c)/(a*d + b*c), 4)
 
   results = data.frame()
   results[1,"candidate"] = quanteda::docvars(k, "author")

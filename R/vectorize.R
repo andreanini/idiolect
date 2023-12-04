@@ -4,7 +4,7 @@
 #'
 #' More information about the literature will go here.
 #'
-#' @param input This should be a `quanteda` corpus object with the author names as a docvar called "author".
+#' @param input This should be a `quanteda` corpus object with the author names as a docvar called "author". Typically, this is the output of the [create_corpus()] function.
 #' @param tokens The type of tokens to extract, either "character" (default) or "word".
 #' @param remove_punct A logical value. FALSE (default) keeps punctuation marks.
 #' @param remove_symbols A logical value. TRUE (default) removes symbols.
@@ -48,14 +48,7 @@ vectorize = function(input, tokens = "character", remove_punct = F, remove_symbo
   }
 
   d <- quanteda::tokens_group(toks) |>
-    quanteda::dfm(tolower = lowercase) |>
-    quanteda::dfm_trim(min_docfreq = 2)
-
-  if(trim == T){
-
-    d = quanteda::dfm_trim(d, min_termfreq = threshold, termfreq_type = "rank")
-
-  }
+    quanteda::dfm(tolower = lowercase)
 
   if(weighting == "tf-idf"){
 
@@ -66,6 +59,12 @@ vectorize = function(input, tokens = "character", remove_punct = F, remove_symbo
   if(weighting == "rel"){
 
     d.f = quanteda::dfm_weight(d, scheme = "prop")
+
+  }
+
+  if(trim == T){
+
+    d.f = quanteda::dfm_trim(d.f, min_termfreq = threshold, termfreq_type = "rank") |> suppressWarnings()
 
   }
 
