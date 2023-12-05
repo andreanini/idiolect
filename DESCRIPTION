@@ -13,7 +13,6 @@ Imports:
     dplyr,
     pbapply,
     proxy,
-    quanteda,
     quanteda.textstats,
     readtext,
     ROC (>= 0.11),
@@ -28,4 +27,5 @@ Config/testthat/edition: 3
 Remotes: 
     https://github.com/davidavdav/ROC
 Depends: 
+    quanteda,
     R (>= 2.10)
