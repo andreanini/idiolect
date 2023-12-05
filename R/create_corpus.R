@@ -1,6 +1,6 @@
 #' Create a corpus
 #'
-#' Function to read in data and turn it into a corpus.
+#' Function to read in data and turn it into a corpus object.
 #'
 #' @param path A string containing the path to a folder of plain text files (ending in .txt) with their name structured as following: authorname_textname.txt (e.g. smith_text1.txt).
 #'
@@ -13,7 +13,6 @@
 #' create_corpus(path)
 #' }
 create_corpus <- function(path){
-
 
   corpus <- readtext::readtext(file = paste0(path, "/*.txt"),
                                docvarsfrom = "filenames", docvarnames = c("author", "textname")) |>
