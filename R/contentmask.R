@@ -16,7 +16,7 @@
 #' text <- "The elegant cat was forcefully put on the chair. cat@pets.com; http://quanteda.io/"
 #' toy.corpus <- quanteda::corpus(text)
 #' contentmask(toy.corpus, algorithm = "POSnoise", replace_non_ascii = FALSE)
-contentmask <- function(corpus, model = "en_core_web_sm", algorithm = "POSnoise", replace_non_ascii){
+contentmask <- function(corpus, model = "en_core_web_sm", algorithm = "POSnoise", replace_non_ascii = F){
 
 
   if(replace_non_ascii == T){

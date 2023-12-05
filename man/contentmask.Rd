@@ -8,7 +8,7 @@ contentmask(
   corpus,
   model = "en_core_web_sm",
   algorithm = "POSnoise",
-  replace_non_ascii
+  replace_non_ascii = F
 )
 }
 \arguments{
