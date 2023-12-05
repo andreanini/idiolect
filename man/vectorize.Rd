@@ -6,37 +6,37 @@
 \usage{
 vectorize(
   input,
-  tokens = "character",
-  remove_punct = F,
-  remove_symbols = T,
-  remove_numbers = T,
-  lowercase = T,
-  n = 5,
-  weighting = "rel",
-  trim = T,
-  threshold = 1500
+  tokens,
+  remove_punct,
+  remove_symbols,
+  remove_numbers,
+  lowercase,
+  n,
+  weighting,
+  trim,
+  threshold
 )
 }
 \arguments{
-\item{input}{This should be a \code{quanteda} corpus object with the author names as a docvar called "author".}
+\item{input}{This should be a \code{quanteda} corpus object with the author names as a docvar called "author". Typically, this is the output of the \code{\link[=create_corpus]{create_corpus()}} function.}
 
-\item{tokens}{The type of tokens to extract, either "character" (default) or "word".}
+\item{tokens}{The type of tokens to extract, either "character" or "word".}
 
-\item{remove_punct}{A logical value. FALSE (default) keeps punctuation marks.}
+\item{remove_punct}{A logical value. FALSE to keep the punctuation marks or TRUE to remove them.}
 
-\item{remove_symbols}{A logical value. TRUE (default) removes symbols.}
+\item{remove_symbols}{A logical value. TRUE removes symbols and FALSE keeps them.}
 
-\item{remove_numbers}{A logical value. TRUE (default) removes numbers}
+\item{remove_numbers}{A logical value. TRUE removes numbers and FALSE keeps them.}
 
-\item{lowercase}{A logical value. TRUE (default) transforms all tokens to lower case.}
+\item{lowercase}{A logical value. TRUE transforms all tokens to lower case.}
 
-\item{n}{The order or size of the n-grams being extracted. Default is 5.}
+\item{n}{The order or size of the n-grams being extracted.}
 
-\item{weighting}{The type of weighting to use, "rel" for relative frequencies, "tf-idf".}
+\item{weighting}{The type of weighting to use, "rel" for relative frequencies, "tf-idf", or "boolean".}
 
-\item{trim}{A logical value. If TRUE (default) then only the most frequent tokens are kept.}
+\item{trim}{A logical value. If TRUE then only the most frequent tokens are kept.}
 
-\item{threshold}{A numeric value indicating how many most frequent tokens to keep. The default is 1500.}
+\item{threshold}{A numeric value indicating how many most frequent tokens to keep.}
 }
 \value{
 A dfm (document-feature matrix) containing each text as a feature vector. N-gram tokenisation does not cross sentence boundaries.
@@ -45,10 +45,11 @@ A dfm (document-feature matrix) containing each text as a feature vector. N-gram
 This function turns the texts into n-gram vectors.
 }
 \details{
-More information about the literature will go here.
+All the authorship analysis functions call vectorize() with the standard parameters for the algorithm selected. This function is therefore left only for users who want to modify these parameters or for convenience if the same dfm has to be reused by the algorithms to avoid vectorizing the same data many times. Most users who only need to run a standard analysis do not need use this function.
 }
 \examples{
 mycorpus <- quanteda::corpus("The cat sat on the mat.")
 quanteda::docvars(mycorpus, "author") <- "author1"
-matrix <- vectorize(mycorpus)
+matrix <- vectorize(mycorpus, tokens = "character", remove_punct = FALSE, remove_symbols = TRUE,
+remove_numbers = TRUE, lowercase = TRUE, n = 5, weighting = "rel", trim = TRUE, threshold = 1500)
 }

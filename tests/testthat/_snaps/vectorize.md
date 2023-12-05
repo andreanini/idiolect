@@ -1,7 +1,9 @@
 # vectorisation works
 
     Code
-      vectorize(enron)
+      vectorize(enron, tokens = "character", remove_punct = F, remove_symbols = T,
+        remove_numbers = T, lowercase = T, n = 5, weighting = "rel", trim = T,
+        threshold = 1500)
     Output
       Document-feature matrix of: 218 documents, 1,500 features (54.35% sparse) and 3 docvars.
                                               features

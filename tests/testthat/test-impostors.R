@@ -6,7 +6,9 @@ test_that("RBI works", {
   known = quanteda::corpus_subset(corpus, texttype == "known") |> quanteda::corpus_group(author)
   final.toks = unknown + known
 
-  d = vectorize(final.toks)
+  d = vectorize(final.toks, tokens = "character", remove_punct = F, remove_symbols = T,
+                remove_numbers = T, lowercase = T, n = 5, weighting = "rel", trim = T,
+                threshold = 1500)
 
   qs = quanteda::dfm_subset(d, quanteda::docnames(d) == "unknown [Kimberly.watson - Mail_3].txt" |
                              quanteda::docnames(d) == "unknown [Larry.campbell - Mail_1].txt")
@@ -40,7 +42,9 @@ test_that("KGI works", {
   known = quanteda::corpus_subset(corpus, texttype == "known") |> quanteda::corpus_group(author)
   final.toks = unknown + known
 
-  d = vectorize(final.toks)
+  d = vectorize(final.toks, tokens = "character", remove_punct = F, remove_symbols = T,
+                remove_numbers = T, lowercase = T, n = 5, weighting = "rel", trim = T,
+                threshold = 1500)
 
   qs = quanteda::dfm_subset(d, quanteda::docnames(d) == "unknown [Kimberly.watson - Mail_3].txt" |
                               quanteda::docnames(d) == "unknown [Larry.campbell - Mail_1].txt")
@@ -66,7 +70,8 @@ test_that("IM works", {
   known = quanteda::corpus_subset(corpus, texttype == "known") |> quanteda::corpus_group(author)
   final.toks = unknown + known
 
-  d = vectorize(final.toks, n = 4, weighting = "tf-idf", trim = F)
+  d = vectorize(final.toks, n = 4, weighting = "tf-idf", trim = F, tokens = "character", remove_punct = F,
+                remove_symbols = T, remove_numbers = T, lowercase = T)
 
   qs = quanteda::dfm_subset(d, quanteda::docnames(d) == "unknown [Kimberly.watson - Mail_3].txt" |
                               quanteda::docnames(d) == "unknown [Larry.campbell - Mail_1].txt")
