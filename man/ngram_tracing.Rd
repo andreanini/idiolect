@@ -4,16 +4,40 @@
 \alias{ngram_tracing}
 \title{N-gram tracing}
 \usage{
-ngram_tracing(qs, candidates, coefficient, features = F, cores = NULL)
+ngram_tracing(
+  q.data,
+  k.data,
+  tokens = "character",
+  remove_punct = F,
+  remove_symbols = T,
+  remove_numbers = T,
+  lowercase = T,
+  n = 9,
+  coefficient = "simpson",
+  features = F,
+  cores = NULL
+)
 }
 \arguments{
-\item{qs}{The \code{quanteda} dfm containing the disputed texts to test.}
+\item{q.data}{The questioned or disputed data, either as a corpus (the output of \code{\link[=create_corpus]{create_corpus()}}) or as a \code{quanteda} dfm (the output of \code{\link[=vectorize]{vectorize()}}).}
 
-\item{candidates}{The \code{quanteda} dfm containing the data belonging to the candidate authors to test. This dfm can contain multiple samples but these will then be concatenated into one profile. This dfm can potentially contain the same rows as in q (e.g. for leave-one-out testing) as these are removed when identical.}
+\item{k.data}{The known or undisputed data, either as a corpus (the output of \code{\link[=create_corpus]{create_corpus()}}) or as a \code{quanteda} dfm (the output of \code{\link[=vectorize]{vectorize()}}). More than one sample for a candidate author is accepted but the function will combine them so to make a profile.}
 
-\item{coefficient}{The coefficient to use to compare texts.}
+\item{tokens}{The type of tokens to extract, either "word" or "character" (default).}
 
-\item{features}{Logical with default FALSE. If TRUE then the result table will contain the features in the overlap.}
+\item{remove_punct}{A logical value. FALSE (default) keeps punctuation marks.}
+
+\item{remove_symbols}{A logical value. TRUE (default) removes symbols.}
+
+\item{remove_numbers}{A logical value. TRUE (default) removes numbers.}
+
+\item{lowercase}{A logical value. TRUE (default) transforms all tokens to lower case.}
+
+\item{n}{The order or size of the n-grams being extracted. Default is 9.}
+
+\item{coefficient}{The coefficient to use to compare texts, one of: "simpson" (default), "phi", "jaccard", "kulczynski", or "cole".}
+
+\item{features}{Logical with default FALSE. If TRUE then the result table will contain the features in the overlap that are unique for that overlap in the corpus.}
 
 \item{cores}{The number of cores to use for parallel processing (the default is one).}
 }
@@ -25,17 +49,7 @@ data frame containing the value of the similarity coefficient selected called 's
 This function performs n-gram tracing.
 }
 \examples{
-library(quanteda)
-
-text1 <- 'The cat sat on the mat.'
-k.corpus <-  corpus(text1)
-k.dfm <- dfm(tokens(k.corpus))
-docvars(k.dfm, 'author') <- 'K'
-
-q <- 'The dog sat on the chair?'
-q.dfm <- dfm(tokens(q))
-docvars(q.dfm, 'author') <- 'Q'
-docnames(q.dfm) <- 'Qtext' # document names should be distinct across all dfms used as input
-
-ngram_tracing(q.dfm, k.dfm, 'Phi')
+qs <- refcor.sample[c(1, 4, 7)]
+ks <- refcor.sample[-c(1, 4, 7)]
+ngram_tracing(qs, ks, coefficient = 'simpson')
 }

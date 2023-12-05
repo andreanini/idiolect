@@ -3,20 +3,19 @@ test_that("ngram tracing works", {
   corpus = readRDS(testthat::test_path("data", "enron.rds"))
 
   unknown = quanteda::corpus_subset(corpus, texttype == "unknown")
-  known = quanteda::corpus_subset(corpus, texttype == "known") |> quanteda::corpus_group(author)
-  final.toks = unknown + known
+  known = quanteda::corpus_subset(corpus, texttype == "known")
 
-  d = vectorize(final.toks, tokens = "character", remove_punct = F, remove_symbols = T,
-                remove_numbers = T, lowercase = T, n = 5, weighting = "rel", trim = T,
-                threshold = 1500)
+  # n-gram tracing from corpus
+  results.corpus <- ngram_tracing(unknown[1:5], known[1:5], features = T)
 
-  qs = quanteda::dfm_subset(d, quanteda::docnames(d) == "unknown [Kimberly.watson - Mail_3].txt" |
-                              quanteda::docnames(d) == "unknown [Larry.campbell - Mail_1].txt")
-  candidates = quanteda::dfm_subset(d, quanteda::docnames(d) == "Kimberly.watson" |
-                                      quanteda::docnames(d) == "Larry.campbell")
+  # n-gram tracing from dfm
+  d = vectorize(c(unknown[1:5], known[1:5]), tokens = "character", remove_punct = F, remove_symbols = T,
+                remove_numbers = T, lowercase = T, n = 9, weighting = "boolean", trim = F)
 
-  results <- ngram_tracing(qs, candidates, 'Phi', features = T)
+  results.dfm <- ngram_tracing(d[1:5,], d[6:10,], features = T)
 
-  expect_snapshot(results)
+  expect_identical(results.corpus, results.dfm)
+
+  expect_snapshot(results.corpus)
 
 })
