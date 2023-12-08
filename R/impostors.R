@@ -38,10 +38,10 @@ important_features <- function(q, candidate, impostors){
 }
 RBI <- function(x, qs, candidates, cand.imps, coefficient, k, features){
 
-  q.name = as.character(x["q"])
+  q.name = as.character(x["Q"])
   q = quanteda::dfm_subset(qs, quanteda::docnames(qs) == q.name)
 
-  candidate.name = as.character(x["candidate"])
+  candidate.name = as.character(x["K"])
   candidate = quanteda::dfm_subset(candidates, author == candidate.name &
                                                quanteda::docnames(candidates) != q.name)
 
@@ -53,7 +53,7 @@ RBI <- function(x, qs, candidates, cand.imps, coefficient, k, features){
 
   if(k >= nrow(cand.imps)){
 
-    warning("K is greater than or equal to the number of available impostors.")
+    warning("The k parameter is greater than or equal to the number of available impostors.")
 
   }
 
@@ -127,10 +127,10 @@ RBI <- function(x, qs, candidates, cand.imps, coefficient, k, features){
 }
 KGI <- function(x, qs, candidates, cand.imps){
 
-  q.name = as.character(x["q"])
+  q.name = as.character(x["Q"])
   q = quanteda::dfm_subset(qs, quanteda::docnames(qs) == q.name)
 
-  candidate.name = as.character(x["candidate"])
+  candidate.name = as.character(x["K"])
   candidate = quanteda::dfm_subset(candidates, author == candidate.name &
                                                quanteda::docnames(candidates) != q.name)
 
@@ -188,12 +188,12 @@ KGI <- function(x, qs, candidates, cand.imps){
   return(results)
 
 }
-IM <- function(x, qs, candidates, cand.imps, q.imps, coefficient, m, n){
+IM <- function(x, qs, candidates, cand.imps, coefficient, m, n){
 
-  q.name = as.character(x["q"])
+  q.name = as.character(x["Q"])
   q = quanteda::dfm_subset(qs, quanteda::docnames(qs) == q.name)
 
-  candidate.name = as.character(x["candidate"])
+  candidate.name = as.character(x["K"])
   candidate = quanteda::dfm_subset(candidates, author == candidate.name &
                                                quanteda::docnames(candidates) != q.name)
 
@@ -227,7 +227,7 @@ IM <- function(x, qs, candidates, cand.imps, q.imps, coefficient, m, n){
   score_b = 0
 
   q |>
-    most_similar(q.imps, coefficient, m) |>
+    most_similar(cand.imps, coefficient, m) |>
     quanteda::dfm_sample(n) -> cons.imps.f
 
   for (i in 1:100) {
@@ -271,84 +271,144 @@ IM <- function(x, qs, candidates, cand.imps, q.imps, coefficient, m, n){
 }
 #' Impostors Method
 #'
-#' This function runs the authorship verification method *Impostors Method*.
+#' This function runs the *Impostors Method* for authorship verification.
 #'
 #' More details here.
 #'
-#' @param candidates The `quanteda` dfm containing the data belonging to the candidate authors to test.
+#' @param q.data The questioned or disputed data, either as a corpus (the output of [create_corpus()]) or as a `quanteda` dfm (the output of [vectorize()]).
+#' @param k.data The known or undisputed data, either as a corpus (the output of [create_corpus()]) or as a `quanteda` dfm (the output of [vectorize()]). More than one sample for a candidate author is accepted for all algorithms except IM.
+#' @param cand.imps The impostors data for the candidate authors, either as a corpus (the output of [create_corpus()]) or as a `quanteda` dfm (the output of [vectorize()]).
 #' @param algorithm A string specifying which impostors algorithm to use, either "RBI", "KGI", or "IM".
+#' @param coefficient A string indicating the coefficient to use, either "minmax" (default) or "cosine". This does not apply to the algorithm KGI, where the distance is "minmax".
 #' @param k The *k* parameters for the RBI algorithm. Not used by other algorithms. The default is 300.
 #' @param m The *m* parameter for the IM algorithm. Not used by other algorithms. The default is 100.
-#' @param qs The `quanteda` dfm containing the disputed texts to test. With the exception of the "IM" algorithm, this data frame can contain the same texts that are also in the candidate data frame, for example, for leave-one-out testing.
-#' @param cand.imps The `quanteda` dfm containing the impostors (or only the impostors for the candidate data if the algorithm is IM)
-#' @param q.imps The `quanteda` dfm containing the impostors for the disputed text (only applicable for the IM algorithm)
-#' @param cores The number of cores to use for parallel processing (the default is one).
 #' @param n The *n* parameter for the IM algorithm. Not used by other algorithms. The default is 25.
-#' @param coefficient A string indicating the coefficient to use, either "minmax" (default) or "cosine". This does not apply to the algorithm KGI, where the distance is "minmax".
 #' @param features A logical value indicating whether the important features should be retrieved or not. The default is FALSE. This only applies to the RBI algorithm.
+#' @param cores The number of cores to use for parallel processing (the default is one).
 #'
 #' @return The function will test all possible combinations of q texts and candidate authors and return a
-#' data frame containing the score ranging from 0 to 1 representing the degree of confidence that the candidate is the author of the Q text. The data frame contains a column called "target" with a logical value which is TRUE if the author of the Q text is the candidate and FALSE otherwise. If the RBI algorithm is selected and the features parameter is TRUE then the data frame will also contain a column with the features that are likely to have had an impact on the score.
+#' data frame containing a score ranging from 0 to 1 representing the degree of confidence that the candidate is the author of the Q text. The data frame contains a column called "target" with a logical value which is TRUE if the author of the Q text is the candidate and FALSE otherwise. If the RBI algorithm is selected and the features parameter is TRUE then the data frame will also contain a column with the features that are likely to have had an impact on the score. The three data sets, `q.data`, `k.data`, and `cand.imps` must be disjunct in terms of the texts that they contain otherwise an error is returned.
 #' @export
 #'
 #' @examples
-#' library(quanteda)
-#' text1 <- "The cat sat on the mat."
-#' text2 <- "The dog sat on the mat."
-#' k.corpus <-  corpus(c(text1, text2))
-#' k.dfm <- dfm(tokens(k.corpus)) |> dfm_weight(scheme = "prop")
-#' docvars(k.dfm, "author") <- "K"
-#'
-#' imp1 <- "A pet, such as a cat or a dog, is an animal kept primarily for a person's company."
-#' imp2 <- "Some pets may be accepted by the owner regardless of these characteristics."
-#' imp.corpus <- corpus(c(imp1, imp2))
-#' imp.dfm <- dfm(tokens(imp.corpus)) |> dfm_weight(scheme = "prop")
-#' docvars(imp.dfm, "author") <- "wikipedia"
-#'
-#' q <- "The dog sat on the chair."
-#' q.dfm <- dfm(tokens(q)) |> dfm_weight(scheme = "prop")
-#' docvars(q.dfm, "author") <- "Q"
-#'
-#' #note how all the dfms must have the same columns
-#' imp.dfm <- dfm_match(imp.dfm, featnames(k.dfm))
-#' q.dfm <- dfm_match(q.dfm, featnames(k.dfm))
-#'
-#' results <- impostors(q.dfm, k.dfm, imp.dfm, algorithm = "KGI")
-impostors = function(qs, candidates, cand.imps, q.imps, algorithm = "RBI", coefficient = "minmax", k = 300, m = 100, n = 25, features = F, cores = NULL){
+#' q <- refcor.sample[1]
+#' ks <- refcor.sample[2:3]
+#' imps <- refcor.sample[4:9]
+#' impostors(q, ks, imps, algorithm = "KGI")
+impostors = function(q.data, k.data, cand.imps, algorithm = "RBI", coefficient = "minmax", k = 300, m = 100, n = 25, features = F, cores = NULL){
 
-  q.list <- rownames(qs)
-  candidate.authors <- quanteda::docvars(candidates, "author") |> unique()
+  q.list <- quanteda::docnames(q.data)
+  k.list <- quanteda::docvars(k.data, "author") |> unique()
 
-  tests <- expand.grid(q.list, candidate.authors, stringsAsFactors = F) |>
-    dplyr::rename(q = Var1, candidate = Var2)
+  tests <- expand.grid(q.list, k.list, stringsAsFactors = F) |>
+    dplyr::rename(Q = Var1, K = Var2)
 
 
   if(algorithm == "RBI"){
 
-    results = pbapply::pbapply(tests, 1, RBI, qs, candidates, cand.imps, coefficient, k, features,
-                               cl = cores)
+    if(quanteda::is.corpus(q.data) & quanteda::is.corpus(k.data) & quanteda::is.corpus(cand.imps)){
+
+      df = vectorize(c(q.data, k.data, cand.imps),
+                     tokens = "character", remove_punct = F, remove_symbols = T,
+                     remove_numbers = T, lowercase = F,
+                     n = 5, weighting = "rel", trim = T, threshold = 1500)
+
+      results = pbapply::pbapply(tests, 1, RBI,
+                                 qs = quanteda::dfm_subset(df, quanteda::docnames(df)
+                                                           %in% quanteda::docnames(q.data)),
+                                 candidates = quanteda::dfm_subset(df, quanteda::docnames(df)
+                                                                   %in% quanteda::docnames(k.data)),
+                                 cand.imps = quanteda::dfm_subset(df, quanteda::docnames(df)
+                                                                  %in% quanteda::docnames(cand.imps)),
+                                 coefficient, k, features, cl = cores)
+
+    }else if(quanteda::is.dfm(q.data) & quanteda::is.dfm(k.data) & quanteda::is.dfm(cand.imps)){
+
+      results = pbapply::pbapply(tests, 1, RBI,
+                                 qs = q.data,
+                                 candidates = k.data,
+                                 cand.imps = cand.imps,
+                                 coefficient, k, features, cl = cores)
+
+    }else{
+
+      stop("The Q, K, and impostors objects need to be either quanteda corpora or quanteda dfms.")
+
+    }
 
   }
 
   if(algorithm == "KGI"){
 
-    results = pbapply::pbapply(tests, 1, KGI, qs, candidates, cand.imps, cl = cores)
+    if(quanteda::is.corpus(q.data) & quanteda::is.corpus(k.data) & quanteda::is.corpus(cand.imps)){
+
+      df = vectorize(c(q.data, k.data, cand.imps),
+                     tokens = "character", remove_punct = F, remove_symbols = T,
+                     remove_numbers = T, lowercase = F,
+                     n = 4, weighting = "tf-idf", trim = F)
+
+      results = pbapply::pbapply(tests, 1, KGI,
+                                 qs = quanteda::dfm_subset(df, quanteda::docnames(df)
+                                                           %in% quanteda::docnames(q.data)),
+                                 candidates = quanteda::dfm_subset(df, quanteda::docnames(df)
+                                                                   %in% quanteda::docnames(k.data)),
+                                 cand.imps = quanteda::dfm_subset(df, quanteda::docnames(df)
+                                                                  %in% quanteda::docnames(cand.imps)),
+                                 cl = cores)
+
+    }else if(quanteda::is.dfm(q.data) & quanteda::is.dfm(k.data) & quanteda::is.dfm(cand.imps)){
+
+      results = pbapply::pbapply(tests, 1, KGI,
+                                 qs = q.data,
+                                 candidates = k.data,
+                                 cand.imps = cand.imps,
+                                 cl = cores)
+
+    }else{
+
+      stop("The Q, K, and impostors objects need to be either quanteda corpora or quanteda dfms.")
+
+    }
 
   }
 
   if(algorithm == "IM"){
 
-    if(nrow(candidates) > length(candidate.authors)){
+    if(quanteda::is.corpus(q.data) &
+       quanteda::is.corpus(k.data) &
+       quanteda::is.corpus(cand.imps)){
 
-      stop("The IM algorithm can only be applied in the case of one single candidate sample.\n")
+      df = vectorize(c(q.data, k.data, cand.imps),
+                     tokens = "character", remove_punct = F, remove_symbols = T,
+                     remove_numbers = T, lowercase = F,
+                     n = 4, weighting = "tf-idf", trim = F)
+
+      results = pbapply::pbapply(tests, 1, IM,
+                                 qs = quanteda::dfm_subset(df, quanteda::docnames(df) %in%
+                                                             quanteda::docnames(q.data)),
+                                 candidates = quanteda::dfm_subset(df, quanteda::docnames(df) %in%
+                                                                     quanteda::docnames(k.data)),
+                                 cand.imps = quanteda::dfm_subset(df, quanteda::docnames(df) %in%
+                                                                    quanteda::docnames(cand.imps)),
+                                 coefficient, m, n, cl = cores)
+
+    }else if(quanteda::is.dfm(q.data) &
+             quanteda::is.dfm(k.data) &
+             quanteda::is.dfm(cand.imps)){
+
+
+      results = pbapply::pbapply(tests, 1, IM,
+                                 qs = q.data,
+                                 candidates = k.data,
+                                 cand.imps = cand.imps,
+                                 coefficient, m, n, cl = cores)
+    }else{
+
+      stop("The Q, K, and impostors objects need to be either quanteda corpora or quanteda dfms.")
 
     }
 
-    results = pbapply::pbapply(tests, 1, IM, qs, candidates, cand.imps, q.imps, coefficient, m, n,
-                               cl = cores)
-
   }
-
 
   results.table = list_to_df(results)
 

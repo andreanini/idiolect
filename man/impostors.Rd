@@ -5,10 +5,9 @@
 \title{Impostors Method}
 \usage{
 impostors(
-  qs,
-  candidates,
+  q.data,
+  k.data,
   cand.imps,
-  q.imps,
   algorithm = "RBI",
   coefficient = "minmax",
   k = 300,
@@ -19,13 +18,11 @@ impostors(
 )
 }
 \arguments{
-\item{qs}{The \code{quanteda} dfm containing the disputed texts to test. With the exception of the "IM" algorithm, this data frame can contain the same texts that are also in the candidate data frame, for example, for leave-one-out testing.}
+\item{q.data}{The questioned or disputed data, either as a corpus (the output of \code{\link[=create_corpus]{create_corpus()}}) or as a \code{quanteda} dfm (the output of \code{\link[=vectorize]{vectorize()}}).}
 
-\item{candidates}{The \code{quanteda} dfm containing the data belonging to the candidate authors to test.}
+\item{k.data}{The known or undisputed data, either as a corpus (the output of \code{\link[=create_corpus]{create_corpus()}}) or as a \code{quanteda} dfm (the output of \code{\link[=vectorize]{vectorize()}}). More than one sample for a candidate author is accepted for all algorithms except IM.}
 
-\item{cand.imps}{The \code{quanteda} dfm containing the impostors (or only the impostors for the candidate data if the algorithm is IM)}
-
-\item{q.imps}{The \code{quanteda} dfm containing the impostors for the disputed text (only applicable for the IM algorithm)}
+\item{cand.imps}{The impostors data for the candidate authors, either as a corpus (the output of \code{\link[=create_corpus]{create_corpus()}}) or as a \code{quanteda} dfm (the output of \code{\link[=vectorize]{vectorize()}}).}
 
 \item{algorithm}{A string specifying which impostors algorithm to use, either "RBI", "KGI", or "IM".}
 
@@ -43,35 +40,17 @@ impostors(
 }
 \value{
 The function will test all possible combinations of q texts and candidate authors and return a
-data frame containing the score ranging from 0 to 1 representing the degree of confidence that the candidate is the author of the Q text. The data frame contains a column called "target" with a logical value which is TRUE if the author of the Q text is the candidate and FALSE otherwise. If the RBI algorithm is selected and the features parameter is TRUE then the data frame will also contain a column with the features that are likely to have had an impact on the score.
+data frame containing a score ranging from 0 to 1 representing the degree of confidence that the candidate is the author of the Q text. The data frame contains a column called "target" with a logical value which is TRUE if the author of the Q text is the candidate and FALSE otherwise. If the RBI algorithm is selected and the features parameter is TRUE then the data frame will also contain a column with the features that are likely to have had an impact on the score. The three data sets, \code{q.data}, \code{k.data}, and \code{cand.imps} must be disjunct in terms of the texts that they contain otherwise an error is returned.
 }
 \description{
-This function runs the authorship verification method \emph{Impostors Method}.
+This function runs the \emph{Impostors Method} for authorship verification.
 }
 \details{
 More details here.
 }
 \examples{
-library(quanteda)
-text1 <- "The cat sat on the mat."
-text2 <- "The dog sat on the mat."
-k.corpus <-  corpus(c(text1, text2))
-k.dfm <- dfm(tokens(k.corpus)) |> dfm_weight(scheme = "prop")
-docvars(k.dfm, "author") <- "K"
-
-imp1 <- "A pet, such as a cat or a dog, is an animal kept primarily for a person's company."
-imp2 <- "Some pets may be accepted by the owner regardless of these characteristics."
-imp.corpus <- corpus(c(imp1, imp2))
-imp.dfm <- dfm(tokens(imp.corpus)) |> dfm_weight(scheme = "prop")
-docvars(imp.dfm, "author") <- "wikipedia"
-
-q <- "The dog sat on the chair."
-q.dfm <- dfm(tokens(q)) |> dfm_weight(scheme = "prop")
-docvars(q.dfm, "author") <- "Q"
-
-#note how all the dfms must have the same columns
-imp.dfm <- dfm_match(imp.dfm, featnames(k.dfm))
-q.dfm <- dfm_match(q.dfm, featnames(k.dfm))
-
-results <- impostors(q.dfm, k.dfm, imp.dfm, algorithm = "KGI")
+q <- refcor.sample[1]
+ks <- refcor.sample[2:3]
+imps <- refcor.sample[4:9]
+impostors(q, ks, imps, algorithm = "KGI")
 }

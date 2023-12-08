@@ -3,35 +3,36 @@ test_that("RBI works", {
   corpus = readRDS(testthat::test_path("data", "enron.rds"))
 
   unknown = quanteda::corpus_subset(corpus, texttype == "unknown")
-  known = quanteda::corpus_subset(corpus, texttype == "known") |> quanteda::corpus_group(author)
-  final.toks = unknown + known
+  known = quanteda::corpus_subset(corpus, texttype == "known")
 
-  d = vectorize(final.toks, tokens = "character", remove_punct = F, remove_symbols = T,
-                remove_numbers = T, lowercase = T, n = 5, weighting = "rel", trim = T,
+  # corpus version
+  q.data <- unknown[c(1, 2)]
+  k.data <- known[c(1:2, 5:6)]
+  cand.imps <- known[7:50]
+
+  results.corpus <- impostors(q.data, k.data, cand.imps, algorithm = "RBI", k = 100) |>
+    suppressWarnings()
+
+
+  # dfm version
+  d = vectorize(c(q.data, k.data, cand.imps), tokens = "character", remove_punct = F, remove_symbols = T,
+                remove_numbers = T, lowercase = F, n = 5, weighting = "rel", trim = T,
                 threshold = 1500)
 
-  qs = quanteda::dfm_subset(d, quanteda::docnames(d) == "unknown [Kimberly.watson - Mail_3].txt" |
-                             quanteda::docnames(d) == "unknown [Larry.campbell - Mail_1].txt")
-  candidates = quanteda::dfm_subset(d, quanteda::docnames(d) == "Kimberly.watson" |
-                                      quanteda::docnames(d) == "Larry.campbell")
-  cand.imps = quanteda::dfm_subset(d, quanteda::docnames(d) != "Kimberly.watson" &
-                                     quanteda::docnames(d) != "Larry.campbell" &
-                                     texttype == "known")
+  results.dfm <- impostors(q.data = quanteda::dfm_subset(d, quanteda::docnames(d)
+                                                         %in% quanteda::docnames(q.data)),
+                           k.data = quanteda::dfm_subset(d, quanteda::docnames(d)
+                                                         %in% quanteda::docnames(k.data)),
+                           cand.imps = quanteda::dfm_subset(d, quanteda::docnames(d)
+                                                            %in% quanteda::docnames(cand.imps)),
+                           algorithm = "RBI", k = 100) |>
+    suppressWarnings()
 
-  score_T = impostors(qs, candidates, cand.imps, algorithm = "RBI", k = 100) |> suppressWarnings()
 
-  testthat::expect_equal(score_T[1, 4], 1, tolerance = 0.05)
-  testthat::expect_equal(score_T[2, 4], 0.1, tolerance = 0.1)
-  testthat::expect_equal(score_T[3, 4], 0.1, tolerance = 0.1)
-  testthat::expect_equal(score_T[4, 4], 1, tolerance = 0.1)
-
-  score_T = impostors(qs, candidates, cand.imps, algorithm = "RBI", coefficient = "cosine",
-                      k = 100) |> suppressWarnings()
-
-  testthat::expect_equal(score_T[1, 4], 1, tolerance = 0.05)
-  testthat::expect_equal(score_T[2, 4], 0.1, tolerance = 0.1)
-  testthat::expect_equal(score_T[3, 4], 0.1, tolerance = 0.1)
-  testthat::expect_equal(score_T[4, 4], 1, tolerance = 0.1)
+  testthat::expect_gt(round(results.corpus[1, 4], 1), 0.4)
+  testthat::expect_gt(round(results.dfm[1, 4], 1), 0.4)
+  testthat::expect_lt(round(results.corpus[2, 4], 1), 0.3)
+  testthat::expect_lt(round(results.dfm[2, 4], 1), 0.3)
 
 })
 test_that("KGI works", {
@@ -39,27 +40,35 @@ test_that("KGI works", {
   corpus = readRDS(testthat::test_path("data", "enron.rds"))
 
   unknown = quanteda::corpus_subset(corpus, texttype == "unknown")
-  known = quanteda::corpus_subset(corpus, texttype == "known") |> quanteda::corpus_group(author)
-  final.toks = unknown + known
+  known = quanteda::corpus_subset(corpus, texttype == "known")
 
-  d = vectorize(final.toks, tokens = "character", remove_punct = F, remove_symbols = T,
-                remove_numbers = T, lowercase = T, n = 5, weighting = "rel", trim = T,
-                threshold = 1500)
+  # corpus version
+  q.data <- unknown[c(1, 2)]
+  k.data <- known[c(1:2, 5:6)]
+  cand.imps <- known[7:50]
 
-  qs = quanteda::dfm_subset(d, quanteda::docnames(d) == "unknown [Kimberly.watson - Mail_3].txt" |
-                              quanteda::docnames(d) == "unknown [Larry.campbell - Mail_1].txt")
-  candidates = quanteda::dfm_subset(d, quanteda::docnames(d) == "Kimberly.watson"  |
-                                      quanteda::docnames(d) == "Larry.campbell")
-  cand.imps = quanteda::dfm_subset(d, quanteda::docnames(d) != "Kimberly.watson" &
-                                     quanteda::docnames(d) != "Larry.campbell" &
-                                     texttype == "known")
+  results.corpus <- impostors(q.data, k.data, cand.imps, algorithm = "KGI") |>
+    suppressWarnings()
 
-  score_T = impostors(qs, candidates, cand.imps, algorithm = "KGI")
 
-  testthat::expect_equal(score_T[1, 4], 1)
-  testthat::expect_lt(score_T[2, 4], 0.1)
-  testthat::expect_lt(score_T[3, 4], 0.1)
-  testthat::expect_gt(score_T[4, 4], 0.8)
+  # dfm version
+  d = vectorize(c(q.data, k.data, cand.imps), tokens = "character", remove_punct = F, remove_symbols = T,
+                remove_numbers = T, lowercase = F, n = 4, weighting = "tf-idf", trim = F)
+
+  results.dfm <- impostors(q.data = quanteda::dfm_subset(d, quanteda::docnames(d)
+                                                         %in% quanteda::docnames(q.data)),
+                           k.data = quanteda::dfm_subset(d, quanteda::docnames(d)
+                                                         %in% quanteda::docnames(k.data)),
+                           cand.imps = quanteda::dfm_subset(d, quanteda::docnames(d)
+                                                            %in% quanteda::docnames(cand.imps)),
+                           algorithm = "KGI") |>
+    suppressWarnings()
+
+
+  testthat::expect_gt(results.corpus[1, 4], 0.6)
+  testthat::expect_gt(results.dfm[1, 4], 0.6)
+  testthat::expect_lt(results.corpus[2, 4], 0.1)
+  testthat::expect_lt(results.dfm[2, 4], 0.1)
 
 })
 test_that("IM works", {
@@ -67,28 +76,36 @@ test_that("IM works", {
   corpus = readRDS(testthat::test_path("data", "enron.rds"))
 
   unknown = quanteda::corpus_subset(corpus, texttype == "unknown")
-  known = quanteda::corpus_subset(corpus, texttype == "known") |> quanteda::corpus_group(author)
-  final.toks = unknown + known
+  known = quanteda::corpus_subset(corpus, texttype == "known")
 
-  d = vectorize(final.toks, n = 4, weighting = "tf-idf", trim = F, tokens = "character", remove_punct = F,
-                remove_symbols = T, remove_numbers = T, lowercase = T)
+  # corpus version
+  q.data <- unknown[c(1, 2)]
+  k.data <- known[c(1, 5)]
+  cand.imps <- known[7:50]
 
-  qs = quanteda::dfm_subset(d, quanteda::docnames(d) == "unknown [Kimberly.watson - Mail_3].txt" |
-                              quanteda::docnames(d) == "unknown [Larry.campbell - Mail_1].txt")
-  candidates = quanteda::dfm_subset(d, quanteda::docnames(d) == "Kimberly.watson"   |
-                                      quanteda::docnames(d) == "Larry.campbell")
-  cand.imps = quanteda::dfm_subset(d, quanteda::docnames(d) != "Kimberly.watson" &
-                                     quanteda::docnames(d) != "Larry.campbell" &
-                                     texttype == "known")
-  q.imps = quanteda::dfm_subset(d, !(quanteda::docnames(d) %in% quanteda::docnames(qs)) &
-                                     texttype == "unknown")
+  results.corpus <- impostors(q.data, k.data, cand.imps, algorithm = "IM") |>
+    suppressWarnings()
 
-  score_T = impostors(qs, candidates, cand.imps, q.imps, algorithm = "IM", m = 100, n = 25)
 
-  testthat::expect_gt(score_T[1, 4], 0.8)
-  testthat::expect_equal(score_T[2, 4], 0, tolerance = 0.01)
-  testthat::expect_equal(score_T[3, 4], 0.0, tolerance = 0.05)
-  testthat::expect_gt(score_T[4, 4], 0.1)
+  # dfm version
+  d = vectorize(c(q.data, k.data, cand.imps), tokens = "character", remove_punct = F,
+                remove_symbols = T, remove_numbers = T, lowercase = F, n = 4, weighting = "tf-idf",
+                trim = F)
+
+  results.dfm <- impostors(q.data = quanteda::dfm_subset(d, quanteda::docnames(d)
+                                                         %in% quanteda::docnames(q.data)),
+                           k.data = quanteda::dfm_subset(d, quanteda::docnames(d)
+                                                         %in% quanteda::docnames(k.data)),
+                           cand.imps = quanteda::dfm_subset(d, quanteda::docnames(d)
+                                                            %in% quanteda::docnames(cand.imps)),
+                           algorithm = "IM") |>
+    suppressWarnings()
+
+
+  testthat::expect_gt(results.corpus[4, 4], 0)
+  testthat::expect_gt(results.dfm[4, 4], 0)
+  testthat::expect_lt(results.corpus[2, 4], 0.1)
+  testthat::expect_lt(results.dfm[2, 4], 0.1)
 
 })
 

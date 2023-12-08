@@ -19,7 +19,9 @@ most_similar <- function(sample, pool, coefficient, n){
 
   if(nrow(sample) > 1){
 
-    stop("Multiple samples in the most_similar function. Only one sample is allowed\n")
+    stop("Multiple samples in the most_similar function. Only one sample is allowed.
+         This error could be caused by the IM algorithm if there is more than one single sample for a
+         candidate author\n")
 
   }
 
