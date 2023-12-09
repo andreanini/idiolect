@@ -60,6 +60,8 @@ performance = function(training, test = NULL){
     res.llr |>
       dplyr::mutate(predicted = dplyr::if_else(llr > 0, T, F)) -> res.res
 
+    AUC <- pROC::roc(res.llr$target, res.llr$llr) |> pROC::auc()
+
     cm = caret::confusionMatrix(as.factor(res.res$predicted),
                                 as.factor(res.res$target),
                                 positive = "TRUE")
@@ -81,6 +83,8 @@ performance = function(training, test = NULL){
     res.llr |>
       dplyr::mutate(predicted = dplyr::if_else(llr > 0, T, F)) -> res.res
 
+    AUC <- pROC::roc(res.llr$target, res.llr$llr) |> pROC::auc()
+
     cm = caret::confusionMatrix(as.factor(res.res$predicted),
                                 as.factor(res.res$target),
                                 positive = "TRUE")
@@ -95,7 +99,8 @@ performance = function(training, test = NULL){
   evaluation.res[1, "Mean FALSE LLR"] = roc.res$mn
   evaluation.res[1, "TRUE trials"] = roc.res$nt
   evaluation.res[1, "FALSE trials"] = roc.res$nn
-  evaluation.res[1, "Accuracy"] = as.numeric(cm$overall["Accuracy"])
+  evaluation.res[1, "AUC"] = AUC
+  evaluation.res[1, "Balanced Accuracy"] = as.numeric(cm$byClass["Balanced Accuracy"])
   evaluation.res[1, "Precision"] = as.numeric(cm$byClass["Precision"])
   evaluation.res[1, "Recall"] = as.numeric(cm$byClass["Recall"])
   evaluation.res[1, "F1"] = as.numeric(cm$byClass["F1"])

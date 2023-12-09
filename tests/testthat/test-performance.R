@@ -6,7 +6,7 @@ test_that("performance evaluation works", {
 
   only.training <- results$evaluation
 
-  testthat::expect_equal(only.training[1, 8], 0.84, tolerance = 0.01)
+  testthat::expect_equal(only.training[1, 9], 0.84, tolerance = 0.01)
 
   train.test = split.data.frame(res, ~target)
   same = train.test$`TRUE`
@@ -20,6 +20,6 @@ test_that("performance evaluation works", {
 
   train.test.perf <- results$evaluation
 
-  testthat::expect_equal(train.test.perf[1, 8], 0.785, tolerance = 0.01)
+  testthat::expect_equal(train.test.perf[1, 9], 0.785, tolerance = 0.01)
 
 })

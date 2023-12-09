@@ -12,6 +12,7 @@ Imports:
     caret,
     dplyr,
     pbapply,
+    pROC,
     proxy,
     quanteda.textstats,
     readtext,
