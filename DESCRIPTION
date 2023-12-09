@@ -15,7 +15,6 @@ Imports:
     pROC,
     proxy,
     quanteda.textstats,
-    readtext,
     ROC (>= 0.11),
     spacyr,
     stringr,
@@ -23,7 +22,8 @@ Imports:
 RoxygenNote: 7.2.3
 Roxygen: list(markdown = TRUE)
 Suggests: 
-    testthat (>= 3.0.0)
+    testthat (>= 3.0.0),
+    readtext
 Config/testthat/edition: 3
 Remotes: 
     https://github.com/davidavdav/ROC

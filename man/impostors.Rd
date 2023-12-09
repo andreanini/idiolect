@@ -52,5 +52,5 @@ More details here.
 q <- refcor.sample[1]
 ks <- refcor.sample[2:3]
 imps <- refcor.sample[4:9]
-impostors(q, ks, imps, algorithm = "KGI", k = 20)
+impostors(q, ks, imps, algorithm = "KGI")
 }
