@@ -34,6 +34,17 @@ test_that("RBI works", {
   testthat::expect_lt(round(results.corpus[2, 4], 1), 0.3)
   testthat::expect_lt(round(results.dfm[2, 4], 1), 0.3)
 
+  # impostors as rest of K version
+  q.data <- unknown[c(1, 2)]
+  k.data <- known[c(1:50)]
+  cand.imps <- k.data
+
+  results.corpus <- impostors(q.data, k.data, cand.imps, algorithm = "RBI", k = 100) |>
+    suppressWarnings()
+
+  testthat::expect_gt(round(results.corpus[4, 4], 1), 0.7)
+  testthat::expect_lt(round(results.corpus[2, 4], 1), 0.3)
+
 })
 test_that("KGI works", {
 

@@ -22,7 +22,7 @@ impostors(
 
 \item{k.data}{The known or undisputed data, either as a corpus (the output of \code{\link[=create_corpus]{create_corpus()}}) or as a \code{quanteda} dfm (the output of \code{\link[=vectorize]{vectorize()}}). More than one sample for a candidate author is accepted for all algorithms except IM.}
 
-\item{cand.imps}{The impostors data for the candidate authors, either as a corpus (the output of \code{\link[=create_corpus]{create_corpus()}}) or as a \code{quanteda} dfm (the output of \code{\link[=vectorize]{vectorize()}}).}
+\item{cand.imps}{The impostors data for the candidate authors, either as a corpus (the output of \code{\link[=create_corpus]{create_corpus()}}) or as a \code{quanteda} dfm (the output of \code{\link[=vectorize]{vectorize()}}). This can be the same object as \code{k.data} (e.g. to recycle impostors).}
 
 \item{algorithm}{A string specifying which impostors algorithm to use, either "RBI", "KGI", or "IM".}
 
@@ -40,7 +40,7 @@ impostors(
 }
 \value{
 The function will test all possible combinations of q texts and candidate authors and return a
-data frame containing a score ranging from 0 to 1 representing the degree of confidence that the candidate is the author of the Q text. The data frame contains a column called "target" with a logical value which is TRUE if the author of the Q text is the candidate and FALSE otherwise. If the RBI algorithm is selected and the features parameter is TRUE then the data frame will also contain a column with the features that are likely to have had an impact on the score. The three data sets, \code{q.data}, \code{k.data}, and \code{cand.imps} must be disjunct in terms of the texts that they contain otherwise an error is returned.
+data frame containing a score ranging from 0 to 1 representing the degree of confidence that the candidate is the author of the Q text. The data frame contains a column called "target" with a logical value which is TRUE if the author of the Q text is the candidate and FALSE otherwise. If the RBI algorithm is selected and the features parameter is TRUE then the data frame will also contain a column with the features that are likely to have had an impact on the score. The two data sets \code{q.data}, \code{k.data}, must be disjunct in terms of the texts that they contain otherwise an error is returned. However, \code{cand.imps} and \code{k.data} can be the same object, for example, to use the other candidates' texts as impostors. The function will always exclude impostor texts with the same author as the Q and K texts considered.
 }
 \description{
 This function runs the \emph{Impostors Method} for authorship verification.
@@ -52,5 +52,5 @@ More details here.
 q <- refcor.sample[1]
 ks <- refcor.sample[2:3]
 imps <- refcor.sample[4:9]
-impostors(q, ks, imps, algorithm = "KGI")
+impostors(q, ks, imps, algorithm = "KGI", k = 20)
 }
