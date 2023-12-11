@@ -108,8 +108,8 @@ RBI <- function(x, qs, candidates, cand.imps, coefficient, k, features){
   if(features == T) { final.feats <- unique(feats) }
 
   results = data.frame()
-  results[1,"candidate"] = quanteda::docvars(candidate[1,], "author")
-  results[1,"q"] = quanteda::docnames(q)
+  results[1,"K"] = quanteda::docvars(candidate[1,], "author")
+  results[1,"Q"] = quanteda::docnames(q)
 
   if(quanteda::docvars(candidate[1,], "author") == quanteda::docvars(q, "author")){
 
@@ -176,8 +176,8 @@ KGI <- function(x, qs, candidates, cand.imps){
   score = round(score, 3)
 
   results = data.frame()
-  results[1,"candidate"] = quanteda::docvars(candidate[1,], "author")
-  results[1,"q"] = quanteda::docnames(q)
+  results[1,"K"] = quanteda::docvars(candidate[1,], "author")
+  results[1,"Q"] = quanteda::docnames(q)
 
   if(quanteda::docvars(candidate[1,], "author") == quanteda::docvars(q, "author")){
 
@@ -260,8 +260,8 @@ IM <- function(x, qs, candidates, cand.imps, coefficient, m, n){
   score = round(mean(c(score_a, score_b)), 3)
 
   results = data.frame()
-  results[1,"candidate"] = quanteda::docvars(candidate[1,], "author")
-  results[1,"q"] = quanteda::docnames(q)
+  results[1,"K"] = quanteda::docvars(candidate[1,], "author")
+  results[1,"Q"] = quanteda::docnames(q)
 
   if(quanteda::docvars(candidate[1,], "author") == quanteda::docvars(q, "author")){
 
