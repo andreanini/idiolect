@@ -2,9 +2,9 @@ citHeader("To cite `idiolect` in publications use:")
 
 citEntry(
   entry    = "Manual",
-  title    = "Idiolect: An R package for forensic authorship verification",
+  title    = "Idiolect: An R package for forensic authorship analysis",
   author   = "Andrea Nini",
   year     = "2023",
   url      = "https://github.com/andreanini/idiolect",
-  textVersion = paste("Nini, A. (2023). Idiolect: An R package for forensic authorship verification. URL https://github.com/andreanini/idiolect")
+  textVersion = paste("Nini, A. (2023). Idiolect: An R package for forensic authorship analysis. URL https://github.com/andreanini/idiolect")
 )
