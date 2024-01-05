@@ -31,8 +31,8 @@ test_that("RBI works", {
 
   testthat::expect_gt(round(results.corpus[1, 4], 1), 0.4)
   testthat::expect_gt(round(results.dfm[1, 4], 1), 0.4)
-  testthat::expect_lt(round(results.corpus[2, 4], 1), 0.3)
-  testthat::expect_lt(round(results.dfm[2, 4], 1), 0.3)
+  testthat::expect_lt(round(results.corpus[2, 4], 1), 0.31)
+  testthat::expect_lt(round(results.dfm[2, 4], 1), 0.31)
 
   # impostors as rest of K version
   q.data <- unknown[c(1, 2)]

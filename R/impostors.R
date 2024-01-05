@@ -31,9 +31,11 @@ important_features <- function(q, candidate, impostors){
 
   }
 
-  final.features <- important.features |> sort(decreasing = T) |> names() |> unique()
+  final.features <- important.features |> sort(decreasing = T)
 
-  return(final.features[1:10])
+  to.return <- names(final.features[final.features > 1]) |> unique()
+
+  return(to.return)
 
 }
 RBI <- function(x, qs, candidates, cand.imps, coefficient, k, features){
