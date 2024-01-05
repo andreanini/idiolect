@@ -6,4 +6,6 @@ test_that("content masking works", {
 
   expect_snapshot(contentmask(enron.small, algorithm = "POSnoise", replace_non_ascii = F))
 
+  expect_snapshot(contentmask(enron.small, algorithm = "frames", replace_non_ascii = F))
+
 })

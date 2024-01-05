@@ -43,7 +43,7 @@ contentmask <- function(corpus, model = "en_core_web_sm", algorithm = "POSnoise"
   names <- quanteda::docnames(c)
 
   spacyr::spacy_initialize(model = model, entity = F)
-  parsed.corpus <- spacyr::spacy_parse(c, lemma = F, entity = F,
+  parsed.corpus <- spacyr::spacy_parse(c, lemma = F, entity = F, tag = T,
                                        additional_attributes = c("like_url", "like_email"))
   spacyr::spacy_finalize()
 
@@ -75,20 +75,15 @@ contentmask <- function(corpus, model = "en_core_web_sm", algorithm = "POSnoise"
 
   }
 
-  if(algorithm == "framenoise"){
+  if(algorithm == "frames"){
 
-    content <- c("N", "P", "V", "D", "S")
+    content = c("ADD", "CD", "NN", "NNP", "NNPS", "NNS", "PRP", "PRP$", "VB", "VBD", "VBG", "VBN", "VBP",
+                "VBZ")
 
     parsed.corpus |>
       dplyr::mutate(token = tolower(token)) |>
-      dplyr::mutate(pos = dplyr::case_when(pos == "NOUN" ~ "N",
-                                           pos == "PROPN" ~ "P",
-                                           pos == "VERB" ~ "V",
-                                           pos == "NUM" ~ "D",
-                                           pos == "SYM" ~ "S",
-                                           TRUE ~ pos)) |>
-      dplyr::mutate(POSnoise = dplyr::case_when(pos %in% content ~ pos,
-                                                pos == "SPACE" ~ token,
+      dplyr::mutate(POSnoise = dplyr::case_when(tag %in% content ~ tag,
+                                                tag == "_SP" ~ token,
                                                 TRUE ~ token)) |>
       dplyr::select(doc_id, POSnoise) |>
       dplyr::rename(token = POSnoise) |>
