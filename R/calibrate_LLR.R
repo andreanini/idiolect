@@ -23,21 +23,21 @@ calibrate_LLR = function(calibration.dataset, dataset){
   LLR <- stats::predict(calibration.model, newdata = dataset)/log(10)
 
   dataset |>
-    dplyr::mutate(llr = LLR,
-           Verbal = dplyr::case_when(llr > 4 ~ "Extremely strong support for Hp",
-                                     llr <= 4 & llr >= 3 ~ "Very strong support for Hp",
-                                     llr < 3 & llr >= 2 ~ "Strong support for Hp",
-                                     llr < 2 & llr >= 1 ~ "Moderate support for Hp",
-                                     llr < 1 & llr > 0 ~ "Weak support for Hp",
-                                     llr == 0 ~ "Hp as likely as Hd",
-                                     llr < 0 & llr >= -1 ~ "Weak support for Hd",
-                                     llr < -1 & llr >= -2 ~ "Moderate support for Hd",
-                                     llr < -2 & llr >= -3 ~ "Strong support for Hd",
-                                     llr < -3 & llr >= -4 ~ "Very strong support for Hd",
-                                     llr < -4 ~ "Extremely strong support for Hd"),
-           Intepretation = dplyr::case_when(llr > 0 ~ paste("The similarity is", round(10^llr, 2), "times more likely to be observed in the case of Hp than in the case of Hd"),
-                                            llr == 0 ~ "Hp is as likely as Hd",
-                                            llr < 0 ~ paste("The similarity is", round(10^abs(llr), 2), "times more likely to be observed in the case of Hd than in the case of Hp"))) -> newdata
+    dplyr::mutate(LLR = round(LLR, 3),
+      `Verbal label` = dplyr::case_when(LLR > 4 ~ "Extremely strong support for $H_p$",
+                                     LLR <= 4 & LLR >= 3 ~ "Very strong support for $H_p$",
+                                     LLR < 3 & LLR >= 2 ~ "Strong support for $H_p$",
+                                     LLR < 2 & LLR >= 1 ~ "Moderate support for $H_p$",
+                                     LLR < 1 & LLR > 0 ~ "Weak support for $H_p$",
+                                     LLR == 0 ~ "$H_p$ as likely as $H_d$",
+                                     LLR < 0 & LLR >= -1 ~ "Weak support for $H_d$",
+                                     LLR < -1 & LLR >= -2 ~ "Moderate support for $H_d$",
+                                     LLR < -2 & LLR >= -3 ~ "Strong support for $H_d$",
+                                     LLR < -3 & LLR >= -4 ~ "Very strong support for $H_d$",
+                                     LLR < -4 ~ "Extremely strong support for $H_d$"),
+           Interpretation = dplyr::case_when(LLR > 0 ~ paste("The similarity is", round(10^LLR, 2), "times more likely to be observed in the case of $H_p$ than in the case of $H_d$"),
+                                            LLR == 0 ~ "$H_p$ is as likely as $H_d$",
+                                            LLR < 0 ~ paste("The similarity is", round(10^abs(LLR), 2), "times more likely to be observed in the case of $H_d$ than in the case of $H_p$"))) -> newdata
 
   return(newdata)
 
