@@ -14,8 +14,8 @@ knitr::opts_chunk$set(
 )
 ```
 
-# *idiolect*: An R package for forensic authorship analysis
-
+# *idiolect*: An R package for forensic authorship analysis <img src="man/figures/logo.png" align="right" height="139" alt="" />
+ 
 <!-- badges: start -->
 
 <!-- badges: end -->
