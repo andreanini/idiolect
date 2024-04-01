@@ -7,22 +7,23 @@
 performance(training, test = NULL)
 }
 \arguments{
-\item{training}{The data frame with the results to evaluate, typically the output of an authorship verification function, such as \code{\link[=impostors]{impostors()}}. If only training is present then the function will perform a leave-one-out cross-validation.}
+\item{training}{The data frame with the results to evaluate, typically the output of an authorship analysis function, such as \code{\link[=impostors]{impostors()}}. If only training is present then the function will perform a leave-one-out cross-validation.}
 
 \item{test}{Optional data frame of results. If present then a calibration model is extracted from training and its performance is evaluated on this data set.}
 }
 \value{
-The function returns a list containing a data frame with performance statistics, including the C_llr, and a ROC object that can be used to make a tippet plot using the \code{tippet.plot()} function from \code{ROC}. The binary classification statistics are all calculated considering a Log-Likelihood Ratio score of 0 as a threshold.
+The function returns a list containing a data frame with performance statistics, including an object that can be used to make a tippet plot using the \code{\link[ROC:tippet.plot]{ROC::tippet.plot()}} function from \link{ROC}.
 }
 \description{
-This function is used to the test the performance of a verification function, such as the \emph{Impostors Method}.
+This function is used to the test the performance of an authorship analysis method, such as the \emph{Impostors Method}.
 }
 \details{
-More details here.
+Before applying a method to a real authorship case, it is good practice to test it known ground truth data. This function performs this test by taking as input a table of results or two tables, one for training and one for the test, and then returning as output a list with the following performance statistics: the log-likelihood ratio cost (both Cllr and Cllr-min), Equal Error Rate (ERR), the mean values of the log-likelihood ratio for both the same-author (TRUE) and different-author (FALSE) cases, the Area Under the Curve (AUC), Balanced Accuracy, Precision, Recall, F1, and the full confusion matrix. The binary classification statistics are all calculated considering a Log-Likelihood Ratio score of 0 as a threshold.
 }
 \examples{
 results <- data.frame(score = c(0.5, 0.2, 0.8, 0.01), target = c(TRUE, FALSE, TRUE, FALSE))
 perf <- performance(results)
 perf$evaluation
 ROC::tippet.plot(perf$roc)
+
 }

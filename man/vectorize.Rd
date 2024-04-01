@@ -42,14 +42,15 @@ vectorize(
 A dfm (document-feature matrix) containing each text as a feature vector. N-gram tokenisation does not cross sentence boundaries.
 }
 \description{
-This function turns the texts into n-gram vectors.
+This function turns the texts into feature vectors.
 }
 \details{
-All the authorship analysis functions call vectorize() with the standard parameters for the algorithm selected. This function is therefore left only for users who want to modify these parameters or for convenience if the same dfm has to be reused by the algorithms to avoid vectorizing the same data many times. Most users who only need to run a standard analysis do not need use this function.
+All the authorship analysis functions call \code{vectorize()} with the standard parameters for the algorithm selected. This function is therefore left only for those users who want to modify these parameters or for convenience if the same dfm has to be reused by the algorithms so to avoid vectorizing the same data many times. Most users who only need to run a standard analysis do not need use this function.
 }
 \examples{
 mycorpus <- quanteda::corpus("The cat sat on the mat.")
 quanteda::docvars(mycorpus, "author") <- "author1"
 matrix <- vectorize(mycorpus, tokens = "character", remove_punct = FALSE, remove_symbols = TRUE,
 remove_numbers = TRUE, lowercase = TRUE, n = 5, weighting = "rel", trim = TRUE, threshold = 1500)
+
 }

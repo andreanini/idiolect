@@ -2,7 +2,7 @@
 % Please edit documentation in R/most_similar.R
 \name{most_similar}
 \alias{most_similar}
-\title{Select most similar texts to a specific text}
+\title{Select the most similar texts to a specific text}
 \usage{
 most_similar(sample, pool, coefficient, n)
 }
@@ -19,7 +19,7 @@ most_similar(sample, pool, coefficient, n)
 The function returns a dfm containing the top n most similar rows to the input sample using the minmax distance.
 }
 \description{
-Select most similar texts to a specific text
+Select the most similar texts to a specific text
 }
 \examples{
 text1 <- "The cat sat on the mat"
@@ -28,4 +28,5 @@ text3 <- "Violence is the last refuge of the incompetent"
 c <- quanteda::corpus(c(text1, text2, text3))
 d <- quanteda::tokens(c) |> quanteda::dfm() |> quanteda::dfm_weight(scheme = "prop")
 most_similar(d[1,], d[-1,], coefficient = "minmax", n = 1)
+
 }

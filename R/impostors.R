@@ -45,10 +45,10 @@ RBI <- function(x, qs, candidates, cand.imps, coefficient, k, features){
 
   candidate.name = as.character(x["K"])
   candidate = quanteda::dfm_subset(candidates, author == candidate.name &
-                                               quanteda::docnames(candidates) != q.name)
+                                     quanteda::docnames(candidates) != q.name)
 
   cand.imps <- quanteda::dfm_subset(cand.imps, author != candidate.name &
-                                               author != quanteda::docvars(q, "author"))
+                                      author != quanteda::docvars(q, "author"))
 
   f <- get(coefficient)
   r = k/5
@@ -137,7 +137,7 @@ KGI <- function(x, qs, candidates, cand.imps){
 
   candidate.name = as.character(x["K"])
   candidate = quanteda::dfm_subset(candidates, author == candidate.name &
-                                               quanteda::docnames(candidates) != q.name)
+                                     quanteda::docnames(candidates) != q.name)
 
   cand.imps <- quanteda::dfm_subset(cand.imps, author != candidate.name &
                                       author != quanteda::docvars(q, "author"))
@@ -203,7 +203,7 @@ IM <- function(x, qs, candidates, cand.imps, coefficient, m, n){
 
   candidate.name = as.character(x["K"])
   candidate = quanteda::dfm_subset(candidates, author == candidate.name &
-                                               quanteda::docnames(candidates) != q.name)
+                                     quanteda::docnames(candidates) != q.name)
 
   cand.imps <- quanteda::dfm_subset(cand.imps, author != candidate.name &
                                       author != quanteda::docvars(q, "author"))
@@ -282,14 +282,19 @@ IM <- function(x, qs, candidates, cand.imps, coefficient, m, n){
 }
 #' Impostors Method
 #'
-#' This function runs the *Impostors Method* for authorship verification.
+#' This function runs the *Impostors Method* for authorship verification. The Impostors Method is based on calculating a similarity score and then, using a corpus of impostor texts, perform a bootstrapping analysis sampling random subsets of features and impostors in order to test the robustness of this similarity.
 #'
-#' More details here.
+#' The Impostors Method has been implemented in several algorithms and this function can run three of them:
+#'
+#' 1) IM: this is the original Impostors Method as proposed by Koppel and Winter (2014).
+#' 2) KGI: Kestemont's et al. (2016) version, which is a very popular implementation of the Impostors Method for stylometricians. It is inspired by IM and by its generalized version, the General Impostors Method proposed by Seidman (2013) but it is different in several ways.
+#' 3) RBI: the Rank-Based Impostors Method (Potha and Stamatatos 2017, 2020), which is the default option as it is currently the latest version that has been tested against older variants and found to be more successful.
+#' The two data sets `q.data`, `k.data`, must be disjunct in terms of the texts that they contain otherwise an error is returned. However, `cand.imps` and `k.data` can be the same object, for example, to use the other candidates' texts as impostors. The function will always exclude impostor texts with the same author as the Q and K texts considered.
 #'
 #' @param q.data The questioned or disputed data, either as a corpus (the output of [create_corpus()]) or as a `quanteda` dfm (the output of [vectorize()]).
 #' @param k.data The known or undisputed data, either as a corpus (the output of [create_corpus()]) or as a `quanteda` dfm (the output of [vectorize()]). More than one sample for a candidate author is accepted for all algorithms except IM.
 #' @param cand.imps The impostors data for the candidate authors, either as a corpus (the output of [create_corpus()]) or as a `quanteda` dfm (the output of [vectorize()]). This can be the same object as `k.data` (e.g. to recycle impostors).
-#' @param algorithm A string specifying which impostors algorithm to use, either "RBI", "KGI", or "IM".
+#' @param algorithm A string specifying which impostors algorithm to use, either "RBI" (deafult), "KGI", or "IM".
 #' @param coefficient A string indicating the coefficient to use, either "minmax" (default) or "cosine". This does not apply to the algorithm KGI, where the distance is "minmax".
 #' @param k The *k* parameters for the RBI algorithm. Not used by other algorithms. The default is 300.
 #' @param m The *m* parameter for the IM algorithm. Not used by other algorithms. The default is 100.
@@ -297,15 +302,24 @@ IM <- function(x, qs, candidates, cand.imps, coefficient, m, n){
 #' @param features A logical value indicating whether the important features should be retrieved or not. The default is FALSE. This only applies to the RBI algorithm.
 #' @param cores The number of cores to use for parallel processing (the default is one).
 #'
+#' @references Kestemont, Mike, Justin Stover, Moshe Koppel, Folgert Karsdorp & Walter Daelemans. 2016. Authenticating the writings of Julius Caesar. Expert Systems With Applications 63. 86–96. https://doi.org/10.1016/j.eswa.2016.06.029.
+#' Koppel, Moshe & Yaron Winter. 2014. Determining if two documents are written by the same author. Journal of the Association for Information Science and Technology 65(1). 178–187.
+#' Potha, Nektaria & Efstathios Stamatatos. 2017. An Improved Impostors Method for Authorship Verification. In Gareth J.F. Jones, Séamus Lawless, Julio Gonzalo, Liadh Kelly, Lorraine Goeuriot, Thomas Mandl, Linda Cappellato & Nicola Ferro (eds.), Experimental IR Meets Multilinguality, Multimodality, and Interaction (Lecture Notes in Computer Science), vol. 10456, 138–144. Springer, Cham. https://doi.org/10.1007/978-3-319-65813-1_14. (5 September, 2017).
+#' Potha, Nektaria & Efstathios Stamatatos. 2020. Improved algorithms for extrinsic author verification. Knowledge and Information Systems 62(5). 1903–1921. https://doi.org/10.1007/s10115-019-01408-4.
+#' Seidman, Shachar. 2013. Authorship Verification Using the Impostors Method. In Pamela Forner, Roberto Navigli, Dan Tufis & Nicola Ferro (eds.), Proceedings of CLEF 2013 Evaluation Labs and Workshop – Working Notes Papers, 23–26. Valencia, Spain. https://ceur-ws.org/Vol-1179/.
+#'
 #' @return The function will test all possible combinations of q texts and candidate authors and return a
-#' data frame containing a score ranging from 0 to 1 representing the degree of confidence that the candidate is the author of the Q text. The data frame contains a column called "target" with a logical value which is TRUE if the author of the Q text is the candidate and FALSE otherwise. If the RBI algorithm is selected and the features parameter is TRUE then the data frame will also contain a column with the features that are likely to have had an impact on the score. The two data sets `q.data`, `k.data`, must be disjunct in terms of the texts that they contain otherwise an error is returned. However, `cand.imps` and `k.data` can be the same object, for example, to use the other candidates' texts as impostors. The function will always exclude impostor texts with the same author as the Q and K texts considered.
-#' @export
+#' data frame containing a score ranging from 0 to 1, with a higher score indicating a higher likelihood that the same author produced the two sets of texts. The data frame contains a column called "target" with a logical value which is TRUE if the author of the Q text is the candidate and FALSE otherwise.
+#'
+#' If the RBI algorithm is selected and the features parameter is TRUE then the data frame will also contain a column with the features that are likely to have had an impact on the score. This algorithm has not been tested and the results should therefore be treated with care. The algorithm returns all those features that are consistently found to be shared by the candidate author's data and the questioned data and that also tend to be rare in the data set of impostors.
 #'
 #' @examples
 #' q <- refcor.sample[1]
 #' ks <- refcor.sample[2:3]
 #' imps <- refcor.sample[4:9]
 #' impostors(q, ks, imps, algorithm = "KGI")
+#'
+#' @export
 impostors = function(q.data, k.data, cand.imps, algorithm = "RBI", coefficient = "minmax", k = 300, m = 100, n = 25, features = F, cores = NULL){
 
   q.list <- quanteda::docnames(q.data)

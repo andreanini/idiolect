@@ -24,13 +24,22 @@ contentmask(
 A \code{quanteda} corpus object only containing functional tokens, depending on the algorithm chosen. The corpus contains the same docvars as the input. Email addresses or URLs are treated like nouns.
 }
 \description{
-This function offers two algorithms for topic/content masking. See Details below.
+This function offers two algorithms for topic/content masking. In order to run the masking algorithms, a Part of Speech (POS) tagger is run first. This is \code{spacy}, which is run via \link{spacyr}. For more information about the masking algorithms see Details below.
 }
 \details{
-References to algorithms to appear here.
+The default algorithm for content masking that this function applies is \code{POSnoise} (Halvani and Graner 2021). This algorithm only works for English and it transforms a text by masking tokens using their POS tag if these tokens are: nouns, verbs, adjectives, adverbs, digits, and symbols while leaving all the rest unchanged. \code{POSnoise} uses a list of function words for English that also includes frequent words belonging to the masked Part of Speech tags that tend to be mostly functional (e.g. make, recently, well).
+
+Another algorithm implemented is Nini's (2023) \code{frames} or \verb{frame n-grams}. This algorithm does not involve a special list of tokens and therefore can potentially work for any language provided that the correct \code{spacy} model is loaded. This algorithm consists in masking all tokens using their POS tag only when these are nouns, verbs, or personal pronouns.
 }
 \examples{
+\dontrun{
 text <- "The elegant cat was forcefully put on the chair. cat@pets.com; http://quanteda.io/"
 toy.corpus <- quanteda::corpus(text)
 contentmask(toy.corpus, algorithm = "POSnoise", replace_non_ascii = FALSE)
+}
+
+}
+\references{
+Halvani, Oren & Lukas Graner. 2021. POSNoise: An Effective Countermeasure Against Topic Biases in Authorship Analysis. In Proceedings of the 16th International Conference on Availability, Reliability and Security, 1–12. Vienna, Austria: Association for Computing Machinery. https://doi.org/10.1145/3465481.3470050.
+Nini, Andrea. 2023. A Theory of Linguistic Individuality for Authorship Analysis (Elements in Forensic Linguistics). Cambridge, UK: Cambridge University Press.
 }

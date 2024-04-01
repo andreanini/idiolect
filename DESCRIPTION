@@ -1,10 +1,10 @@
 Package: idiolect
 Type: Package
-Title: An R package for forensic authorship verification
+Title: An R package for forensic authorship analysis
 Version: 0.1.0
 Author: Andrea Nini
 Maintainer: Andrea Nini <andrea.nini@manchester.ac.uk>
-Description: This package implements methods for authorship verification tailored for the forensic context using the likelihood ratio framework.
+Description: This package implements authorship analysis methods tailored for the forensic context using the likelihood ratio framework.
 License: GPL (>= 2)
 Encoding: UTF-8
 LazyData: true

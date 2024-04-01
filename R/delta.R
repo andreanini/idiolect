@@ -31,7 +31,7 @@ cosine_delta <- function(x, z){
 }
 #' Delta
 #'
-#' This function runs a classic Delta analysis, more precisely its Cosine variant.
+#' This function runs a classic *Cosine Delta* analysis (Smith and Aldridge 2011; Evert et al. 2017).
 #'
 #' @param q.data The questioned or disputed data, either as a corpus (the output of [create_corpus()]) or as a `quanteda` dfm (the output of [vectorize()]).
 #' @param k.data The known or undisputed data, either as a corpus (the output of [create_corpus()]) or as a `quanteda` dfm (the output of [vectorize()]).
@@ -46,13 +46,17 @@ cosine_delta <- function(x, z){
 #' @param features Logical with default FALSE. If TRUE, then the output will contain the features used.
 #' @param cores The number of cores to use for parallel processing (the default is one).
 #'
+#' @references Evert, Stefan, Thomas Proisl, Fotis Jannidis, Isabella Reger, Steffen Pielström, Christof Schöch & Thorsten Vitt. 2017. Understanding and explaining Delta measures for authorship attribution. Digital Scholarship in the Humanities 32. ii4–ii16. https://doi.org/10.1093/llc/fqx023.
+#' Smith, Peter W H & W Aldridge. 2011. Improving Authorship Attribution: Optimizing Burrows’ Delta Method*. Journal of Quantitative Linguistics 18(1). 63–88. https://doi.org/10.1080/09296174.2011.533591.
+
 #' @return If features is set to FALSE then the output is a data frame containing the results of all comparisons between the Q texts and the K texts. If features is set to TRUE then the output is a list containing the results data frame and the vector of features used for the analysis.
-#' @export
 #'
 #' @examples
 #' qs <- refcor.sample[c(1, 4, 7)]
 #' ks <- refcor.sample[-c(1, 4, 7)]
 #' delta(qs, ks, features = TRUE)
+#'
+#' @export
 delta <- function(q.data, k.data, tokens = "word", remove_punct = F, remove_symbols = T, remove_numbers = T, lowercase = T, n = 1, trim = T, threshold = 150, features = F, cores = NULL){
 
   if(quanteda::is.corpus(q.data) & quanteda::is.corpus(k.data)){

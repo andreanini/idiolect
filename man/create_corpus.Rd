@@ -13,11 +13,12 @@ create_corpus(path)
 A \code{quanteda} corpus object with the authors' names as a docvar.
 }
 \description{
-Function to read in data and turn it into a corpus object.
+Function to read in text data and turn it into a \code{quanteda} corpus object.
 }
 \examples{
 \dontrun{
 path <- "path/to/data"
 create_corpus(path)
 }
+
 }

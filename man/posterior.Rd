@@ -2,22 +2,23 @@
 % Please edit documentation in R/posterior.R
 \name{posterior}
 \alias{posterior}
-\title{Posterior prosecution probabilities/odds}
+\title{Posterior prosecution probabilities and odds}
 \usage{
 posterior(LLR)
 }
 \arguments{
-\item{LLR}{One single numeric value corresponding to the Log-Likelihood Ratio.}
+\item{LLR}{One single numeric value corresponding to a Log-Likelihood Ratio (base 10).}
 }
 \value{
-A data frame containing some simulated prior probabilities/odds for the prosecution and the resulting posterior probabilities/odds after the LLR. The first row/scenario is a prior of 0.000001, where the denominator roughly corresponds to the population of Manchester.
+A data frame containing some simulated prior probabilities/odds for the prosecution and the resulting posterior probabilities/odds after the LLR.
 }
 \description{
-This function takes as input a value of the Log-Likelihood Ratio and returns a table that shows the impact on some simulated prior probabilities (for the prosecution hypothesis).
+This function takes as input a value of the Log-Likelihood Ratio and returns a table that shows the impact on some simulated prior probabilities for the prosecution hypothesis.
 }
 \examples{
 posterior(LLR = 0)
 posterior(LLR = 1.8)
 posterior(LLR = -0.5)
 posterior(LLR = 4)
+
 }

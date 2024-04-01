@@ -1,4 +1,4 @@
-#' Select most similar texts to a specific text
+#' Select the most similar texts to a specific text
 #'
 #' @param sample This is a single row of a `quanteda` dfm representing the sample to match.
 #' @param pool This is a dfm containing all possible samples from which to select the top n.
@@ -6,7 +6,6 @@
 #' @param coefficient The coefficient to use for similarity. Either "minmax", "cosine", or "Phi".
 #'
 #' @return The function returns a dfm containing the top n most similar rows to the input sample using the minmax distance.
-#' @export
 #'
 #' @examples
 #' text1 <- "The cat sat on the mat"
@@ -15,6 +14,8 @@
 #' c <- quanteda::corpus(c(text1, text2, text3))
 #' d <- quanteda::tokens(c) |> quanteda::dfm() |> quanteda::dfm_weight(scheme = "prop")
 #' most_similar(d[1,], d[-1,], coefficient = "minmax", n = 1)
+#'
+#' @export
 most_similar <- function(sample, pool, coefficient, n){
 
   if(nrow(sample) > 1){

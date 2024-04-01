@@ -14,17 +14,15 @@ knitr::opts_chunk$set(
 )
 ```
 
-# idiolect: <img src="man/figures/logo.png" align="right" height="139"/>
-
-An R package for forensic authorship analysis
+# idiolect <img src="man/figures/logo.png" align="right" height="139"/>
 
 <!-- badges: start -->
 
 <!-- badges: end -->
 
----------- !!! WARNING: CURRENTLY IN DEVELOPMENT !!! ----------
+## Overview
 
-The `idiolect` R package is designed to provide a framework for performing comparative authorship analysis within a forensic context using the likelihood ratio framework. The package contains a set of authorship analysis functions that take a set of texts as input and output scores that can then be calibrated into likelihood ratios. The package is dependent on [`quanteda`](https://quanteda.io) [@benoit2018] for the Natural Language Processing functions.
+The `idiolect` R package is designed to provide a comprehensive suite of tools for performing comparative authorship analysis within a forensic context using the likelihood ratio framework [e.g. @ishihara2021]. The package contains a set of authorship analysis functions that take a set of texts as input and output scores that can then be calibrated into likelihood ratios. The package is dependent on [`quanteda`](https://quanteda.io) [@benoit2018] for all Natural Language Processing functions.
 
 ## Installation
 
@@ -36,7 +34,7 @@ devtools::install_github("https://github.com/andreanini/idiolect")
 
 ## Example
 
-The main functions contained in the package reflect the typical workflow for the use of authorship analysis methods for forensic problems:
+The main functions contained in the package reflect the typical workflow for authorship analysis for forensic problems:
 
 1.  Input data using `create_corpus()`;
 
@@ -44,7 +42,7 @@ The main functions contained in the package reflect the typical workflow for the
 
 3.  Launch an analysis (`delta()`, `ngram_tracing()`, or `impostors()`);
 
-4.  Test the performance of the method on known data using `performance()`;
+4.  Test the performance of the method on ground truth data using `performance()`;
 
 5.  Finally, apply the method to the questioned text and generate a likelihood ratio with `calibrate_LLR()`.
 

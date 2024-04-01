@@ -94,7 +94,9 @@ similarity <- function(x, df, coefficient, features){
 }
 #' N-gram tracing
 #'
-#' This function performs n-gram tracing.
+#' This function runs the authorship analysis method called *n-gram tracing*, which can be used for both attribution and verification.
+#'
+#' N-gram tracing was originally proposed by Grieve et al (2019). Nini (2023) then proposed a mathematical reinterpretation that is compatible with Cognitive Linguistic theories of language processing. He then tested several variants of the method and found that the original version, which uses the Simpson's coefficient, tends to be outperformed by versions using the Phi coefficient, the Kulczynski's coefficient, and the Cole coefficient. This function can run the n-gram tracing method using any of these coefficients plus the Jaccard coefficient for reference, as this coefficient has been applied in several forensic linguistic studies.
 #'
 #' @param q.data The questioned or disputed data, either as a corpus (the output of [create_corpus()]) or as a `quanteda` dfm (the output of [vectorize()]).
 #' @param k.data The known or undisputed data, either as a corpus (the output of [create_corpus()]) or as a `quanteda` dfm (the output of [vectorize()]). More than one sample for a candidate author is accepted but the function will combine them so to make a profile.
@@ -108,14 +110,18 @@ similarity <- function(x, df, coefficient, features){
 #' @param cores The number of cores to use for parallel processing (the default is one).
 #' @param features Logical with default FALSE. If TRUE then the result table will contain the features in the overlap that are unique for that overlap in the corpus.
 #'
-#' @return The function will test all possible combinations of q texts and candidate authors and return a
+#' @references Grieve, Jack, Emily Chiang, Isobelle Clarke, Hannah Gideon, Aninna Heini, Andrea Nini & Emily Waibel. 2019. Attributing the Bixby Letter using n-gram tracing. Digital Scholarship in the Humanities 34(3). 493–512.
+#' Nini, Andrea. 2023. A Theory of Linguistic Individuality for Authorship Analysis (Elements in Forensic Linguistics). Cambridge, UK: Cambridge University Press.
+#'
+#' @return The function will test all possible combinations of Q texts and candidate authors and return a
 #' data frame containing the value of the similarity coefficient selected called 'score' and an optional column with the overlapping features that only occur in the Q and candidate considered and in no other Qs (ordered by length if the n-gram is of variable length). The data frame contains a column called 'target' with a logical value which is TRUE if the author of the Q text is the candidate and FALSE otherwise.
-#' @export
 #'
 #' @examples
 #' qs <- refcor.sample[c(1, 4, 7)]
 #' ks <- refcor.sample[-c(1, 4, 7)]
 #' ngram_tracing(qs, ks, coefficient = 'simpson')
+#'
+#' @export
 ngram_tracing <- function(q.data, k.data, tokens = "character", remove_punct = F, remove_symbols = T, remove_numbers = T, lowercase = T, n = 9, coefficient = "simpson", features = F, cores = NULL){
 
   if(quanteda::is.corpus(q.data) & quanteda::is.corpus(k.data)){
