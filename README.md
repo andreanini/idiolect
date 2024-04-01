@@ -1,7 +1,7 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# idiolect <img src="man/figures/logo.png" align="right" height="139"/>
+# **idiolect**: An R package for forensic authorship analysis <img src="man/figures/logo.png" align="right" height="139"/>
 
 An R package for forensic authorship analysis
 
