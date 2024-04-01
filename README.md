@@ -1,17 +1,19 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# *idiolect*: An R package for forensic authorship verification
+# idiolect <img src="man/figures/logo.png" align="right" height="139"/>
+
+An R package for forensic authorship analysis
 
 <!-- badges: start -->
 <!-- badges: end -->
 
----------- !!! WARNING: CURRENTLY IN DEVELOPMENT !!! ----------
+———- !!! WARNING: CURRENTLY IN DEVELOPMENT !!! ———-
 
 The `idiolect` R package is designed to provide a framework for
-performing comparative authorship analysis within a forensic context and
+performing comparative authorship analysis within a forensic context
 using the likelihood ratio framework. The package contains a set of
-authorship verification functions that take a set of texts as input and
+authorship analysis functions that take a set of texts as input and
 output scores that can then be calibrated into likelihood ratios. The
 package is dependent on [`quanteda`](https://quanteda.io) (Benoit et al.
 2018) for the Natural Language Processing functions.
@@ -28,22 +30,19 @@ devtools::install_github("https://github.com/andreanini/idiolect")
 ## Example
 
 The main functions contained in the package reflect the typical workflow
-for the use of authorship verification methods for forensic problems:
+for the use of authorship analysis methods for forensic problems:
 
 1.  Input data using `create_corpus()`;
 
 2.  Optionally mask the content/topic of the texts using
     `contentmask()`;
 
-3.  Turn the texts into feature vectors with `vectorize()`;
+3.  Launch an analysis (`delta()`, `ngram_tracing()`, or `impostors()`);
 
-4.  Run a verification function. At the moment the only implemented one
-    is the *Impostors Method* in `impostors()`;
-
-5.  Test the performance of the method on known data using
+4.  Test the performance of the method on known data using
     `performance()`;
 
-6.  Finally, apply the method to the questioned text and generate a
+5.  Finally, apply the method to the questioned text and generate a
     likelihood ratio with `calibrate_LLR()`.
 
 ## References
