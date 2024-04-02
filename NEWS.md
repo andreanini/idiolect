@@ -1,3 +1,3 @@
-# idiolect 0.1.0
+# idiolect 1.0.0
 
 * Initial CRAN submission.

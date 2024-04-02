@@ -1,13 +1,24 @@
-Package: idiolect
 Type: Package
-Title: An R package for forensic authorship analysis
-Version: 0.1.0
-Author: Andrea Nini
+Package: idiolect
+Title: Functions for Forensic Authorship Analysis
+Version: 1.0.0
+Authors@R: 
+    person("Andrea", "Nini", , "andrea.nini@manchester.ac.uk", role = c("aut", "cre", "cph"),
+           comment = c(ORCID = "0000-0003-4218-5130"))
+Author: Andrea Nini [aut, cre, cph]
 Maintainer: Andrea Nini <andrea.nini@manchester.ac.uk>
-Description: This package implements authorship analysis methods tailored for the forensic context using the likelihood ratio framework.
+Description: Carry out comparative authorship analysis of disputed and
+    undisputed texts within the Likelihood Ratio Framework for expressing
+    evidence in forensic science. This package contains functions that
+    implement algorithms for comparative authorship analysis as well as
+    functions to measure their performance and to calibrate their outputs
+    into Log-Likelihood Ratios.
 License: GPL (>= 2)
-Encoding: UTF-8
-LazyData: true
+URL: https://github.com/andreanini/idiolect
+BugReports: https://github.com/andreanini/idiolect/issues
+Depends: 
+    quanteda,
+    R (>= 2.10)
 Imports: 
     caret,
     dplyr,
@@ -19,14 +30,13 @@ Imports:
     spacyr,
     stringr,
     textclean
-RoxygenNote: 7.2.3
-Roxygen: list(markdown = TRUE)
 Suggests: 
-    testthat (>= 3.0.0),
-    readtext
-Config/testthat/edition: 3
+    readtext,
+    testthat (>= 3.0.0)
 Remotes: 
     https://github.com/davidavdav/ROC
-Depends: 
-    quanteda,
-    R (>= 2.10)
+Config/testthat/edition: 3
+Encoding: UTF-8
+LazyData: true
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.2.3
