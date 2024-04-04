@@ -117,9 +117,9 @@ similarity <- function(x, df, coefficient, features){
 #' data frame containing the value of the similarity coefficient selected called 'score' and an optional column with the overlapping features that only occur in the Q and candidate considered and in no other Qs (ordered by length if the n-gram is of variable length). The data frame contains a column called 'target' with a logical value which is TRUE if the author of the Q text is the candidate and FALSE otherwise.
 #'
 #' @examples
-#' qs <- refcor.sample[c(1, 4, 7)]
-#' ks <- refcor.sample[-c(1, 4, 7)]
-#' ngram_tracing(qs, ks, coefficient = 'simpson')
+#' Q <- quanteda::corpus_subset(enron.sample, texttype == "unknown")[1:5]
+#' K <- quanteda::corpus_subset(enron.sample, texttype == "known")[1:20]
+#' ngram_tracing(Q, K, coefficient = 'simpson')
 #'
 #' @export
 ngram_tracing <- function(q.data, k.data, tokens = "character", remove_punct = F, remove_symbols = T, remove_numbers = T, lowercase = T, n = 9, coefficient = "simpson", features = F, cores = NULL){

@@ -52,9 +52,9 @@ This function runs the authorship analysis method called \emph{n-gram tracing}, 
 N-gram tracing was originally proposed by Grieve et al (2019). Nini (2023) then proposed a mathematical reinterpretation that is compatible with Cognitive Linguistic theories of language processing. He then tested several variants of the method and found that the original version, which uses the Simpson's coefficient, tends to be outperformed by versions using the Phi coefficient, the Kulczynski's coefficient, and the Cole coefficient. This function can run the n-gram tracing method using any of these coefficients plus the Jaccard coefficient for reference, as this coefficient has been applied in several forensic linguistic studies.
 }
 \examples{
-qs <- refcor.sample[c(1, 4, 7)]
-ks <- refcor.sample[-c(1, 4, 7)]
-ngram_tracing(qs, ks, coefficient = 'simpson')
+Q <- quanteda::corpus_subset(enron.sample, texttype == "unknown")[1:5]
+K <- quanteda::corpus_subset(enron.sample, texttype == "known")[1:20]
+ngram_tracing(Q, K, coefficient = 'simpson')
 
 }
 \references{

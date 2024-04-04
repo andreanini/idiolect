@@ -314,10 +314,10 @@ IM <- function(x, qs, candidates, cand.imps, coefficient, m, n){
 #' If the RBI algorithm is selected and the features parameter is TRUE then the data frame will also contain a column with the features that are likely to have had an impact on the score. This algorithm has not been tested and the results should therefore be treated with care. The algorithm returns all those features that are consistently found to be shared by the candidate author's data and the questioned data and that also tend to be rare in the data set of impostors.
 #'
 #' @examples
-#' q <- refcor.sample[1]
-#' ks <- refcor.sample[2:3]
-#' imps <- refcor.sample[4:9]
-#' impostors(q, ks, imps, algorithm = "KGI")
+#' Q <- enron.sample[1]
+#' K <- enron.sample[2:3]
+#' imps <- enron.sample[4:9]
+#' impostors(Q, K, imps, algorithm = "KGI")
 #'
 #' @export
 impostors = function(q.data, k.data, cand.imps, algorithm = "RBI", coefficient = "minmax", k = 300, m = 100, n = 25, features = F, cores = NULL){

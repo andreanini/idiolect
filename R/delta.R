@@ -52,9 +52,9 @@ cosine_delta <- function(x, z){
 #' @return If features is set to FALSE then the output is a data frame containing the results of all comparisons between the Q texts and the K texts. If features is set to TRUE then the output is a list containing the results data frame and the vector of features used for the analysis.
 #'
 #' @examples
-#' qs <- refcor.sample[c(1, 4, 7)]
-#' ks <- refcor.sample[-c(1, 4, 7)]
-#' delta(qs, ks, features = TRUE)
+#' Q <- quanteda::corpus_subset(enron.sample, texttype == "unknown")[1:5]
+#' K <- quanteda::corpus_subset(enron.sample, texttype == "known")[1:20]
+#' delta(Q, K, features = TRUE)
 #'
 #' @export
 delta <- function(q.data, k.data, tokens = "word", remove_punct = F, remove_symbols = T, remove_numbers = T, lowercase = T, n = 1, trim = T, threshold = 150, features = F, cores = NULL){

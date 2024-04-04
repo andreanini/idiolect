@@ -4,7 +4,7 @@
 \alias{calibrate_LLR}
 \title{Calibrate scores into Log-Likelihood Ratios}
 \usage{
-calibrate_LLR(calibration.dataset, dataset)
+calibrate_LLR(calibration.dataset, dataset, latex = FALSE)
 }
 \arguments{
 \item{calibration.dataset}{A data frame containing the calibration data, typically the output of an authorship analysis function like \code{\link[=impostors]{impostors()}}.}

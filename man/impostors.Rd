@@ -57,10 +57,10 @@ The two data sets \code{q.data}, \code{k.data}, must be disjunct in terms of the
 }
 }
 \examples{
-q <- refcor.sample[1]
-ks <- refcor.sample[2:3]
-imps <- refcor.sample[4:9]
-impostors(q, ks, imps, algorithm = "KGI")
+Q <- enron.sample[1]
+K <- enron.sample[2:3]
+imps <- enron.sample[4:9]
+impostors(Q, K, imps, algorithm = "KGI")
 
 }
 \references{
