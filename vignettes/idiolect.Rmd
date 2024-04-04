@@ -76,17 +76,7 @@ performance(res)
 ```
 
 ```{r}
-a <- density(res[which(res$target == FALSE),"score"])
-b <- density(res[which(res$target == TRUE),"score"])
 
-plot(a) 
-plot(b)
-
-library(ggplot2)
-
-res |> ggplot() +
-  aes(x = score, color = target) +
-  geom_density()
 ```
 
 ```{r}

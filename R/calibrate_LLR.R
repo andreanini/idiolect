@@ -4,6 +4,7 @@
 #'
 #' @param calibration.dataset A data frame containing the calibration data, typically the output of an authorship analysis function like [impostors()].
 #' @param dataset A data frame containing the scores that have to be calibrated into LLRs using the calibration data. This is typically the result of applying a function like [impostors()] to the Q texts.
+#' @param latex A logical value. If FALSE (default), then the hypothesis labels are printed as plain text (Hp/Hd). If TRUE the labels are written to be read in Latex ($H_p$/$H_d$).
 #' @references Marquis, Raymond, Alex Biedermann, Liv Cadola, Christophe Champod, Line Gueissaz, Geneviève Massonnet, Williams David Mazzella, Franco Taroni & Tacha Hicks. 2016. Discussion on how to implement a verbal scale in a forensic laboratory: Benefits, pitfalls and suggestions to avoid misunderstandings. Science & Justice 56(5). 364–370. https://doi.org/10.1016/j.scijus.2016.05.009.
 #'
 #' @return The function returns a data frame with the LLRs, as well as the verbal label according to Marquis et al (2016) and a verbal interpretation of the results.

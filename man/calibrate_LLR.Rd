@@ -10,6 +10,8 @@ calibrate_LLR(calibration.dataset, dataset, latex = FALSE)
 \item{calibration.dataset}{A data frame containing the calibration data, typically the output of an authorship analysis function like \code{\link[=impostors]{impostors()}}.}
 
 \item{dataset}{A data frame containing the scores that have to be calibrated into LLRs using the calibration data. This is typically the result of applying a function like \code{\link[=impostors]{impostors()}} to the Q texts.}
+
+\item{latex}{A logical value. If FALSE (default), then the hypothesis labels are printed as plain text (Hp/Hd). If TRUE the labels are written to be read in Latex ($H_p$/$H_d$).}
 }
 \value{
 The function returns a data frame with the LLRs, as well as the verbal label according to Marquis et al (2016) and a verbal interpretation of the results.

@@ -2,7 +2,7 @@
 
     Code
       contentmask(enron.small, algorithm = "POSnoise", replace_non_ascii = F)
-    Message <simpleMessage>
+    Message
       successfully initialized (spaCy Version: 3.7.1, language model: en_core_web_sm)
     Output
       Corpus consisting of 1 document and 2 docvars.
@@ -14,7 +14,7 @@
 
     Code
       contentmask(enron.small, algorithm = "frames", replace_non_ascii = F)
-    Message <simpleMessage>
+    Message
       successfully initialized (spaCy Version: 3.7.1, language model: en_core_web_sm)
     Output
       Corpus consisting of 1 document and 2 docvars.
