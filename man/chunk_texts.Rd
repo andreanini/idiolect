@@ -22,4 +22,5 @@ corpus <- quanteda::corpus(c("The cat sat on the mat", "The dog sat on the chair
 quanteda::docvars(corpus, "author") <- c("A", "B")
 chunk_texts(corpus, size = 2)
 
+
 }

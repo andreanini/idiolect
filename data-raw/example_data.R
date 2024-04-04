@@ -1,5 +1,7 @@
-## code to prepare `example_data` dataset goes here
+## code to prepare example dataset
 
-refcor.sample <- create_corpus("data-raw/refcor")
+full.corpus <- readRDS("tests/testthat/data/enron.rds")
 
-usethis::use_data(refcor.sample, overwrite = TRUE)
+enron.sample <- full.corpus[1:49]
+
+usethis::use_data(enron.sample, overwrite = TRUE)
