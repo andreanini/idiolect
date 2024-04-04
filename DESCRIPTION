@@ -31,7 +31,9 @@ Imports:
     stringr,
     textclean
 Suggests: 
+    knitr,
     readtext,
+    rmarkdown,
     testthat (>= 3.0.0)
 Remotes: 
     https://github.com/davidavdav/ROC
@@ -40,3 +42,4 @@ Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.2.3
+VignetteBuilder: knitr
