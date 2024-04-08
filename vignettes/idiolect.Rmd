@@ -261,4 +261,17 @@ The final conclusion of the analysis is therefore the following:
 
 > The similarity score of $Q$ given $K$ is 1, which corresponds to $LLR=$ `r q.llr$LLR`. `r q.llr$Interpretation`. Therefore, the linguistic analysis offers **`r q.llr$"Verbal label"`**.
 
+This conclusion can be complemented with an explanation of the implication of these results for the trier of facts by showing a table of posterior probabilities assuming a range of prior probabilities. This can be done with the `posterior()` function by inserting as input the value of the $LLR$
+
+```{r}
+posterior(q.llr$LLR) |> 
+  dplyr::select(prosecution_prior_probs, prosecution_post_probs)
+```
+
+The table above reveals that, assuming a prior probability for $H_p$ of 0.00001 (roughly, one out of the population of Manchester), then this $LLR$ would transform this probability to a posterior probability for $H_p$ of 0.0000326. In other words, it would not make much substantial difference for the trial.
+
+However, if the prior probability of $H_p$ was 0.5, then these results would turn it to 0.97, which is a substantial change.
+
+The table shows that the present evidence could change the probability that $H_p$ is true to equal or higher than 0.9 only with a prior greater than 0.2.
+
 # References
