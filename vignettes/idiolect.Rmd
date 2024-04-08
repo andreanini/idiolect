@@ -97,14 +97,16 @@ Before applying an authorship analysis method, each text or sample must be turne
 
 ```{r}
 vectorize(Q, tokens = "word", remove_punct = F, remove_symbols = T, remove_numbers = T,
-          lowercase = T, n = 1, weighting = "rel", trim = F)
+          lowercase = T, n = 1, weighting = "rel", trim = F) |> 
+  print(max_nfeat = 3)
 ```
 
 or, as the most frequent 1,000 character 4-grams relative frequencies, for example, using
 
 ```{r}
 vectorize(Q, tokens = "character", remove_punct = F, remove_symbols = T, remove_numbers = T,
-          lowercase = T, n = 4, weighting = "rel", trim = T, threshold = 1000)
+          lowercase = T, n = 4, weighting = "rel", trim = T, threshold = 1000) |> 
+  print(max_nfeat = 3)
 ```
 
 The output of the function is a `quanteda` *document-feature matrix* (or *dfm*) that can efficiently store even very large matrices.
@@ -210,8 +212,8 @@ set.seed(2)
 ```
 
 ```{r message=FALSE, warning=FALSE}
-q.res <- impostors(Q, K, R, algorithm = "RBI", k = 50, features = T)
-q.res$features
+q.res2 <- impostors(Q, K, R, algorithm = "RBI", k = 50, features = T)
+strwrap(q.res2$features, width = 70)
 ```
 
 The RBI method uses as features character 4-grams and a list of these features is clearly hard to interpret by a human analyst. Despite the complexity, this is not an impossible task. `idiolect` offers a function to aid exploration called `concordance()`, which uses `quanteda`'s `kwic()` as its engine.
@@ -219,19 +221,22 @@ The RBI method uses as features character 4-grams and a list of these features i
 `concordance()` takes as input a string representing one or more words (or punctuation marks). For example, the most important character 4-gram seems to be \<*, her*\> so this could be the search target.
 
 ```{r}
-concordance(Q, K, R, search = ", her", token.type = "character")
+concordance(Q, K, R, search = ", her", token.type = "character") |> 
+  dplyr::select(pre, keyword, post, authorship)
 ```
 
-The search reveals that this character sequence is only used by the candidate author and nobody else in the reference corpus. However, the real underlying pattern is not the use of a comma followed by the possessive determiner *her* but the token sequence [*, here is*].
+The search reveals that this character sequence is a strong characteristic of the candidate author's writing. However, the real underlying pattern is not the use of a comma followed by the possessive determiner *her* but the token sequence [*, here is*], which is only used by the candidate author and one other author in the reference corpus.
 
 ```{r}
-concordance(Q, K, R, search = ", here is", token.type = "word")
+concordance(Q, K, R, search = ", here is", token.type = "word") |> 
+  dplyr::select(pre, keyword, post, authorship)
 ```
 
 Another important feature is represented by the two character 4-grams, \<*lso ,*\> and \<*so ,* \>, which are likely to refer to the token sequence [*also ,*].
 
 ```{r}
-concordance(Q, K, R, search = "lso ,", token.type = "character")
+concordance(Q, K, R, search = "lso ,", token.type = "character") |> 
+  dplyr::select(pre, keyword, post, authorship)
 ```
 
 This is correct and it is referring to the use of *also* at the beginning of a sentence and immediately followed by a comma.
@@ -252,7 +257,8 @@ To perform this calibration the `calibrate_LLR()` function is used again by usin
 
 ```{r}
 q.llr <- calibrate_LLR(res, q.res, latex = T)
-q.llr
+q.llr$`Verbal label`
+strwrap(q.llr$Interpretation)
 ```
 
 This function not only returns the $LLR$ value but also the verbal labels and their interpretation.
