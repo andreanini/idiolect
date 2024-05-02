@@ -21,13 +21,16 @@ lambdaG(q.data, k.data, ref.data, N = 10, r = 30, cores = NULL)
 }
 \value{
 The function will test all possible combinations of q texts and candidate authors and return a
-data frame containing the lambdaG, an uncalibrated log-likelihood ratio base 10. The data frame contains a column called "target" with a logical value which is TRUE if the author of the Q text is the candidate and FALSE otherwise.
+data frame containing the LambdaG, an uncalibrated log-likelihood ratio (base 10). LambdaG can then be calibrated into a likelihood ratio that expresses the strength of the evidence using \code{\link[=calibrate_LLR]{calibrate_LLR()}}. The data frame contains a column called "target" with a logical value which is TRUE if the author of the Q text is the candidate and FALSE otherwise.
 }
 \description{
-Apply the LambdaG algorithm
+This function calculates the likelihood ratio of grammar models, or the LambdaG score, as in Nini et al. (pending submission). In order to run the analysis as in this paper, all data must be preprocessed using \code{\link[=contentmask]{contentmask()}} with the "algorithm" parameter set to "POSnoise".
 }
 \examples{
 q.data <- enron.sample[1]
 k.data <- enron.sample[2:10]
 ref.data <- enron.sample[11:ndoc(enron.sample)]
+}
+\references{
+Nini, A., Halvani, O., Graner, L., Gherardi, V., Ishihara, S. Authorship Verification based on the Likelihood Ratio of Grammar Models. https://arxiv.org/abs/2403.08462v1
 }

@@ -65,8 +65,12 @@ impostors(Q, K, imps, algorithm = "KGI")
 }
 \references{
 Kestemont, Mike, Justin Stover, Moshe Koppel, Folgert Karsdorp & Walter Daelemans. 2016. Authenticating the writings of Julius Caesar. Expert Systems With Applications 63. 86–96. https://doi.org/10.1016/j.eswa.2016.06.029.
+
 Koppel, Moshe & Yaron Winter. 2014. Determining if two documents are written by the same author. Journal of the Association for Information Science and Technology 65(1). 178–187.
+
 Potha, Nektaria & Efstathios Stamatatos. 2017. An Improved Impostors Method for Authorship Verification. In Gareth J.F. Jones, Séamus Lawless, Julio Gonzalo, Liadh Kelly, Lorraine Goeuriot, Thomas Mandl, Linda Cappellato & Nicola Ferro (eds.), Experimental IR Meets Multilinguality, Multimodality, and Interaction (Lecture Notes in Computer Science), vol. 10456, 138–144. Springer, Cham. https://doi.org/10.1007/978-3-319-65813-1_14. (5 September, 2017).
+
 Potha, Nektaria & Efstathios Stamatatos. 2020. Improved algorithms for extrinsic author verification. Knowledge and Information Systems 62(5). 1903–1921. https://doi.org/10.1007/s10115-019-01408-4.
+
 Seidman, Shachar. 2013. Authorship Verification Using the Impostors Method. In Pamela Forner, Roberto Navigli, Dan Tufis & Nicola Ferro (eds.), Proceedings of CLEF 2013 Evaluation Labs and Workshop – Working Notes Papers, 23–26. Valencia, Spain. https://ceur-ws.org/Vol-1179/.
 }
