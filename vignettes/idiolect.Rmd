@@ -23,21 +23,21 @@ library(idiolect)
 
 # Introduction
 
-Authorship Analysis is defined as the task of determining the likelihood that a certain candidate is the author of a certain set of questioned or disputed texts. We call *Forensic* Authorship Analysis a task of this kind applied in a real forensic case. In such settings, the disputed texts could be anonymous malicious documents, such as a threatening letter, but could also be text messages, emails, text messages, or any other document that, for various reasons, becomes evidence in a forensic case. In Forensic Linguistics, typically a set of disputed text is indicated as $Q$, while a set of texts of known origin, for example the texts written by the candidate author and collected as comparison material, is labelled using $K$. In addition to these two data sets, the analysis also necessitates of a comparison reference corpus, that we call $R$. In a classic case involving a closed set of suspects, the texts written by the suspects minus the candidate form $R$. In *Authorship Verification* cases that only involve one candidate author, then the reference data set might have to be compiled by the analyst for the specific case.
+Authorship Analysis is defined as the task of determining the likelihood that a certain candidate is the author of a certain set of questioned or disputed texts. We call *Forensic* Authorship Analysis a task of this kind applied in a real forensic case. In such settings, the disputed texts could be anonymous malicious documents, such as a threatening letter, but could also be text messages, emails, text messages, or any other document that, for various reasons, becomes evidence in a forensic case. In Forensic Linguistics, typically a set of disputed or *questioned* text is indicated as $Q$, while a set of texts of known origin, for example the texts written by the candidate author and collected as comparison material, is labelled using $K$. In addition to these two data sets, the analysis also necessitates of a comparison reference corpus, that we call $R$. In a classic case involving a closed set of suspects, the texts written by the suspects minus the candidate form $R$. In *Authorship Verification* cases that only involve one candidate author, then the reference data set might have to be compiled by the analyst for the specific case [@ishihara2024].
 
-A crucial difference between Authorship Analysis and Forensic Authorship Analysis is that whereas the former can be treated as a classification task where the final answer is binary ('candidate is the author' vs. 'candidate is NOT the author'), the latter needs an expression of likelihood for the two competing propositions or hypotheses, the Prosecution Hypothesis $H_p$ vs. the Defence Hypothesis ($H_d$):
+A crucial difference between Authorship Analysis and Forensic Authorship Analysis is that whereas the former can be treated as a classification task where the final answer is binary ('candidate is the author' vs. 'candidate is NOT the author'), the latter needs an expression of likelihood for the two competing propositions or hypotheses, the Prosecution Hypothesis $H_p$ vs. the Defence Hypothesis $H_d$:
 
 $H_p$: The author of $K$ is the author of $Q$\
 $H_d$: The author of $K$ is NOT the author of $Q$
 
-The job of the forensic linguist in a forensic context is to analyse the linguistic evidence and determine which hypothesis it supports and with what degree of strength. The role of the forensic linguist is therefore not to provide a YES/NO answer but to express a degree of support for one or the other hypothesis.
+The job of the forensic linguist in a forensic context is to analyse the linguistic evidence and determine which hypothesis it supports and with what degree of strength, thus aiding the trier-of-fact in reaching a conclusion. The role of the forensic linguist is therefore not to provide a YES/NO answer but rather to express strength of the evidence in favour of each of these two hypotheses.
 
 Given $K$, $Q$ and $R$, the workflow for this analysis involves four steps:
 
 1.  **Preparation**: This step involves any pre-processing step that is necessary for the analysis with the chosen method;
 2.  **Validation**: Carry out an analysis on the case data or on a separate data set that has been designed to be similar to the case material in order to validate the method for this particular case;
 3.  **Analysis**: Carry out the analysis on the real $K$, $Q$, and $R$;
-4.  **Calibration**: Calibrate the output of (2) into a Likelihood Ratio that expresses the degree of support for the competing hypotheses using the output of (1).
+4.  **Calibration**: Calibrate the output of (2) using the output of (1) into a Likelihood Ratio that expresses the strength of the evidence given the two competing hypotheses.
 
 # Preparation
 
@@ -160,7 +160,7 @@ res[1:10,]
 
 In order to assess the results of this validation analysis, the function `performance()` can be used to return a series of performance metrics. This function can take one or two result data frames as input. If two are provided, then one is used as training and the other one as test. If only one data frame is provided, then the performance metrics are calculated using a leave-one-out approach.
 
-The procedure followed by this function is to held out one text (if leave-one-out, otherwise the test dataset in its entirety) and then use the rest of the data (or the training data set) as a calibration dataset to calculate a *Log-Likelihood Ratio* ($LLR$). This analysis is done using the `calibrate_LLR()` function, which fits a logistic regression model to calibrate the score into a $LLR$ [@ishihara2021] using the `ROC` library [@vanleeuwen2015].
+The procedure followed by this function is to held out one text (if leave-one-out, otherwise the test dataset in its entirety) and then use the rest of the data (or the training data set) as a calibration dataset to calculate a *Log-Likelihood Ratio* ($LLR$). This analysis is done using the `calibrate_LLR()` function, which fits a logistic regression model to calibrate the score into a $LLR$ [@morrison2013, @ishihara2021] using the `ROC` library [@vanleeuwen2015].
 
 The output of the function is the following
 
@@ -241,7 +241,7 @@ concordance(Q, K, R, search = "lso ,", token.type = "character") |>
 
 This is correct and it is referring to the use of *also* at the beginning of a sentence and immediately followed by a comma.
 
-Although searching all the features returned is clearly a significant amount of work, by inspecting the list of features carefully and by using `concordance()` to explore the features in the data the analyst can spot patterns or mistakes in the analysis.
+Although searching all the features returned is clearly a significant amount of work, by inspecting the list of features carefully and by using `concordance()` to explore the features in the data the analyst can spot patterns or mistakes in the analysis [@ypma2023].
 
 ## Conclusions
 
@@ -261,7 +261,7 @@ q.llr$`Verbal label`
 strwrap(q.llr$Interpretation)
 ```
 
-This function not only returns the $LLR$ value but also the verbal labels and their interpretation.
+This function not only returns the $LLR$ value but also the verbal labels and their interpretation [@marquis2016].
 
 The final conclusion of the analysis is therefore the following:
 
@@ -279,5 +279,9 @@ The table above reveals that, assuming a prior probability for $H_p$ of 0.00001 
 However, if the prior probability of $H_p$ was 0.5, then these results would turn it to 0.97, which is a substantial change.
 
 The table shows that the present evidence could change the probability that $H_p$ is true to equal or higher than 0.9 only with a prior greater than 0.2.
+
+# Acknowledgements
+
+I would like to thank Shunichi Ishihara for helpful comments on the first draft of this vignette.
 
 # References
