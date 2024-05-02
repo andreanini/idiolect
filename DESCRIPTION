@@ -23,6 +23,7 @@ Imports:
     caret,
     dplyr,
     ggplot2,
+    kgrams,
     pbapply,
     pROC,
     proxy,

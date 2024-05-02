@@ -3,7 +3,7 @@
     Code
       chunked
     Output
-      Corpus consisting of 1,622 documents and 3 docvars.
+      Corpus consisting of 1,623 documents and 3 docvars.
       known [Kevin.hyatt - Mail_1].txt.1 :
       "N N N N wants to be N when he V up likes N P , N for doing t..."
       
@@ -22,7 +22,7 @@
       known [Kevin.hyatt - Mail_1].txt.6 :
       "as N N , the N N , or N N . it ' s like the J N or the N of ..."
       
-      [ reached max_ndoc ... 1,616 more documents ]
+      [ reached max_ndoc ... 1,617 more documents ]
 
 ---
 
@@ -1395,7 +1395,7 @@
       1363  Enron    Susan.pereira  unknown
       1364  Enron    Susan.pereira  unknown
       1365  Enron    Susan.pereira  unknown
-      1366  Enron    Susan.pereira    known
+      1366  Enron    Susan.pereira  unknown
       1367  Enron    Susan.pereira    known
       1368  Enron    Susan.pereira    known
       1369  Enron    Susan.pereira    known
@@ -1415,7 +1415,7 @@
       1383  Enron    Susan.pereira    known
       1384  Enron    Susan.pereira    known
       1385  Enron    Susan.pereira    known
-      1386  Enron      Susan.scott  unknown
+      1386  Enron    Susan.pereira    known
       1387  Enron      Susan.scott  unknown
       1388  Enron      Susan.scott  unknown
       1389  Enron      Susan.scott  unknown
@@ -1426,7 +1426,7 @@
       1394  Enron      Susan.scott  unknown
       1395  Enron      Susan.scott  unknown
       1396  Enron      Susan.scott  unknown
-      1397  Enron      Susan.scott    known
+      1397  Enron      Susan.scott  unknown
       1398  Enron      Susan.scott    known
       1399  Enron      Susan.scott    known
       1400  Enron      Susan.scott    known
@@ -1455,7 +1455,7 @@
       1423  Enron      Susan.scott    known
       1424  Enron      Susan.scott    known
       1425  Enron      Susan.scott    known
-      1426  Enron       Tana.jones  unknown
+      1426  Enron      Susan.scott    known
       1427  Enron       Tana.jones  unknown
       1428  Enron       Tana.jones  unknown
       1429  Enron       Tana.jones  unknown
@@ -1464,7 +1464,7 @@
       1432  Enron       Tana.jones  unknown
       1433  Enron       Tana.jones  unknown
       1434  Enron       Tana.jones  unknown
-      1435  Enron       Tana.jones    known
+      1435  Enron       Tana.jones  unknown
       1436  Enron       Tana.jones    known
       1437  Enron       Tana.jones    known
       1438  Enron       Tana.jones    known
@@ -1494,13 +1494,13 @@
       1462  Enron       Tana.jones    known
       1463  Enron       Tana.jones    known
       1464  Enron       Tana.jones    known
-      1465  Enron   Tracy.geaccone  unknown
+      1465  Enron       Tana.jones    known
       1466  Enron   Tracy.geaccone  unknown
       1467  Enron   Tracy.geaccone  unknown
       1468  Enron   Tracy.geaccone  unknown
       1469  Enron   Tracy.geaccone  unknown
       1470  Enron   Tracy.geaccone  unknown
-      1471  Enron   Tracy.geaccone    known
+      1471  Enron   Tracy.geaccone  unknown
       1472  Enron   Tracy.geaccone    known
       1473  Enron   Tracy.geaccone    known
       1474  Enron   Tracy.geaccone    known
@@ -1519,14 +1519,14 @@
       1487  Enron   Tracy.geaccone    known
       1488  Enron   Tracy.geaccone    known
       1489  Enron   Tracy.geaccone    known
-      1490  Enron     Twanda.sweet  unknown
+      1490  Enron   Tracy.geaccone    known
       1491  Enron     Twanda.sweet  unknown
       1492  Enron     Twanda.sweet  unknown
       1493  Enron     Twanda.sweet  unknown
       1494  Enron     Twanda.sweet  unknown
       1495  Enron     Twanda.sweet  unknown
       1496  Enron     Twanda.sweet  unknown
-      1497  Enron     Twanda.sweet    known
+      1497  Enron     Twanda.sweet  unknown
       1498  Enron     Twanda.sweet    known
       1499  Enron     Twanda.sweet    known
       1500  Enron     Twanda.sweet    known
@@ -1544,7 +1544,7 @@
       1512  Enron     Twanda.sweet    known
       1513  Enron     Twanda.sweet    known
       1514  Enron     Twanda.sweet    known
-      1515  Enron         V.weldon  unknown
+      1515  Enron     Twanda.sweet    known
       1516  Enron         V.weldon  unknown
       1517  Enron         V.weldon  unknown
       1518  Enron         V.weldon  unknown
@@ -1553,7 +1553,7 @@
       1521  Enron         V.weldon  unknown
       1522  Enron         V.weldon  unknown
       1523  Enron         V.weldon  unknown
-      1524  Enron         V.weldon    known
+      1524  Enron         V.weldon  unknown
       1525  Enron         V.weldon    known
       1526  Enron         V.weldon    known
       1527  Enron         V.weldon    known
@@ -1585,7 +1585,7 @@
       1553  Enron         V.weldon    known
       1554  Enron         V.weldon    known
       1555  Enron         V.weldon    known
-      1556  Enron   Vince.kaminski  unknown
+      1556  Enron         V.weldon    known
       1557  Enron   Vince.kaminski  unknown
       1558  Enron   Vince.kaminski  unknown
       1559  Enron   Vince.kaminski  unknown
@@ -1594,7 +1594,7 @@
       1562  Enron   Vince.kaminski  unknown
       1563  Enron   Vince.kaminski  unknown
       1564  Enron   Vince.kaminski  unknown
-      1565  Enron   Vince.kaminski    known
+      1565  Enron   Vince.kaminski  unknown
       1566  Enron   Vince.kaminski    known
       1567  Enron   Vince.kaminski    known
       1568  Enron   Vince.kaminski    known
@@ -1619,7 +1619,7 @@
       1587  Enron   Vince.kaminski    known
       1588  Enron   Vince.kaminski    known
       1589  Enron   Vince.kaminski    known
-      1590  Enron          W.white  unknown
+      1590  Enron   Vince.kaminski    known
       1591  Enron          W.white  unknown
       1592  Enron          W.white  unknown
       1593  Enron          W.white  unknown
@@ -1628,7 +1628,7 @@
       1596  Enron          W.white  unknown
       1597  Enron          W.white  unknown
       1598  Enron          W.white  unknown
-      1599  Enron          W.white    known
+      1599  Enron          W.white  unknown
       1600  Enron          W.white    known
       1601  Enron          W.white    known
       1602  Enron          W.white    known
@@ -1652,4 +1652,5 @@
       1620  Enron          W.white    known
       1621  Enron          W.white    known
       1622  Enron          W.white    known
+      1623  Enron          W.white    known
 
