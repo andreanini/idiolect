@@ -16,11 +16,11 @@ lambdaG_visualize(
 )
 }
 \arguments{
-\item{q.data}{A single questioned or disputed text as a corpus object (the output of \code{\link[=create_corpus]{create_corpus()}}).}
+\item{q.data}{A single questioned or disputed text as a \code{quanteda} tokens object with the tokens being sentences (the output of \code{\link[=contentmask]{contentmask()}} with output = "sentences").}
 
-\item{k.data}{A known or undisputed corpus containing exclusively one candidate author's texts (the output of \code{\link[=create_corpus]{create_corpus()}}).}
+\item{k.data}{A known or undisputed corpus containing exclusively a single candidate author's texts as a \code{quanteda} tokens object with the tokens being sentences (the output of \code{\link[=contentmask]{contentmask()}} with output = "sentences").}
 
-\item{ref.data}{The reference dataset as a corpus (the output of \code{\link[=create_corpus]{create_corpus()}}).}
+\item{ref.data}{The reference dataset as a \code{quanteda} tokens object with the tokens being sentences (the output of \code{\link[=contentmask]{contentmask()}} with output = "sentences").}
 
 \item{N}{The order of the model. Default is 10.}
 
@@ -39,9 +39,9 @@ The function outputs a list of two objects: a data frame with each row being a t
 This function outputs a colour-coded list of sentences belonging to the input Q text ordered from highest to lowest lambdaG value, as shown in Nini et al. (pending submission).
 }
 \examples{
-q.data <- corpus_trim(enron.sample[1], "sentences", max_ntoken = 10)
-k.data <- enron.sample[2:10]
-ref.data <- enron.sample[11:ndoc(enron.sample)]
+q.data <- corpus_trim(enron.sample[1], "sentences", max_ntoken = 10) |> quanteda::tokens("sentence")
+k.data <- enron.sample[2:5]|> quanteda::tokens("sentence")
+ref.data <- enron.sample[6:ndoc(enron.sample)] |> quanteda::tokens("sentence")
 outputs <- lambdaG_visualize(q.data, k.data, ref.data, r = 2, print = FALSE)
 outputs$table
 }

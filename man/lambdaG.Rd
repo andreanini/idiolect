@@ -7,11 +7,11 @@
 lambdaG(q.data, k.data, ref.data, N = 10, r = 30, cores = NULL)
 }
 \arguments{
-\item{q.data}{The questioned or disputed data as a corpus (the output of \code{\link[=create_corpus]{create_corpus()}}).}
+\item{q.data}{The questioned or disputed data as a \code{quanteda} tokens object with the tokens being sentences (the output of \code{\link[=contentmask]{contentmask()}} with output = "sentences").}
 
-\item{k.data}{The known or undisputed data as a corpus (the output of \code{\link[=create_corpus]{create_corpus()}}).}
+\item{k.data}{The known or undisputed data as a \code{quanteda} tokens object with the tokens being sentences (the output of \code{\link[=contentmask]{contentmask()}} with output = "sentences").}
 
-\item{ref.data}{The reference dataset as a corpus (the output of \code{\link[=create_corpus]{create_corpus()}}). This can be the same object as \code{k.data}.}
+\item{ref.data}{The reference dataset as a \code{quanteda} tokens object with the tokens being sentences (the output of \code{\link[=contentmask]{contentmask()}} with output = "sentences"). This can be the same object as \code{k.data}.}
 
 \item{N}{The order of the model. Default is 10.}
 
@@ -27,9 +27,10 @@ data frame containing the LambdaG, an uncalibrated log-likelihood ratio (base 10
 This function calculates the likelihood ratio of grammar models, or the LambdaG score, as in Nini et al. (pending submission). In order to run the analysis as in this paper, all data must be preprocessed using \code{\link[=contentmask]{contentmask()}} with the "algorithm" parameter set to "POSnoise".
 }
 \examples{
-q.data <- enron.sample[1]
-k.data <- enron.sample[2:10]
-ref.data <- enron.sample[11:ndoc(enron.sample)]
+q.data <- enron.sample[1] |> quanteda::tokens("sentence")
+k.data <- enron.sample[2:10] |> quanteda::tokens("sentence")
+ref.data <- enron.sample[11:ndoc(enron.sample)] |> quanteda::tokens("sentence")
+lambdaG(q.data, k.data, ref.data)
 }
 \references{
 Nini, A., Halvani, O., Graner, L., Gherardi, V., Ishihara, S. Authorship Verification based on the Likelihood Ratio of Grammar Models. https://arxiv.org/abs/2403.08462v1

@@ -1,18 +1,14 @@
 apply_lambdaG <- function(x, q.data, k.data, ref.data, N, r){
 
   q.name <- as.character(x["Q"])
-  q <- quanteda::corpus_subset(q.data, quanteda::docnames(q.data) == q.name)
+  q.sents <- quanteda::tokens_subset(q.data, quanteda::docnames(q.data) == q.name) |> as.character()
 
   candidate.name <- as.character(x["K"])
-  candidate <- quanteda::corpus_subset(k.data, author == candidate.name &
-                                     quanteda::docnames(k.data) != q.name)
+  k.sents <- quanteda::tokens_subset(k.data, author == candidate.name &
+                                     quanteda::docnames(k.data) != q.name) |> as.character()
 
-  reference <- quanteda::corpus_subset(ref.data, author != candidate.name &
-                                      author != quanteda::docvars(q, "author"))
-
-  k.sents <- kgrams::tknz_sent(candidate, EOS = "[.?!]+( \\n+)*|\\n+", keep_first = T)
-  ref.sents <- kgrams::tknz_sent(reference, "[.?!]+( \\n+)*|\\n+", keep_first = T)
-  q.sents <- kgrams::tknz_sent(q, EOS = "[.?!]+( \\n+)*|\\n+", keep_first = T)
+  ref.sents <- quanteda::tokens_subset(ref.data, author != candidate.name &
+                                       author != quanteda::docvars(q.data, "author")) |> as.character()
 
   k.g <- k.sents |> kgrams::kgram_freqs(N = N) |> kgrams::language_model(smoother = "kn", D = 0.75)
 
@@ -42,10 +38,10 @@ apply_lambdaG <- function(x, q.data, k.data, ref.data, N, r){
   }
 
   results = data.frame()
-  results[1,"K"] = quanteda::docvars(candidate[1,], "author")
-  results[1,"Q"] = quanteda::docnames(q)
+  results[1,"K"] = candidate.name
+  results[1,"Q"] = q.name
 
-  if(quanteda::docvars(candidate[1,], "author") == quanteda::docvars(q, "author")){
+  if(candidate.name == quanteda::docvars(q.data, "author")){
 
     results[1,"target"] = TRUE
 
@@ -64,9 +60,9 @@ apply_lambdaG <- function(x, q.data, k.data, ref.data, N, r){
 #'
 #' This function calculates the likelihood ratio of grammar models, or the LambdaG score, as in Nini et al. (pending submission). In order to run the analysis as in this paper, all data must be preprocessed using [contentmask()] with the "algorithm" parameter set to "POSnoise".
 #'
-#' @param q.data The questioned or disputed data as a corpus (the output of [create_corpus()]).
-#' @param k.data The known or undisputed data as a corpus (the output of [create_corpus()]).
-#' @param ref.data The reference dataset as a corpus (the output of [create_corpus()]). This can be the same object as `k.data`.
+#' @param q.data The questioned or disputed data as a `quanteda` tokens object with the tokens being sentences (the output of [contentmask()] with output = "sentences").
+#' @param k.data The known or undisputed data as a `quanteda` tokens object with the tokens being sentences (the output of [contentmask()] with output = "sentences").
+#' @param ref.data The reference dataset as a `quanteda` tokens object with the tokens being sentences (the output of [contentmask()] with output = "sentences"). This can be the same object as `k.data`.
 #' @param N The order of the model. Default is 10.
 #' @param r The number of iterations. Default is 30.
 #' @param cores The number of cores to use for parallel processing (the default is one).
@@ -77,9 +73,9 @@ apply_lambdaG <- function(x, q.data, k.data, ref.data, N, r){
 #' @export
 #'
 #' @examples
-#' q.data <- enron.sample[1]
-#' k.data <- enron.sample[2:10]
-#' ref.data <- enron.sample[11:ndoc(enron.sample)]
+#' q.data <- enron.sample[1] |> quanteda::tokens("sentence")
+#' k.data <- enron.sample[2:10] |> quanteda::tokens("sentence")
+#' ref.data <- enron.sample[11:ndoc(enron.sample)] |> quanteda::tokens("sentence")
 #' lambdaG(q.data, k.data, ref.data)
 lambdaG <- function(q.data, k.data, ref.data, N = 10, r = 30, cores = NULL){
 

@@ -45,9 +45,9 @@ loglikelihood_one_rep <- function(q.sents, k.sents, ref.sents, N, k.g, k.sent.pr
 }
 loglikelihood_table_avgllrs <- function(q.data, k.data, ref.data, r, N, cores){
 
-  k.sents = kgrams::tknz_sent(k.data, EOS = "[.?!]+( \\n+)*|\\n+", keep_first = TRUE)
-  ref.sents = kgrams::tknz_sent(ref.data, EOS = "[.?!]+( \\n+)*|\\n+", keep_first = TRUE)
-  q.sents = kgrams::tknz_sent(q.data, EOS = "[.?!]+( \\n+)*|\\n+", keep_first = TRUE)
+  k.sents = as.character(k.data)
+  ref.sents = as.character(ref.data)
+  q.sents = as.character(q.data)
 
   k.g = extract(k.sents, N)
   k.sent.probs = kgrams::probability(q.sents, k.g)
@@ -130,9 +130,9 @@ color_coding_latex <- function(llr.table){
 #'
 #' This function outputs a colour-coded list of sentences belonging to the input Q text ordered from highest to lowest lambdaG value, as shown in Nini et al. (pending submission).
 #'
-#' @param q.data A single questioned or disputed text as a corpus object (the output of [create_corpus()]).
-#' @param k.data A known or undisputed corpus containing exclusively one candidate author's texts (the output of [create_corpus()]).
-#' @param ref.data The reference dataset as a corpus (the output of [create_corpus()]).
+#' @param q.data A single questioned or disputed text as a `quanteda` tokens object with the tokens being sentences (the output of [contentmask()] with output = "sentences").
+#' @param k.data A known or undisputed corpus containing exclusively a single candidate author's texts as a `quanteda` tokens object with the tokens being sentences (the output of [contentmask()] with output = "sentences").
+#' @param ref.data The reference dataset as a `quanteda` tokens object with the tokens being sentences (the output of [contentmask()] with output = "sentences").
 #' @param N The order of the model. Default is 10.
 #' @param r The number of iterations. Default is 30.
 #' @param output A string detailing the file type of the colour-coded text output. Either "html" (default) or "latex".
@@ -144,13 +144,26 @@ color_coding_latex <- function(llr.table){
 #' @export
 #'
 #' @examples
-#' q.data <- corpus_trim(enron.sample[1], "sentences", max_ntoken = 10)
-#' k.data <- enron.sample[2:10]
-#' ref.data <- enron.sample[11:ndoc(enron.sample)]
+#' q.data <- corpus_trim(enron.sample[1], "sentences", max_ntoken = 10) |> quanteda::tokens("sentence")
+#' k.data <- enron.sample[2:5]|> quanteda::tokens("sentence")
+#' ref.data <- enron.sample[6:ndoc(enron.sample)] |> quanteda::tokens("sentence")
 #' outputs <- lambdaG_visualize(q.data, k.data, ref.data, r = 2, print = FALSE)
 #' outputs$table
 lambdaG_visualize <- function(q.data, k.data, ref.data, N = 10, r = 30, output = "html", print = TRUE,
                               cores = NULL){
+
+  if(length(unique(quanteda::docvars(k.data, "author"))) != 1){
+
+    stop("The k.data does not contain a single candidate author.")
+
+  }
+
+  if(length(q.data) != 1){
+
+    stop("The q.data does not contain one text only.")
+
+  }
+
 
   llr.table <- loglikelihood_table_avgllrs(q.data, k.data, ref.data, r, N, cores = cores)
 
