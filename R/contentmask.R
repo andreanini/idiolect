@@ -10,6 +10,7 @@
 #' @param algorithm A string, either "POSnoise" (default) or "frames".
 #' @param model The spacy model to use. The default is en_core_web_sm.
 #' @param replace_non_ascii A boolean value. If this is TRUE then All non-ASCII characters are either substituted to ASCII ones or removed using the function [textclean::replace_non_ascii()]. This operation also removes all emojis.
+#' @param output A string, either "corpus" or "sentences". This indicates the kind of object returned by the function, either a `quanteda` corpus or a `quanteda` tokens list where each token is a sentence.
 #'
 #' @references Halvani, Oren & Lukas Graner. 2021. POSNoise: An Effective Countermeasure Against Topic Biases in Authorship Analysis. In Proceedings of the 16th International Conference on Availability, Reliability and Security, 1–12. Vienna, Austria: Association for Computing Machinery. https://doi.org/10.1145/3465481.3470050.
 #' Nini, Andrea. 2023. A Theory of Linguistic Individuality for Authorship Analysis (Elements in Forensic Linguistics). Cambridge, UK: Cambridge University Press.
@@ -25,8 +26,7 @@
 #' }
 #'
 #' @export
-contentmask <- function(corpus, model = "en_core_web_sm", algorithm = "POSnoise", replace_non_ascii = F){
-
+contentmask <- function(corpus, model = "en_core_web_sm", algorithm = "POSnoise", replace_non_ascii = F, output = "corpus"){
 
   if(replace_non_ascii == T){
 
@@ -45,15 +45,32 @@ contentmask <- function(corpus, model = "en_core_web_sm", algorithm = "POSnoise"
 
   }
 
-  # this removes potential empty documents in the corpus, which are anyway removed by spacy
-  c <- quanteda::corpus_subset(c.c, quanteda::ntoken(c.c) > 0)
+  spacyr::spacy_initialize(model = model, entity = F)
 
+  if(output == "sentences"){
+
+    c.p <- spacyr::spacy_tokenize(c.c, "sentence", output = "data.frame")
+
+    dplyr::mutate(quanteda::docvars(c.c), doc_id = quanteda::docnames(c.c)) |>
+      dplyr::inner_join(c.p, by = "doc_id") |>
+      quanteda::corpus(text_field = "token", unique_docnames = F) -> c
+
+  }else{
+
+    c <- c.c
+
+  }
+
+  # this removes potential empty documents in the corpus, which are anyway removed by spacy
+  c <- quanteda::corpus_subset(c, quanteda::ntoken(c) > 0)
+
+  docids <- quanteda::docid(c)
   meta <- quanteda::docvars(c)
   names <- quanteda::docnames(c)
 
-  spacyr::spacy_initialize(model = model, entity = F)
   parsed.corpus <- spacyr::spacy_parse(c, lemma = F, entity = F, tag = T,
                                        additional_attributes = c("like_url", "like_email"))
+
   spacyr::spacy_finalize()
 
   if(algorithm == "POSnoise"){
@@ -80,7 +97,15 @@ contentmask <- function(corpus, model = "en_core_web_sm", algorithm = "POSnoise"
       dplyr::rename(token = POSnoise) |>
       quanteda::as.tokens() -> x.pos
 
-    x.corp <- sapply(x.pos, function(x) { paste(x, collapse = " ") }) |> quanteda::corpus()
+    if(output == "sentences"){
+
+      x.corp <- sapply(x.pos, function(x) { paste(x, collapse = " ") }) |> quanteda::tokens("sentence")
+
+    }else{
+
+      x.corp <- sapply(x.pos, function(x) { paste(x, collapse = " ") }) |> quanteda::corpus()
+
+    }
 
   }
 
@@ -98,13 +123,33 @@ contentmask <- function(corpus, model = "en_core_web_sm", algorithm = "POSnoise"
       dplyr::rename(token = POSnoise) |>
       quanteda::as.tokens() -> x.pos
 
-    x.corp <- sapply(x.pos, function(x) { paste(x, collapse = " ") }) |> quanteda::corpus()
+    if(output == "sentences"){
+
+      x.corp <- sapply(x.pos, function(x) { paste(x, collapse = " ") }) |> quanteda::tokens("sentence")
+
+    }else{
+
+      x.corp <- sapply(x.pos, function(x) { paste(x, collapse = " ") }) |> quanteda::corpus()
+
+    }
 
   }
 
   quanteda::docvars(x.corp) <- meta
   quanteda::docnames(x.corp) <- names
 
-  return(x.corp)
+  if(output == "sentences"){
+
+    quanteda::docvars(x.corp, "original_docid") <- docids
+    final.x.corp <- quanteda::tokens_group(x.corp, original_docid)
+    quanteda::docvars(final.x.corp, "original_docid") <- NULL
+
+  }else{
+
+    final.x.corp <- x.corp
+
+  }
+
+  return(final.x.corp)
 
 }

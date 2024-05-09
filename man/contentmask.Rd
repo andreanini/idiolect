@@ -8,7 +8,8 @@ contentmask(
   corpus,
   model = "en_core_web_sm",
   algorithm = "POSnoise",
-  replace_non_ascii = F
+  replace_non_ascii = F,
+  output = "corpus"
 )
 }
 \arguments{
@@ -19,6 +20,8 @@ contentmask(
 \item{algorithm}{A string, either "POSnoise" (default) or "frames".}
 
 \item{replace_non_ascii}{A boolean value. If this is TRUE then All non-ASCII characters are either substituted to ASCII ones or removed using the function \code{\link[textclean:replace_non_ascii]{textclean::replace_non_ascii()}}. This operation also removes all emojis.}
+
+\item{output}{A string, either "corpus" or "sentences". This indicates the kind of object returned by the function, either a \code{quanteda} corpus or a \code{quanteda} tokens list where each token is a sentence.}
 }
 \value{
 A \code{quanteda} corpus object only containing functional tokens, depending on the algorithm chosen. The corpus contains the same docvars as the input. Email addresses or URLs are treated like nouns.
