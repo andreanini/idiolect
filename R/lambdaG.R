@@ -80,6 +80,7 @@ apply_lambdaG <- function(x, q.data, k.data, ref.data, N, r){
 #' q.data <- enron.sample[1]
 #' k.data <- enron.sample[2:10]
 #' ref.data <- enron.sample[11:ndoc(enron.sample)]
+#' lambdaG(q.data, k.data, ref.data)
 lambdaG <- function(q.data, k.data, ref.data, N = 10, r = 30, cores = NULL){
 
   q.list <- quanteda::docnames(q.data)
