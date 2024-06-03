@@ -1,6 +1,7 @@
 apply_lambdaG <- function(x, q.data, k.data, ref.data, N, r){
 
   q.name <- as.character(x["Q"])
+  q.author <- quanteda::tokens_subset(q.data, quanteda::docnames(q.data) == q.name) |> docnames()
   q.sents <- quanteda::tokens_subset(q.data, quanteda::docnames(q.data) == q.name) |> as.character()
 
   candidate.name <- as.character(x["K"])
@@ -8,7 +9,7 @@ apply_lambdaG <- function(x, q.data, k.data, ref.data, N, r){
                                      quanteda::docnames(k.data) != q.name) |> as.character()
 
   ref.sents <- quanteda::tokens_subset(ref.data, author != candidate.name &
-                                       author != quanteda::docvars(q.data, "author")) |> as.character()
+                                       author != q.author) |> as.character()
 
   k.g <- k.sents |> kgrams::kgram_freqs(N = N) |> kgrams::language_model(smoother = "kn", D = 0.75)
 
@@ -41,7 +42,7 @@ apply_lambdaG <- function(x, q.data, k.data, ref.data, N, r){
   results[1,"K"] = candidate.name
   results[1,"Q"] = q.name
 
-  if(candidate.name == quanteda::docvars(q.data, "author")){
+  if(candidate.name == q.author){
 
     results[1,"target"] = TRUE
 
