@@ -1,7 +1,7 @@
 apply_lambdaG <- function(x, q.data, k.data, ref.data, N, r){
 
   q.name <- as.character(x["Q"])
-  q.author <- quanteda::tokens_subset(q.data, quanteda::docnames(q.data) == q.name) |> docnames()
+  q.author <- quanteda::tokens_subset(q.data, quanteda::docnames(q.data) == q.name) |> docvars("author")
   q.sents <- quanteda::tokens_subset(q.data, quanteda::docnames(q.data) == q.name) |> as.character()
 
   candidate.name <- as.character(x["K"])
