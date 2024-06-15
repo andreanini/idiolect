@@ -9,7 +9,7 @@ concordance(
   k.data,
   reference.data,
   search,
-  token.type,
+  token.type = "word",
   window = 5,
   case_insensitive = T
 )
@@ -23,7 +23,7 @@ concordance(
 
 \item{search}{A string. It can be any sequence of characters and it also accepts the use of * as a wildcard.}
 
-\item{token.type}{Choice between "word", which searches for word or punctuation mark tokens, or "character", which instead uses a single character search.}
+\item{token.type}{Choice between "word" (default), which searches for word or punctuation mark tokens, or "character", which instead uses a single character search.}
 
 \item{window}{The number of context words to be displayed around the keyword (\code{\link[quanteda:kwic]{quanteda::kwic()}} parameter).}
 

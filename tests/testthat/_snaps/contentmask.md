@@ -3,7 +3,7 @@
     Code
       contentmask(enron.small, algorithm = "POSnoise", replace_non_ascii = F, output = "corpus")
     Message
-      successfully initialized (spaCy Version: 3.7.4, language model: en_core_web_sm)
+      successfully initialized (spaCy Version: 3.7.1, language model: en_core_web_sm)
     Output
       Corpus consisting of 3 documents and 2 docvars.
       allen-p_16.txt :
@@ -21,7 +21,7 @@
     Code
       contentmask(enron.small, algorithm = "frames", replace_non_ascii = F, output = "corpus")
     Message
-      successfully initialized (spaCy Version: 3.7.4, language model: en_core_web_sm)
+      successfully initialized (spaCy Version: 3.7.1, language model: en_core_web_sm)
     Output
       Corpus consisting of 3 documents and 2 docvars.
       allen-p_16.txt :
@@ -39,7 +39,7 @@
     Code
       contentmask(enron.small, algorithm = "POSnoise", replace_non_ascii = F, output = "sentences")
     Message
-      successfully initialized (spaCy Version: 3.7.4, language model: en_core_web_sm)
+      successfully initialized (spaCy Version: 3.7.1, language model: en_core_web_sm)
     Output
       Tokens consisting of 3 documents and 2 docvars.
       allen-p_16.txt :
@@ -79,7 +79,7 @@
     Code
       contentmask(enron.small, algorithm = "frames", replace_non_ascii = F, output = "sentences")
     Message
-      successfully initialized (spaCy Version: 3.7.4, language model: en_core_web_sm)
+      successfully initialized (spaCy Version: 3.7.1, language model: en_core_web_sm)
     Output
       Tokens consisting of 3 documents and 2 docvars.
       allen-p_16.txt :
