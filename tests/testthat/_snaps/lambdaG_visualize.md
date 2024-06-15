@@ -4,7 +4,7 @@
       outputs
     Output
       $table
-      # A tibble: 13 x 6
+      # A tibble: 13 x 8
          sentence_id token_id t         lambdaG sentence_lambdaG zlambdaG
                <int>    <int> <chr>       <dbl>            <dbl>    <dbl>
        1           1        1 J          0.741            -0.767    1.28 
@@ -20,6 +20,7 @@
       11           1       11 works     -0.167            -0.767   -0.174
       12           1       12 .          0.0786           -0.767    0.221
       13           1       13 ___EOS___ -0.141            -0.767   -0.132
+      # i 2 more variables: token_contribution <dbl>, sentence_contribution <dbl>
       
       $colourcoded_text
       [1] " <span style=\"background-color: #F1948A;\">J</span> <span style=\"background-color: #FADBD8;\">N</span> , but that <span style=\"background-color: #F1948A;\">'s</span> just the N it works . <br>"

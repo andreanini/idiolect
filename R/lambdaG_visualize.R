@@ -140,7 +140,7 @@ color_coding_latex <- function(llr.table){
 #' @param cores The number of cores to use for parallel processing (the default is one).
 #'
 #' @references Nini, A., Halvani, O., Graner, L., Gherardi, V., Ishihara, S. Authorship Verification based on the Likelihood Ratio of Grammar Models. https://arxiv.org/abs/2403.08462v1
-#' @return The function outputs a list of two objects: a data frame with each row being a token in the Q text and the values of lambdaG for the token and sentences, in decreasing order of sentence lambdaG; the raw code in html or latex that generates the colour-coded file. If the print value is set to TRUE the function will also save the colour-coded text as an html or plain text file on disk in the working directory.
+#' @return The function outputs a list of two objects: a data frame with each row being a token in the Q text and the values of lambdaG for the token and sentences, in decreasing order of sentence lambdaG and with the relative contribution of each token and each sentence to the final lambdaG in percentage; the raw code in html or latex that generates the colour-coded file. If the print value is set to TRUE the function will also save the colour-coded text as an html or plain text file on disk in the working directory.
 #' @export
 #'
 #' @examples
@@ -166,6 +166,25 @@ lambdaG_visualize <- function(q.data, k.data, ref.data, N = 10, r = 30, output =
 
 
   llr.table <- loglikelihood_table_avgllrs(q.data, k.data, ref.data, r, N, cores = cores)
+
+  # calculation of relative contribution in percentage
+  llr.table |>
+    dplyr::pull(lambdaG) |>
+    abs() |>
+    sum() -> total_lambdaG_tokens
+
+  llr.table |>
+      dplyr::pull(sentence_lambdaG) |>
+      unique() |>
+      abs() |>
+      sum() -> total_lambdaG_sents
+
+  llr.table |>
+    dplyr::mutate(token_contribution = lambdaG/total_lambdaG_tokens) |>
+    dplyr::mutate(token_contribution = round(token_contribution*100, 2)) |>
+    dplyr::mutate(sentence_contribution = sentence_lambdaG/total_lambdaG_sents) |>
+    dplyr::mutate(sentence_contribution = round(sentence_contribution*100, 2)) -> llr.table
+
 
   if(output == "html"){
 
