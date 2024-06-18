@@ -9,7 +9,6 @@
 #' @param corpus A `quanteda` corpus object, typically the output of the [create_corpus()] function.
 #' @param algorithm A string, either "POSnoise" (default) or "frames".
 #' @param model The spacy model to use. The default is en_core_web_sm.
-#' @param replace_non_ascii A boolean value. If this is TRUE then All non-ASCII characters are either substituted to ASCII ones or removed using the function [textclean::replace_non_ascii()]. This operation also removes all emojis.
 #' @param output A string, either "corpus" or "sentences". This indicates the kind of object returned by the function, either a `quanteda` corpus or a `quanteda` tokens list where each token is a sentence.
 #'
 #' @references Halvani, Oren & Lukas Graner. 2021. POSNoise: An Effective Countermeasure Against Topic Biases in Authorship Analysis. In Proceedings of the 16th International Conference on Availability, Reliability and Security, 1–12. Vienna, Austria: Association for Computing Machinery. https://doi.org/10.1145/3465481.3470050.
@@ -20,47 +19,22 @@
 #'
 #' @examples
 #' \dontrun{
-#' text <- "The elegant cat was forcefully put on the chair. He didn't like it but he did not move\ncat@pets.com;\nhttp://quanteda.io/"
+#' text <- "The cat was put on the chair. He didn't like it but he did not move\ncat@pets.com;\nhttp://quanteda.io/"
 #' toy.corpus <- quanteda::corpus(text)
-#' contentmask(toy.corpus, algorithm = "POSnoise", replace_non_ascii = FALSE)
-#' contentmask(toy.corpus, algorithm = "POSnoise", replace_non_ascii = FALSE, output = "sentences")
+#' contentmask(toy.corpus, algorithm = "POSnoise")
+#' contentmask(toy.corpus, algorithm = "POSnoise", output = "sentences")
 #' }
 #'
 #' @export
-contentmask <- function(corpus, model = "en_core_web_sm", algorithm = "POSnoise", replace_non_ascii = F, output = "corpus"){
+contentmask <- function(corpus, model = "en_core_web_sm", algorithm = "POSnoise", output = "corpus"){
 
-  if(replace_non_ascii == T){
+  #replacing potential curly quotes
+  meta <- quanteda::docvars(corpus)
+  names <- quanteda::docnames(corpus)
+  c <- textclean::replace_curly_quote(corpus) |> quanteda::corpus()
+  quanteda::docvars(c) <- meta
+  quanteda::docnames(c) <- names
 
-    meta <- quanteda::docvars(corpus)
-    names <- quanteda::docnames(corpus)
-
-    c.c <- textclean::replace_non_ascii(corpus) |> quanteda::corpus()
-
-    quanteda::docvars(c.c) <- meta
-    quanteda::docnames(c.c) <- names
-
-
-  }else{
-
-    c.c <- corpus
-
-  }
-
-  spacyr::spacy_initialize(model = model, entity = F)
-
-  if(output == "sentences"){
-
-    c.p <- spacyr::spacy_tokenize(c.c, "sentence", output = "data.frame")
-
-    dplyr::mutate(quanteda::docvars(c.c), doc_id = quanteda::docnames(c.c)) |>
-      dplyr::inner_join(c.p, by = "doc_id") |>
-      quanteda::corpus(text_field = "token", unique_docnames = F) -> c
-
-  }else{
-
-    c <- c.c
-
-  }
 
   # this removes potential empty documents in the corpus, which are anyway removed by spacy
   c <- quanteda::corpus_subset(c, quanteda::ntoken(c) > 0)
@@ -69,10 +43,9 @@ contentmask <- function(corpus, model = "en_core_web_sm", algorithm = "POSnoise"
   meta <- quanteda::docvars(c)
   names <- quanteda::docnames(c)
 
+  spacyr::spacy_initialize(model = model, entity = F)
   parsed.corpus <- spacyr::spacy_parse(c, lemma = F, entity = F, tag = T,
                                        additional_attributes = c("like_url", "like_email"))
-
-  spacyr::spacy_finalize()
 
   if(algorithm == "POSnoise"){
 
@@ -98,15 +71,7 @@ contentmask <- function(corpus, model = "en_core_web_sm", algorithm = "POSnoise"
       dplyr::rename(token = POSnoise) |>
       quanteda::as.tokens() -> x.pos
 
-    if(output == "sentences"){
-
-      x.corp <- sapply(x.pos, function(x) { paste(x, collapse = " ") }) |> quanteda::tokens("sentence")
-
-    }else{
-
       x.corp <- sapply(x.pos, function(x) { paste(x, collapse = " ") }) |> quanteda::corpus()
-
-    }
 
   }
 
@@ -124,32 +89,37 @@ contentmask <- function(corpus, model = "en_core_web_sm", algorithm = "POSnoise"
       dplyr::rename(token = POSnoise) |>
       quanteda::as.tokens() -> x.pos
 
-    if(output == "sentences"){
-
-      x.corp <- sapply(x.pos, function(x) { paste(x, collapse = " ") }) |> quanteda::tokens("sentence")
-
-    }else{
-
       x.corp <- sapply(x.pos, function(x) { paste(x, collapse = " ") }) |> quanteda::corpus()
-
-    }
 
   }
 
-  quanteda::docvars(x.corp) <- meta
-  quanteda::docnames(x.corp) <- names
-
   if(output == "sentences"){
 
-    quanteda::docvars(x.corp, "original_docid") <- docids
-    final.x.corp <- quanteda::tokens_group(x.corp, original_docid)
-    quanteda::docvars(final.x.corp, "original_docid") <- NULL
+    sapply(x.corp, stringr::str_replace_all, "\n", "\n\n") |>
+      quanteda::corpus() |>
+      quanteda::corpus_reshape(to = "paragraphs", use_docvars = T) -> x.pars
+
+    x.pars |>
+      spacyr::spacy_tokenize("sentence") |>
+      quanteda::as.tokens() -> x.toks
+
+    docvars(x.toks, "original_docid") <- docid(x.pars)
+
+    final.x.corp <- tokens_group(x.toks, original_docid)
+
+    quanteda::docvars(final.x.corp) <- meta
+    quanteda::docnames(final.x.corp) <- names
 
   }else{
+
+    quanteda::docvars(x.corp) <- meta
+    quanteda::docnames(x.corp) <- names
 
     final.x.corp <- x.corp
 
   }
+
+  spacyr::spacy_finalize()
 
   return(final.x.corp)
 

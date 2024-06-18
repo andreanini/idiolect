@@ -8,7 +8,6 @@ contentmask(
   corpus,
   model = "en_core_web_sm",
   algorithm = "POSnoise",
-  replace_non_ascii = F,
   output = "corpus"
 )
 }
@@ -19,12 +18,10 @@ contentmask(
 
 \item{algorithm}{A string, either "POSnoise" (default) or "frames".}
 
-\item{replace_non_ascii}{A boolean value. If this is TRUE then All non-ASCII characters are either substituted to ASCII ones or removed using the function \code{\link[textclean:replace_non_ascii]{textclean::replace_non_ascii()}}. This operation also removes all emojis.}
-
 \item{output}{A string, either "corpus" or "sentences". This indicates the kind of object returned by the function, either a \code{quanteda} corpus or a \code{quanteda} tokens list where each token is a sentence.}
 }
 \value{
-A \code{quanteda} corpus object only containing functional tokens, depending on the algorithm chosen. The corpus contains the same docvars as the input. Email addresses or URLs are treated like nouns.
+A \code{quanteda} corpus object or a \code{quanteda} list of sentences only containing functional tokens, depending on the algorithm and output type chosen. The corpus contains the same docvars as the input. Email addresses or URLs are treated like nouns.
 }
 \description{
 This function offers two algorithms for topic/content masking. In order to run the masking algorithms, a Part of Speech (POS) tagger is run first. This is \code{spacy}, which is run via \link{spacyr}. For more information about the masking algorithms see Details below.
@@ -36,9 +33,10 @@ Another algorithm implemented is Nini's (2023) \code{frames} or \verb{frame n-gr
 }
 \examples{
 \dontrun{
-text <- "The elegant cat was forcefully put on the chair. cat@pets.com; http://quanteda.io/"
+text <- "The elegant cat was forcefully put on the chair. He didn't like it but he did not move\ncat@pets.com;\nhttp://quanteda.io/"
 toy.corpus <- quanteda::corpus(text)
-contentmask(toy.corpus, algorithm = "POSnoise", replace_non_ascii = FALSE)
+contentmask(toy.corpus, algorithm = "POSnoise")
+contentmask(toy.corpus, algorithm = "POSnoise", output = "sentences")
 }
 
 }
