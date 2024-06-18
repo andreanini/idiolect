@@ -16,13 +16,14 @@
 #' Nini, Andrea. 2023. A Theory of Linguistic Individuality for Authorship Analysis (Elements in Forensic Linguistics). Cambridge, UK: Cambridge University Press.
 #'
 #'
-#' @return A `quanteda` corpus object only containing functional tokens, depending on the algorithm chosen. The corpus contains the same docvars as the input. Email addresses or URLs are treated like nouns.
+#' @return A `quanteda` corpus object or a `quanteda` list of sentences only containing functional tokens, depending on the algorithm and output type chosen. The corpus contains the same docvars as the input. Email addresses or URLs are treated like nouns.
 #'
 #' @examples
 #' \dontrun{
-#' text <- "The elegant cat was forcefully put on the chair. cat@pets.com; http://quanteda.io/"
+#' text <- "The elegant cat was forcefully put on the chair. He didn't like it but he did not move\ncat@pets.com;\nhttp://quanteda.io/"
 #' toy.corpus <- quanteda::corpus(text)
 #' contentmask(toy.corpus, algorithm = "POSnoise", replace_non_ascii = FALSE)
+#' contentmask(toy.corpus, algorithm = "POSnoise", replace_non_ascii = FALSE, output = "sentences")
 #' }
 #'
 #' @export
