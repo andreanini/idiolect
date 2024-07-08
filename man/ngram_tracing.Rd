@@ -37,7 +37,7 @@ ngram_tracing(
 
 \item{coefficient}{The coefficient to use to compare texts, one of: "simpson" (default), "phi", "jaccard", "kulczynski", or "cole".}
 
-\item{features}{Logical with default FALSE. If TRUE then the result table will contain the features in the overlap that are unique for that overlap in the corpus.}
+\item{features}{Logical with default FALSE. If TRUE then the result table will contain the features in the overlap that are unique for that overlap in the corpus. If only two texts are present then this will return the n-grams in common.}
 
 \item{cores}{The number of cores to use for parallel processing (the default is one).}
 }

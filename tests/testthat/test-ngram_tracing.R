@@ -14,8 +14,11 @@ test_that("ngram tracing works", {
 
   results.dfm <- ngram_tracing(d[1:5,], d[6:10,], features = T)
 
-  expect_identical(results.corpus, results.dfm)
+  # n-gram tracing on only two texts with features activated
+  results.two <- ngram_tracing(unknown[1], known[1], features = T)
 
+  expect_identical(results.corpus, results.dfm)
   expect_snapshot(results.corpus)
+  expect_snapshot(results.two)
 
 })

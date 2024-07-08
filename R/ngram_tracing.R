@@ -4,7 +4,16 @@ overlap <- function(m1, m2, rest.m){
 
   overlap <- quanteda::dfm_trim(m, min_docfreq = 2) |> quanteda::featnames()
 
-  to.remove <- quanteda::dfm_trim(rest.m, min_docfreq = 1) |> quanteda::featnames()
+  # this is to control case in which the dfm only contains two samples
+  if(length(rest.m) > 0){
+
+    to.remove <- quanteda::dfm_trim(rest.m, min_docfreq = 1) |> quanteda::featnames()
+
+  }else{
+
+    to.remove = c()
+
+  }
 
   unique.overlap <- overlap[!(overlap %in% to.remove)]
 
@@ -50,8 +59,18 @@ similarity <- function(x, df, coefficient, features){
   if(features == T){
 
     rest <- quanteda::dfm_subset(df, quanteda::docnames(df) != q.name & author != k.name)
-    quanteda::docvars(rest, "author") <- "rest"
-    rest.m <- quanteda::dfm_group(rest, author) |> quanteda::dfm_weight("boolean", force = T)
+
+    # this is to control the case in which the dfm only contains two samples
+    if(length(rest) > 0){
+
+      quanteda::docvars(rest, "author") <- "rest"
+      rest.m <- quanteda::dfm_group(rest, author) |> quanteda::dfm_weight("boolean", force = T)
+
+    }else{
+
+      rest.m <- rest
+
+    }
 
   }
 
@@ -108,7 +127,7 @@ similarity <- function(x, df, coefficient, features){
 #' @param n The order or size of the n-grams being extracted. Default is 9.
 #' @param coefficient The coefficient to use to compare texts, one of: "simpson" (default), "phi", "jaccard", "kulczynski", or "cole".
 #' @param cores The number of cores to use for parallel processing (the default is one).
-#' @param features Logical with default FALSE. If TRUE then the result table will contain the features in the overlap that are unique for that overlap in the corpus.
+#' @param features Logical with default FALSE. If TRUE then the result table will contain the features in the overlap that are unique for that overlap in the corpus. If only two texts are present then this will return the n-grams in common.
 #'
 #' @references Grieve, Jack, Emily Chiang, Isobelle Clarke, Hannah Gideon, Aninna Heini, Andrea Nini & Emily Waibel. 2019. Attributing the Bixby Letter using n-gram tracing. Digital Scholarship in the Humanities 34(3). 493–512.
 #' Nini, Andrea. 2023. A Theory of Linguistic Individuality for Authorship Analysis (Elements in Forensic Linguistics). Cambridge, UK: Cambridge University Press.

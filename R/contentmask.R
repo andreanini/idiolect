@@ -19,7 +19,7 @@
 #'
 #' @examples
 #' \dontrun{
-#' text <- "The cat was put on the chair. He didn't like it but he did not move\ncat@pets.com;\nhttp://quanteda.io/"
+#' text <- "The cat was on the chair. He didn't move\ncat@pets.com;\nhttp://quanteda.io/"
 #' toy.corpus <- quanteda::corpus(text)
 #' contentmask(toy.corpus, algorithm = "POSnoise")
 #' contentmask(toy.corpus, algorithm = "POSnoise", output = "sentences")

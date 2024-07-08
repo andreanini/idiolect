@@ -33,7 +33,7 @@ Another algorithm implemented is Nini's (2023) \code{frames} or \verb{frame n-gr
 }
 \examples{
 \dontrun{
-text <- "The elegant cat was forcefully put on the chair. He didn't like it but he did not move\ncat@pets.com;\nhttp://quanteda.io/"
+text <- "The cat was on the chair. He didn't move\ncat@pets.com;\nhttp://quanteda.io/"
 toy.corpus <- quanteda::corpus(text)
 contentmask(toy.corpus, algorithm = "POSnoise")
 contentmask(toy.corpus, algorithm = "POSnoise", output = "sentences")
