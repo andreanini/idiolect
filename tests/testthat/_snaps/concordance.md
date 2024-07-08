@@ -174,3 +174,16 @@
       75  Reference
       76  Reference
 
+---
+
+    Code
+      concordance(enron.sample[1], enron.sample[2], search = "want*", token.type = "character")
+    Output
+                                 docname from   to   pre keyword  post authorship
+      1 known [Kevin.hyatt - Mail_1].txt    9   13  N N    wants  to b          Q
+      2 known [Kevin.hyatt - Mail_1].txt  250  254 ight    want  to ma          Q
+      3 known [Kevin.hyatt - Mail_1].txt 1306 1310  n't    want  an N           Q
+      4 known [Kevin.hyatt - Mail_1].txt 1339 1343  n't    want  to he          Q
+      5 known [Kevin.hyatt - Mail_1].txt 2009 2013  you    want  help           Q
+      6 known [Kevin.hyatt - Mail_1].txt 2131 2135  you    want  N or           Q
+

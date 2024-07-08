@@ -4,7 +4,7 @@
 #'
 #' @param q.data A `quanteda` corpus object, such as the output of [create_corpus()].
 #' @param k.data A `quanteda` corpus object, such as the output of [create_corpus()].
-#' @param reference.data A `quanteda` corpus object, such as the output of [create_corpus()].
+#' @param reference.data A `quanteda` corpus object, such as the output of [create_corpus()]. This is optional.
 #' @param search A string. It can be any sequence of characters and it also accepts the use of * as a wildcard.
 #' @param token.type Choice between "word" (default), which searches for word or punctuation mark tokens, or "character", which instead uses a single character search.
 #' @param window The number of context words to be displayed around the keyword ([quanteda::kwic()] parameter).
@@ -23,6 +23,13 @@
 #' concordance(enron.sample[1], enron.sample[2], enron.sample[3:49], "help*", token.type = "character")
 #'
 concordance <- function(q.data, k.data, reference.data, search, token.type = "word", window = 5, case_insensitive = T){
+
+  # this condition is needed to make reference.data optional
+  if(missing(reference.data)){
+
+    reference.data <- quanteda::corpus("")
+
+  }
 
   if(!quanteda::is.corpus(q.data) | !quanteda::is.corpus(k.data) | !quanteda::is.corpus(reference.data)){
 

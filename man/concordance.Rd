@@ -19,7 +19,7 @@ concordance(
 
 \item{k.data}{A \code{quanteda} corpus object, such as the output of \code{\link[=create_corpus]{create_corpus()}}.}
 
-\item{reference.data}{A \code{quanteda} corpus object, such as the output of \code{\link[=create_corpus]{create_corpus()}}.}
+\item{reference.data}{A \code{quanteda} corpus object, such as the output of \code{\link[=create_corpus]{create_corpus()}}. This is optional.}
 
 \item{search}{A string. It can be any sequence of characters and it also accepts the use of * as a wildcard.}
 
