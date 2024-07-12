@@ -59,7 +59,7 @@ loglikelihood_table_avgllrs <- function(q.data, k.data, ref.data, r, N, cores){
     dplyr::summarise(lambdaG = mean(llr), sentence_lambdaG = round(mean(sentence_llr), 3)) |>
     dplyr::ungroup() |>
     dplyr::mutate(zlambdaG = as.numeric(round(scale(lambdaG), 3))) |>
-    dplyr::arrange(desc(sentence_lambdaG), token_id) -> final.table
+    dplyr::arrange(desc(sentence_lambdaG), sentence_id, token_id) -> final.table
 
   return(final.table)
 
