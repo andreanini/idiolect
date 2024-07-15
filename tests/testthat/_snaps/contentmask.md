@@ -113,3 +113,27 @@
       [6] "sincerely , NNP NNP NNP - CD"                                                                                                                                                                           
       
 
+---
+
+    Code
+      contentmask(toy.corpus, algorithm = "POSnoise")
+    Message
+      successfully initialized (spaCy Version: 3.7.4, language model: en_core_web_sm)
+    Output
+      Corpus consisting of 1 document.
+      text1 :
+      "the N was on the N . he did n't move   N ;   N N"
+      
+
+---
+
+    Code
+      contentmask(toy.corpus, algorithm = "POSnoise", remove_emojis = F)
+    Message
+      successfully initialized (spaCy Version: 3.7.4, language model: en_core_web_sm)
+    Output
+      Corpus consisting of 1 document.
+      text1 :
+      "the N was on the N . he did n't move   N ;   N N P 👍"
+      
+

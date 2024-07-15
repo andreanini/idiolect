@@ -8,6 +8,7 @@ contentmask(
   corpus,
   model = "en_core_web_sm",
   algorithm = "POSnoise",
+  remove_emojis = TRUE,
   output = "corpus"
 )
 }
@@ -17,6 +18,8 @@ contentmask(
 \item{model}{The spacy model to use. The default is en_core_web_sm.}
 
 \item{algorithm}{A string, either "POSnoise" (default) or "frames".}
+
+\item{remove_emojis}{A logical value indicating whether to remove emojis (default) or not.}
 
 \item{output}{A string, either "corpus" or "sentences". This indicates the kind of object returned by the function, either a \code{quanteda} corpus or a \code{quanteda} tokens list where each token is a sentence.}
 }
@@ -33,7 +36,7 @@ Another algorithm implemented is Nini's (2023) \code{frames} or \verb{frame n-gr
 }
 \examples{
 \dontrun{
-text <- "The cat was on the chair. He didn't move\ncat@pets.com;\nhttp://quanteda.io/"
+text <- "The cat was on the chair. He didn't move\ncat@pets.com;\nhttp://quanteda.io/ test 😻 👍"
 toy.corpus <- quanteda::corpus(text)
 contentmask(toy.corpus, algorithm = "POSnoise")
 contentmask(toy.corpus, algorithm = "POSnoise", output = "sentences")

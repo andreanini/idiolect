@@ -9,6 +9,7 @@
 #' @param corpus A `quanteda` corpus object, typically the output of the [create_corpus()] function.
 #' @param algorithm A string, either "POSnoise" (default) or "frames".
 #' @param model The spacy model to use. The default is en_core_web_sm.
+#' @param remove_emojis A logical value indicating whether to remove emojis (default) or not.
 #' @param output A string, either "corpus" or "sentences". This indicates the kind of object returned by the function, either a `quanteda` corpus or a `quanteda` tokens list where each token is a sentence.
 #'
 #' @references Halvani, Oren & Lukas Graner. 2021. POSNoise: An Effective Countermeasure Against Topic Biases in Authorship Analysis. In Proceedings of the 16th International Conference on Availability, Reliability and Security, 1–12. Vienna, Austria: Association for Computing Machinery. https://doi.org/10.1145/3465481.3470050.
@@ -19,14 +20,14 @@
 #'
 #' @examples
 #' \dontrun{
-#' text <- "The cat was on the chair. He didn't move\ncat@pets.com;\nhttp://quanteda.io/"
+#' text <- "The cat was on the chair. He didn't move\ncat@pets.com;\nhttp://quanteda.io/ test 😻 👍"
 #' toy.corpus <- quanteda::corpus(text)
 #' contentmask(toy.corpus, algorithm = "POSnoise")
 #' contentmask(toy.corpus, algorithm = "POSnoise", output = "sentences")
 #' }
 #'
 #' @export
-contentmask <- function(corpus, model = "en_core_web_sm", algorithm = "POSnoise", output = "corpus"){
+contentmask <- function(corpus, model = "en_core_web_sm", algorithm = "POSnoise", remove_emojis = TRUE, output = "corpus"){
 
   #replacing potential curly quotes
   meta <- quanteda::docvars(corpus)
@@ -46,6 +47,15 @@ contentmask <- function(corpus, model = "en_core_web_sm", algorithm = "POSnoise"
   spacyr::spacy_initialize(model = model, entity = F)
   parsed.corpus <- spacyr::spacy_parse(c, lemma = F, entity = F, tag = T,
                                        additional_attributes = c("like_url", "like_email"))
+
+  if(remove_emojis == T){
+
+    parsed.corpus |>
+      dplyr::mutate(is_emoji = textclean::replace_emoji_identifier(token)) |>
+      dplyr::filter(stringr::str_detect(is_emoji, " lexicon.{5,}", negate = T)) |>
+      dplyr::select(-is_emoji) -> parsed.corpus
+
+  }
 
   if(algorithm == "POSnoise"){
 
