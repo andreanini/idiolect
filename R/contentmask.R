@@ -29,13 +29,24 @@
 #' @export
 contentmask <- function(corpus, model = "en_core_web_sm", algorithm = "POSnoise", remove_emojis = TRUE, output = "corpus"){
 
-  #replacing potential curly quotes
+  #replacing potential curly quotes and removing emojis if needed
   meta <- quanteda::docvars(corpus)
   names <- quanteda::docnames(corpus)
-  c <- textclean::replace_curly_quote(corpus) |> quanteda::corpus()
+
+  c <- textclean::replace_curly_quote(corpus)
+
+  if(remove_emojis == T){
+
+    c |>
+      textclean::replace_emoji_identifier() |>
+      lapply(stringr::str_remove_all, "\\blexicon.{5,}\\b") |>
+      unlist() |>
+      quanteda::corpus() -> c
+
+  }
+
   quanteda::docvars(c) <- meta
   quanteda::docnames(c) <- names
-
 
   # this removes potential empty documents in the corpus, which are anyway removed by spacy
   c <- quanteda::corpus_subset(c, quanteda::ntoken(c) > 0)
@@ -48,14 +59,7 @@ contentmask <- function(corpus, model = "en_core_web_sm", algorithm = "POSnoise"
   parsed.corpus <- spacyr::spacy_parse(c, lemma = F, entity = F, tag = T,
                                        additional_attributes = c("like_url", "like_email"))
 
-  if(remove_emojis == T){
 
-    parsed.corpus |>
-      dplyr::mutate(is_emoji = textclean::replace_emoji_identifier(token)) |>
-      dplyr::filter(stringr::str_detect(is_emoji, " lexicon.{5,}", negate = T)) |>
-      dplyr::select(-is_emoji) -> parsed.corpus
-
-  }
 
   if(algorithm == "POSnoise"){
 

@@ -122,7 +122,7 @@
     Output
       Corpus consisting of 1 document.
       text1 :
-      "the N was on the N . he did n't move   N ;   N N"
+      "the N was on the N . he did n't move N ; N N  "
       
 
 ---
@@ -132,8 +132,11 @@
     Message
       successfully initialized (spaCy Version: 3.7.4, language model: en_core_web_sm)
     Output
-      Corpus consisting of 1 document.
+      Corpus consisting of 2 documents.
       text1 :
       "the N was on the N . he did n't move   N ;   N N P 👍"
+      
+      text2 :
+      "D 👍"
       
 
