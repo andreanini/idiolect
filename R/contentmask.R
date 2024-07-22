@@ -6,47 +6,48 @@
 #'
 #' Another algorithm implemented is Nini's (2023) `frames` or `frame n-grams`. This algorithm does not involve a special list of tokens and therefore can potentially work for any language provided that the correct `spacy` model is loaded. This algorithm consists in masking all tokens using their POS tag only when these are nouns, verbs, or personal pronouns.
 #'
+#' The removal of non-ASCII characters is done using the [textclean] package.
+#'
 #' @param corpus A `quanteda` corpus object, typically the output of the [create_corpus()] function.
 #' @param algorithm A string, either "POSnoise" (default) or "frames".
 #' @param model The spacy model to use. The default is en_core_web_sm.
-#' @param remove_emojis A logical value indicating whether to remove emojis (default) or not.
-#' @param output A string, either "corpus" or "sentences". This indicates the kind of object returned by the function, either a `quanteda` corpus or a `quanteda` tokens list where each token is a sentence.
+#' @param replace_non_ascii A logical value indicating whether to remove non-ASCII characters (including emojis). This is the default.
 #'
 #' @references Halvani, Oren & Lukas Graner. 2021. POSNoise: An Effective Countermeasure Against Topic Biases in Authorship Analysis. In Proceedings of the 16th International Conference on Availability, Reliability and Security, 1–12. Vienna, Austria: Association for Computing Machinery. https://doi.org/10.1145/3465481.3470050.
 #' Nini, Andrea. 2023. A Theory of Linguistic Individuality for Authorship Analysis (Elements in Forensic Linguistics). Cambridge, UK: Cambridge University Press.
 #'
 #'
-#' @return A `quanteda` corpus object or a `quanteda` list of sentences only containing functional tokens, depending on the algorithm and output type chosen. The corpus contains the same docvars as the input. Email addresses or URLs are treated like nouns.
+#' @return A `quanteda` corpus object only containing functional tokens, depending on the algorithm chosen. The corpus contains the same docvars as the input. Email addresses or URLs are treated like nouns.
 #'
 #' @examples
 #' \dontrun{
 #' text <- "The cat was on the chair. He didn't move\ncat@pets.com;\nhttp://quanteda.io/ test 😻 👍"
 #' toy.corpus <- quanteda::corpus(text)
 #' contentmask(toy.corpus, algorithm = "POSnoise")
-#' contentmask(toy.corpus, algorithm = "POSnoise", output = "sentences")
 #' }
-#'
 #' @export
-contentmask <- function(corpus, model = "en_core_web_sm", algorithm = "POSnoise", remove_emojis = TRUE, output = "corpus"){
+contentmask <- function(corpus, model = "en_core_web_sm", algorithm = "POSnoise", replace_non_ascii = TRUE){
 
-  #replacing potential curly quotes and removing emojis if needed
-  meta <- quanteda::docvars(corpus)
-  names <- quanteda::docnames(corpus)
+  if(replace_non_ascii == T){
 
-  c <- textclean::replace_curly_quote(corpus)
+    meta <- quanteda::docvars(corpus)
+    names <- quanteda::docnames(corpus)
 
-  if(remove_emojis == T){
-
-    c |>
-      textclean::replace_emoji_identifier() |>
-      lapply(stringr::str_remove_all, "\\blexicon.{5,}\\b") |>
-      unlist() |>
+    corpus |>
+      sapply(stringr::str_replace_all, "\n", "--NL--") |>
+      textclean::replace_non_ascii() |>
+      sapply(stringr::str_replace_all, "--NL--", "\n") |>
       quanteda::corpus() -> c
+
+    quanteda::docvars(c) <- meta
+    quanteda::docnames(c) <- names
+
+  }else{
+
+    c <- corpus
 
   }
 
-  quanteda::docvars(c) <- meta
-  quanteda::docnames(c) <- names
 
   # this removes potential empty documents in the corpus, which are anyway removed by spacy
   c <- quanteda::corpus_subset(c, quanteda::ntoken(c) > 0)
@@ -58,7 +59,7 @@ contentmask <- function(corpus, model = "en_core_web_sm", algorithm = "POSnoise"
   spacyr::spacy_initialize(model = model, entity = F)
   parsed.corpus <- spacyr::spacy_parse(c, lemma = F, entity = F, tag = T,
                                        additional_attributes = c("like_url", "like_email"))
-
+  spacyr::spacy_finalize()
 
 
   if(algorithm == "POSnoise"){
@@ -107,34 +108,9 @@ contentmask <- function(corpus, model = "en_core_web_sm", algorithm = "POSnoise"
 
   }
 
-  if(output == "sentences"){
+  quanteda::docvars(x.corp) <- meta
+  quanteda::docnames(x.corp) <- names
 
-    sapply(x.corp, stringr::str_replace_all, "\n", "\n\n") |>
-      quanteda::corpus() |>
-      quanteda::corpus_reshape(to = "paragraphs", use_docvars = T) -> x.pars
-
-    x.pars |>
-      spacyr::spacy_tokenize("sentence") |>
-      quanteda::as.tokens() -> x.toks
-
-    docvars(x.toks, "original_docid") <- docid(x.pars)
-
-    final.x.corp <- tokens_group(x.toks, original_docid)
-
-    quanteda::docvars(final.x.corp) <- meta
-    quanteda::docnames(final.x.corp) <- names
-
-  }else{
-
-    quanteda::docvars(x.corp) <- meta
-    quanteda::docnames(x.corp) <- names
-
-    final.x.corp <- x.corp
-
-  }
-
-  spacyr::spacy_finalize()
-
-  return(final.x.corp)
+  return(x.corp)
 
 }
