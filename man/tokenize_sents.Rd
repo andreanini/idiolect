@@ -4,10 +4,12 @@
 \alias{tokenize_sents}
 \title{Tokenize to sentences}
 \usage{
-tokenize_sents(corpus)
+tokenize_sents(corpus, model = "en_core_web_sm")
 }
 \arguments{
 \item{corpus}{A \code{quanteda} corpus object, typically the output of the \code{\link[=create_corpus]{create_corpus()}} function or the output of \code{\link[=contentmask]{contentmask()}}.}
+
+\item{model}{The spacy model to use. The default is en_core_web_sm.}
 }
 \value{
 A \code{quanteda} tokens object where each token is a sentence.
@@ -19,6 +21,8 @@ This function turns a corpus of texts into a \link{quanteda} tokens object of se
 The function first split each text into paragraphs by splitting at new line markers and then uses spacy to tokenize each paragraph into sentences. The function accepts a plain text corpus input or the output of \code{\link[=contentmask]{contentmask()}}. This function is necessary to prepare the data for \code{\link[=lambdaG]{lambdaG()}}.
 }
 \examples{
+\dontrun{
 toy.pos <- corpus("the N was on the N . he did n't move \n N ; \n N N")
 tokenize_sents(toy.pos)
+}
 }
