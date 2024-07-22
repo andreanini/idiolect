@@ -34,9 +34,14 @@ contentmask <- function(corpus, model = "en_core_web_sm", algorithm = "POSnoise"
     names <- quanteda::docnames(corpus)
 
     corpus |>
-      sapply(stringr::str_replace_all, "\n", "--NL--") |>
-      textclean::replace_non_ascii() |>
-      sapply(stringr::str_replace_all, "--NL--", "\n") |>
+      sapply(function(x){
+
+        x |>
+          stringr::str_replace_all("\n", "--NL--") |>
+          textclean::replace_non_ascii() |>
+          stringr::str_replace_all("--NL--", "\n")
+
+      }) |>
       quanteda::corpus() -> c
 
     quanteda::docvars(c) <- meta
