@@ -61,9 +61,9 @@ apply_lambdaG <- function(x, q.data, k.data, ref.data, N, r){
 #'
 #' This function calculates the likelihood ratio of grammar models, or the LambdaG score, as in Nini et al. (pending submission). In order to run the analysis as in this paper, all data must be preprocessed using [contentmask()] with the "algorithm" parameter set to "POSnoise".
 #'
-#' @param q.data The questioned or disputed data as a `quanteda` tokens object with the tokens being sentences (the output of [contentmask()] with output = "sentences").
-#' @param k.data The known or undisputed data as a `quanteda` tokens object with the tokens being sentences (the output of [contentmask()] with output = "sentences").
-#' @param ref.data The reference dataset as a `quanteda` tokens object with the tokens being sentences (the output of [contentmask()] with output = "sentences"). This can be the same object as `k.data`.
+#' @param q.data The questioned or disputed data as a `quanteda` tokens object with the tokens being sentences (e.g. the output of [tokenize_sents()]).
+#' @param k.data The known or undisputed data as a `quanteda` tokens object with the tokens being sentences (e.g. the output of [tokenize_sents()]).
+#' @param ref.data The reference dataset as a `quanteda` tokens object with the tokens being sentences (e.g. the output of [tokenize_sents()]). This can be the same object as `k.data`.
 #' @param N The order of the model. Default is 10.
 #' @param r The number of iterations. Default is 30.
 #' @param cores The number of cores to use for parallel processing (the default is one).

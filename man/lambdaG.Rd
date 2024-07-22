@@ -7,11 +7,11 @@
 lambdaG(q.data, k.data, ref.data, N = 10, r = 30, cores = NULL)
 }
 \arguments{
-\item{q.data}{The questioned or disputed data as a \code{quanteda} tokens object with the tokens being sentences (the output of \code{\link[=contentmask]{contentmask()}} with output = "sentences").}
+\item{q.data}{The questioned or disputed data as a \code{quanteda} tokens object with the tokens being sentences (e.g. the output of \code{\link[=tokenize_sents]{tokenize_sents()}}).}
 
-\item{k.data}{The known or undisputed data as a \code{quanteda} tokens object with the tokens being sentences (the output of \code{\link[=contentmask]{contentmask()}} with output = "sentences").}
+\item{k.data}{The known or undisputed data as a \code{quanteda} tokens object with the tokens being sentences (e.g. the output of \code{\link[=tokenize_sents]{tokenize_sents()}}).}
 
-\item{ref.data}{The reference dataset as a \code{quanteda} tokens object with the tokens being sentences (the output of \code{\link[=contentmask]{contentmask()}} with output = "sentences"). This can be the same object as \code{k.data}.}
+\item{ref.data}{The reference dataset as a \code{quanteda} tokens object with the tokens being sentences (e.g. the output of \code{\link[=tokenize_sents]{tokenize_sents()}}). This can be the same object as \code{k.data}.}
 
 \item{N}{The order of the model. Default is 10.}
 
