@@ -14,7 +14,7 @@ calibrate_LLR(calibration.dataset, dataset, latex = FALSE)
 \item{latex}{A logical value. If FALSE (default), then the hypothesis labels are printed as plain text (Hp/Hd). If TRUE the labels are written to be read in Latex ($H_p$/$H_d$).}
 }
 \value{
-The function returns a data frame with the LLRs, as well as the verbal label according to Marquis et al (2016) and a verbal interpretation of the results.
+The function returns a data frame with the LLRs (base 10), as well as the verbal label according to Marquis et al (2016) and a verbal interpretation of the results.
 }
 \description{
 This function is used to transform the scores returned by any of the authorship analysis functions into a Log-Likelihood Ratio (LLR).
