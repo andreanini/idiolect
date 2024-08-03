@@ -12,6 +12,7 @@ lambdaG_visualize(
   r = 30,
   output = "html",
   print = TRUE,
+  scale = "absolute",
   cores = NULL
 )
 }
@@ -29,6 +30,8 @@ lambdaG_visualize(
 \item{output}{A string detailing the file type of the colour-coded text output. Either "html" (default) or "latex".}
 
 \item{print}{A logical value indicating whether the colour-coded text file should be written to the working directory (default) or not.}
+
+\item{scale}{A string indicating what scale to use to colour-code the text file. If "absolute" (default) then the raw lambdaG score is used; if "relative", then the z-score of lambdaG over the Q data is used instead, thus showing relative importance.}
 
 \item{cores}{The number of cores to use for parallel processing (the default is one).}
 }

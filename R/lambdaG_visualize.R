@@ -64,12 +64,26 @@ loglikelihood_table_avgllrs <- function(q.data, k.data, ref.data, r, N, cores){
   return(final.table)
 
 }
-color_coding_html <- function(llr.table){
+color_coding_html <- function(llr.table, scale){
 
-  llr.table |> dplyr::mutate(color = dplyr::case_when(zlambdaG > 0.5 & zlambdaG <= 1 ~ "#FADBD8",
-                                                      zlambdaG > 1 & zlambdaG <= 2 ~ "#F1948A",
-                                                      zlambdaG > 2 ~ "#E74C3C",
-                                                      .default = "")) -> table2
+  if(scale == "absolute"){
+
+    llr.table |> dplyr::mutate(color = dplyr::case_when(lambdaG > 0 & lambdaG < 1 ~ "#fdedec",
+                                                        lambdaG >= 1 & lambdaG < 2 ~ "#f5b7b1",
+                                                        lambdaG >= 2 & lambdaG < 3 ~ "#ec7063",
+                                                        lambdaG >= 3 & lambdaG <= 4 ~ "#cb4335",
+                                                        lambdaG > 4 ~ "#943126",
+                                                        .default = "")) -> table2
+
+  }
+
+  if(scale == "relative"){
+
+    llr.table |> dplyr::mutate(color = dplyr::case_when(zlambdaG > 0.5 & zlambdaG <= 1 ~ "#FADBD8",
+                                                        zlambdaG > 1 & zlambdaG <= 2 ~ "#F1948A",
+                                                        zlambdaG > 2 ~ "#E74C3C",
+                                                        .default = "")) -> table2
+  }
 
   string = c()
 
@@ -94,13 +108,30 @@ color_coding_html <- function(llr.table){
   return(string)
 
 }
-color_coding_latex <- function(llr.table){
+color_coding_latex <- function(llr.table, scale){
 
-  llr.table |> dplyr::mutate(t = dplyr::if_else(t == "___EOS___", "[EOS]", t),
-                             color = dplyr::case_when(zlambdaG > 0.5 & zlambdaG <= 1 ~ 20,
-                                                      zlambdaG > 1 & zlambdaG <= 2 ~ 50,
-                                                      zlambdaG > 2 ~ 70,
-                                                      .default = 0)) -> table2
+  if(scale == "absolute"){
+
+    llr.table |> dplyr::mutate(t = dplyr::if_else(t == "___EOS___", "[EOS]", t),
+                               color = dplyr::case_when(lambdaG > 0 & lambdaG < 1 ~ 20,
+                                                        lambdaG >= 1 & lambdaG < 2 ~ 40,
+                                                        lambdaG >= 2 & lambdaG < 3 ~ 60,
+                                                        lambdaG >= 3 & lambdaG <= 4 ~ 80,
+                                                        lambdaG > 4 ~ 100,
+                                                        .default = 0)) -> table2
+
+  }
+
+  if(scale == "relative"){
+
+    llr.table |> dplyr::mutate(t = dplyr::if_else(t == "___EOS___", "[EOS]", t),
+                               color = dplyr::case_when(zlambdaG > 0.5 & zlambdaG <= 1 ~ 20,
+                                                        zlambdaG > 1 & zlambdaG <= 2 ~ 50,
+                                                        zlambdaG > 2 ~ 70,
+                                                        .default = 0)) -> table2
+  }
+
+
   string = c()
 
   for (i in 1:nrow(table2)) {
@@ -137,6 +168,7 @@ color_coding_latex <- function(llr.table){
 #' @param r The number of iterations. Default is 30.
 #' @param output A string detailing the file type of the colour-coded text output. Either "html" (default) or "latex".
 #' @param print A logical value indicating whether the colour-coded text file should be written to the working directory (default) or not.
+#' @param scale A string indicating what scale to use to colour-code the text file. If "absolute" (default) then the raw lambdaG score is used; if "relative", then the z-score of lambdaG over the Q data is used instead, thus showing relative importance.
 #' @param cores The number of cores to use for parallel processing (the default is one).
 #'
 #' @references Nini, A., Halvani, O., Graner, L., Gherardi, V., Ishihara, S. Authorship Verification based on the Likelihood Ratio of Grammar Models. https://arxiv.org/abs/2403.08462v1
@@ -149,8 +181,7 @@ color_coding_latex <- function(llr.table){
 #' ref.data <- enron.sample[6:ndoc(enron.sample)] |> quanteda::tokens("sentence")
 #' outputs <- lambdaG_visualize(q.data, k.data, ref.data, r = 2, print = FALSE)
 #' outputs$table
-lambdaG_visualize <- function(q.data, k.data, ref.data, N = 10, r = 30, output = "html", print = TRUE,
-                              cores = NULL){
+lambdaG_visualize <- function(q.data, k.data, ref.data, N = 10, r = 30, output = "html", print = TRUE, scale = "absolute", cores = NULL){
 
   if(length(unique(quanteda::docvars(k.data, "author"))) != 1){
 
@@ -189,12 +220,12 @@ lambdaG_visualize <- function(q.data, k.data, ref.data, N = 10, r = 30, output =
   if(output == "html"){
 
     filename <- paste0(quanteda::docnames(q.data), ".html")
-    cc.text <- color_coding_html(llr.table)
+    cc.text <- color_coding_html(llr.table, scale)
 
   }else if(output == "latex"){
 
     filename <- paste0(quanteda::docnames(q.data), ".txt")
-    cc.text <- color_coding_latex(llr.table)
+    cc.text <- color_coding_latex(llr.table, scale)
 
   }
 

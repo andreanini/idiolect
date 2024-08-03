@@ -1,7 +1,7 @@
 # lambdaG visualize works
 
     Code
-      outputs
+      lambdaG_visualize(q.data, k.data, ref.data, r = 2, print = FALSE)
     Output
       $table
       # A tibble: 13 x 8
@@ -23,6 +23,34 @@
       # i 2 more variables: token_contribution <dbl>, sentence_contribution <dbl>
       
       $colourcoded_text
-      [1] " <span style=\"background-color: #F1948A;\">J</span> <span style=\"background-color: #FADBD8;\">N</span> , but that <span style=\"background-color: #F1948A;\">'s</span> just the N it works . <br>"
+      [1] " <span style=\"background-color: #fdedec;\">J</span> <span style=\"background-color: #fdedec;\">N</span> , but <span style=\"background-color: #fdedec;\">that</span> <span style=\"background-color: #f5b7b1;\">'s</span> just <span style=\"background-color: #fdedec;\">the</span> <span style=\"background-color: #fdedec;\">N</span> it works <span style=\"background-color: #fdedec;\">.</span> <br>"
+      
+
+---
+
+    Code
+      lambdaG_visualize(q.data, k.data, ref.data, r = 2, print = FALSE, scale = "relative")
+    Output
+      $table
+      # A tibble: 13 x 8
+         sentence_id token_id t          lambdaG sentence_lambdaG zlambdaG
+               <int>    <int> <chr>        <dbl>            <dbl>    <dbl>
+       1           1        1 J          0.872              -0.16    1.19 
+       2           1        2 N          0.225              -0.16    0.32 
+       3           1        3 ,         -0.414              -0.16   -0.541
+       4           1        4 but       -0.0897             -0.16   -0.104
+       5           1        5 that      -1.82               -0.16   -2.44 
+       6           1        6 's         1.49               -0.16    2.02 
+       7           1        7 just      -0.281              -0.16   -0.361
+       8           1        8 the        0.0341             -0.16    0.063
+       9           1        9 N          0.0272             -0.16    0.053
+      10           1       10 it        -0.0252             -0.16   -0.017
+      11           1       11 works     -0.104              -0.16   -0.123
+      12           1       12 .         -0.00152            -0.16    0.015
+      13           1       13 ___EOS___ -0.0687             -0.16   -0.076
+      # i 2 more variables: token_contribution <dbl>, sentence_contribution <dbl>
+      
+      $colourcoded_text
+      [1] " <span style=\"background-color: #F1948A;\">J</span> N , but that <span style=\"background-color: #E74C3C;\">'s</span> just the N it works . <br>"
       
 

@@ -4,8 +4,7 @@ test_that("lambdaG visualize works", {
   k.data <- enron.sample[2:5] |> quanteda::tokens("sentence")
   ref.data <- enron.sample[6:ndoc(enron.sample)] |> quanteda::tokens("sentence")
   set.seed(2)
-  outputs <- lambdaG_visualize(q.data, k.data, ref.data, r = 2, print = FALSE)
-
-  expect_snapshot(outputs)
+  lambdaG_visualize(q.data, k.data, ref.data, r = 2, print = FALSE) |> expect_snapshot()
+  lambdaG_visualize(q.data, k.data, ref.data, r = 2, print = FALSE, scale = "relative") |> expect_snapshot()
 
 })
