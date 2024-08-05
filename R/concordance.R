@@ -92,7 +92,7 @@ concordance <- function(q.data, k.data, reference.data, search, token.type = "wo
 
   }
 
-  output <- rbind(q.kwic, k.kwic) |> rbind(r.kwic)
+  output <- rbind(q.kwic, k.kwic) |> rbind(r.kwic) |> dplyr::rename(node = keyword)
 
   return(output)
 
