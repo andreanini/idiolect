@@ -222,21 +222,21 @@ The RBI method uses as features character 4-grams and a list of these features i
 
 ```{r}
 concordance(Q, K, R, search = ", her", token.type = "character") |> 
-  dplyr::select(pre, keyword, post, authorship)
+  dplyr::select(pre, node, post, authorship)
 ```
 
 The search reveals that this character sequence is a strong characteristic of the candidate author's writing. However, the real underlying pattern is not the use of a comma followed by the possessive determiner *her* but the token sequence [*, here is*], which is only used by the candidate author and one other author in the reference corpus.
 
 ```{r}
 concordance(Q, K, R, search = ", here is", token.type = "word") |> 
-  dplyr::select(pre, keyword, post, authorship)
+  dplyr::select(pre, node, post, authorship)
 ```
 
 Another important feature is represented by the two character 4-grams, \<*lso ,*\> and \<*so ,* \>, which are likely to refer to the token sequence [*also ,*].
 
 ```{r}
 concordance(Q, K, R, search = "lso ,", token.type = "character") |> 
-  dplyr::select(pre, keyword, post, authorship)
+  dplyr::select(pre, node, post, authorship)
 ```
 
 This is correct and it is referring to the use of *also* at the beginning of a sentence and immediately followed by a comma.
