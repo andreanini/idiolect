@@ -37,6 +37,24 @@
 ---
 
     Code
+      contentmask(enron.small, algorithm = "textdistortion")
+    Message
+      successfully initialized (spaCy Version: 3.7.5, language model: en_core_web_sm)
+    Output
+      Corpus consisting of 3 documents and 2 docvars.
+      allen-p_16.txt :
+      "* , the * * is having a * * * with the * * that is to be * a..."
+      
+      allen-p_37.txt :
+      "* , * * * * the * * for two * while * * was on a * leave . s..."
+      
+      bass-e_195.txt :
+      "* , i work for * * on the * * * * and he has some * on * " *..."
+      
+
+---
+
+    Code
       contentmask(toy.corpus, algorithm = "POSnoise")
     Message
       successfully initialized (spaCy Version: 3.7.5, language model: en_core_web_sm)
@@ -59,5 +77,17 @@
       
       text2 :
       "D 👍"
+      
+
+---
+
+    Code
+      contentmask(toy.corpus, algorithm = "textdistortion")
+    Message
+      successfully initialized (spaCy Version: 3.7.5, language model: en_core_web_sm)
+    Output
+      Corpus consisting of 1 document.
+      text1 :
+      "the * was on the * . he did n't move   * ;   * *"
       
 

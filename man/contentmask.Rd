@@ -8,6 +8,7 @@ contentmask(
   corpus,
   model = "en_core_web_sm",
   algorithm = "POSnoise",
+  fw_list = "eng_halvani",
   replace_non_ascii = TRUE
 )
 }
@@ -16,7 +17,9 @@ contentmask(
 
 \item{model}{The spacy model to use. The default is en_core_web_sm.}
 
-\item{algorithm}{A string, either "POSnoise" (default) or "frames".}
+\item{algorithm}{A string, either "POSnoise" (default), "frames", or "textdistortion".}
+
+\item{fw_list}{The list of function words to use for the \code{textdistortion} algorithm. This is either the default ("eng_halvani") for the same list of function words used for \code{POSnoise} or it can be a vector of strings where each string is a function word to keep.}
 
 \item{replace_non_ascii}{A logical value indicating whether to remove non-ASCII characters (including emojis). This is the default.}
 }
@@ -31,6 +34,10 @@ The default algorithm for content masking that this function applies is \code{PO
 
 Another algorithm implemented is Nini's (2023) \code{frames} or \verb{frame n-grams}. This algorithm does not involve a special list of tokens and therefore can potentially work for any language provided that the correct \code{spacy} model is loaded. This algorithm consists in masking all tokens using their POS tag only when these are nouns, verbs, or personal pronouns.
 
+Finally, the last algorithm implemented is a version of \code{textdistortion}, as originally proposed by Stamatatos (2017). This version of the algorithm is essentially \code{POSnoise} but without POS tag information. The default implementation uses the same list of function words that are used for \code{POSnoise}. In addition to the function words provided, the function treats all punctuation marks and new line breaks as function words to keep. The basic tokenization is done using \code{spacyr} so the right model for the language being analysed should be selected.
+
+To run this function using algorithms that need a POS-tagger it is necessary to have a model installed. If you have never used \link{spacyr} before then please follow the instructions to set it up and install a model before using this function.
+
 The removal of non-ASCII characters is done using the \link{textclean} package.
 }
 \examples{
@@ -38,9 +45,11 @@ The removal of non-ASCII characters is done using the \link{textclean} package.
 text <- "The cat was on the chair. He didn't move\ncat@pets.com;\nhttp://quanteda.io/ test 😻 👍"
 toy.corpus <- quanteda::corpus(text)
 contentmask(toy.corpus, algorithm = "POSnoise")
+contentmask(toy.corpus, algorithm = "textdistortion")
 }
 }
 \references{
 Halvani, Oren & Lukas Graner. 2021. POSNoise: An Effective Countermeasure Against Topic Biases in Authorship Analysis. In Proceedings of the 16th International Conference on Availability, Reliability and Security, 1–12. Vienna, Austria: Association for Computing Machinery. https://doi.org/10.1145/3465481.3470050.
 Nini, Andrea. 2023. A Theory of Linguistic Individuality for Authorship Analysis (Elements in Forensic Linguistics). Cambridge, UK: Cambridge University Press.
+Stamatatos, Efstathios. 2017. Masking topic-related information to enhance authorship attribution. Journal of the Association for Information Science and Technology. https://doi.org/10.1002/asi.23968.
 }
