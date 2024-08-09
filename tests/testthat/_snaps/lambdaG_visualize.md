@@ -20,7 +20,7 @@
       11           1       11 works     -0.167            -0.767   -0.174
       12           1       12 .          0.0786           -0.767    0.221
       13           1       13 ___EOS___ -0.141            -0.767   -0.132
-      # i 2 more variables: token_contribution <dbl>, sentence_contribution <dbl>
+      # i 2 more variables: token_contribution <dbl>, sent_contribution <dbl>
       
       $colourcoded_text
       [1] " <span style=\"background-color: #fdedec;\">J</span> <span style=\"background-color: #fdedec;\">N</span> , but <span style=\"background-color: #fdedec;\">that</span> <span style=\"background-color: #f5b7b1;\">'s</span> just <span style=\"background-color: #fdedec;\">the</span> <span style=\"background-color: #fdedec;\">N</span> it works <span style=\"background-color: #fdedec;\">.</span> <br>"
@@ -48,7 +48,7 @@
       11           1       11 works     -0.104              -0.16   -0.123
       12           1       12 .         -0.00152            -0.16    0.015
       13           1       13 ___EOS___ -0.0687             -0.16   -0.076
-      # i 2 more variables: token_contribution <dbl>, sentence_contribution <dbl>
+      # i 2 more variables: token_contribution <dbl>, sent_contribution <dbl>
       
       $colourcoded_text
       [1] " <span style=\"background-color: #F1948A;\">J</span> N , but that <span style=\"background-color: #E74C3C;\">'s</span> just the N it works . <br>"

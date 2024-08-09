@@ -39,7 +39,7 @@ lambdaG_visualize(
 The function outputs a list of two objects: a data frame with each row being a token in the Q text and the values of lambdaG for the token and sentences, in decreasing order of sentence lambdaG and with the relative contribution of each token and each sentence to the final lambdaG in percentage; the raw code in html or latex that generates the colour-coded file. If the print value is set to TRUE the function will also save the colour-coded text as an html or plain text file on disk in the working directory.
 }
 \description{
-This function outputs a colour-coded list of sentences belonging to the input Q text ordered from highest to lowest lambdaG value, as shown in Nini et al. (pending submission).
+This function outputs a colour-coded list of sentences belonging to the input Q text ordered from highest to lowest lambdaG value, as shown in Nini et al. (under review).
 }
 \examples{
 q.data <- corpus_trim(enron.sample[1], "sentences", max_ntoken = 10) |> quanteda::tokens("sentence")

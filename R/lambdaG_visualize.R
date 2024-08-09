@@ -159,7 +159,7 @@ color_coding_latex <- function(llr.table, scale){
 }
 #' Visualize the output of the LambdaG algorithm
 #'
-#' This function outputs a colour-coded list of sentences belonging to the input Q text ordered from highest to lowest lambdaG value, as shown in Nini et al. (pending submission).
+#' This function outputs a colour-coded list of sentences belonging to the input Q text ordered from highest to lowest lambdaG value, as shown in Nini et al. (under review).
 #'
 #' @param q.data A single questioned or disputed text as a `quanteda` tokens object with the tokens being sentences (the output of [contentmask()] with output = "sentences").
 #' @param k.data A known or undisputed corpus containing exclusively a single candidate author's texts as a `quanteda` tokens object with the tokens being sentences (the output of [contentmask()] with output = "sentences").
@@ -199,22 +199,23 @@ lambdaG_visualize <- function(q.data, k.data, ref.data, N = 10, r = 30, output =
   llr.table <- loglikelihood_table_avgllrs(q.data, k.data, ref.data, r, N, cores = cores)
 
   # calculation of relative contribution in percentage
-  llr.table |>
-    dplyr::pull(lambdaG) |>
-    abs() |>
-    sum() -> total_lambdaG_tokens
+  dplyr::filter(llr.table, lambdaG > 0) |> dplyr::pull(lambdaG) |> sum() -> pos.t.total
+  dplyr::filter(llr.table, lambdaG < 0) |> dplyr::pull(lambdaG) |> sum() -> neg.t.total
+  dplyr::slice_head(llr.table, n = 1, by = sentence_id) |> dplyr::filter(sentence_lambdaG > 0) |>
+    dplyr::pull(sentence_lambdaG) |> sum() -> pos.s.total
+  dplyr::slice_head(llr.table, n = 1, by = sentence_id) |> dplyr::filter(sentence_lambdaG < 0) |>
+    dplyr::pull(sentence_lambdaG) |> sum() -> neg.s.total
 
   llr.table |>
-      dplyr::pull(sentence_lambdaG) |>
-      unique() |>
-      abs() |>
-      sum() -> total_lambdaG_sents
-
-  llr.table |>
-    dplyr::mutate(token_contribution = lambdaG/total_lambdaG_tokens) |>
-    dplyr::mutate(token_contribution = round(token_contribution*100, 2)) |>
-    dplyr::mutate(sentence_contribution = sentence_lambdaG/total_lambdaG_sents) |>
-    dplyr::mutate(sentence_contribution = round(sentence_contribution*100, 2)) -> llr.table
+    dplyr::mutate(token_contribution = dplyr::case_when(lambdaG > 0 ~ round(lambdaG/pos.t.total*100, 2),
+                                                        lambdaG < 0 ~ round(-lambdaG/neg.t.total*100, 2),
+                                                        lambdaG == 0 ~ 0)) |>
+    dplyr::mutate(sent_contribution = dplyr::case_when(sentence_lambdaG > 0 ~
+                                                         round(sentence_lambdaG/pos.s.total*100, 2),
+                                                        sentence_lambdaG < 0 ~
+                                                         round(-sentence_lambdaG/neg.s.total*100, 2),
+                                                        sentence_lambdaG == 0 ~ 0)) ->
+    llr.table
 
 
   if(output == "html"){
