@@ -15,6 +15,6 @@ https://tuprints.ulb.tu-darmstadt.de/19861/
 enron.sample
 }
 \description{
-A small sample of the \emph{Enron} corpus comprising ten authors, each with a roughly equal amount of 'known' data and with one sample that is labelled as 'unknown'. The data was pre-processed using the \emph{POSnoise} algorithm to mask content (see \code{\link[=contentmask]{contentmask()}}).
+A small sample of the \emph{Enron} corpus comprising ten authors with approximately the same amount of data. Each author has one text labelled as 'unknown' and the other texts labelled as 'known'. The data was pre-processed using the \emph{POSnoise} algorithm to mask content (see \code{\link[=contentmask]{contentmask()}}).
 }
 \keyword{datasets}

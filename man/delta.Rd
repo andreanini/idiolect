@@ -51,9 +51,9 @@ If features is set to FALSE then the output is a data frame containing the resul
 This function runs a classic \emph{Cosine Delta} analysis (Smith and Aldridge 2011; Evert et al. 2017).
 }
 \examples{
-Q <- quanteda::corpus_subset(enron.sample, texttype == "unknown")[1:5]
-K <- quanteda::corpus_subset(enron.sample, texttype == "known")[1:20]
-delta(Q, K, features = TRUE)
+Q <- enron.sample[c(5:6)]
+K <- enron.sample[-c(5:6)]
+delta(Q, K)
 
 }
 \references{

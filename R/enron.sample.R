@@ -1,6 +1,6 @@
 #' Enron sample
 #'
-#' A small sample of the *Enron* corpus comprising ten authors, each with a roughly equal amount of 'known' data and with one sample that is labelled as 'unknown'. The data was pre-processed using the *POSnoise* algorithm to mask content (see [contentmask()]).
+#' A small sample of the *Enron* corpus comprising ten authors with approximately the same amount of data. Each author has one text labelled as 'unknown' and the other texts labelled as 'known'. The data was pre-processed using the *POSnoise* algorithm to mask content (see [contentmask()]).
 #'
 #' @format
 #' A `quanteda` corpus object.
