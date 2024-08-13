@@ -2,9 +2,12 @@ Type: Package
 Package: idiolect
 Title: Functions for Forensic Authorship Analysis
 Version: 1.0.0
-Authors@R: 
+Authors@R: c(
     person("Andrea", "Nini", , "andrea.nini@manchester.ac.uk", role = c("aut", "cre", "cph"),
-           comment = c(ORCID = "0000-0003-4218-5130"))
+           comment = c(ORCID = "0000-0003-4218-5130")),
+    person("David", "van Leeuwen", role = ("cph"), 
+           comment = "Author of some bundled functions from package ROC")
+    )
 Author: Andrea Nini [aut, cre, cph]
 Maintainer: Andrea Nini <andrea.nini@manchester.ac.uk>
 Description: Carry out comparative authorship analysis of disputed and
@@ -22,13 +25,13 @@ Depends:
 Imports: 
     caret,
     dplyr,
+    fdrtool,
     ggplot2,
     kgrams,
     pbapply,
     pROC,
     proxy,
     quanteda.textstats,
-    ROC (>= 0.11),
     spacyr,
     stringr,
     textclean
@@ -37,8 +40,6 @@ Suggests:
     readtext,
     rmarkdown,
     testthat (>= 3.0.0)
-Remotes: 
-    https://github.com/davidavdav/ROC
 Config/testthat/edition: 3
 Encoding: UTF-8
 LazyData: true

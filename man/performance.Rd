@@ -12,7 +12,7 @@ performance(training, test = NULL)
 \item{test}{Optional data frame of results. If present then a calibration model is extracted from training and its performance is evaluated on this data set.}
 }
 \value{
-The function returns a list containing a data frame with performance statistics, including an object that can be used to make a tippet plot using the \code{\link[ROC:tippet.plot]{ROC::tippet.plot()}} function from \link{ROC}.
+The function returns a list containing a data frame with performance statistics, including an object that can be used to make a tippet plot using the \code{tippet.plot()} function of the \code{ROC} package (https://github.com/davidavdav/ROC).
 }
 \description{
 This function is used to the test the performance of an authorship analysis method, such as the \emph{Impostors Method}.
@@ -24,6 +24,5 @@ Before applying a method to a real authorship case, it is good practice to test 
 results <- data.frame(score = c(0.5, 0.2, 0.8, 0.01), target = c(TRUE, FALSE, TRUE, FALSE))
 perf <- performance(results)
 perf$evaluation
-ROC::tippet.plot(perf$roc)
 
 }

@@ -9,7 +9,7 @@ leave_one_out_llr = function(df){
     left = df[i,]
     rest = df[-i,]
 
-    suppressWarnings(ROC::train.logreg(rest) -> calibration.model)
+    suppressWarnings(train.logreg(rest) -> calibration.model)
 
     stats::predict(calibration.model, newdata = left) -> llr
 
@@ -36,13 +36,12 @@ leave_one_out_llr = function(df){
 #' @param training The data frame with the results to evaluate, typically the output of an authorship analysis function, such as [impostors()]. If only training is present then the function will perform a leave-one-out cross-validation.
 #' @param test Optional data frame of results. If present then a calibration model is extracted from training and its performance is evaluated on this data set.
 #'
-#' @return The function returns a list containing a data frame with performance statistics, including an object that can be used to make a tippet plot using the [ROC::tippet.plot()] function from [ROC].
+#' @return The function returns a list containing a data frame with performance statistics, including an object that can be used to make a tippet plot using the `tippet.plot()` function of the `ROC` package (https://github.com/davidavdav/ROC).
 #'
 #' @examples
 #' results <- data.frame(score = c(0.5, 0.2, 0.8, 0.01), target = c(TRUE, FALSE, TRUE, FALSE))
 #' perf <- performance(results)
 #' perf$evaluation
-#' ROC::tippet.plot(perf$roc)
 #'
 #' @export
 performance = function(training, test = NULL){
@@ -54,10 +53,10 @@ performance = function(training, test = NULL){
     res.llr |>
       dplyr::select(llr, target) |>
       dplyr::rename(score = llr) |>
-      ROC::roc() -> roc.object
+      roc() -> roc.object
 
     roc.object |>
-      ROC::summary.roc() -> roc.res
+      summaryroc() -> roc.res
 
     res.llr |>
       dplyr::mutate(predicted = dplyr::if_else(llr > 0, T, F)) -> res.res
@@ -70,17 +69,17 @@ performance = function(training, test = NULL){
 
   }else{
 
-    training.model = suppressWarnings(ROC::train.logreg(training))
+    training.model = suppressWarnings(train.logreg(training))
 
     res.llr = dplyr::mutate(test, llr = stats::predict(training.model, test))
 
     res.llr |>
       dplyr::select(llr, target) |>
       dplyr::rename(score = llr) |>
-      ROC::roc() -> roc.object
+      roc() -> roc.object
 
     roc.object |>
-      ROC::summary.roc() -> roc.res
+      summaryroc() -> roc.res
 
     res.llr |>
       dplyr::mutate(predicted = dplyr::if_else(llr > 0, T, F)) -> res.res

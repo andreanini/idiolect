@@ -31,7 +31,7 @@ calibrate_LLR = function(calibration.dataset, dataset, latex = FALSE){
 
   llr.table <- data.frame()
 
-  suppressWarnings(ROC::train.logreg(calibration.dataset) -> calibration.model)
+  suppressWarnings(train.logreg(calibration.dataset) -> calibration.model)
 
   LLR <- stats::predict(calibration.model, newdata = dataset)/log(10)
 
