@@ -4,7 +4,7 @@ citEntry(
   entry    = "Manual",
   title    = "Idiolect: An R package for forensic authorship analysis",
   author   = "Andrea Nini",
-  year     = "2023",
-  url      = "https://github.com/andreanini/idiolect",
-  textVersion = paste("Nini, A. (2023). Idiolect: An R package for forensic authorship analysis. URL https://github.com/andreanini/idiolect")
+  year     = "2024",
+  url      = "https://andreanini.github.io/idiolect/",
+  textVersion = paste("Nini, A. (2024). Idiolect: An R package for forensic authorship analysis. URL https://andreanini.github.io/idiolect/")
 )
