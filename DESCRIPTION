@@ -14,7 +14,7 @@ Description: Carry out comparative authorship analysis of disputed and
     functions to measure their performance and to calibrate their outputs
     into Log-Likelihood Ratios.
 License: GPL (>= 2)
-URL: https://github.com/andreanini/idiolect
+URL: https://github.com/andreanini/idiolect, https://andreanini.github.io/idiolect/
 BugReports: https://github.com/andreanini/idiolect/issues
 Depends: 
     quanteda,
