@@ -8,8 +8,6 @@ Authors@R: c(
     person("David", "van Leeuwen", role = ("cph"), 
            comment = "Author of some bundled functions from package ROC")
     )
-Author: Andrea Nini [aut, cre, cph]
-Maintainer: Andrea Nini <andrea.nini@manchester.ac.uk>
 Description: Carry out comparative authorship analysis of disputed and
     undisputed texts within the Likelihood Ratio Framework for expressing
     evidence in forensic science. This package contains functions that
@@ -21,7 +19,7 @@ URL: https://github.com/andreanini/idiolect, https://andreanini.github.io/idiole
 BugReports: https://github.com/andreanini/idiolect/issues
 Depends: 
     quanteda,
-    R (>= 2.10)
+    R (>= 3.5.0)
 Imports: 
     caret,
     dplyr,

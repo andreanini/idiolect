@@ -1,4 +1,6 @@
 url: https://andreanini.github.io/idiolect/
 template:
   bootstrap: 5
+development:
+  mode: auto
 
