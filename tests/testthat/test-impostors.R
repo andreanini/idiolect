@@ -1,5 +1,7 @@
 test_that("RBI works", {
 
+  set.seed(10)
+
   corpus = readRDS(testthat::test_path("data", "enron.rds"))
 
   unknown = quanteda::corpus_subset(corpus, texttype == "unknown")
@@ -9,6 +11,7 @@ test_that("RBI works", {
   q.data <- unknown[c(1, 2)]
   k.data <- known[c(1:2, 5:6)]
   cand.imps <- known[7:50]
+
 
   results.corpus <- impostors(q.data, k.data, cand.imps, algorithm = "RBI", k = 100) |>
     suppressWarnings()
@@ -29,10 +32,10 @@ test_that("RBI works", {
     suppressWarnings()
 
 
-  testthat::expect_gt(round(results.corpus[1, 4], 1), 0.4)
-  testthat::expect_gt(round(results.dfm[1, 4], 1), 0.4)
-  testthat::expect_lt(round(results.corpus[2, 4], 1), 0.31)
-  testthat::expect_lt(round(results.dfm[2, 4], 1), 0.31)
+  testthat::expect(results.corpus[1, 4], 0.540)
+  testthat::expect(results.dfm[1, 4], 0.539)
+  testthat::expect(results.corpus[2, 4], 0.207)
+  testthat::expect(results.dfm[2, 4], 0.240)
 
   # impostors as rest of K version
   q.data <- unknown[c(1, 2)]
@@ -42,11 +45,13 @@ test_that("RBI works", {
   results.corpus <- impostors(q.data, k.data, cand.imps, algorithm = "RBI", k = 100) |>
     suppressWarnings()
 
-  testthat::expect_gt(round(results.corpus[4, 4], 1), 0.7)
-  testthat::expect_lt(round(results.corpus[2, 4], 1), 0.3)
+  testthat::expect(results.corpus[4, 4], 0.975)
+  testthat::expect(results.corpus[2, 4], 0.172)
 
 })
 test_that("KGI works", {
+
+  set.seed(10)
 
   corpus = readRDS(testthat::test_path("data", "enron.rds"))
 
@@ -76,13 +81,15 @@ test_that("KGI works", {
     suppressWarnings()
 
 
-  testthat::expect_gt(results.corpus[1, 4], 0.6)
-  testthat::expect_gt(results.dfm[1, 4], 0.6)
-  testthat::expect_lt(results.corpus[2, 4], 0.1)
-  testthat::expect_lt(results.dfm[2, 4], 0.1)
+  testthat::expect(results.corpus[1, 4], 0.75)
+  testthat::expect(results.dfm[1, 4], 0.73)
+  testthat::expect_lt(results.corpus[2, 4], 0.01)
+  testthat::expect(results.dfm[2, 4], 0.01)
 
 })
 test_that("IM works", {
+
+  set.seed(10)
 
   corpus = readRDS(testthat::test_path("data", "enron.rds"))
 
@@ -113,10 +120,10 @@ test_that("IM works", {
     suppressWarnings()
 
 
-  testthat::expect_gt(results.corpus[4, 4], 0)
-  testthat::expect_gt(results.dfm[4, 4], 0)
-  testthat::expect_lt(results.corpus[2, 4], 0.1)
-  testthat::expect_lt(results.dfm[2, 4], 0.1)
+  testthat::expect(results.corpus[4, 4], 0.57)
+  testthat::expect(results.dfm[4, 4], 0.585)
+  testthat::expect_lt(results.corpus[2, 4], 0.01)
+  testthat::expect_lt(results.dfm[2, 4], 0.001)
 
 })
 

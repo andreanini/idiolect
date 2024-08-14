@@ -1,5 +1,10 @@
 test_that("content masking works", {
 
+  # skip tests if there is no python installation
+  testthat::skip_if(try(spacyr::spacy_initialize(), silent = TRUE) |>
+                      inherits("try-error"),
+                    message = "spacyr environment not present")
+
   enron.corpus <- readRDS(testthat::test_path("data", "enron_corpus.rds"))
 
   enron.small <- enron.corpus[1:3]
