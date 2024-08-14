@@ -8,7 +8,7 @@ test_that("content masking works", {
   expect_snapshot(contentmask(enron.small, algorithm = "frames"))
   expect_snapshot(contentmask(enron.small, algorithm = "textdistortion"))
 
-  text1 <- "The cat was on the chair. He didn't move\ncat@pets.com;\nhttp://quanteda.io/ test 😻 👍"
+  text1 <- "The cat was on the chair. He didn't move\ncat@pets.com;\nhttp://quanteda.io/ i.e. a test 😻 👍"
   text2 <- "😻 👍"
   toy.corpus <- quanteda::corpus(c(text1, text2))
   contentmask(toy.corpus, algorithm = "POSnoise") |> expect_snapshot()

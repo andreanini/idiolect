@@ -5,16 +5,17 @@
 #' The function first split each text into paragraphs by splitting at new line markers and then uses spacy to tokenize each paragraph into sentences. The function accepts a plain text corpus input or the output of [contentmask()]. This function is necessary to prepare the data for [lambdaG()].
 #'
 #' @param corpus A `quanteda` corpus object, typically the output of the [create_corpus()] function or the output of [contentmask()].
-#' @param model The spacy model to use. The default is en_core_web_sm.
+#' @param model The spacy model to use. The default is "en_core_web_sm".
 #'
 #' @return A `quanteda` tokens object where each token is a sentence.
-#' @export
 #'
 #' @examples
 #' \dontrun{
 #' toy.pos <- corpus("the N was on the N . he did n't move \n N ; \n N N")
 #' tokenize_sents(toy.pos)
 #' }
+#'
+#' @export
 tokenize_sents <- function(corpus, model = "en_core_web_sm"){
 
   meta <- quanteda::docvars(corpus)

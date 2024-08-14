@@ -1,37 +1,6 @@
-cosine_delta <- function(x, z){
-
-  a.name = as.character(x["Q"])
-  a = quanteda::dfm_subset(z, quanteda::docnames(z) == a.name)
-  a.author = quanteda::docvars(a, "author")
-
-  b.name = as.character(x["K"])
-  b = quanteda::dfm_subset(z, quanteda::docnames(z) == b.name)
-  b.author = quanteda::docvars(b, "author")
-
-  score <- quanteda.textstats::textstat_simil(a, b, method = "cosine") |> suppressMessages() |> as.numeric()
-
-  results = data.frame()
-  results[1,"Q"] = a.name
-  results[1,"K"] = b.name
-
-  if(a.author == b.author){
-
-    results[1,"target"] = TRUE
-
-  }else{
-
-    results[1,"target"] = FALSE
-
-  }
-
-  results[1,"score"] = round(score, 3)
-
-  return(results)
-
-}
 #' Delta
 #'
-#' This function runs a classic *Cosine Delta* analysis (Smith and Aldridge 2011; Evert et al. 2017).
+#' This function runs a *Cosine Delta* analysis (Smith and Aldridge 2011; Evert et al. 2017).
 #'
 #' @param q.data The questioned or disputed data, either as a corpus (the output of [create_corpus()]) or as a `quanteda` dfm (the output of [vectorize()]).
 #' @param k.data The known or undisputed data, either as a corpus (the output of [create_corpus()]) or as a `quanteda` dfm (the output of [vectorize()]).
@@ -99,5 +68,37 @@ delta <- function(q.data, k.data, tokens = "word", remove_punct = F, remove_symb
   }
 
   return(output)
+
+}
+
+cosine_delta <- function(x, z){
+
+  a.name = as.character(x["Q"])
+  a = quanteda::dfm_subset(z, quanteda::docnames(z) == a.name)
+  a.author = quanteda::docvars(a, "author")
+
+  b.name = as.character(x["K"])
+  b = quanteda::dfm_subset(z, quanteda::docnames(z) == b.name)
+  b.author = quanteda::docvars(b, "author")
+
+  score <- quanteda.textstats::textstat_simil(a, b, method = "cosine") |> suppressMessages() |> as.numeric()
+
+  results = data.frame()
+  results[1,"Q"] = a.name
+  results[1,"K"] = b.name
+
+  if(a.author == b.author){
+
+    results[1,"target"] = TRUE
+
+  }else{
+
+    results[1,"target"] = FALSE
+
+  }
+
+  results[1,"score"] = round(score, 3)
+
+  return(results)
 
 }

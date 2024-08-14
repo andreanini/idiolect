@@ -1,6 +1,6 @@
 #' Chunk a corpus
 #'
-#'This function can be used to chunk a corpus in order to control sample sizes.
+#' This function can be used to chunk a corpus in order to control sample sizes.
 #'
 #' @param corpus A `quanteda` corpus.
 #' @param size The size of the chunks in number of tokens.

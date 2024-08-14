@@ -1,37 +1,8 @@
-leave_one_out_llr = function(df){
-
-  final.llr = data.frame()
-
-  pb = utils::txtProgressBar(min = 1, max = nrow(df), initial = 0, style = 3)
-
-  for (i in 1:nrow(df)) {
-
-    left = df[i,]
-    rest = df[-i,]
-
-    suppressWarnings(train.logreg(rest) -> calibration.model)
-
-    stats::predict(calibration.model, newdata = left) -> llr
-
-    final.llr[i, "llr"] = llr/log(10)
-
-    utils::setTxtProgressBar(pb, i)
-
-  }
-
-  close(pb)
-
-  final.llr = cbind(df, final.llr)
-
-  return(final.llr)
-
-}
-
 #' Performance evaluation
 #'
-#' This function is used to the test the performance of an authorship analysis method, such as the *Impostors Method*.
+#' This function is used to the test the performance of an authorship analysis method.
 #'
-#' Before applying a method to a real authorship case, it is good practice to test it known ground truth data. This function performs this test by taking as input a table of results or two tables, one for training and one for the test, and then returning as output a list with the following performance statistics: the log-likelihood ratio cost (both Cllr and Cllr-min), Equal Error Rate (ERR), the mean values of the log-likelihood ratio for both the same-author (TRUE) and different-author (FALSE) cases, the Area Under the Curve (AUC), Balanced Accuracy, Precision, Recall, F1, and the full confusion matrix. The binary classification statistics are all calculated considering a Log-Likelihood Ratio score of 0 as a threshold.
+#' Before applying a method to a real authorship case, it is good practice to test it on known ground truth data. This function performs this test by taking as input either a single table of results or two tables, one for training and one for the test, and then returning as output a list with the following performance statistics: the log-likelihood ratio cost (both \eqn{C_{llr}} and \eqn{C_{llr}^{min}}), Equal Error Rate (ERR), the mean values of the log-likelihood ratio for both the same-author (TRUE) and different-author (FALSE) cases, the Area Under the Curve (AUC), Balanced Accuracy, Precision, Recall, F1, and the full confusion matrix. The binary classification statistics are all calculated considering a Log-Likelihood Ratio score of 0 as a threshold.
 #'
 #' @param training The data frame with the results to evaluate, typically the output of an authorship analysis function, such as [impostors()]. If only training is present then the function will perform a leave-one-out cross-validation.
 #' @param test Optional data frame of results. If present then a calibration model is extracted from training and its performance is evaluated on this data set.
@@ -113,5 +84,34 @@ performance = function(training, test = NULL){
   result.list <- list(evaluation = evaluation.res, roc = roc.object)
 
   return(result.list)
+
+}
+
+leave_one_out_llr = function(df){
+
+  final.llr = data.frame()
+
+  pb = utils::txtProgressBar(min = 1, max = nrow(df), initial = 0, style = 3)
+
+  for (i in 1:nrow(df)) {
+
+    left = df[i,]
+    rest = df[-i,]
+
+    suppressWarnings(train.logreg(rest) -> calibration.model)
+
+    stats::predict(calibration.model, newdata = left) -> llr
+
+    final.llr[i, "llr"] = llr/log(10)
+
+    utils::setTxtProgressBar(pb, i)
+
+  }
+
+  close(pb)
+
+  final.llr = cbind(df, final.llr)
+
+  return(final.llr)
 
 }

@@ -1,294 +1,12 @@
-minmax_overlap <- function(m1, m2){
-
-  m <- rbind(m1, m2)
-
-  mins <- apply(m, 2, min)
-  maxs <- apply(m, 2, max)
-
-  ratios <- mins/maxs
-
-  return(ratios)
-
-}
-important_features <- function(q, candidate, impostors){
-
-  important.features = c()
-
-  for(i in 1:nrow(candidate)){
-
-    cand.overlap <- minmax_overlap(q, candidate[i,])
-
-    imp.means <- quanteda::colMeans(impostors)
-    imp.matrix <- quanteda::as.dfm(t(as.matrix(imp.means)))
-
-    imp.overlap <- minmax_overlap(q, imp.matrix)
-
-    odds <- cand.overlap/imp.overlap
-
-    temp <- odds[is.na(odds) == F & odds != 0]
-
-    important.features <- c(important.features, temp)
-
-  }
-
-  final.features <- important.features |> sort(decreasing = T)
-
-  to.return <- names(final.features[final.features > 1]) |> unique()
-
-  return(to.return)
-
-}
-RBI <- function(x, qs, candidates, cand.imps, coefficient, k, features){
-
-  q.name = as.character(x["Q"])
-  q = quanteda::dfm_subset(qs, quanteda::docnames(qs) == q.name)
-
-  candidate.name = as.character(x["K"])
-  candidate = quanteda::dfm_subset(candidates, author == candidate.name &
-                                     quanteda::docnames(candidates) != q.name)
-
-  cand.imps <- quanteda::dfm_subset(cand.imps, author != candidate.name &
-                                      author != quanteda::docvars(q, "author"))
-
-  f <- get(coefficient)
-  r = k/5
-  r.imps = k/10
-  score.sum = 0
-  feats <- c()
-
-  if(k >= nrow(cand.imps)){
-
-    warning("The k parameter is greater than or equal to the number of available impostors.")
-
-  }
-
-  for(i in 1:nrow(candidate)){
-
-    cons.k = candidate[i,]
-
-    if(k < nrow(cand.imps)){
-
-      cons.imps = most_similar(cons.k, cand.imps, coefficient, k)
-
-    }else{
-
-      cons.imps = cand.imps
-
-    }
-
-
-    score = 0
-
-    for(j in 1:r){
-
-      #r impostors
-      cons.imps.f = quanteda::dfm_sample(cons.imps, size = r.imps)
-
-      #50% of features
-      feats.n = ncol(q)*0.5
-      s = sample(colnames(q), feats.n)
-      f.q = quanteda::dfm_match(q, s)
-
-      #combining k and imps
-      f.m = quanteda::dfm_match(rbind(cons.k, cons.imps.f), s)
-
-      ranking = f(f.m, f.q)
-
-      k.rank = ranking[quanteda::docnames(cons.k)] |>  as.numeric()
-
-      score = score + 1/(r*k.rank)
-
-    }
-
-    if(features == T) { feats <- c(feats, important_features(q, cons.k, cons.imps)) }
-
-    score.sum = score.sum + score
-
-  }
-
-  final.score = round(score.sum/nrow(candidate), 3)
-  if(features == T) { final.feats <- unique(feats) }
-
-  results = data.frame()
-  results[1,"K"] = quanteda::docvars(candidate[1,], "author")
-  results[1,"Q"] = quanteda::docnames(q)
-
-  if(quanteda::docvars(candidate[1,], "author") == quanteda::docvars(q, "author")){
-
-    results[1,"target"] = TRUE
-
-  }else{
-
-    results[1,"target"] = FALSE
-
-  }
-
-  results[1,"score"] = final.score
-
-  if(features == T) { results[1, "features"] = paste(final.feats, collapse = "|") }
-
-  return(results)
-
-}
-KGI <- function(x, qs, candidates, cand.imps){
-
-  q.name = as.character(x["Q"])
-  q = quanteda::dfm_subset(qs, quanteda::docnames(qs) == q.name)
-
-  candidate.name = as.character(x["K"])
-  candidate = quanteda::dfm_subset(candidates, author == candidate.name &
-                                     quanteda::docnames(candidates) != q.name)
-
-  cand.imps <- quanteda::dfm_subset(cand.imps, author != candidate.name &
-                                      author != quanteda::docvars(q, "author"))
-
-  score = 0
-  r.imps = nrow(cand.imps)/2
-
-  for (i in 1:100) {
-
-    #r impostors
-    cons.imps.f = quanteda::dfm_sample(cand.imps, size = r.imps)
-
-    #50% of features
-    feats.n = ncol(q)*0.5
-    s = sample(colnames(q), feats.n)
-    f.q = quanteda::dfm_match(q, s)
-
-    #reducing k
-    f.k = quanteda::dfm_match(candidate, s)
-
-    #reducing imps
-    f.i = quanteda::dfm_match(cons.imps.f, s)
-
-    k.dist = proxy::dist(x = as.matrix(f.k), y = as.matrix(f.q), method = "fJaccard")
-    min.k = min(k.dist)
-
-    i.dist = proxy::dist(x = as.matrix(f.i), y = as.matrix(f.q), method = "fJaccard")
-    min.i = min(i.dist)
-
-    if(min.k < min.i){
-
-      score = score + 0.01
-
-    }
-
-  }
-
-  score = round(score, 3)
-
-  results = data.frame()
-  results[1,"K"] = quanteda::docvars(candidate[1,], "author")
-  results[1,"Q"] = quanteda::docnames(q)
-
-  if(quanteda::docvars(candidate[1,], "author") == quanteda::docvars(q, "author")){
-
-    results[1,"target"] = TRUE
-
-  }else{
-
-    results[1,"target"] = FALSE
-
-  }
-
-  results[1,"score"] = score
-
-  return(results)
-
-}
-IM <- function(x, qs, candidates, cand.imps, coefficient, m, n){
-
-  q.name = as.character(x["Q"])
-  q = quanteda::dfm_subset(qs, quanteda::docnames(qs) == q.name)
-
-  candidate.name = as.character(x["K"])
-  candidate = quanteda::dfm_subset(candidates, author == candidate.name &
-                                     quanteda::docnames(candidates) != q.name)
-
-  cand.imps <- quanteda::dfm_subset(cand.imps, author != candidate.name &
-                                      author != quanteda::docvars(q, "author"))
-
-  f <- get(coefficient)
-
-  score_a = 0
-
-  candidate |>
-    most_similar(cand.imps, coefficient, m) |>
-    quanteda::dfm_sample(n) -> cons.imps.f
-
-  for (i in 1:100) {
-
-    #50% of features
-    feats.n = ncol(q)*0.5
-    s = sample(colnames(q), feats.n)
-    f.q = quanteda::dfm_match(q, s)
-
-    #combining k and imps
-    f.m = quanteda::dfm_match(rbind(candidate, cons.imps.f), s)
-
-    ranking = f(f.m, f.q)
-
-    rank = ranking[quanteda::docnames(candidate)] |>  as.numeric()
-
-    if(rank == 1) { score_a = score_a + 0.01 }
-
-  }
-
-
-  score_b = 0
-
-  q |>
-    most_similar(cand.imps, coefficient, m) |>
-    quanteda::dfm_sample(n) -> cons.imps.f
-
-  for (i in 1:100) {
-
-    #50% of features
-    feats.n = ncol(candidate)*0.5
-    s = sample(colnames(candidate), feats.n)
-    f.k = quanteda::dfm_match(candidate, s)
-
-    #combining q and imps
-    f.m = quanteda::dfm_match(rbind(q, cons.imps.f), s)
-
-    ranking = f(f.m, f.k)
-
-    rank = ranking[quanteda::docnames(q)] |>  as.numeric()
-
-    if(rank == 1) { score_b = score_b + 0.01 }
-
-  }
-
-  score = round(mean(c(score_a, score_b)), 3)
-
-  results = data.frame()
-  results[1,"K"] = quanteda::docvars(candidate[1,], "author")
-  results[1,"Q"] = quanteda::docnames(q)
-
-  if(quanteda::docvars(candidate[1,], "author") == quanteda::docvars(q, "author")){
-
-    results[1,"target"] = TRUE
-
-  }else{
-
-    results[1,"target"] = FALSE
-
-  }
-
-  results[1,"score"] = score
-
-  return(results)
-
-}
 #' Impostors Method
 #'
 #' This function runs the *Impostors Method* for authorship verification. The Impostors Method is based on calculating a similarity score and then, using a corpus of impostor texts, perform a bootstrapping analysis sampling random subsets of features and impostors in order to test the robustness of this similarity.
 #'
-#' The Impostors Method has been implemented in several algorithms and this function can run three of them:
+#' There are several variants of the Impostors Method and this function can run three of them:
 #'
 #' 1) IM: this is the original Impostors Method as proposed by Koppel and Winter (2014).
-#' 2) KGI: Kestemont's et al. (2016) version, which is a very popular implementation of the Impostors Method for stylometricians. It is inspired by IM and by its generalized version, the General Impostors Method proposed by Seidman (2013) but it is different in several ways.
-#' 3) RBI: the Rank-Based Impostors Method (Potha and Stamatatos 2017, 2020), which is the default option as it is currently the latest version that has been tested against older variants and found to be more successful.
+#' 2) KGI: Kestemont's et al. (2016) version, which is a very popular implementation of the Impostors Method in stylometry. It is inspired by IM and by its generalized version, the General Impostors Method proposed by Seidman (2013).
+#' 3) RBI: the Rank-Based Impostors Method (Potha and Stamatatos 2017, 2020), which is the default option as it is the most recent and as it tends to outperform the original.
 #' The two data sets `q.data`, `k.data`, must be disjunct in terms of the texts that they contain otherwise an error is returned. However, `cand.imps` and `k.data` can be the same object, for example, to use the other candidates' texts as impostors. The function will always exclude impostor texts with the same author as the Q and K texts considered.
 #'
 #' @param q.data The questioned or disputed data, either as a corpus (the output of [create_corpus()]) or as a `quanteda` dfm (the output of [vectorize()]).
@@ -312,10 +30,10 @@ IM <- function(x, qs, candidates, cand.imps, coefficient, m, n){
 #'
 #' Seidman, Shachar. 2013. Authorship Verification Using the Impostors Method. In Pamela Forner, Roberto Navigli, Dan Tufis & Nicola Ferro (eds.), Proceedings of CLEF 2013 Evaluation Labs and Workshop – Working Notes Papers, 23–26. Valencia, Spain. https://ceur-ws.org/Vol-1179/.
 #'
-#' @return The function will test all possible combinations of q texts and candidate authors and return a
+#' @return The function will test all possible combinations of Q texts and candidate authors and return a
 #' data frame containing a score ranging from 0 to 1, with a higher score indicating a higher likelihood that the same author produced the two sets of texts. The data frame contains a column called "target" with a logical value which is TRUE if the author of the Q text is the candidate and FALSE otherwise.
 #'
-#' If the RBI algorithm is selected and the features parameter is TRUE then the data frame will also contain a column with the features that are likely to have had an impact on the score. This algorithm has not been tested and the results should therefore be treated with care. The algorithm returns all those features that are consistently found to be shared by the candidate author's data and the questioned data and that also tend to be rare in the data set of impostors.
+#' If the RBI algorithm is selected and the features parameter is TRUE then the data frame will also contain a column with the features that are likely to have had an impact on the score. These are all those features that are consistently found to be shared by the candidate author's data and the questioned data and that also tend to be rare in the dataset of impostors.
 #'
 #' @examples
 #' Q <- enron.sample[1]
@@ -443,5 +161,292 @@ impostors = function(q.data, k.data, cand.imps, algorithm = "RBI", coefficient =
   results.table = list_to_df(results)
 
   return(results.table)
+
+}
+
+minmax_overlap <- function(m1, m2){
+
+  m <- rbind(m1, m2)
+
+  mins <- apply(m, 2, min)
+  maxs <- apply(m, 2, max)
+
+  ratios <- mins/maxs
+
+  return(ratios)
+
+}
+
+important_features <- function(q, candidate, impostors){
+
+  important.features = c()
+
+  for(i in 1:nrow(candidate)){
+
+    cand.overlap <- minmax_overlap(q, candidate[i,])
+
+    imp.means <- quanteda::colMeans(impostors)
+    imp.matrix <- quanteda::as.dfm(t(as.matrix(imp.means)))
+
+    imp.overlap <- minmax_overlap(q, imp.matrix)
+
+    odds <- cand.overlap/imp.overlap
+
+    temp <- odds[is.na(odds) == F & odds != 0]
+
+    important.features <- c(important.features, temp)
+
+  }
+
+  final.features <- important.features |> sort(decreasing = T)
+
+  to.return <- names(final.features[final.features > 1]) |> unique()
+
+  return(to.return)
+
+}
+
+RBI <- function(x, qs, candidates, cand.imps, coefficient, k, features){
+
+  q.name = as.character(x["Q"])
+  q = quanteda::dfm_subset(qs, quanteda::docnames(qs) == q.name)
+
+  candidate.name = as.character(x["K"])
+  candidate = quanteda::dfm_subset(candidates, author == candidate.name &
+                                     quanteda::docnames(candidates) != q.name)
+
+  cand.imps <- quanteda::dfm_subset(cand.imps, author != candidate.name &
+                                      author != quanteda::docvars(q, "author"))
+
+  f <- get(coefficient)
+  r = k/5
+  r.imps = k/10
+  score.sum = 0
+  feats <- c()
+
+  if(k >= nrow(cand.imps)){
+
+    warning("The k parameter is greater than or equal to the number of available impostors.")
+
+  }
+
+  for(i in 1:nrow(candidate)){
+
+    cons.k = candidate[i,]
+
+    if(k < nrow(cand.imps)){
+
+      cons.imps = most_similar(cons.k, cand.imps, coefficient, k)
+
+    }else{
+
+      cons.imps = cand.imps
+
+    }
+
+
+    score = 0
+
+    for(j in 1:r){
+
+      #r impostors
+      cons.imps.f = quanteda::dfm_sample(cons.imps, size = r.imps)
+
+      #50% of features
+      feats.n = ncol(q)*0.5
+      s = sample(colnames(q), feats.n)
+      f.q = quanteda::dfm_match(q, s)
+
+      #combining k and imps
+      f.m = quanteda::dfm_match(rbind(cons.k, cons.imps.f), s)
+
+      ranking = f(f.m, f.q)
+
+      k.rank = ranking[quanteda::docnames(cons.k)] |>  as.numeric()
+
+      score = score + 1/(r*k.rank)
+
+    }
+
+    if(features == T) { feats <- c(feats, important_features(q, cons.k, cons.imps)) }
+
+    score.sum = score.sum + score
+
+  }
+
+  final.score = round(score.sum/nrow(candidate), 3)
+  if(features == T) { final.feats <- unique(feats) }
+
+  results = data.frame()
+  results[1,"K"] = quanteda::docvars(candidate[1,], "author")
+  results[1,"Q"] = quanteda::docnames(q)
+
+  if(quanteda::docvars(candidate[1,], "author") == quanteda::docvars(q, "author")){
+
+    results[1,"target"] = TRUE
+
+  }else{
+
+    results[1,"target"] = FALSE
+
+  }
+
+  results[1,"score"] = final.score
+
+  if(features == T) { results[1, "features"] = paste(final.feats, collapse = "|") }
+
+  return(results)
+
+}
+
+KGI <- function(x, qs, candidates, cand.imps){
+
+  q.name = as.character(x["Q"])
+  q = quanteda::dfm_subset(qs, quanteda::docnames(qs) == q.name)
+
+  candidate.name = as.character(x["K"])
+  candidate = quanteda::dfm_subset(candidates, author == candidate.name &
+                                     quanteda::docnames(candidates) != q.name)
+
+  cand.imps <- quanteda::dfm_subset(cand.imps, author != candidate.name &
+                                      author != quanteda::docvars(q, "author"))
+
+  score = 0
+  r.imps = nrow(cand.imps)/2
+
+  for (i in 1:100) {
+
+    #r impostors
+    cons.imps.f = quanteda::dfm_sample(cand.imps, size = r.imps)
+
+    #50% of features
+    feats.n = ncol(q)*0.5
+    s = sample(colnames(q), feats.n)
+    f.q = quanteda::dfm_match(q, s)
+
+    #reducing k
+    f.k = quanteda::dfm_match(candidate, s)
+
+    #reducing imps
+    f.i = quanteda::dfm_match(cons.imps.f, s)
+
+    k.dist = proxy::dist(x = as.matrix(f.k), y = as.matrix(f.q), method = "fJaccard")
+    min.k = min(k.dist)
+
+    i.dist = proxy::dist(x = as.matrix(f.i), y = as.matrix(f.q), method = "fJaccard")
+    min.i = min(i.dist)
+
+    if(min.k < min.i){
+
+      score = score + 0.01
+
+    }
+
+  }
+
+  score = round(score, 3)
+
+  results = data.frame()
+  results[1,"K"] = quanteda::docvars(candidate[1,], "author")
+  results[1,"Q"] = quanteda::docnames(q)
+
+  if(quanteda::docvars(candidate[1,], "author") == quanteda::docvars(q, "author")){
+
+    results[1,"target"] = TRUE
+
+  }else{
+
+    results[1,"target"] = FALSE
+
+  }
+
+  results[1,"score"] = score
+
+  return(results)
+
+}
+
+IM <- function(x, qs, candidates, cand.imps, coefficient, m, n){
+
+  q.name = as.character(x["Q"])
+  q = quanteda::dfm_subset(qs, quanteda::docnames(qs) == q.name)
+
+  candidate.name = as.character(x["K"])
+  candidate = quanteda::dfm_subset(candidates, author == candidate.name &
+                                     quanteda::docnames(candidates) != q.name)
+
+  cand.imps <- quanteda::dfm_subset(cand.imps, author != candidate.name &
+                                      author != quanteda::docvars(q, "author"))
+
+  f <- get(coefficient)
+
+  score_a = 0
+
+  candidate |>
+    most_similar(cand.imps, coefficient, m) |>
+    quanteda::dfm_sample(n) -> cons.imps.f
+
+  for (i in 1:100) {
+
+    #50% of features
+    feats.n = ncol(q)*0.5
+    s = sample(colnames(q), feats.n)
+    f.q = quanteda::dfm_match(q, s)
+
+    #combining k and imps
+    f.m = quanteda::dfm_match(rbind(candidate, cons.imps.f), s)
+
+    ranking = f(f.m, f.q)
+
+    rank = ranking[quanteda::docnames(candidate)] |>  as.numeric()
+
+    if(rank == 1) { score_a = score_a + 0.01 }
+
+  }
+
+
+  score_b = 0
+
+  q |>
+    most_similar(cand.imps, coefficient, m) |>
+    quanteda::dfm_sample(n) -> cons.imps.f
+
+  for (i in 1:100) {
+
+    #50% of features
+    feats.n = ncol(candidate)*0.5
+    s = sample(colnames(candidate), feats.n)
+    f.k = quanteda::dfm_match(candidate, s)
+
+    #combining q and imps
+    f.m = quanteda::dfm_match(rbind(q, cons.imps.f), s)
+
+    ranking = f(f.m, f.k)
+
+    rank = ranking[quanteda::docnames(q)] |>  as.numeric()
+
+    if(rank == 1) { score_b = score_b + 0.01 }
+
+  }
+
+  score = round(mean(c(score_a, score_b)), 3)
+
+  results = data.frame()
+  results[1,"K"] = quanteda::docvars(candidate[1,], "author")
+  results[1,"Q"] = quanteda::docnames(q)
+
+  if(quanteda::docvars(candidate[1,], "author") == quanteda::docvars(q, "author")){
+
+    results[1,"target"] = TRUE
+
+  }else{
+
+    results[1,"target"] = FALSE
+
+  }
+
+  results[1,"score"] = score
+
+  return(results)
 
 }

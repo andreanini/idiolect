@@ -17,11 +17,11 @@ lambdaG_visualize(
 )
 }
 \arguments{
-\item{q.data}{A single questioned or disputed text as a \code{quanteda} tokens object with the tokens being sentences (the output of \code{\link[=contentmask]{contentmask()}} with output = "sentences").}
+\item{q.data}{A single questioned or disputed text as a \code{quanteda} tokens object with the tokens being sentences (e.g. the output of \code{\link[=tokenize_sents]{tokenize_sents()}}).}
 
-\item{k.data}{A known or undisputed corpus containing exclusively a single candidate author's texts as a \code{quanteda} tokens object with the tokens being sentences (the output of \code{\link[=contentmask]{contentmask()}} with output = "sentences").}
+\item{k.data}{A known or undisputed corpus containing exclusively a single candidate author's texts as a \code{quanteda} tokens object with the tokens being sentences (e.g. the output of \code{\link[=tokenize_sents]{tokenize_sents()}}).}
 
-\item{ref.data}{The reference dataset as a \code{quanteda} tokens object with the tokens being sentences (the output of \code{\link[=contentmask]{contentmask()}} with output = "sentences").}
+\item{ref.data}{The reference dataset as a \code{quanteda} tokens object with the tokens being sentences (e.g. the output of \code{\link[=tokenize_sents]{tokenize_sents()}}).}
 
 \item{N}{The order of the model. Default is 10.}
 
@@ -31,15 +31,15 @@ lambdaG_visualize(
 
 \item{print}{A logical value indicating whether the colour-coded text file should be written to the working directory (default) or not.}
 
-\item{scale}{A string indicating what scale to use to colour-code the text file. If "absolute" (default) then the raw lambdaG score is used; if "relative", then the z-score of lambdaG over the Q data is used instead, thus showing relative importance.}
+\item{scale}{A string indicating what scale to use to colour-code the text file. If "absolute" (default) then the raw \eqn{\lambda_G} is used; if "relative", then the z-score of \eqn{\lambda_G} over the Q data is used instead, thus showing relative importance.}
 
 \item{cores}{The number of cores to use for parallel processing (the default is one).}
 }
 \value{
-The function outputs a list of two objects: a data frame with each row being a token in the Q text and the values of lambdaG for the token and sentences, in decreasing order of sentence lambdaG and with the relative contribution of each token and each sentence to the final lambdaG in percentage; the raw code in html or latex that generates the colour-coded file. If the print value is set to TRUE the function will also save the colour-coded text as an html or plain text file on disk in the working directory.
+The function outputs a list of two objects: a data frame with each row being a token in the Q text and the values of \eqn{\lambda_G} for the token and sentences, in decreasing order of sentence \eqn{\lambda_G} and with the relative contribution of each token and each sentence to the final \eqn{\lambda_G} in percentage; the raw code in html or LaTeX that generates the colour-coded file. If the print value is set to TRUE the function will also save the colour-coded text as an html or plain text file on disk in the working directory.
 }
 \description{
-This function outputs a colour-coded list of sentences belonging to the input Q text ordered from highest to lowest lambdaG value, as shown in Nini et al. (under review).
+This function outputs a colour-coded list of sentences belonging to the input Q text ordered from highest to lowest \eqn{\lambda_G}, as shown in Nini et al. (under review).
 }
 \examples{
 q.data <- corpus_trim(enron.sample[1], "sentences", max_ntoken = 10) |> quanteda::tokens("sentence")
@@ -47,6 +47,7 @@ k.data <- enron.sample[2:5]|> quanteda::tokens("sentence")
 ref.data <- enron.sample[6:ndoc(enron.sample)] |> quanteda::tokens("sentence")
 outputs <- lambdaG_visualize(q.data, k.data, ref.data, r = 2, print = FALSE)
 outputs$table
+
 }
 \references{
 Nini, A., Halvani, O., Graner, L., Gherardi, V., Ishihara, S. Authorship Verification based on the Likelihood Ratio of Grammar Models. https://arxiv.org/abs/2403.08462v1

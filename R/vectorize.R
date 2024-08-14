@@ -1,6 +1,6 @@
 #' Vectorize data
 #'
-#' This function turns the texts into feature vectors.
+#' This function turns texts into feature vectors.
 #'
 #' All the authorship analysis functions call `vectorize()` with the standard parameters for the algorithm selected. This function is therefore left only for those users who want to modify these parameters or for convenience if the same dfm has to be reused by the algorithms so to avoid vectorizing the same data many times. Most users who only need to run a standard analysis do not need use this function.
 #'

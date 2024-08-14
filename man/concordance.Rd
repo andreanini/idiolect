@@ -25,15 +25,15 @@ concordance(
 
 \item{token.type}{Choice between "word" (default), which searches for word or punctuation mark tokens, or "character", which instead uses a single character search.}
 
-\item{window}{The number of context words to be displayed around the keyword (\code{\link[quanteda:kwic]{quanteda::kwic()}} parameter).}
+\item{window}{The number of context items to be displayed around the keyword (a \code{\link[quanteda:kwic]{quanteda::kwic()}} parameter).}
 
-\item{case_insensitive}{Logical; if TRUE, ignore case (\code{\link[quanteda:kwic]{quanteda::kwic()}} parameter).}
+\item{case_insensitive}{Logical; if TRUE, ignore case (a \code{\link[quanteda:kwic]{quanteda::kwic()}} parameter).}
 }
 \value{
 The function returns a data frame containing the concordances for the search pattern.
 }
 \description{
-This function uses \code{\link[quanteda:kwic]{quanteda::kwic()}} to return a concordance for a search pattern. The function takes as input three data sets and a pattern and returns a final data frame with the hits labelled for authorship.
+This function uses \code{\link[quanteda:kwic]{quanteda::kwic()}} to return a concordance for a search pattern. The function takes as input three datasets and a pattern and returns a data frame with the hits labelled for authorship.
 }
 \examples{
 concordance(enron.sample[1], enron.sample[2], enron.sample[3:49], "wants to", token.type = "word")
@@ -43,5 +43,6 @@ concordance(enron.sample[1], enron.sample[2], enron.sample[3:49], "want * to", t
 
 #searching character sequences with wildcards
 concordance(enron.sample[1], enron.sample[2], enron.sample[3:49], "help*", token.type = "character")
+
 
 }

@@ -61,7 +61,7 @@
     Output
       Corpus consisting of 1 document.
       text1 :
-      "the N was on the N . he did n't move   N ;   N N"
+      "the N was on the N . he did n't move   N ;   N i.e. a N"
       
 
 ---
@@ -73,7 +73,7 @@
     Output
       Corpus consisting of 2 documents.
       text1 :
-      "the N was on the N . he did n't move   N ;   N N P 👍"
+      "the N was on the N . he did n't move   N ;   N i.e. a N B 👍"
       
       text2 :
       "D 👍"
@@ -88,6 +88,6 @@
     Output
       Corpus consisting of 1 document.
       text1 :
-      "the * was on the * . he did n't move   * ;   * *"
+      "the * was on the * . he did n't move   * ;   * i.e. a *"
       
 

@@ -7,7 +7,7 @@
 density_plot(dataset, q = NULL)
 }
 \arguments{
-\item{dataset}{A data frame containing the calibration data, typically the output of an authorship analysis function like \code{\link[=impostors]{impostors()}}.}
+\item{dataset}{A data frame containing the calibration dataset, typically the output of an authorship analysis function like \code{\link[=impostors]{impostors()}}.}
 
 \item{q}{This optional argument should be one value or a vector of values that contain the score of the disputed text(s). These are then plotted as lines crossing the density distributions.}
 }

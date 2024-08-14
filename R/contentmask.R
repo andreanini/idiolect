@@ -1,6 +1,6 @@
 #' Content masking
 #'
-#' This function offers two algorithms for topic/content masking. In order to run the masking algorithms, a Part of Speech (POS) tagger is run first. This is `spacy`, which is run via [spacyr]. For more information about the masking algorithms see Details below.
+#' This function offers three algorithms for topic/content masking. In order to run the masking algorithms, a `spacy` tokenizer or POS-tagger has to be run first (via [spacyr]). For more information about the masking algorithms see Details below.
 #'
 #' The default algorithm for content masking that this function applies is `POSnoise` (Halvani and Graner 2021). This algorithm only works for English and it transforms a text by masking tokens using their POS tag if these tokens are: nouns, verbs, adjectives, adverbs, digits, and symbols while leaving all the rest unchanged. `POSnoise` uses a list of function words for English that also includes frequent words belonging to the masked Part of Speech tags that tend to be mostly functional (e.g. make, recently, well).
 #'
@@ -8,14 +8,14 @@
 #'
 #' Finally, the last algorithm implemented is a version of `textdistortion`, as originally proposed by Stamatatos (2017). This version of the algorithm is essentially `POSnoise` but without POS tag information. The default implementation uses the same list of function words that are used for `POSnoise`. In addition to the function words provided, the function treats all punctuation marks and new line breaks as function words to keep. The basic tokenization is done using `spacyr` so the right model for the language being analysed should be selected.
 #'
-#' To run this function using algorithms that need a POS-tagger it is necessary to have a model installed. If you have never used [spacyr] before then please follow the instructions to set it up and install a model before using this function.
+#' If you have never used [spacyr] before then please follow the instructions to set it up and install a model before using this function.
 #'
 #' The removal of non-ASCII characters is done using the [textclean] package.
 #'
 #' @param corpus A `quanteda` corpus object, typically the output of the [create_corpus()] function.
 #' @param algorithm A string, either "POSnoise" (default), "frames", or "textdistortion".
 #' @param fw_list The list of function words to use for the `textdistortion` algorithm. This is either the default ("eng_halvani") for the same list of function words used for `POSnoise` or it can be a vector of strings where each string is a function word to keep.
-#' @param model The spacy model to use. The default is en_core_web_sm.
+#' @param model The spacy model to use. The default is "en_core_web_sm".
 #' @param replace_non_ascii A logical value indicating whether to remove non-ASCII characters (including emojis). This is the default.
 #'
 #' @references Halvani, Oren & Lukas Graner. 2021. POSNoise: An Effective Countermeasure Against Topic Biases in Authorship Analysis. In Proceedings of the 16th International Conference on Availability, Reliability and Security, 1–12. Vienna, Austria: Association for Computing Machinery. https://doi.org/10.1145/3465481.3470050.
@@ -27,7 +27,7 @@
 #'
 #' @examples
 #' \dontrun{
-#' text <- "The cat was on the chair. He didn't move\ncat@pets.com;\nhttp://quanteda.io/ test 😻 👍"
+#' text <- "The cat was on the chair. He didn't move\ncat@pets.com;\nhttp://quanteda.io/. i.e. a test "
 #' toy.corpus <- quanteda::corpus(text)
 #' contentmask(toy.corpus, algorithm = "POSnoise")
 #' contentmask(toy.corpus, algorithm = "textdistortion")

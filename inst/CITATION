@@ -1,10 +1,9 @@
 citHeader("To cite `idiolect` in publications use:")
 
-citEntry(
-  entry    = "Manual",
+bibentry(
+  bibtype  = "Manual",
   title    = "Idiolect: An R package for forensic authorship analysis",
-  author   = "Andrea Nini",
-  year     = "2024",
-  url      = "https://andreanini.github.io/idiolect/",
-  textVersion = paste("Nini, A. (2024). Idiolect: An R package for forensic authorship analysis. URL https://andreanini.github.io/idiolect/")
+  author   = person("Andrea Nini"),
+  year     = 2024,
+  url      = "https://andreanini.github.io/idiolect/"
 )

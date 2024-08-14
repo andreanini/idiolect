@@ -39,20 +39,20 @@ impostors(
 \item{cores}{The number of cores to use for parallel processing (the default is one).}
 }
 \value{
-The function will test all possible combinations of q texts and candidate authors and return a
+The function will test all possible combinations of Q texts and candidate authors and return a
 data frame containing a score ranging from 0 to 1, with a higher score indicating a higher likelihood that the same author produced the two sets of texts. The data frame contains a column called "target" with a logical value which is TRUE if the author of the Q text is the candidate and FALSE otherwise.
 
-If the RBI algorithm is selected and the features parameter is TRUE then the data frame will also contain a column with the features that are likely to have had an impact on the score. This algorithm has not been tested and the results should therefore be treated with care. The algorithm returns all those features that are consistently found to be shared by the candidate author's data and the questioned data and that also tend to be rare in the data set of impostors.
+If the RBI algorithm is selected and the features parameter is TRUE then the data frame will also contain a column with the features that are likely to have had an impact on the score. These are all those features that are consistently found to be shared by the candidate author's data and the questioned data and that also tend to be rare in the dataset of impostors.
 }
 \description{
 This function runs the \emph{Impostors Method} for authorship verification. The Impostors Method is based on calculating a similarity score and then, using a corpus of impostor texts, perform a bootstrapping analysis sampling random subsets of features and impostors in order to test the robustness of this similarity.
 }
 \details{
-The Impostors Method has been implemented in several algorithms and this function can run three of them:
+There are several variants of the Impostors Method and this function can run three of them:
 \enumerate{
 \item IM: this is the original Impostors Method as proposed by Koppel and Winter (2014).
-\item KGI: Kestemont's et al. (2016) version, which is a very popular implementation of the Impostors Method for stylometricians. It is inspired by IM and by its generalized version, the General Impostors Method proposed by Seidman (2013) but it is different in several ways.
-\item RBI: the Rank-Based Impostors Method (Potha and Stamatatos 2017, 2020), which is the default option as it is currently the latest version that has been tested against older variants and found to be more successful.
+\item KGI: Kestemont's et al. (2016) version, which is a very popular implementation of the Impostors Method in stylometry. It is inspired by IM and by its generalized version, the General Impostors Method proposed by Seidman (2013).
+\item RBI: the Rank-Based Impostors Method (Potha and Stamatatos 2017, 2020), which is the default option as it is the most recent and as it tends to outperform the original.
 The two data sets \code{q.data}, \code{k.data}, must be disjunct in terms of the texts that they contain otherwise an error is returned. However, \code{cand.imps} and \code{k.data} can be the same object, for example, to use the other candidates' texts as impostors. The function will always exclude impostor texts with the same author as the Q and K texts considered.
 }
 }

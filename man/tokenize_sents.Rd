@@ -9,7 +9,7 @@ tokenize_sents(corpus, model = "en_core_web_sm")
 \arguments{
 \item{corpus}{A \code{quanteda} corpus object, typically the output of the \code{\link[=create_corpus]{create_corpus()}} function or the output of \code{\link[=contentmask]{contentmask()}}.}
 
-\item{model}{The spacy model to use. The default is en_core_web_sm.}
+\item{model}{The spacy model to use. The default is "en_core_web_sm".}
 }
 \value{
 A \code{quanteda} tokens object where each token is a sentence.
@@ -25,4 +25,5 @@ The function first split each text into paragraphs by splitting at new line mark
 toy.pos <- corpus("the N was on the N . he did n't move \n N ; \n N N")
 tokenize_sents(toy.pos)
 }
+
 }

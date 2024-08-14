@@ -1,3 +1,65 @@
+#' N-gram tracing
+#'
+#' This function runs the authorship analysis method called *n-gram tracing*, which can be used for both attribution and verification.
+#'
+#' N-gram tracing was originally proposed by Grieve et al (2019). Nini (2023) then proposed a mathematical reinterpretation that is compatible with Cognitive Linguistic theories of language processing. He then tested several variants of the method and found that the original version, which uses the Simpson's coefficient, tends to be outperformed by versions using the Phi coefficient, the Kulczynski's coefficient, and the Cole coefficient. This function can run the n-gram tracing method using any of these coefficients plus the Jaccard coefficient for reference, as this coefficient has been applied in several forensic linguistic studies.
+#'
+#' @param q.data The questioned or disputed data, either as a corpus (the output of [create_corpus()]) or as a `quanteda` dfm (the output of [vectorize()]).
+#' @param k.data The known or undisputed data, either as a corpus (the output of [create_corpus()]) or as a `quanteda` dfm (the output of [vectorize()]). More than one sample for a candidate author is accepted but the function will combine them so to make a profile.
+#' @param tokens The type of tokens to extract, either "word" or "character" (default).
+#' @param remove_punct A logical value. FALSE (default) keeps punctuation marks.
+#' @param remove_symbols A logical value. TRUE (default) removes symbols.
+#' @param remove_numbers A logical value. TRUE (default) removes numbers.
+#' @param lowercase A logical value. TRUE (default) transforms all tokens to lower case.
+#' @param n The order or size of the n-grams being extracted. Default is 9.
+#' @param coefficient The coefficient to use to compare texts, one of: "simpson" (default), "phi", "jaccard", "kulczynski", or "cole".
+#' @param cores The number of cores to use for parallel processing (the default is one).
+#' @param features Logical with default FALSE. If TRUE then the result table will contain the features in the overlap that are unique for that overlap in the corpus. If only two texts are present then this will return the n-grams in common.
+#'
+#' @references Grieve, Jack, Emily Chiang, Isobelle Clarke, Hannah Gideon, Aninna Heini, Andrea Nini & Emily Waibel. 2019. Attributing the Bixby Letter using n-gram tracing. Digital Scholarship in the Humanities 34(3). 493–512.
+#' Nini, Andrea. 2023. A Theory of Linguistic Individuality for Authorship Analysis (Elements in Forensic Linguistics). Cambridge, UK: Cambridge University Press.
+#'
+#' @return The function will test all possible combinations of Q texts and candidate authors and return a
+#' data frame containing the value of the similarity coefficient selected called 'score' and an optional column with the overlapping features that only occur in the Q and candidate considered and in no other Qs (ordered by length if the n-gram is of variable length). The data frame contains a column called 'target' with a logical value which is TRUE if the author of the Q text is the candidate and FALSE otherwise.
+#'
+#' @examples
+#' Q <- enron.sample[c(5:6)]
+#' K <- enron.sample[-c(5:6)]
+#' ngram_tracing(Q, K, coefficient = 'phi')
+#'
+#' @export
+ngram_tracing <- function(q.data, k.data, tokens = "character", remove_punct = F, remove_symbols = T, remove_numbers = T, lowercase = T, n = 9, coefficient = "simpson", features = F, cores = NULL){
+
+  if(quanteda::is.corpus(q.data) & quanteda::is.corpus(k.data)){
+
+    df = vectorize(c(q.data, k.data), tokens = tokens, remove_punct = remove_punct,
+                  remove_symbols = remove_symbols, remove_numbers = remove_numbers, lowercase = lowercase,
+                  n = n, weighting = "boolean", trim = F)
+
+  }else if(quanteda::is.dfm(q.data) & quanteda::is.dfm(k.data)){
+
+    df <- rbind(q.data, k.data)
+
+  }else{
+
+    stop("The Q and K objects need to be either quanteda corpora or quanteda dfms.")
+
+  }
+
+  q.list <- quanteda::docnames(q.data)
+  k.list <- quanteda::docvars(k.data, "author") |> unique()
+
+  tests <- expand.grid(q.list, k.list, stringsAsFactors = F) |>
+    dplyr::rename(Q = Var1, K = Var2)
+
+  results <- pbapply::pbapply(tests, 1, similarity, df, coefficient, features, cl = cores)
+
+  results.table = list_to_df(results)
+
+  return(results.table)
+
+}
+
 overlap <- function(m1, m2, rest.m){
 
   m <- rbind(m1, m2)
@@ -45,6 +107,7 @@ overlap <- function(m1, m2, rest.m){
   return(output)
 
 }
+
 similarity <- function(x, df, coefficient, features){
 
   q.name = as.character(x["Q"])
@@ -109,66 +172,5 @@ similarity <- function(x, df, coefficient, features){
   }
 
   return(results)
-
-}
-#' N-gram tracing
-#'
-#' This function runs the authorship analysis method called *n-gram tracing*, which can be used for both attribution and verification.
-#'
-#' N-gram tracing was originally proposed by Grieve et al (2019). Nini (2023) then proposed a mathematical reinterpretation that is compatible with Cognitive Linguistic theories of language processing. He then tested several variants of the method and found that the original version, which uses the Simpson's coefficient, tends to be outperformed by versions using the Phi coefficient, the Kulczynski's coefficient, and the Cole coefficient. This function can run the n-gram tracing method using any of these coefficients plus the Jaccard coefficient for reference, as this coefficient has been applied in several forensic linguistic studies.
-#'
-#' @param q.data The questioned or disputed data, either as a corpus (the output of [create_corpus()]) or as a `quanteda` dfm (the output of [vectorize()]).
-#' @param k.data The known or undisputed data, either as a corpus (the output of [create_corpus()]) or as a `quanteda` dfm (the output of [vectorize()]). More than one sample for a candidate author is accepted but the function will combine them so to make a profile.
-#' @param tokens The type of tokens to extract, either "word" or "character" (default).
-#' @param remove_punct A logical value. FALSE (default) keeps punctuation marks.
-#' @param remove_symbols A logical value. TRUE (default) removes symbols.
-#' @param remove_numbers A logical value. TRUE (default) removes numbers.
-#' @param lowercase A logical value. TRUE (default) transforms all tokens to lower case.
-#' @param n The order or size of the n-grams being extracted. Default is 9.
-#' @param coefficient The coefficient to use to compare texts, one of: "simpson" (default), "phi", "jaccard", "kulczynski", or "cole".
-#' @param cores The number of cores to use for parallel processing (the default is one).
-#' @param features Logical with default FALSE. If TRUE then the result table will contain the features in the overlap that are unique for that overlap in the corpus. If only two texts are present then this will return the n-grams in common.
-#'
-#' @references Grieve, Jack, Emily Chiang, Isobelle Clarke, Hannah Gideon, Aninna Heini, Andrea Nini & Emily Waibel. 2019. Attributing the Bixby Letter using n-gram tracing. Digital Scholarship in the Humanities 34(3). 493–512.
-#' Nini, Andrea. 2023. A Theory of Linguistic Individuality for Authorship Analysis (Elements in Forensic Linguistics). Cambridge, UK: Cambridge University Press.
-#'
-#' @return The function will test all possible combinations of Q texts and candidate authors and return a
-#' data frame containing the value of the similarity coefficient selected called 'score' and an optional column with the overlapping features that only occur in the Q and candidate considered and in no other Qs (ordered by length if the n-gram is of variable length). The data frame contains a column called 'target' with a logical value which is TRUE if the author of the Q text is the candidate and FALSE otherwise.
-#'
-#' @examples
-#' Q <- enron.sample[c(5:6)]
-#' K <- enron.sample[-c(5:6)]
-#' ngram_tracing(Q, K, coefficient = 'phi')
-#'
-#' @export
-ngram_tracing <- function(q.data, k.data, tokens = "character", remove_punct = F, remove_symbols = T, remove_numbers = T, lowercase = T, n = 9, coefficient = "simpson", features = F, cores = NULL){
-
-  if(quanteda::is.corpus(q.data) & quanteda::is.corpus(k.data)){
-
-    df = vectorize(c(q.data, k.data), tokens = tokens, remove_punct = remove_punct,
-                  remove_symbols = remove_symbols, remove_numbers = remove_numbers, lowercase = lowercase,
-                  n = n, weighting = "boolean", trim = F)
-
-  }else if(quanteda::is.dfm(q.data) & quanteda::is.dfm(k.data)){
-
-    df <- rbind(q.data, k.data)
-
-  }else{
-
-    stop("The Q and K objects need to be either quanteda corpora or quanteda dfms.")
-
-  }
-
-  q.list <- quanteda::docnames(q.data)
-  k.list <- quanteda::docvars(k.data, "author") |> unique()
-
-  tests <- expand.grid(q.list, k.list, stringsAsFactors = F) |>
-    dplyr::rename(Q = Var1, K = Var2)
-
-  results <- pbapply::pbapply(tests, 1, similarity, df, coefficient, features, cl = cores)
-
-  results.table = list_to_df(results)
-
-  return(results.table)
 
 }

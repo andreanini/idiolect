@@ -48,7 +48,7 @@ delta(
 If features is set to FALSE then the output is a data frame containing the results of all comparisons between the Q texts and the K texts. If features is set to TRUE then the output is a list containing the results data frame and the vector of features used for the analysis.
 }
 \description{
-This function runs a classic \emph{Cosine Delta} analysis (Smith and Aldridge 2011; Evert et al. 2017).
+This function runs a \emph{Cosine Delta} analysis (Smith and Aldridge 2011; Evert et al. 2017).
 }
 \examples{
 Q <- enron.sample[c(5:6)]
