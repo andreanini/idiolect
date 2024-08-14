@@ -1,6 +1,6 @@
 #' Tokenize to sentences
 #'
-#' This function turns a corpus of texts into a [quanteda] tokens object of sentences.
+#' This function turns a corpus of texts into a `quanteda` tokens object of sentences.
 #'
 #' The function first split each text into paragraphs by splitting at new line markers and then uses spacy to tokenize each paragraph into sentences. The function accepts a plain text corpus input or the output of [contentmask()]. This function is necessary to prepare the data for [lambdaG()].
 #'

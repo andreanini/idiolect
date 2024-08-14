@@ -3,7 +3,7 @@
     Code
       contentmask(enron.small, algorithm = "POSnoise")
     Message
-      successfully initialized (spaCy Version: 3.7.5, language model: en_core_web_sm)
+      spaCy is already initialized
     Output
       Corpus consisting of 3 documents and 2 docvars.
       allen-p_16.txt :

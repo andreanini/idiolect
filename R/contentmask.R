@@ -1,6 +1,6 @@
 #' Content masking
 #'
-#' This function offers three algorithms for topic/content masking. In order to run the masking algorithms, a `spacy` tokenizer or POS-tagger has to be run first (via [spacyr]). For more information about the masking algorithms see Details below.
+#' This function offers three algorithms for topic/content masking. In order to run the masking algorithms, a `spacy` tokenizer or POS-tagger has to be run first (via `spacyr`). For more information about the masking algorithms see Details below.
 #'
 #' The default algorithm for content masking that this function applies is `POSnoise` (Halvani and Graner 2021). This algorithm only works for English and it transforms a text by masking tokens using their POS tag if these tokens are: nouns, verbs, adjectives, adverbs, digits, and symbols while leaving all the rest unchanged. `POSnoise` uses a list of function words for English that also includes frequent words belonging to the masked Part of Speech tags that tend to be mostly functional (e.g. make, recently, well).
 #'
@@ -8,9 +8,9 @@
 #'
 #' Finally, the last algorithm implemented is a version of `textdistortion`, as originally proposed by Stamatatos (2017). This version of the algorithm is essentially `POSnoise` but without POS tag information. The default implementation uses the same list of function words that are used for `POSnoise`. In addition to the function words provided, the function treats all punctuation marks and new line breaks as function words to keep. The basic tokenization is done using `spacyr` so the right model for the language being analysed should be selected.
 #'
-#' If you have never used [spacyr] before then please follow the instructions to set it up and install a model before using this function.
+#' If you have never used `spacyr` before then please follow the instructions to set it up and install a model before using this function.
 #'
-#' The removal of non-ASCII characters is done using the [textclean] package.
+#' The removal of non-ASCII characters is done using the `textclean` package.
 #'
 #' @param corpus A `quanteda` corpus object, typically the output of the [create_corpus()] function.
 #' @param algorithm A string, either "POSnoise" (default), "frames", or "textdistortion".
@@ -24,6 +24,7 @@
 #'
 #'
 #' @return A `quanteda` corpus object only containing functional tokens, depending on the algorithm chosen. The corpus contains the same docvars as the input. Email addresses or URLs are treated like nouns.
+#'
 #'
 #' @examples
 #' \dontrun{

@@ -1,7 +1,7 @@
 test_that("tokenize_sents works", {
 
   # skip tests if there is no python installation
-  testthat::skip_if(try(spacyr::spacy_initialize(), silent = TRUE) |>
+  testthat::skip_if(try(suppressMessages(spacyr::spacy_initialize()), silent = TRUE) |>
                       inherits("try-error"),
                     message = "spacyr environment not present")
 

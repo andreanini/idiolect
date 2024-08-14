@@ -27,7 +27,7 @@ contentmask(
 A \code{quanteda} corpus object only containing functional tokens, depending on the algorithm chosen. The corpus contains the same docvars as the input. Email addresses or URLs are treated like nouns.
 }
 \description{
-This function offers three algorithms for topic/content masking. In order to run the masking algorithms, a \code{spacy} tokenizer or POS-tagger has to be run first (via \link{spacyr}). For more information about the masking algorithms see Details below.
+This function offers three algorithms for topic/content masking. In order to run the masking algorithms, a \code{spacy} tokenizer or POS-tagger has to be run first (via \code{spacyr}). For more information about the masking algorithms see Details below.
 }
 \details{
 The default algorithm for content masking that this function applies is \code{POSnoise} (Halvani and Graner 2021). This algorithm only works for English and it transforms a text by masking tokens using their POS tag if these tokens are: nouns, verbs, adjectives, adverbs, digits, and symbols while leaving all the rest unchanged. \code{POSnoise} uses a list of function words for English that also includes frequent words belonging to the masked Part of Speech tags that tend to be mostly functional (e.g. make, recently, well).
@@ -36,9 +36,9 @@ Another algorithm implemented is Nini's (2023) \code{frames} or \verb{frame n-gr
 
 Finally, the last algorithm implemented is a version of \code{textdistortion}, as originally proposed by Stamatatos (2017). This version of the algorithm is essentially \code{POSnoise} but without POS tag information. The default implementation uses the same list of function words that are used for \code{POSnoise}. In addition to the function words provided, the function treats all punctuation marks and new line breaks as function words to keep. The basic tokenization is done using \code{spacyr} so the right model for the language being analysed should be selected.
 
-If you have never used \link{spacyr} before then please follow the instructions to set it up and install a model before using this function.
+If you have never used \code{spacyr} before then please follow the instructions to set it up and install a model before using this function.
 
-The removal of non-ASCII characters is done using the \link{textclean} package.
+The removal of non-ASCII characters is done using the \code{textclean} package.
 }
 \examples{
 \dontrun{
