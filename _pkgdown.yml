@@ -4,51 +4,45 @@ template:
 development:
   mode: auto
 reference:
-  - title: List of functions
-    desc: >
-      The functions are ordered according to a typical workflow where possible
 
-  - subtitle: Input and pre-processing
-    desc: >
-      Functions to input the data and prepare it for an analysis
+  - title: Input and pre-processing
+    desc: Functions to input the data and prepare it for an analysis
     contents:
     - create_corpus
     - chunk_texts
     - contentmask
     - tokenize_sents
 
-  - subtitle: Authorship analysis functions
-    desc: >
-      Functions to run an authorship analysis
+  - title: Authorship analysis functions
+    desc: Functions to run an authorship analysis
     contents:
     - delta
     - impostors
     - lambdaG
     - ngram_tracing
 
-    - subtitle: Likelihood ratio
-    desc: >
-      Functions to calibrate, interpret, and evaluate likelihood ratios
+  - title: Likelihood ratio
+    desc: Functions to calibrate, interpret, and evaluate likelihood ratios
     contents:
     - calibrate_LLR
     - density_plot
     - performance
     - posterior
 
-    - subtitle: Post-hoc and intepretation
-    desc: >
-      Functions to interpret the output
+  - title: Post-hoc and intepretation
+    desc: Functions to interpret the output
     contents:
     - lambdaG_visualize
     - concordance
 
-    - subtitle: Optional advanced functions for analysis
+  - title: Optional advanced functions for analysis
     desc: >
       Typically only needed in special cases
     contents:
     - vectorize
     - most_similar
 
-    - subtitle: Sample datasets
+  - title: Data
+    desc: Sample dataset for testing
     contents:
     - enron.sample
