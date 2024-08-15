@@ -27,7 +27,8 @@ Authorship Analysis is defined as the task of determining the likelihood that a 
 
 A crucial difference between Authorship Analysis and Forensic Authorship Analysis is that whereas the former can be treated as a classification task where the final answer is binary ('candidate is the author' vs. 'candidate is NOT the author'), the latter needs an expression of likelihood for the two competing propositions or hypotheses, the Prosecution Hypothesis $H_p$ vs. the Defence Hypothesis $H_d$, for example:
 
-| $H_p$: The author of $K$ and the author of $Q$ are the same individual.  $H_d$: The author of $K$ and the author of $Q$ are two different individuals.
+| $H_p$: The author of $K$ and the author of $Q$ are the same individual.
+| $H_d$: The author of $K$ and the author of $Q$ are two different individuals.
 
 The job of the forensic linguist in a forensic context is to analyse the linguistic evidence and determine which hypothesis it supports and with what degree of strength, thus aiding the trier-of-fact in reaching a conclusion. The role of the forensic linguist is therefore not to provide a YES/NO answer but rather to express the strength of the evidence in favour of each of these two hypotheses.
 
