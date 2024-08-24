@@ -1,7 +1,7 @@
 Type: Package
 Package: idiolect
 Title: Forensic Authorship Analysis
-Version: 1.0.0
+Version: 1.0.1
 Authors@R: c(
     person("Andrea", "Nini", , "andrea.nini@manchester.ac.uk", role = c("aut", "cre", "cph"),
            comment = c(ORCID = "0000-0003-4218-5130")),
