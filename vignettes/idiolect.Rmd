@@ -96,6 +96,7 @@ vectorize(Q, tokens = "word", remove_punct = F, remove_symbols = T, remove_numbe
           lowercase = T, n = 1, weighting = "rel", trim = F) |> 
   print(max_nfeat = 3)
 ```
+
 or, as the most frequent 1,000 character 4-grams relative frequencies, for example, using
 
 ```{r}
