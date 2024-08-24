@@ -8,13 +8,13 @@ ngram_tracing(
   q.data,
   k.data,
   tokens = "character",
-  remove_punct = F,
-  remove_symbols = T,
-  remove_numbers = T,
-  lowercase = T,
+  remove_punct = FALSE,
+  remove_symbols = TRUE,
+  remove_numbers = TRUE,
+  lowercase = TRUE,
   n = 9,
   coefficient = "simpson",
-  features = F,
+  features = FALSE,
   cores = NULL
 )
 }

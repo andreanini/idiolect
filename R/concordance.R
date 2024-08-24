@@ -23,7 +23,7 @@
 #'
 #'
 #' @export
-concordance <- function(q.data, k.data, reference.data, search, token.type = "word", window = 5, case_insensitive = T){
+concordance <- function(q.data, k.data, reference.data, search, token.type = "word", window = 5, case_insensitive = TRUE){
 
   # this condition is needed to make reference.data optional
   if(missing(reference.data)){
@@ -65,10 +65,10 @@ concordance <- function(q.data, k.data, reference.data, search, token.type = "wo
 
   }else if(token.type == "character"){
 
-    kw <- quanteda::tokens(search, what = token.type, remove_separators = F)
+    kw <- quanteda::tokens(search, what = token.type, remove_separators = FALSE)
 
     q.data |>
-      quanteda::tokens(what = token.type, remove_separators = F) |>
+      quanteda::tokens(what = token.type, remove_separators = FALSE) |>
       quanteda::kwic(quanteda::as.phrase(kw), window = window, case_insensitive = case_insensitive,
                      separator = "") |>
       as.data.frame() |>
@@ -76,7 +76,7 @@ concordance <- function(q.data, k.data, reference.data, search, token.type = "wo
       dplyr::mutate(authorship = "Q") -> q.kwic
 
     k.data |>
-      quanteda::tokens(what = token.type, remove_separators = F) |>
+      quanteda::tokens(what = token.type, remove_separators = FALSE) |>
       quanteda::kwic(quanteda::as.phrase(kw), window = window, case_insensitive = case_insensitive,
                      separator = "") |>
       as.data.frame() |>
@@ -84,7 +84,7 @@ concordance <- function(q.data, k.data, reference.data, search, token.type = "wo
       dplyr::mutate(authorship = "K") -> k.kwic
 
     reference.data |>
-      quanteda::tokens(what = token.type, remove_separators = F) |>
+      quanteda::tokens(what = token.type, remove_separators = FALSE) |>
       quanteda::kwic(quanteda::as.phrase(kw), window = window, case_insensitive = case_insensitive,
                      separator = "") |>
       as.data.frame() |>

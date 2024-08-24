@@ -1,7 +1,7 @@
 # lambdaG visualize works
 
     Code
-      lambdaG_visualize(q.data, k.data, ref.data, r = 2, print = FALSE)
+      lambdaG_visualize(q.data, k.data, ref.data, r = 2, print = "")
     Output
       $table
       # A tibble: 13 x 8
@@ -29,7 +29,7 @@
 ---
 
     Code
-      lambdaG_visualize(q.data, k.data, ref.data, r = 2, print = FALSE, scale = "relative")
+      lambdaG_visualize(q.data, k.data, ref.data, r = 2, print = "", scale = "relative")
     Output
       $table
       # A tibble: 13 x 8

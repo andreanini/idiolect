@@ -28,13 +28,13 @@
 #' ngram_tracing(Q, K, coefficient = 'phi')
 #'
 #' @export
-ngram_tracing <- function(q.data, k.data, tokens = "character", remove_punct = F, remove_symbols = T, remove_numbers = T, lowercase = T, n = 9, coefficient = "simpson", features = F, cores = NULL){
+ngram_tracing <- function(q.data, k.data, tokens = "character", remove_punct = FALSE, remove_symbols = TRUE, remove_numbers = TRUE, lowercase = TRUE, n = 9, coefficient = "simpson", features = FALSE, cores = NULL){
 
   if(quanteda::is.corpus(q.data) & quanteda::is.corpus(k.data)){
 
     df = vectorize(c(q.data, k.data), tokens = tokens, remove_punct = remove_punct,
                   remove_symbols = remove_symbols, remove_numbers = remove_numbers, lowercase = lowercase,
-                  n = n, weighting = "boolean", trim = F)
+                  n = n, weighting = "boolean", trim = FALSE)
 
   }else if(quanteda::is.dfm(q.data) & quanteda::is.dfm(k.data)){
 
@@ -49,7 +49,7 @@ ngram_tracing <- function(q.data, k.data, tokens = "character", remove_punct = F
   q.list <- quanteda::docnames(q.data)
   k.list <- quanteda::docvars(k.data, "author") |> unique()
 
-  tests <- expand.grid(q.list, k.list, stringsAsFactors = F) |>
+  tests <- expand.grid(q.list, k.list, stringsAsFactors = FALSE) |>
     dplyr::rename(Q = Var1, K = Var2)
 
   results <- pbapply::pbapply(tests, 1, similarity, df, coefficient, features, cl = cores)
@@ -117,9 +117,9 @@ similarity <- function(x, df, coefficient, features){
   k = quanteda::dfm_subset(df, author == k.name &
                              quanteda::docnames(df) != q.name) |>
     quanteda::dfm_group(author) |>
-    quanteda::dfm_weight(scheme = "boolean", force = T)
+    quanteda::dfm_weight(scheme = "boolean", force = TRUE)
 
-  if(features == T){
+  if(features == TRUE){
 
     rest <- quanteda::dfm_subset(df, quanteda::docnames(df) != q.name & author != k.name)
 
@@ -127,7 +127,7 @@ similarity <- function(x, df, coefficient, features){
     if(length(rest) > 0){
 
       quanteda::docvars(rest, "author") <- "rest"
-      rest.m <- quanteda::dfm_group(rest, author) |> quanteda::dfm_weight("boolean", force = T)
+      rest.m <- quanteda::dfm_group(rest, author) |> quanteda::dfm_weight("boolean", force = TRUE)
 
     }else{
 
@@ -165,7 +165,7 @@ similarity <- function(x, df, coefficient, features){
 
   results[1,"score"] = score
 
-  if(features == T){
+  if(features == TRUE){
 
     results[1, "unique_overlap"] = overlap(q, k, rest.m)
 

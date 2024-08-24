@@ -11,7 +11,7 @@
 #' @param lowercase A logical value. TRUE (default) transforms all tokens to lower case.
 #' @param n The order or size of the n-grams being extracted. Default is 1.
 #' @param trim A logical value. If TRUE (default) then only the most frequent tokens are kept.
-#' @param threshold A numeric value indicating how many most frequent tokens to keep if trim = T. The default is 150.
+#' @param threshold A numeric value indicating how many most frequent tokens to keep if trim = TRUE. The default is 150.
 #' @param features Logical with default FALSE. If TRUE, then the output will contain the features used.
 #' @param cores The number of cores to use for parallel processing (the default is one).
 #'
@@ -26,7 +26,7 @@
 #' delta(Q, K)
 #'
 #' @export
-delta <- function(q.data, k.data, tokens = "word", remove_punct = F, remove_symbols = T, remove_numbers = T, lowercase = T, n = 1, trim = T, threshold = 150, features = F, cores = NULL){
+delta <- function(q.data, k.data, tokens = "word", remove_punct = FALSE, remove_symbols = TRUE, remove_numbers = TRUE, lowercase = TRUE, n = 1, trim = TRUE, threshold = 150, features = FALSE, cores = NULL){
 
   if(quanteda::is.corpus(q.data) & quanteda::is.corpus(k.data)){
 
@@ -47,7 +47,7 @@ delta <- function(q.data, k.data, tokens = "word", remove_punct = F, remove_symb
   q.list <- quanteda::docnames(q.data)
   k.list <- quanteda::docnames(k.data)
 
-  tests <- expand.grid(q.list, k.list, stringsAsFactors = F) |>
+  tests <- expand.grid(q.list, k.list, stringsAsFactors = FALSE) |>
     dplyr::rename(Q = Var1, K = Var2)
 
   z <- scale(d) |> quanteda::as.dfm()
@@ -57,7 +57,7 @@ delta <- function(q.data, k.data, tokens = "word", remove_punct = F, remove_symb
 
   results.table = list_to_df(results)
 
-  if(features == T){
+  if(features == TRUE){
 
     output <- list(results = results.table, features = colnames(d))
 

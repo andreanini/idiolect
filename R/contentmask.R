@@ -36,7 +36,7 @@
 #' @export
 contentmask <- function(corpus, model = "en_core_web_sm", algorithm = "POSnoise", fw_list = "eng_halvani", replace_non_ascii = TRUE){
 
-  if(replace_non_ascii == T){
+  if(replace_non_ascii == TRUE){
 
     meta <- quanteda::docvars(corpus)
     names <- quanteda::docnames(corpus)
@@ -70,8 +70,8 @@ contentmask <- function(corpus, model = "en_core_web_sm", algorithm = "POSnoise"
 
   if(algorithm == "textdistortion"){
 
-    spacyr::spacy_initialize(model = model, entity = F)
-    toks <- spacyr::spacy_tokenize(c, "word", remove_separators = F, output = "data.frame")
+    spacyr::spacy_initialize(model = model, entity = FALSE)
+    toks <- spacyr::spacy_tokenize(c, "word", remove_separators = FALSE, output = "data.frame")
     spacyr::spacy_finalize()
 
     if(fw_list == "eng_halvani"){
@@ -95,8 +95,8 @@ contentmask <- function(corpus, model = "en_core_web_sm", algorithm = "POSnoise"
 
   }else{
 
-    spacyr::spacy_initialize(model = model, entity = F)
-    parsed.corpus <- spacyr::spacy_parse(c, lemma = F, entity = F, tag = T,
+    spacyr::spacy_initialize(model = model, entity = FALSE)
+    parsed.corpus <- spacyr::spacy_parse(c, lemma = FALSE, entity = FALSE, tag = TRUE,
                                          additional_attributes = c("like_url", "like_email"))
     spacyr::spacy_finalize()
 
@@ -106,8 +106,8 @@ contentmask <- function(corpus, model = "en_core_web_sm", algorithm = "POSnoise"
 
       parsed.corpus |>
         dplyr::mutate(token = tolower(token)) |>
-        dplyr::mutate(pos = dplyr::case_when(like_email == T ~ "N",
-                                             like_url == T ~ "N",
+        dplyr::mutate(pos = dplyr::case_when(like_email == TRUE ~ "N",
+                                             like_url == TRUE ~ "N",
                                              pos == "NOUN" ~ "N",
                                              pos == "PROPN" ~ "P",
                                              pos == "VERB" ~ "V",

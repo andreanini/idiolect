@@ -30,7 +30,7 @@ performance = function(training, test = NULL){
       summaryroc() -> roc.res
 
     res.llr |>
-      dplyr::mutate(predicted = dplyr::if_else(llr > 0, T, F)) -> res.res
+      dplyr::mutate(predicted = dplyr::if_else(llr > 0, TRUE, FALSE)) -> res.res
 
     AUC <- pROC::roc(res.llr$target, res.llr$llr) |> pROC::auc()
 
@@ -53,7 +53,7 @@ performance = function(training, test = NULL){
       summaryroc() -> roc.res
 
     res.llr |>
-      dplyr::mutate(predicted = dplyr::if_else(llr > 0, T, F)) -> res.res
+      dplyr::mutate(predicted = dplyr::if_else(llr > 0, TRUE, FALSE)) -> res.res
 
     AUC <- pROC::roc(res.llr$target, res.llr$llr) |> pROC::auc()
 

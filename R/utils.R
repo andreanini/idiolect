@@ -25,8 +25,8 @@ minmax <- function(m, q){
 }
 phi <- function(m, q){
 
-  bm <- quanteda::dfm_weight(m, "boolean", force = T)
-  bq <- quanteda::dfm_weight(q, "boolean", force = T)
+  bm <- quanteda::dfm_weight(m, "boolean", force = TRUE)
+  bq <- quanteda::dfm_weight(q, "boolean", force = TRUE)
 
   score <- quanteda.textstats::textstat_simil(bm, bq, method = "correlation") |>
     suppressMessages()

@@ -8,22 +8,22 @@
 #' @param N The order of the model. Default is 10.
 #' @param r The number of iterations. Default is 30.
 #' @param output A string detailing the file type of the colour-coded text output. Either "html" (default) or "latex".
-#' @param print A logical value indicating whether the colour-coded text file should be written to the working directory (default) or not.
+#' @param print A string indicating the path to the folder where to print a colour-coded text file. If left empty (default), then nothing is printed.
 #' @param scale A string indicating what scale to use to colour-code the text file. If "absolute" (default) then the raw \eqn{\lambda_G} is used; if "relative", then the z-score of \eqn{\lambda_G} over the Q data is used instead, thus showing relative importance.
 #' @param cores The number of cores to use for parallel processing (the default is one).
 #'
 #' @references Nini, A., Halvani, O., Graner, L., Gherardi, V., Ishihara, S. Authorship Verification based on the Likelihood Ratio of Grammar Models. https://arxiv.org/abs/2403.08462v1
-#' @return The function outputs a list of two objects: a data frame with each row being a token in the Q text and the values of \eqn{\lambda_G} for the token and sentences, in decreasing order of sentence \eqn{\lambda_G} and with the relative contribution of each token and each sentence to the final \eqn{\lambda_G} in percentage; the raw code in html or LaTeX that generates the colour-coded file. If the print value is set to TRUE the function will also save the colour-coded text as an html or plain text file on disk in the working directory.
+#' @return The function outputs a list of two objects: a data frame with each row being a token in the Q text and the values of \eqn{\lambda_G} for the token and sentences, in decreasing order of sentence \eqn{\lambda_G} and with the relative contribution of each token and each sentence to the final \eqn{\lambda_G} in percentage; the raw code in html or LaTeX that generates the colour-coded file. If a path is provided for the print argument then the function will also save the colour-coded text as an html or plain text file.
 #'
 #' @examples
 #' q.data <- corpus_trim(enron.sample[1], "sentences", max_ntoken = 10) |> quanteda::tokens("sentence")
 #' k.data <- enron.sample[2:5]|> quanteda::tokens("sentence")
 #' ref.data <- enron.sample[6:ndoc(enron.sample)] |> quanteda::tokens("sentence")
-#' outputs <- lambdaG_visualize(q.data, k.data, ref.data, r = 2, print = FALSE)
+#' outputs <- lambdaG_visualize(q.data, k.data, ref.data, r = 2)
 #' outputs$table
 #'
 #' @export
-lambdaG_visualize <- function(q.data, k.data, ref.data, N = 10, r = 30, output = "html", print = TRUE, scale = "absolute", cores = NULL){
+lambdaG_visualize <- function(q.data, k.data, ref.data, N = 10, r = 30, output = "html", print = "", scale = "absolute", cores = NULL){
 
   if(length(unique(quanteda::docvars(k.data, "author"))) != 1){
 
@@ -72,9 +72,11 @@ lambdaG_visualize <- function(q.data, k.data, ref.data, N = 10, r = 30, output =
 
   }
 
-  if(print == T){
+  if(print != ""){
 
-    write(cc.text, filename)
+    write(cc.text,
+          paste0(print, filename)
+          )
 
   }
 

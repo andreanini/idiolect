@@ -29,7 +29,7 @@ pAUC <- function(pfa, pmiss) {
   x
 }
 
-`opt.llr` <- function(x, laplace=T) {
+`opt.llr` <- function(x, laplace=TRUE) {
   o <- order(x$score, !x$target)        # break ties in pessimistic order
   p.ideal <- as.numeric(x$target[o])    # ideal posterior
   if (is.null(x$weight)) x$weight=1 # did we have weights?
@@ -50,9 +50,9 @@ pAUC <- function(pfa, pmiss) {
   transform(x, opt.llr=llrs)
 }
 
-`Cllr` <- function(x, opt=F) {
+`Cllr` <- function(x, opt=FALSE) {
   if (opt) {                            # do we want optimum?
-    if (is.null(x$opt.llr)) x <- opt.llr(x, F) # did we have optimum?
+    if (is.null(x$opt.llr)) x <- opt.llr(x, FALSE) # did we have optimum?
     x$score <- x$opt.llr
   }
   if (is.null(x$weight)) x$weight <- 1  # did we have weights?
@@ -83,7 +83,7 @@ eer <- function(pfa, pmiss, index=NULL) {
 }
 
 ## this should cover most cases of input data now
-roc <- function(x, cond, laplace=T) {
+roc <- function(x, cond, laplace=TRUE) {
   x <- as.cst(x)
   call <- match.call()
   ordered <- is.ordered(x$score)        #ordered factor
@@ -152,7 +152,7 @@ roc <- function(x, cond, laplace=T) {
   noch.pmiss <- diff(pmiss) == 0
   nch <- length(noch.pfa)
   if (nch>1) {
-    changes <- c(T, ! (noch.pfa[1:(nch-1)] & noch.pfa[2:nch] | noch.pmiss[1:(nch-1)] & noch.pmiss[2:nch]), T)
+    changes <- c(TRUE, ! (noch.pfa[1:(nch-1)] & noch.pfa[2:nch] | noch.pmiss[1:(nch-1)] & noch.pmiss[2:nch]), TRUE)
     pfa <- pfa[changes]
     pmiss <- pmiss[changes]
     thres <- thres[changes]
@@ -165,8 +165,8 @@ roc <- function(x, cond, laplace=T) {
   pmiss <- c(pmiss, 1.1)
   index <- chull(pfa, pmiss)               # find convex hull data points
   index <- sort(index[index<=n])          # remove corner
-  roc$chull <- F
-  roc$chull[index] <- T
+  roc$chull <- FALSE
+  roc$chull[index] <- TRUE
   ## mind the abs( ) in the following expression, just to take care of 1/0=Inf (not -Inf)
   roc$opt.llr <- with(subset(roc, chull), log(abs(diff(pmiss) / diff(pfa))))[cumsum(roc$chull)]
   ## then, through isotonic regression---this should give identical answers
@@ -174,10 +174,10 @@ roc <- function(x, cond, laplace=T) {
   pauc <- pAUC(pfa[index], pmiss[index])
   ##eer
   if (ordered)
-    stats <- list(Cllr=NA, Cllr.min=Cllr(x.opt, T), eer=100*eer(pfa, pmiss, index), pAUC=pauc,
-                  mt=NA, mn=NA, nt=nt, nn=nn, n=nt+nn, discrete=T)
+    stats <- list(Cllr=NA, Cllr.min=Cllr(x.opt, TRUE), eer=100*eer(pfa, pmiss, index), pAUC=pauc,
+                  mt=NA, mn=NA, nt=nt, nn=nn, n=nt+nn, discrete=TRUE)
   else
-    stats <- list(Cllr=Cllr(x), Cllr.min=Cllr(x.opt, T), eer=100*eer(pfa, pmiss, index), pAUC=pauc,
+    stats <- list(Cllr=Cllr(x), Cllr.min=Cllr(x.opt, TRUE), eer=100*eer(pfa, pmiss, index), pAUC=pauc,
                   mt=mean(x$score[x$target]), mn=mean(x$score[!x$target]), nt=nt, nn=nn, n=nt+nn,
                   discrete=discrete)
   attr(roc, "call") <- call

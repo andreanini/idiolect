@@ -24,7 +24,7 @@
 #'
 #' Koppel, Moshe & Yaron Winter. 2014. Determining if two documents are written by the same author. Journal of the Association for Information Science and Technology 65(1). 178–187.
 #'
-#' Potha, Nektaria & Efstathios Stamatatos. 2017. An Improved Impostors Method for Authorship Verification. In Gareth J.F. Jones, Séamus Lawless, Julio Gonzalo, Liadh Kelly, Lorraine Goeuriot, Thomas Mandl, Linda Cappellato & Nicola Ferro (eds.), Experimental IR Meets Multilinguality, Multimodality, and Interaction (Lecture Notes in Computer Science), vol. 10456, 138–144. Springer, Cham. https://doi.org/10.1007/978-3-319-65813-1_14. (5 September, 2017).
+#' Potha, Nektaria & Efstathios Stamatatos. 2017. An Improved Impostors Method for Authorship Verification. In Gareth J.FALSE. Jones, Séamus Lawless, Julio Gonzalo, Liadh Kelly, Lorraine Goeuriot, Thomas Mandl, Linda Cappellato & Nicola Ferro (eds.), Experimental IR Meets Multilinguality, Multimodality, and Interaction (Lecture Notes in Computer Science), vol. 10456, 138–144. Springer, Cham. https://doi.org/10.1007/978-3-319-65813-1_14. (5 September, 2017).
 #'
 #' Potha, Nektaria & Efstathios Stamatatos. 2020. Improved algorithms for extrinsic author verification. Knowledge and Information Systems 62(5). 1903–1921. https://doi.org/10.1007/s10115-019-01408-4.
 #'
@@ -42,12 +42,12 @@
 #' impostors(Q, K, imps, algorithm = "KGI")
 #'
 #' @export
-impostors = function(q.data, k.data, cand.imps, algorithm = "RBI", coefficient = "minmax", k = 300, m = 100, n = 25, features = F, cores = NULL){
+impostors = function(q.data, k.data, cand.imps, algorithm = "RBI", coefficient = "minmax", k = 300, m = 100, n = 25, features = FALSE, cores = NULL){
 
   q.list <- quanteda::docnames(q.data)
   k.list <- quanteda::docvars(k.data, "author") |> unique()
 
-  tests <- expand.grid(q.list, k.list, stringsAsFactors = F) |>
+  tests <- expand.grid(q.list, k.list, stringsAsFactors = FALSE) |>
     dplyr::rename(Q = Var1, K = Var2)
 
 
@@ -69,9 +69,9 @@ impostors = function(q.data, k.data, cand.imps, algorithm = "RBI", coefficient =
     if(algorithm == "RBI"){
 
       df = vectorize(all.data,
-                     tokens = "character", remove_punct = F, remove_symbols = T,
-                     remove_numbers = T, lowercase = F,
-                     n = 5, weighting = "rel", trim = T, threshold = 1500)
+                     tokens = "character", remove_punct = FALSE, remove_symbols = TRUE,
+                     remove_numbers = TRUE, lowercase = FALSE,
+                     n = 5, weighting = "rel", trim = TRUE, threshold = 1500)
 
       results = pbapply::pbapply(tests, 1, RBI,
                                  qs = quanteda::dfm_subset(df, quanteda::docnames(df)
@@ -87,9 +87,9 @@ impostors = function(q.data, k.data, cand.imps, algorithm = "RBI", coefficient =
     if(algorithm == "KGI"){
 
       df = vectorize(all.data,
-                     tokens = "character", remove_punct = F, remove_symbols = T,
-                     remove_numbers = T, lowercase = F,
-                     n = 4, weighting = "tf-idf", trim = F)
+                     tokens = "character", remove_punct = FALSE, remove_symbols = TRUE,
+                     remove_numbers = TRUE, lowercase = FALSE,
+                     n = 4, weighting = "tf-idf", trim = FALSE)
 
       results = pbapply::pbapply(tests, 1, KGI,
                                  qs = quanteda::dfm_subset(df, quanteda::docnames(df)
@@ -105,9 +105,9 @@ impostors = function(q.data, k.data, cand.imps, algorithm = "RBI", coefficient =
     if(algorithm == "IM"){
 
       df = vectorize(all.data,
-                     tokens = "character", remove_punct = F, remove_symbols = T,
-                     remove_numbers = T, lowercase = F,
-                     n = 4, weighting = "tf-idf", trim = F)
+                     tokens = "character", remove_punct = FALSE, remove_symbols = TRUE,
+                     remove_numbers = TRUE, lowercase = FALSE,
+                     n = 4, weighting = "tf-idf", trim = FALSE)
 
       results = pbapply::pbapply(tests, 1, IM,
                                  qs = quanteda::dfm_subset(df, quanteda::docnames(df) %in%
@@ -192,13 +192,13 @@ important_features <- function(q, candidate, impostors){
 
     odds <- cand.overlap/imp.overlap
 
-    temp <- odds[is.na(odds) == F & odds != 0]
+    temp <- odds[is.na(odds) == FALSE & odds != 0]
 
     important.features <- c(important.features, temp)
 
   }
 
-  final.features <- important.features |> sort(decreasing = T)
+  final.features <- important.features |> sort(decreasing = TRUE)
 
   to.return <- names(final.features[final.features > 1]) |> unique()
 
@@ -268,14 +268,14 @@ RBI <- function(x, qs, candidates, cand.imps, coefficient, k, features){
 
     }
 
-    if(features == T) { feats <- c(feats, important_features(q, cons.k, cons.imps)) }
+    if(features == TRUE) { feats <- c(feats, important_features(q, cons.k, cons.imps)) }
 
     score.sum = score.sum + score
 
   }
 
   final.score = round(score.sum/nrow(candidate), 3)
-  if(features == T) { final.feats <- unique(feats) }
+  if(features == TRUE) { final.feats <- unique(feats) }
 
   results = data.frame()
   results[1,"K"] = quanteda::docvars(candidate[1,], "author")
@@ -293,7 +293,7 @@ RBI <- function(x, qs, candidates, cand.imps, coefficient, k, features){
 
   results[1,"score"] = final.score
 
-  if(features == T) { results[1, "features"] = paste(final.feats, collapse = "|") }
+  if(features == TRUE) { results[1, "features"] = paste(final.feats, collapse = "|") }
 
   return(results)
 

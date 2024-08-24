@@ -23,9 +23,9 @@ tokenize_sents <- function(corpus, model = "en_core_web_sm"){
 
   sapply(corpus, stringr::str_replace_all, "\n", "\n\n") |>
     quanteda::corpus() |>
-    quanteda::corpus_reshape(to = "paragraphs", use_docvars = T) -> x.pars
+    quanteda::corpus_reshape(to = "paragraphs", use_docvars = TRUE) -> x.pars
 
-  spacyr::spacy_initialize(model = model, entity = F)
+  spacyr::spacy_initialize(model = model, entity = FALSE)
   x.pars |>
     spacyr::spacy_tokenize("sentence") |>
     quanteda::as.tokens() -> x.toks

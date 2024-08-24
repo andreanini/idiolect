@@ -8,14 +8,14 @@ delta(
   q.data,
   k.data,
   tokens = "word",
-  remove_punct = F,
-  remove_symbols = T,
-  remove_numbers = T,
-  lowercase = T,
+  remove_punct = FALSE,
+  remove_symbols = TRUE,
+  remove_numbers = TRUE,
+  lowercase = TRUE,
   n = 1,
-  trim = T,
+  trim = TRUE,
   threshold = 150,
-  features = F,
+  features = FALSE,
   cores = NULL
 )
 }
@@ -38,7 +38,7 @@ delta(
 
 \item{trim}{A logical value. If TRUE (default) then only the most frequent tokens are kept.}
 
-\item{threshold}{A numeric value indicating how many most frequent tokens to keep if trim = T. The default is 150.}
+\item{threshold}{A numeric value indicating how many most frequent tokens to keep if trim = TRUE. The default is 150.}
 
 \item{features}{Logical with default FALSE. If TRUE, then the output will contain the features used.}
 

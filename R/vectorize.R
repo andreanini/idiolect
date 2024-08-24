@@ -29,14 +29,14 @@
 vectorize = function(input, tokens, remove_punct, remove_symbols, remove_numbers, lowercase, n, weighting, trim, threshold){
 
   sents <- quanteda::corpus_segment(input, pattern = "[.?!]+( \\n+)*|\\n+", valuetype = "regex",
-                                    extract_pattern = F, pattern_position = "after")
+                                    extract_pattern = FALSE, pattern_position = "after")
 
   if(tokens == "character"){
 
     sents |>
       quanteda::tokens(what = tokens, remove_punct = remove_punct, remove_symbols = remove_symbols,
-                       remove_url = T, remove_numbers = remove_numbers, split_hyphens = T,
-                       remove_separators = F) |>
+                       remove_url = TRUE, remove_numbers = remove_numbers, split_hyphens = TRUE,
+                       remove_separators = FALSE) |>
       quanteda::tokens_ngrams(n, concatenator = "") -> toks
 
   }
@@ -45,8 +45,8 @@ vectorize = function(input, tokens, remove_punct, remove_symbols, remove_numbers
 
     sents |>
       quanteda::tokens(what = tokens, remove_punct = remove_punct, remove_symbols = remove_symbols,
-                       remove_url = T, remove_numbers = remove_numbers, split_hyphens = T,
-                       remove_separators = T) |>
+                       remove_url = TRUE, remove_numbers = remove_numbers, split_hyphens = TRUE,
+                       remove_separators = TRUE) |>
       quanteda::tokens_ngrams(n, concatenator = "_") -> toks
 
   }
@@ -72,7 +72,7 @@ vectorize = function(input, tokens, remove_punct, remove_symbols, remove_numbers
 
   }
 
-  if(trim == T){
+  if(trim == TRUE){
 
     d.f = quanteda::dfm_trim(d.f, min_termfreq = threshold, termfreq_type = "rank") |> suppressWarnings()
 

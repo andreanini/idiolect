@@ -11,7 +11,7 @@ concordance(
   search,
   token.type = "word",
   window = 5,
-  case_insensitive = T
+  case_insensitive = TRUE
 )
 }
 \arguments{

@@ -11,7 +11,7 @@ lambdaG_visualize(
   N = 10,
   r = 30,
   output = "html",
-  print = TRUE,
+  print = "",
   scale = "absolute",
   cores = NULL
 )
@@ -29,14 +29,14 @@ lambdaG_visualize(
 
 \item{output}{A string detailing the file type of the colour-coded text output. Either "html" (default) or "latex".}
 
-\item{print}{A logical value indicating whether the colour-coded text file should be written to the working directory (default) or not.}
+\item{print}{A string indicating the path to the folder where to print a colour-coded text file. If left empty (default), then nothing is printed.}
 
 \item{scale}{A string indicating what scale to use to colour-code the text file. If "absolute" (default) then the raw \eqn{\lambda_G} is used; if "relative", then the z-score of \eqn{\lambda_G} over the Q data is used instead, thus showing relative importance.}
 
 \item{cores}{The number of cores to use for parallel processing (the default is one).}
 }
 \value{
-The function outputs a list of two objects: a data frame with each row being a token in the Q text and the values of \eqn{\lambda_G} for the token and sentences, in decreasing order of sentence \eqn{\lambda_G} and with the relative contribution of each token and each sentence to the final \eqn{\lambda_G} in percentage; the raw code in html or LaTeX that generates the colour-coded file. If the print value is set to TRUE the function will also save the colour-coded text as an html or plain text file on disk in the working directory.
+The function outputs a list of two objects: a data frame with each row being a token in the Q text and the values of \eqn{\lambda_G} for the token and sentences, in decreasing order of sentence \eqn{\lambda_G} and with the relative contribution of each token and each sentence to the final \eqn{\lambda_G} in percentage; the raw code in html or LaTeX that generates the colour-coded file. If a path is provided for the print argument then the function will also save the colour-coded text as an html or plain text file.
 }
 \description{
 This function outputs a colour-coded list of sentences belonging to the input Q text ordered from highest to lowest \eqn{\lambda_G}, as shown in Nini et al. (under review).
@@ -45,7 +45,7 @@ This function outputs a colour-coded list of sentences belonging to the input Q 
 q.data <- corpus_trim(enron.sample[1], "sentences", max_ntoken = 10) |> quanteda::tokens("sentence")
 k.data <- enron.sample[2:5]|> quanteda::tokens("sentence")
 ref.data <- enron.sample[6:ndoc(enron.sample)] |> quanteda::tokens("sentence")
-outputs <- lambdaG_visualize(q.data, k.data, ref.data, r = 2, print = FALSE)
+outputs <- lambdaG_visualize(q.data, k.data, ref.data, r = 2)
 outputs$table
 
 }

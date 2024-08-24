@@ -25,7 +25,7 @@ lambdaG <- function(q.data, k.data, ref.data, N = 10, r = 30, cores = NULL){
   q.list <- quanteda::docnames(q.data)
   k.list <- quanteda::docvars(k.data, "author") |> unique()
 
-  tests <- expand.grid(q.list, k.list, stringsAsFactors = F) |>
+  tests <- expand.grid(q.list, k.list, stringsAsFactors = FALSE) |>
     dplyr::rename(Q = Var1, K = Var2)
 
   # this condition allows for the reference being just the rest of the K data
