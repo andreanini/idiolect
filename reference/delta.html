@@ -43,14 +43,14 @@
 <span>  <span class="va">q.data</span>,</span>
 <span>  <span class="va">k.data</span>,</span>
 <span>  tokens <span class="op">=</span> <span class="st">"word"</span>,</span>
-<span>  remove_punct <span class="op">=</span> <span class="cn">F</span>,</span>
-<span>  remove_symbols <span class="op">=</span> <span class="cn">T</span>,</span>
-<span>  remove_numbers <span class="op">=</span> <span class="cn">T</span>,</span>
-<span>  lowercase <span class="op">=</span> <span class="cn">T</span>,</span>
+<span>  remove_punct <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  remove_symbols <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  remove_numbers <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  lowercase <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  n <span class="op">=</span> <span class="fl">1</span>,</span>
-<span>  trim <span class="op">=</span> <span class="cn">T</span>,</span>
+<span>  trim <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  threshold <span class="op">=</span> <span class="fl">150</span>,</span>
-<span>  features <span class="op">=</span> <span class="cn">F</span>,</span>
+<span>  features <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  cores <span class="op">=</span> <span class="cn">NULL</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
@@ -96,7 +96,7 @@
 
 
 <dt id="arg-threshold">threshold<a class="anchor" aria-label="anchor" href="#arg-threshold"></a></dt>
-<dd><p>A numeric value indicating how many most frequent tokens to keep if trim = T. The default is 150.</p></dd>
+<dd><p>A numeric value indicating how many most frequent tokens to keep if trim = TRUE. The default is 150.</p></dd>
 
 
 <dt id="arg-features">features<a class="anchor" aria-label="anchor" href="#arg-features"></a></dt>

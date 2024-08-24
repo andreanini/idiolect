@@ -46,7 +46,7 @@
 <span>  N <span class="op">=</span> <span class="fl">10</span>,</span>
 <span>  r <span class="op">=</span> <span class="fl">30</span>,</span>
 <span>  output <span class="op">=</span> <span class="st">"html"</span>,</span>
-<span>  print <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  print <span class="op">=</span> <span class="st">""</span>,</span>
 <span>  scale <span class="op">=</span> <span class="st">"absolute"</span>,</span>
 <span>  cores <span class="op">=</span> <span class="cn">NULL</span></span>
 <span><span class="op">)</span></span></code></pre></div>
@@ -81,7 +81,7 @@
 
 
 <dt id="arg-print">print<a class="anchor" aria-label="anchor" href="#arg-print"></a></dt>
-<dd><p>A logical value indicating whether the colour-coded text file should be written to the working directory (default) or not.</p></dd>
+<dd><p>A string indicating the path to the folder where to print a colour-coded text file. If left empty (default), then nothing is printed.</p></dd>
 
 
 <dt id="arg-scale">scale<a class="anchor" aria-label="anchor" href="#arg-scale"></a></dt>
@@ -94,7 +94,7 @@
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-    <p>The function outputs a list of two objects: a data frame with each row being a token in the Q text and the values of \(\lambda_G\) for the token and sentences, in decreasing order of sentence \(\lambda_G\) and with the relative contribution of each token and each sentence to the final \(\lambda_G\) in percentage; the raw code in html or LaTeX that generates the colour-coded file. If the print value is set to TRUE the function will also save the colour-coded text as an html or plain text file on disk in the working directory.</p>
+    <p>The function outputs a list of two objects: a data frame with each row being a token in the Q text and the values of \(\lambda_G\) for the token and sentences, in decreasing order of sentence \(\lambda_G\) and with the relative contribution of each token and each sentence to the final \(\lambda_G\) in percentage; the raw code in html or LaTeX that generates the colour-coded file. If a path is provided for the print argument then the function will also save the colour-coded text as an html or plain text file.</p>
     </div>
     <div class="section level2">
     <h2 id="references">References<a class="anchor" aria-label="anchor" href="#references"></a></h2>
@@ -106,7 +106,7 @@
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">q.data</span> <span class="op">&lt;-</span> <span class="fu">corpus_trim</span><span class="op">(</span><span class="va">enron.sample</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span>, <span class="st">"sentences"</span>, max_ntoken <span class="op">=</span> <span class="fl">10</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu">quanteda</span><span class="fu">::</span><span class="fu"><a href="https://quanteda.io/reference/tokens.html" class="external-link">tokens</a></span><span class="op">(</span><span class="st">"sentence"</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">k.data</span> <span class="op">&lt;-</span> <span class="va">enron.sample</span><span class="op">[</span><span class="fl">2</span><span class="op">:</span><span class="fl">5</span><span class="op">]</span><span class="op">|&gt;</span> <span class="fu">quanteda</span><span class="fu">::</span><span class="fu"><a href="https://quanteda.io/reference/tokens.html" class="external-link">tokens</a></span><span class="op">(</span><span class="st">"sentence"</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">ref.data</span> <span class="op">&lt;-</span> <span class="va">enron.sample</span><span class="op">[</span><span class="fl">6</span><span class="op">:</span><span class="fu">ndoc</span><span class="op">(</span><span class="va">enron.sample</span><span class="op">)</span><span class="op">]</span> <span class="op">|&gt;</span> <span class="fu">quanteda</span><span class="fu">::</span><span class="fu"><a href="https://quanteda.io/reference/tokens.html" class="external-link">tokens</a></span><span class="op">(</span><span class="st">"sentence"</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="va">outputs</span> <span class="op">&lt;-</span> <span class="fu">lambdaG_visualize</span><span class="op">(</span><span class="va">q.data</span>, <span class="va">k.data</span>, <span class="va">ref.data</span>, r <span class="op">=</span> <span class="fl">2</span>, print <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">outputs</span> <span class="op">&lt;-</span> <span class="fu">lambdaG_visualize</span><span class="op">(</span><span class="va">q.data</span>, <span class="va">k.data</span>, <span class="va">ref.data</span>, r <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">outputs</span><span class="op">$</span><span class="va">table</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 13 × 8</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    sentence_id token_id t         lambdaG sentence_lambdaG zlambdaG</span>
