@@ -1,0 +1,27 @@
+<urlset xmlns = 'http://www.sitemaps.org/schemas/sitemap/0.9'>
+<url><loc>https://andreanini.github.io/idiolect/dev/LICENSE.html</loc></url>
+<url><loc>https://andreanini.github.io/idiolect/dev/articles/idiolect.html</loc></url>
+<url><loc>https://andreanini.github.io/idiolect/dev/articles/index.html</loc></url>
+<url><loc>https://andreanini.github.io/idiolect/dev/authors.html</loc></url>
+<url><loc>https://andreanini.github.io/idiolect/dev/index.html</loc></url>
+<url><loc>https://andreanini.github.io/idiolect/dev/news/index.html</loc></url>
+<url><loc>https://andreanini.github.io/idiolect/dev/reference/calibrate_LLR.html</loc></url>
+<url><loc>https://andreanini.github.io/idiolect/dev/reference/chunk_texts.html</loc></url>
+<url><loc>https://andreanini.github.io/idiolect/dev/reference/concordance.html</loc></url>
+<url><loc>https://andreanini.github.io/idiolect/dev/reference/contentmask.html</loc></url>
+<url><loc>https://andreanini.github.io/idiolect/dev/reference/create_corpus.html</loc></url>
+<url><loc>https://andreanini.github.io/idiolect/dev/reference/delta.html</loc></url>
+<url><loc>https://andreanini.github.io/idiolect/dev/reference/density_plot.html</loc></url>
+<url><loc>https://andreanini.github.io/idiolect/dev/reference/enron.sample.html</loc></url>
+<url><loc>https://andreanini.github.io/idiolect/dev/reference/impostors.html</loc></url>
+<url><loc>https://andreanini.github.io/idiolect/dev/reference/index.html</loc></url>
+<url><loc>https://andreanini.github.io/idiolect/dev/reference/lambdaG.html</loc></url>
+<url><loc>https://andreanini.github.io/idiolect/dev/reference/lambdaG_visualize.html</loc></url>
+<url><loc>https://andreanini.github.io/idiolect/dev/reference/most_similar.html</loc></url>
+<url><loc>https://andreanini.github.io/idiolect/dev/reference/ngram_tracing.html</loc></url>
+<url><loc>https://andreanini.github.io/idiolect/dev/reference/performance.html</loc></url>
+<url><loc>https://andreanini.github.io/idiolect/dev/reference/posterior.html</loc></url>
+<url><loc>https://andreanini.github.io/idiolect/dev/reference/tokenize_sents.html</loc></url>
+<url><loc>https://andreanini.github.io/idiolect/dev/reference/vectorize.html</loc></url>
+</urlset>
+
