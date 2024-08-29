@@ -1,5 +1,5 @@
 ---
-title: 'Idiolect: An R package for forensic authorship analysis'
+title: 'idiolect: An R package for forensic authorship analysis'
 tags:
   - R
   - linguistics
@@ -17,15 +17,13 @@ authors:
 affiliations:
  - name: University of Manchester, UK
    index: 1
-date: 
+date: 29 August 2024
 bibliography: paper.bib
 ---
 
 # Summary
 
-Authorship Analysis is defined as the task of determining the likelihood that a certain person is the author of a certain set of questioned texts. This determination is done by analysing the language of the questioned texts and the language of samples produced by the candidate author or authors. This kind of analysis is often applied in the context of literary (e.g. Robert Galbraith as J.K. Rowling's [@juola2015], the identity of Elena Ferrante [@tuzzi2018]) or historical problems (e.g. Lincoln's Bixby letter [@grieve2019], the Jack the Ripper letters [@nini2018], the writings of Julius Caesar [@kestemont2016]).
-
-However, another common application of authorship analysis is in a forensic or investigative context. In such settings, the disputed texts could be anonymous malicious documents (e.g. the *devil strip* ransom letter [@leonard2005] or the Ayia Napa rape statements [@donlan2022]), or text messages, emails, or any other document that, for various reasons, becomes evidence in a forensic case or in forensic contexts (e.g. the Amanda Birks murder [@grant2013]).
+Authorship Analysis is defined as the task of determining the likelihood that a certain person is the author of a certain set of questioned texts. This determination is done by analysing the language of the questioned texts and the language of samples produced by the candidate author or authors. This kind of analysis is often applied in the context of literary problems (e.g. Robert Galbraith as J.K. Rowling's alias [@juola2015], the identity of Elena Ferrante [@tuzzi2018]), historical problems (e.g. Lincoln's Bixby letter [@grieve2019], the Jack the Ripper letters [@nini2018], the writings of Julius Caesar [@kestemont2016]) or forensic contexts (e.g. the *devil strip* ransom letter [@leonard2005], the Amanda Birks murder [@grant2013] or the Ayia Napa rape statements [@donlan2022]).
 
 Especially when dealing with a forensic context, then best practice is to carry out authorship analysis within the Bayesian Likelihood Ratio Framework for expressing evidence in forensic science, which is logically aligned with the role of the expert witness in a court of law. Rather than expressing a final binary judgement (same author vs. different author, or author A vs. author B), the framework instead leads the analyst to express the strength of the linguistic evidence in favour or against a set of two competing hypotheses, for example:
 
@@ -40,9 +38,9 @@ Within this context, `idiolect` is an R package that contains functions to pre-p
 
 Most significantly, what sets `idiolect` apart is its use of the Likelihood Ratio Framework. Through a suite of functions, `idiolect` facilitates the calibration of likelihood ratios from the results of any of the authorship analysis functions and then the assessment of the performance of this likelihood ratio using standard performance metrics, such as the $C_{llr}$ [@ramos2013].
 
-Another novelty in `idiolect` is that the package also offers functions that aid the *post-hoc* interpretation of the results. Computational authorship analysis techniques are offer hard to interpret by the analyst. Although this is true, for example, for algorithms such as the *Impostors Method* that use the frequency of short sequences as features, `idiolect` facilitates interpretation by returning the most important features and allowing the user to see these features in context. For other algorithms that are easier to interpret like *N-gram Tracing* or *LambdaG* this is even more so.
+Another novelty in `idiolect` is that the package also offers functions that aid the *post-hoc* interpretation of the results. Computational authorship analysis techniques are offer hard to interpret by the analyst. Although this is true, for example, for algorithms such as the *Impostors Method* that are based on the frequency of short sequences of characters, `idiolect` facilitates interpretation by returning the most important features and allowing the user to see these features in context. For *LambdaG*, a purpose-built function can return a colour-coded heat map of a text highlighting the words or constructions that influenced the results.
 
-`idiolect` has been designed for research in authorship analysis, stylometry, digital humanities, and forensic linguistics. In addition, `idiolect` can be used effectively to run analyses for real-life forensic linguistics cases.
+Although `idiolect` has been designed for research in authorship analysis, stylometry, digital humanities, and forensic linguistics, it can also be used effectively to run analyses for real-life forensic linguistics casework. The code being open source is particularly important in a forensic context to allow opposing experts to replicate the analysis and scrutinize the procedure in full.
 
 # Acknowledgements
 
