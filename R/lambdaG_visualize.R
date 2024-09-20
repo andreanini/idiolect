@@ -8,7 +8,7 @@
 #' @param N The order of the model. Default is 10.
 #' @param r The number of iterations. Default is 30.
 #' @param output A string detailing the file type of the colour-coded text output. Either "html" (default) or "latex".
-#' @param print A string indicating the path to the folder where to print a colour-coded text file. If left empty (default), then nothing is printed.
+#' @param print A string indicating the path to save the colour-coded text file. If left empty (default), then nothing is printed.
 #' @param scale A string indicating what scale to use to colour-code the text file. If "absolute" (default) then the raw \eqn{\lambda_G} is used; if "relative", then the z-score of \eqn{\lambda_G} over the Q data is used instead, thus showing relative importance.
 #' @param cores The number of cores to use for parallel processing (the default is one).
 #'
@@ -74,9 +74,7 @@ lambdaG_visualize <- function(q.data, k.data, ref.data, N = 10, r = 30, output =
 
   if(print != ""){
 
-    write(cc.text,
-          paste0(print, filename)
-          )
+    write(cc.text, print)
 
   }
 
@@ -94,7 +92,6 @@ extract <- function(s, N){
   return(model)
 
 }
-
 loglikelihood_one_rep <- function(q.sents, k.sents, ref.sents, N, k.g, k.sent.probs){
 
   ref.g <- ref.sents |> sample(length(k.sents)) |> extract(N)
@@ -108,8 +105,9 @@ loglikelihood_one_rep <- function(q.sents, k.sents, ref.sents, N, k.g, k.sent.pr
     toks = s |> stringr::str_squish() |> stringr::str_split_1(" ")
     n_tokens = length(toks) + 1
 
-    res = data.frame(sentence_id = id, token_id = 1:n_tokens, t = character(n_tokens), k = numeric(n_tokens),
-                     ref = numeric(n_tokens), llr = numeric(n_tokens), sentence_llr = sllr)
+    res = data.frame(sentence_id = id, token_id = 1:n_tokens, t = character(n_tokens),
+                     k = numeric(n_tokens), ref = numeric(n_tokens), llr = numeric(n_tokens),
+                     sentence_llr = sllr)
 
     for (i in 1:n_tokens) {
       topred = ifelse(i < n_tokens, toks[i], kgrams::EOS())
@@ -132,7 +130,6 @@ loglikelihood_one_rep <- function(q.sents, k.sents, ref.sents, N, k.g, k.sent.pr
   return(table)
 
 }
-
 loglikelihood_table_avgllrs <- function(q.data, k.data, ref.data, r, N, cores){
 
   k.sents = as.character(k.data)
@@ -154,7 +151,6 @@ loglikelihood_table_avgllrs <- function(q.data, k.data, ref.data, r, N, cores){
   return(final.table)
 
 }
-
 color_coding_html <- function(llr.table, scale){
 
   if(scale == "absolute"){
@@ -199,7 +195,6 @@ color_coding_html <- function(llr.table, scale){
   return(string)
 
 }
-
 color_coding_latex <- function(llr.table, scale){
 
   if(scale == "absolute"){
