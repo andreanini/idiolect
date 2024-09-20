@@ -29,7 +29,7 @@ lambdaG_visualize(
 
 \item{output}{A string detailing the file type of the colour-coded text output. Either "html" (default) or "latex".}
 
-\item{print}{A string indicating the path to the folder where to print a colour-coded text file. If left empty (default), then nothing is printed.}
+\item{print}{A string indicating the path to save the colour-coded text file. If left empty (default), then nothing is printed.}
 
 \item{scale}{A string indicating what scale to use to colour-code the text file. If "absolute" (default) then the raw \eqn{\lambda_G} is used; if "relative", then the z-score of \eqn{\lambda_G} over the Q data is used instead, thus showing relative importance.}
 
