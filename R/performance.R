@@ -6,6 +6,8 @@
 #'
 #' @param training The data frame with the results to evaluate, typically the output of an authorship analysis function, such as [impostors()]. If only training is present then the function will perform a leave-one-out cross-validation.
 #' @param test Optional data frame of results. If present then a calibration model is extracted from training and its performance is evaluated on this data set.
+#' @param progress Logical. If TRUE (default) then a progress bar is diplayed.
+#' @param by Either "case" or "author". If the performance is evaluated leave-one-out, then "case" would go through the table row by row while, if "author" is selected, then the performance is calculated after taking out each author (identified as a value of the K column).
 #'
 #' @return The function returns a list containing a data frame with performance statistics, including an object that can be used to make a tippet plot using the `tippet.plot()` function of the `ROC` package (https://github.com/davidavdav/ROC).
 #'
@@ -15,11 +17,19 @@
 #' perf$evaluation
 #'
 #' @export
-performance = function(training, test = NULL){
+performance = function(training, test = NULL, by = "case", progress = TRUE){
 
   if(is.null(test)){
 
-    res.llr = leave_one_out_llr(training)
+    if(by == "case"){
+
+      res.llr = leave_one_out_llr(training, progress)
+
+      }else if(by == "author"){
+
+        res.llr = leave_one_author_out_llr(training, progress)
+
+      }
 
     res.llr |>
       dplyr::select(llr, target) |>
@@ -32,7 +42,7 @@ performance = function(training, test = NULL){
     res.llr |>
       dplyr::mutate(predicted = dplyr::if_else(llr > 0, TRUE, FALSE)) -> res.res
 
-    AUC <- pROC::roc(res.llr$target, res.llr$llr) |> pROC::auc()
+    AUC <- pROC::roc(res.llr$target, res.llr$llr, quiet = TRUE) |> pROC::auc()
 
     cm = caret::confusionMatrix(as.factor(res.res$predicted),
                                 as.factor(res.res$target),
@@ -55,7 +65,7 @@ performance = function(training, test = NULL){
     res.llr |>
       dplyr::mutate(predicted = dplyr::if_else(llr > 0, TRUE, FALSE)) -> res.res
 
-    AUC <- pROC::roc(res.llr$target, res.llr$llr) |> pROC::auc()
+    AUC <- pROC::roc(res.llr$target, res.llr$llr, quiet = TRUE) |> pROC::auc()
 
     cm = caret::confusionMatrix(as.factor(res.res$predicted),
                                 as.factor(res.res$target),
@@ -87,11 +97,11 @@ performance = function(training, test = NULL){
 
 }
 
-leave_one_out_llr = function(df){
+leave_one_out_llr = function(df, progress){
 
   final.llr = data.frame()
 
-  pb = utils::txtProgressBar(min = 1, max = nrow(df), initial = 0, style = 3)
+  if(progress == TRUE){pb = utils::txtProgressBar(min = 1, max = nrow(df), initial = 0, style = 3)}
 
   for (i in 1:nrow(df)) {
 
@@ -104,13 +114,46 @@ leave_one_out_llr = function(df){
 
     final.llr[i, "llr"] = llr/log(10)
 
-    utils::setTxtProgressBar(pb, i)
+    if(progress == TRUE){utils::setTxtProgressBar(pb, i)}
 
   }
 
-  close(pb)
+  if(progress == TRUE){close(pb)}
 
   final.llr = cbind(df, final.llr)
+
+  return(final.llr)
+
+}
+
+leave_one_author_out_llr = function(df, progress){
+
+  final.llr = data.frame()
+
+  unique.ks <- dplyr::pull(df, K) |> unique()
+
+  if(progress == TRUE){pb = utils::txtProgressBar(min = 1, max = length(unique.ks), initial = 0, style = 3)}
+
+  for (i in 1:length(unique.ks)) {
+
+    left = dplyr::filter(df, K == unique.ks[i])
+    rest = dplyr::filter(df, K != unique.ks[i])
+
+    suppressWarnings(train.logreg(rest) -> calibration.model)
+
+    stats::predict(calibration.model, newdata = left) -> llr
+
+    llr.10 = llr/log(10)
+
+    left.llr <- dplyr::mutate(left, llr = llr.10)
+
+    final.llr <- rbind(final.llr, left.llr)
+
+    if(progress == TRUE){utils::setTxtProgressBar(pb, i)}
+
+  }
+
+  if(progress == TRUE){close(pb)}
 
   return(final.llr)
 

@@ -1,12 +1,19 @@
 test_that("performance evaluation works", {
 
   res = readRDS(testthat::test_path("data", "res.rds"))
+  res <- dplyr::rename(res, K = k)
 
-  results = performance(res)
+  results = performance(res, progress = FALSE)
 
   only.training <- results$evaluation
 
   testthat::expect_equal(only.training[1, 9], 0.84, tolerance = 0.01)
+
+  results2 <- performance(res, by = "author", progress = FALSE)
+
+  only.training2 <- results2$evaluation
+
+  testthat::expect_equal(only.training2[1, 9], 0.84, tolerance = 0.01)
 
   train.test = split.data.frame(res, ~target)
   same = train.test$`TRUE`

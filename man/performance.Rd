@@ -4,12 +4,16 @@
 \alias{performance}
 \title{Performance evaluation}
 \usage{
-performance(training, test = NULL)
+performance(training, test = NULL, by = "case", progress = TRUE)
 }
 \arguments{
 \item{training}{The data frame with the results to evaluate, typically the output of an authorship analysis function, such as \code{\link[=impostors]{impostors()}}. If only training is present then the function will perform a leave-one-out cross-validation.}
 
 \item{test}{Optional data frame of results. If present then a calibration model is extracted from training and its performance is evaluated on this data set.}
+
+\item{by}{Either "case" or "author". If the performance is evaluated leave-one-out, then "case" would go through the table row by row while, if "author" is selected, then the performance is calculated after taking out each author (identified as a value of the K column).}
+
+\item{progress}{Logical. If TRUE (default) then a progress bar is diplayed.}
 }
 \value{
 The function returns a list containing a data frame with performance statistics, including an object that can be used to make a tippet plot using the \code{tippet.plot()} function of the \code{ROC} package (https://github.com/davidavdav/ROC).

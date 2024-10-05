@@ -16,7 +16,7 @@
     Code
       tokenize_sents(toy.pos)
     Message
-      successfully initialized (spaCy Version: 3.7.5, language model: en_core_web_sm)
+      successfully initialized (spaCy Version: 3.7.6, language model: en_core_web_sm)
     Output
       Tokens consisting of 1 document.
       text1 :
