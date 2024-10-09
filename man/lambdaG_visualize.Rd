@@ -13,6 +13,7 @@ lambdaG_visualize(
   output = "html",
   print = "",
   scale = "absolute",
+  negative = FALSE,
   cores = NULL
 )
 }
@@ -29,9 +30,11 @@ lambdaG_visualize(
 
 \item{output}{A string detailing the file type of the colour-coded text output. Either "html" (default) or "latex".}
 
-\item{print}{A string indicating the path to save the colour-coded text file. If left empty (default), then nothing is printed.}
+\item{print}{A string indicating the path and filename to save the colour-coded text file. If left empty (default), then nothing is printed.}
 
 \item{scale}{A string indicating what scale to use to colour-code the text file. If "absolute" (default) then the raw \eqn{\lambda_G} is used; if "relative", then the z-score of \eqn{\lambda_G} over the Q data is used instead, thus showing relative importance.}
+
+\item{negative}{Logical. If TRUE then negative values of \eqn{\lambda_G} are color-coded in blue, otherwise (default) only the positive values of \eqn{\lambda_G} are displayed in red. This only applies to HTML output.}
 
 \item{cores}{The number of cores to use for parallel processing (the default is one).}
 }

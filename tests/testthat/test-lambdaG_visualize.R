@@ -8,5 +8,6 @@ test_that("lambdaG visualize works", {
   lambdaG_visualize(q.data, k.data, ref.data, r = 2, print = "") |> expect_snapshot()
   lambdaG_visualize(q.data, k.data, ref.data, r = 2, print = "", scale = "relative") |> expect_snapshot()
   lambdaG_visualize(q.data, k.data, ref.data, r = 2, print = tempfile()) |> expect_no_error()
+  lambdaG_visualize(q.data, k.data, ref.data, r = 2, print = tempfile(), negative = TRUE) |> expect_no_error()
 
 })

@@ -8,8 +8,9 @@
 #' @param N The order of the model. Default is 10.
 #' @param r The number of iterations. Default is 30.
 #' @param output A string detailing the file type of the colour-coded text output. Either "html" (default) or "latex".
-#' @param print A string indicating the path to save the colour-coded text file. If left empty (default), then nothing is printed.
+#' @param print A string indicating the path and filename to save the colour-coded text file. If left empty (default), then nothing is printed.
 #' @param scale A string indicating what scale to use to colour-code the text file. If "absolute" (default) then the raw \eqn{\lambda_G} is used; if "relative", then the z-score of \eqn{\lambda_G} over the Q data is used instead, thus showing relative importance.
+#' @param negative Logical. If TRUE then negative values of \eqn{\lambda_G} are color-coded in blue, otherwise (default) only the positive values of \eqn{\lambda_G} are displayed in red. This only applies to HTML output.
 #' @param cores The number of cores to use for parallel processing (the default is one).
 #'
 #' @references Nini, A., Halvani, O., Graner, L., Gherardi, V., Ishihara, S. Authorship Verification based on the Likelihood Ratio of Grammar Models. https://arxiv.org/abs/2403.08462v1
@@ -23,7 +24,7 @@
 #' outputs$table
 #'
 #' @export
-lambdaG_visualize <- function(q.data, k.data, ref.data, N = 10, r = 30, output = "html", print = "", scale = "absolute", cores = NULL){
+lambdaG_visualize <- function(q.data, k.data, ref.data, N = 10, r = 30, output = "html", print = "", scale = "absolute", negative = FALSE, cores = NULL){
 
   if(length(unique(quanteda::docvars(k.data, "author"))) != 1){
 
@@ -62,12 +63,10 @@ lambdaG_visualize <- function(q.data, k.data, ref.data, N = 10, r = 30, output =
 
   if(output == "html"){
 
-    filename <- paste0(quanteda::docnames(q.data), ".html")
-    cc.text <- color_coding_html(llr.table, scale)
+    cc.text <- color_coding_html(llr.table, scale, negative = negative)
 
   }else if(output == "latex"){
 
-    filename <- paste0(quanteda::docnames(q.data), ".txt")
     cc.text <- color_coding_latex(llr.table, scale)
 
   }
@@ -151,7 +150,7 @@ loglikelihood_table_avgllrs <- function(q.data, k.data, ref.data, r, N, cores){
   return(final.table)
 
 }
-color_coding_html <- function(llr.table, scale){
+color_coding_html <- function(llr.table, scale, negative){
 
   if(scale == "absolute"){
 
@@ -162,6 +161,17 @@ color_coding_html <- function(llr.table, scale){
                                                         lambdaG > 4 ~ "#943126",
                                                         .default = "")) -> table2
 
+    if(negative == TRUE){
+
+      table2 |> dplyr::mutate(color = dplyr::case_when(lambdaG < 0 & lambdaG > -1 ~ "#d1e5f0",
+                                                        lambdaG <= -1 & lambdaG > -2 ~ "#92c5de",
+                                                        lambdaG <= -2 & lambdaG > -3 ~ "#4393c3",
+                                                        lambdaG <= -3 & lambdaG >= -4 ~ "#2166ac",
+                                                        lambdaG < -4 ~ "#053061",
+                                                        .default = color)) -> table2
+
+    }
+
   }
 
   if(scale == "relative"){
@@ -170,6 +180,16 @@ color_coding_html <- function(llr.table, scale){
                                                         zlambdaG > 1 & zlambdaG <= 2 ~ "#F1948A",
                                                         zlambdaG > 2 ~ "#E74C3C",
                                                         .default = "")) -> table2
+
+    if(negative == TRUE){
+
+      table2 |> dplyr::mutate(color = dplyr::case_when(zlambdaG < -0.5 & zlambdaG >= -1 ~ "#d1e5f0",
+                                                       zlambdaG < -1 & zlambdaG >= -2 ~ "#67a9cf",
+                                                       zlambdaG < -2 ~ "#2166ac",
+                                                       .default = color)) -> table2
+
+    }
+
   }
 
   string = c()
