@@ -1,5 +1,6 @@
 # idiolect (development version)
 
+* concordance() now can take sentences as input and will also show sentence boundaries
 * changed progress bar in performance() to optional
 * added the option to leave-one-out by author in performance()
 * bug fixes
