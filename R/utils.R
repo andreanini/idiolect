@@ -5,11 +5,24 @@ list_to_df = function(list){
   return(final.df)
 
 }
-detokenize <- function(tok){
+detokenize <- function(tok, sentence.boundaries = FALSE){
 
   meta <- quanteda::docvars(tok)
 
-  sapply(tok, function(x) { paste(x, collapse = " ") }) |> quanteda::corpus() -> c
+  if(sentence.boundaries == TRUE){
+
+    sapply(tok, function(x) {
+
+      paste("_BOS_ ", x, " _EOS_", collapse = " ")
+
+      }) |>
+      quanteda::corpus() -> c
+
+  }else{
+
+    sapply(tok, function(x) { paste(x, collapse = " ") }) |> quanteda::corpus() -> c
+
+  }
 
   quanteda::docvars(c) <- meta
 
