@@ -52,7 +52,7 @@ ngram_tracing <- function(q.data, k.data, tokens = "character", remove_punct = F
   tests <- expand.grid(q.list, k.list, stringsAsFactors = FALSE) |>
     dplyr::rename(Q = Var1, K = Var2)
 
-  results <- pbapply::pbapply(tests, 1, similarity, df, coefficient, features, cl = cores)
+  results <- pbapply::pbapply(tests, 1, similarity, df, k.data, coefficient, features, cl = cores)
 
   results.table = list_to_df(results)
 
@@ -108,14 +108,15 @@ overlap <- function(m1, m2, rest.m){
 
 }
 
-similarity <- function(x, df, coefficient, features){
+similarity <- function(x, df, k.data, coefficient, features){
 
   q.name = as.character(x["Q"])
   q = quanteda::dfm_subset(df, quanteda::docnames(df) == q.name)
 
   k.name = as.character(x["K"])
   k = quanteda::dfm_subset(df, author == k.name &
-                             quanteda::docnames(df) != q.name) |>
+                             quanteda::docnames(df) != q.name &
+                             quanteda::docnames(df) %in% docnames(k.data)) |>
     quanteda::dfm_group(author) |>
     quanteda::dfm_weight(scheme = "boolean", force = TRUE)
 
