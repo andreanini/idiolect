@@ -1,5 +1,6 @@
 # idiolect (development version)
 
+* add the possibility to visualize the text heatmap either with sentences ordered by lambdaG values (default) or by the order of the sentences in the text
 * add the possibility to visualize negative lambdaG values in an html file
 * concordance() now can take sentences as input and will also show sentence boundaries
 * changed progress bar in performance() to optional

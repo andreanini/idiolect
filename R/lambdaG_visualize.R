@@ -11,6 +11,7 @@
 #' @param print A string indicating the path and filename to save the colour-coded text file. If left empty (default), then nothing is printed.
 #' @param scale A string indicating what scale to use to colour-code the text file. If "absolute" (default) then the raw \eqn{\lambda_G} is used; if "relative", then the z-score of \eqn{\lambda_G} over the Q data is used instead, thus showing relative importance.
 #' @param negative Logical. If TRUE then negative values of \eqn{\lambda_G} are color-coded in blue, otherwise (default) only the positive values of \eqn{\lambda_G} are displayed in red. This only applies to HTML output.
+#' @param order.by A string indicating the order of the output. If "importance" (default) then the output is ordered by sentence \eqn{\lambda_G} in descending order, otherwise the text is displayed and ordered as it appears.
 #' @param cores The number of cores to use for parallel processing (the default is one).
 #'
 #' @references Nini, A., Halvani, O., Graner, L., Gherardi, V., Ishihara, S. Authorship Verification based on the Likelihood Ratio of Grammar Models. https://arxiv.org/abs/2403.08462v1
@@ -24,7 +25,7 @@
 #' outputs$table
 #'
 #' @export
-lambdaG_visualize <- function(q.data, k.data, ref.data, N = 10, r = 30, output = "html", print = "", scale = "absolute", negative = FALSE, cores = NULL){
+lambdaG_visualize <- function(q.data, k.data, ref.data, N = 10, r = 30, output = "html", print = "", scale = "absolute", negative = FALSE, order.by = "importance", cores = NULL){
 
   if(length(unique(quanteda::docvars(k.data, "author"))) != 1){
 
@@ -39,7 +40,7 @@ lambdaG_visualize <- function(q.data, k.data, ref.data, N = 10, r = 30, output =
   }
 
 
-  llr.table <- loglikelihood_table_avgllrs(q.data, k.data, ref.data, r, N, cores = cores)
+  llr.table <- loglikelihood_table_avgllrs(q.data, k.data, ref.data, r, N, order.by, cores = cores)
 
   # calculation of relative contribution in percentage
   dplyr::filter(llr.table, lambdaG > 0) |> dplyr::pull(lambdaG) |> sum() -> pos.t.total
@@ -82,7 +83,6 @@ lambdaG_visualize <- function(q.data, k.data, ref.data, N = 10, r = 30, output =
   return(output.list)
 
 }
-
 extract <- function(s, N){
 
   kgrams::kgram_freqs(s, N = N) |>
@@ -129,7 +129,7 @@ loglikelihood_one_rep <- function(q.sents, k.sents, ref.sents, N, k.g, k.sent.pr
   return(table)
 
 }
-loglikelihood_table_avgllrs <- function(q.data, k.data, ref.data, r, N, cores){
+loglikelihood_table_avgllrs <- function(q.data, k.data, ref.data, r, N, order.by, cores){
 
   k.sents = as.character(k.data)
   ref.sents = as.character(ref.data)
@@ -144,8 +144,13 @@ loglikelihood_table_avgllrs <- function(q.data, k.data, ref.data, r, N, cores){
     dplyr::group_by(sentence_id, token_id, t) |>
     dplyr::summarise(lambdaG = mean(llr), sentence_lambdaG = round(mean(sentence_llr), 3)) |>
     dplyr::ungroup() |>
-    dplyr::mutate(zlambdaG = as.numeric(round(scale(lambdaG), 3))) |>
-    dplyr::arrange(desc(sentence_lambdaG), sentence_id, token_id) -> final.table
+    dplyr::mutate(zlambdaG = as.numeric(round(scale(lambdaG), 3))) -> final.table
+
+  if(order.by == "importance"){
+
+    final.table <- dplyr::arrange(final.table, desc(sentence_lambdaG), sentence_id, token_id)
+
+  }
 
   return(final.table)
 
