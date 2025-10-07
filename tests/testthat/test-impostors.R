@@ -32,10 +32,10 @@ test_that("RBI works", {
     suppressWarnings()
 
 
-  testthat::expect(results.corpus[1, 4], 0.540)
-  testthat::expect(results.dfm[1, 4], 0.539)
-  testthat::expect(results.corpus[2, 4], 0.207)
-  testthat::expect(results.dfm[2, 4], 0.240)
+  testthat::expect_equal(results.corpus[1, 4], 0.540)
+  testthat::expect_equal(results.dfm[1, 4], 0.539)
+  testthat::expect_equal(results.corpus[2, 4], 0.207)
+  testthat::expect_equal(results.dfm[2, 4], 0.240)
 
   # impostors as rest of K version
   q.data <- unknown[c(1, 2)]
@@ -45,8 +45,8 @@ test_that("RBI works", {
   results.corpus <- impostors(q.data, k.data, cand.imps, algorithm = "RBI", k = 100) |>
     suppressWarnings()
 
-  testthat::expect(results.corpus[4, 4], 0.975)
-  testthat::expect(results.corpus[2, 4], 0.172)
+  testthat::expect_equal(results.corpus[4, 4], 0.975)
+  testthat::expect_equal(results.corpus[2, 4], 0.172)
 
 })
 test_that("KGI works", {
@@ -81,10 +81,10 @@ test_that("KGI works", {
     suppressWarnings()
 
 
-  testthat::expect(results.corpus[1, 4], 0.75)
-  testthat::expect(results.dfm[1, 4], 0.73)
+  testthat::expect_equal(results.corpus[1, 4], 0.75)
+  testthat::expect_equal(results.dfm[1, 4], 0.73)
   testthat::expect_lt(results.corpus[2, 4], 0.01)
-  testthat::expect(results.dfm[2, 4], 0.01)
+  testthat::expect_equal(results.dfm[2, 4], 0.01)
 
 })
 test_that("IM works", {
@@ -120,10 +120,9 @@ test_that("IM works", {
     suppressWarnings()
 
 
-  testthat::expect(results.corpus[4, 4], 0.57)
-  testthat::expect(results.dfm[4, 4], 0.585)
+  testthat::expect_equal(results.corpus[4, 4], 0.57)
+  testthat::expect_equal(results.dfm[4, 4], 0.585)
   testthat::expect_lt(results.corpus[2, 4], 0.01)
   testthat::expect_lt(results.dfm[2, 4], 0.001)
 
 })
-
