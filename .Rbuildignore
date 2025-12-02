@@ -10,3 +10,4 @@
 ^\.github$
 ^CRAN-SUBMISSION$
 ^JOSS-paper$
+^revdep$

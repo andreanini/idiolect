@@ -21,7 +21,7 @@
     Code
       contentmask(enron.small, algorithm = "frames")
     Message
-      successfully initialized (spaCy Version: 3.7.6, language model: en_core_web_sm)
+      successfully initialized (spaCy Version: 3.8.7, language model: en_core_web_sm)
     Output
       Corpus consisting of 3 documents and 2 docvars.
       allen-p_16.txt :
@@ -39,7 +39,7 @@
     Code
       contentmask(enron.small, algorithm = "textdistortion")
     Message
-      successfully initialized (spaCy Version: 3.7.6, language model: en_core_web_sm)
+      successfully initialized (spaCy Version: 3.8.7, language model: en_core_web_sm)
     Output
       Corpus consisting of 3 documents and 2 docvars.
       allen-p_16.txt :
@@ -57,7 +57,7 @@
     Code
       contentmask(toy.corpus, algorithm = "POSnoise")
     Message
-      successfully initialized (spaCy Version: 3.7.6, language model: en_core_web_sm)
+      successfully initialized (spaCy Version: 3.8.7, language model: en_core_web_sm)
     Output
       Corpus consisting of 1 document.
       text1 :
@@ -69,11 +69,11 @@
     Code
       contentmask(toy.corpus, algorithm = "POSnoise", replace_non_ascii = F)
     Message
-      successfully initialized (spaCy Version: 3.7.6, language model: en_core_web_sm)
+      successfully initialized (spaCy Version: 3.8.7, language model: en_core_web_sm)
     Output
       Corpus consisting of 2 documents.
       text1 :
-      "the N was on the N . he did n't move   N ;   N i.e. a N B 👍"
+      "the N was on the N . he did n't move   N ;   N i.e. a N P 👍"
       
       text2 :
       "D 👍"
@@ -84,7 +84,7 @@
     Code
       contentmask(toy.corpus, algorithm = "textdistortion")
     Message
-      successfully initialized (spaCy Version: 3.7.6, language model: en_core_web_sm)
+      successfully initialized (spaCy Version: 3.8.7, language model: en_core_web_sm)
     Output
       Corpus consisting of 1 document.
       text1 :
