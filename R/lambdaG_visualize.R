@@ -43,24 +43,39 @@ lambdaG_visualize <- function(q.data, k.data, ref.data, N = 10, r = 30, output =
   llr.table <- loglikelihood_table_avgllrs(q.data, k.data, ref.data, r, N, order.by, cores = cores)
 
   # calculation of relative contribution in percentage
-  dplyr::filter(llr.table, lambdaG > 0) |> dplyr::pull(lambdaG) |> sum() -> pos.t.total
-  dplyr::filter(llr.table, lambdaG < 0) |> dplyr::pull(lambdaG) |> sum() -> neg.t.total
-  dplyr::slice_head(llr.table, n = 1, by = sentence_id) |> dplyr::filter(sentence_lambdaG > 0) |>
-    dplyr::pull(sentence_lambdaG) |> sum() -> pos.s.total
-  dplyr::slice_head(llr.table, n = 1, by = sentence_id) |> dplyr::filter(sentence_lambdaG < 0) |>
-    dplyr::pull(sentence_lambdaG) |> sum() -> neg.s.total
+  pos.t.total <- dplyr::filter(llr.table, lambdaG > 0) |>
+    dplyr::pull(lambdaG) |>
+    sum()
 
-  llr.table |>
-    dplyr::mutate(token_contribution = dplyr::case_when(lambdaG > 0 ~ round(lambdaG/pos.t.total*100, 2),
-                                                        lambdaG < 0 ~ round(-lambdaG/neg.t.total*100, 2),
-                                                        lambdaG == 0 ~ 0)) |>
-    dplyr::mutate(sent_contribution = dplyr::case_when(sentence_lambdaG > 0 ~
-                                                         round(sentence_lambdaG/pos.s.total*100, 2),
-                                                        sentence_lambdaG < 0 ~
-                                                         round(-sentence_lambdaG/neg.s.total*100, 2),
-                                                        sentence_lambdaG == 0 ~ 0)) ->
-    llr.table
+  neg.t.total <- dplyr::filter(llr.table, lambdaG < 0) |>
+    dplyr::pull(lambdaG) |>
+    sum()
 
+  pos.s.total <- dplyr::slice_head(llr.table, n = 1, by = sentence_id) |>
+    dplyr::filter(sentence_lambdaG > 0) |>
+    dplyr::pull(sentence_lambdaG) |>
+    sum()
+
+  neg.s.total <- dplyr::slice_head(llr.table, n = 1, by = sentence_id) |>
+    dplyr::filter(sentence_lambdaG < 0) |>
+    dplyr::pull(sentence_lambdaG) |>
+    sum()
+
+  llr.table <- llr.table |>
+    dplyr::mutate(
+      token_contribution = dplyr::case_when(
+        lambdaG > 0 ~ round(lambdaG/pos.t.total*100, 2),
+        lambdaG < 0 ~ round(-lambdaG/neg.t.total*100, 2),
+        lambdaG == 0 ~ 0
+      )
+    ) |>
+    dplyr::mutate(
+      sent_contribution = dplyr::case_when(
+        sentence_lambdaG > 0 ~ round(sentence_lambdaG/pos.s.total*100, 2),
+        sentence_lambdaG < 0 ~ round(-sentence_lambdaG/neg.s.total*100, 2),
+        sentence_lambdaG == 0 ~ 0
+      )
+    )
 
   if(output == "html"){
 
@@ -138,13 +153,17 @@ loglikelihood_table_avgllrs <- function(q.data, k.data, ref.data, r, N, order.by
   k.g = extract(k.sents, N)
   k.sent.probs = kgrams::probability(q.sents, k.g)
 
-  pbapply::pbreplicate(r, loglikelihood_one_rep(q.sents, k.sents, ref.sents, N, k.g, k.sent.probs),
-                       simplify = FALSE, cl = cores) |>
+  final.table <- r |>
+    pbapply::pbreplicate(
+      loglikelihood_one_rep(q.sents, k.sents, ref.sents, N, k.g, k.sent.probs),
+      simplify = FALSE,
+      cl = cores
+    ) |>
     dplyr::bind_rows() |>
     dplyr::group_by(sentence_id, token_id, t) |>
     dplyr::summarise(lambdaG = mean(llr), sentence_lambdaG = round(mean(sentence_llr), 3)) |>
     dplyr::ungroup() |>
-    dplyr::mutate(zlambdaG = as.numeric(round(scale(lambdaG), 3))) -> final.table
+    dplyr::mutate(zlambdaG = as.numeric(round(scale(lambdaG), 3)))
 
   if(order.by == "importance"){
 
@@ -159,21 +178,33 @@ color_coding_html <- function(llr.table, scale, negative){
 
   if(scale == "absolute"){
 
-    llr.table |> dplyr::mutate(color = dplyr::case_when(lambdaG > 0 & lambdaG < 1 ~ "#fdedec",
-                                                        lambdaG >= 1 & lambdaG < 2 ~ "#f5b7b1",
-                                                        lambdaG >= 2 & lambdaG < 3 ~ "#ec7063",
-                                                        lambdaG >= 3 & lambdaG <= 4 ~ "#cb4335",
-                                                        lambdaG > 4 ~ "#943126",
-                                                        .default = "")) -> table2
+    table2 <- llr.table |>
+      dplyr::mutate(
+        color = dplyr::case_when(
+          lambdaG > 0 & lambdaG < 0.5 ~ "#FFFFFF",
+          lambdaG >= 0.5 & lambdaG < 1 ~ "#fdedec",
+          lambdaG >= 1 & lambdaG < 2 ~ "#f5b7b1",
+          lambdaG >= 2 & lambdaG < 3 ~ "#ec7063",
+          lambdaG >= 3 & lambdaG <= 4 ~ "#cb4335",
+          lambdaG > 4 ~ "#943126",
+          .default = ""
+        )
+      )
 
     if(negative == TRUE){
 
-      table2 |> dplyr::mutate(color = dplyr::case_when(lambdaG < 0 & lambdaG > -1 ~ "#d1e5f0",
-                                                        lambdaG <= -1 & lambdaG > -2 ~ "#92c5de",
-                                                        lambdaG <= -2 & lambdaG > -3 ~ "#4393c3",
-                                                        lambdaG <= -3 & lambdaG >= -4 ~ "#2166ac",
-                                                        lambdaG < -4 ~ "#053061",
-                                                        .default = color)) -> table2
+      table2 <- table2 |>
+        dplyr::mutate(
+          color = dplyr::case_when(
+            lambdaG < 0 & lambdaG > -0.5 ~ "#FFFFFF",
+            lambdaG <= -0.5 & lambdaG > -1 ~ "#d1e5f0",
+            lambdaG <= -1 & lambdaG > -2 ~ "#92c5de",
+            lambdaG <= -2 & lambdaG > -3 ~ "#4393c3",
+            lambdaG <= -3 & lambdaG >= -4 ~ "#2166ac",
+            lambdaG < -4 ~ "#053061",
+            .default = color
+          )
+        )
 
     }
 
@@ -181,17 +212,27 @@ color_coding_html <- function(llr.table, scale, negative){
 
   if(scale == "relative"){
 
-    llr.table |> dplyr::mutate(color = dplyr::case_when(zlambdaG > 0.5 & zlambdaG <= 1 ~ "#FADBD8",
-                                                        zlambdaG > 1 & zlambdaG <= 2 ~ "#F1948A",
-                                                        zlambdaG > 2 ~ "#E74C3C",
-                                                        .default = "")) -> table2
+    table2 <- llr.table |>
+      dplyr::mutate(
+        color = dplyr::case_when(
+          zlambdaG > 0.5 & zlambdaG <= 1 ~ "#FADBD8",
+          zlambdaG > 1 & zlambdaG <= 2 ~ "#F1948A",
+          zlambdaG > 2 ~ "#E74C3C",
+          .default = ""
+        )
+      )
 
     if(negative == TRUE){
 
-      table2 |> dplyr::mutate(color = dplyr::case_when(zlambdaG < -0.5 & zlambdaG >= -1 ~ "#d1e5f0",
-                                                       zlambdaG < -1 & zlambdaG >= -2 ~ "#67a9cf",
-                                                       zlambdaG < -2 ~ "#2166ac",
-                                                       .default = color)) -> table2
+      table2 <- table2 |>
+        dplyr::mutate(
+          color = dplyr::case_when(
+            zlambdaG < -0.5 & zlambdaG >= -1 ~ "#d1e5f0",
+            zlambdaG < -1 & zlambdaG >= -2 ~ "#67a9cf",
+            zlambdaG < -2 ~ "#2166ac",
+            .default = color
+          )
+        )
 
     }
 
