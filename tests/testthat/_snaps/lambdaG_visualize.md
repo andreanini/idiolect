@@ -23,7 +23,7 @@
       # i 2 more variables: token_contribution <dbl>, sent_contribution <dbl>
       
       $colourcoded_text
-      [1] " <span style=\"background-color: #fdedec;\">J</span> <span style=\"background-color: #fdedec;\">N</span> , but <span style=\"background-color: #fdedec;\">that</span> <span style=\"background-color: #f5b7b1;\">'s</span> just <span style=\"background-color: #fdedec;\">the</span> <span style=\"background-color: #fdedec;\">N</span> it works <span style=\"background-color: #fdedec;\">.</span> <br>"
+      [1] " <span style=\"background-color: #fdedec;\">J</span> <span style=\"background-color: #FFFFFF;\">N</span> , but <span style=\"background-color: #FFFFFF;\">that</span> <span style=\"background-color: #f5b7b1;\">'s</span> just <span style=\"background-color: #FFFFFF;\">the</span> <span style=\"background-color: #FFFFFF;\">N</span> it works <span style=\"background-color: #FFFFFF;\">.</span> <br>"
       
 
 ---
