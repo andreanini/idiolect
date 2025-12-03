@@ -1,5 +1,7 @@
 # Changelog
 
+## idiolect 1.1.1
+
 ## idiolect 1.1.0
 
 - minor bug fixes
