@@ -1,6 +1,6 @@
-# idiolect 1.1.1
+# idiolect (development version)
 
-# idiolect 1.1.0
+# idiolect 1.1.1
 
 * minor bug fixes
 
