@@ -13,17 +13,17 @@
 #' @return The function returns a data frame containing the concordances for the search pattern.
 #'
 #' @examples
-#' concordance(enron.sample[1], enron.sample[2], enron.sample[3:49], "wants to", token.type = "word")
+#' concordance(enron.sample[1], enron.sample[2], enron.sample[3], "wants to", token.type = "word")
 #'
 #' #using wildcards
-#' concordance(enron.sample[1], enron.sample[2], enron.sample[3:49], "want * to", token.type = "word")
+#' concordance(enron.sample[1], enron.sample[2], enron.sample[3], "wants * be", token.type = "word")
 #'
 #' #searching character sequences with wildcards
-#' concordance(enron.sample[1], enron.sample[2], enron.sample[3:49], "help*", token.type = "character")
+#' concordance(enron.sample[1], enron.sample[2], enron.sample[3], "help*", token.type = "character")
 #'
 #' #using sentences
 #' enron.sents <- tokens(enron.sample, "sentence")
-#' concordance(enron.sents[1], enron.sents[2], enron.sents[3:49], ". _EOS_", token.type = "word")
+#' concordance(enron.sents[1], enron.sents[2], enron.sents[3], ". _EOS_", token.type = "word")
 #'
 #' @export
 concordance <- function(q.data, k.data, reference.data, search, token.type = "word", window = 5, case_insensitive = TRUE){
