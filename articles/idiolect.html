@@ -6,16 +6,15 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <title>idiolect • idiolect</title>
-<!-- favicons --><link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
-<link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
-<link rel="apple-touch-icon" type="image/png" sizes="180x180" href="../apple-touch-icon.png">
-<link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../apple-touch-icon-120x120.png">
-<link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png">
-<link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png">
+<!-- favicons --><link rel="icon" type="image/png" sizes="96x96" href="../favicon-96x96.png">
+<link rel="icon" type="”image/svg+xml”" href="../favicon.svg">
+<link rel="apple-touch-icon" sizes="180x180" href="../apple-touch-icon.png">
+<link rel="icon" sizes="any" href="../favicon.ico">
+<link rel="manifest" href="../site.webmanifest">
 <script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
-<script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.4.2/css/all.min.css" rel="stylesheet">
-<link href="../deps/font-awesome-6.4.2/css/v4-shims.min.css" rel="stylesheet">
+<script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
+<link href="../deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
 <script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="idiolect">
 </head>
 <body>
@@ -26,7 +25,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">idiolect</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">1.0.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">1.1.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -59,7 +58,7 @@
       <img src="../logo.png" class="logo" alt=""><h1>idiolect</h1>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/andreanini/idiolect/blob/v1.0.1/vignettes/idiolect.Rmd" class="external-link"><code>vignettes/idiolect.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/andreanini/idiolect/blob/main/vignettes/idiolect.Rmd" class="external-link"><code>vignettes/idiolect.Rmd</code></a></small>
       <div class="d-none name"><code>idiolect.Rmd</code></div>
     </div>
 
@@ -68,9 +67,9 @@
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/andreanini/idiolect" class="external-link">idiolect</a></span><span class="op">)</span></span>
 <span><span class="co">#&gt; Loading required package: quanteda</span></span>
-<span><span class="co">#&gt; Package version: 4.0.2</span></span>
-<span><span class="co">#&gt; Unicode version: 14.0</span></span>
-<span><span class="co">#&gt; ICU version: 70.1</span></span>
+<span><span class="co">#&gt; Package version: 4.3.1</span></span>
+<span><span class="co">#&gt; Unicode version: 15.1</span></span>
+<span><span class="co">#&gt; ICU version: 74.2</span></span>
 <span><span class="co">#&gt; Parallel computing: disabled</span></span>
 <span><span class="co">#&gt; See https://quanteda.io for tutorials and examples.</span></span></code></pre></div>
 <p><code>idiolect</code> is a package that depends on
@@ -193,7 +192,7 @@ content masking. This step consists in masking or removing words or
 other tokens in the text that are likely to create noise for an
 authorship analysis. Hiding content not only avoids incorrectly
 attributing a text based on the correlation between topics and authors
-<span class="citation">(Bischoff et al., n.d.)</span> but also tends to
+<span class="citation">(Bischoff et al. 2020)</span> but also tends to
 improve the performance of authorship analysis methods in cross-topic
 and cross-genre situations <span class="citation">(Stamatatos
 2017)</span>.</p>
@@ -499,7 +498,7 @@ for each of the two distributions, TRUE and FALSE. This can be done
 using the <code><a href="../reference/density_plot.html">density_plot()</a></code> function</p>
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/density_plot.html">density_plot</a></span><span class="op">(</span><span class="va">res</span><span class="op">)</span></span></code></pre></div>
-<p><img src="idiolect_files/figure-html/unnamed-chunk-15-1.png" width="660"></p>
+<p><img src="idiolect_files/figure-html/unnamed-chunk-15-1.png" class="r-plt" width="660"></p>
 <p>This plot shows the values of the score on the horizontal axis and
 the density for TRUE (red) vs. FALSE (blue) on the vertical axis.</p>
 <p>These findings are evidence that the method is validated for this
@@ -710,7 +709,7 @@ distributions at the horizontal axis corresponding to the score of
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>Q</mi><annotation encoding="application/x-tex">Q</annotation></semantics></math>.</p>
 <div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/density_plot.html">density_plot</a></span><span class="op">(</span><span class="va">res</span>, q <span class="op">=</span> <span class="va">q.res</span><span class="op">$</span><span class="va">score</span><span class="op">)</span></span></code></pre></div>
-<p><img src="idiolect_files/figure-html/unnamed-chunk-24-1.png" width="660"></p>
+<p><img src="idiolect_files/figure-html/unnamed-chunk-24-1.png" class="r-plt" width="660"></p>
 <p>To perform this calibration the <code><a href="../reference/calibrate_LLR.html">calibrate_LLR()</a></code> function
 is used again by using the validation results as calibration data</p>
 <div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
@@ -794,8 +793,8 @@ helpful comments on the first draft of this vignette.</p>
 <div id="ref-bischoff" class="csl-entry">
 Bischoff, Sebastian, Niklas Deckers, Marcel Schliebs, Ben Thies,
 Matthias Hagen, Efstathios Stamatatos, Benno Stein, and Martin Potthast.
-n.d. <span>“The Importance of Suppressing Domain Style in Authorship
-Analysis.”</span>
+2020. <span>“The Importance of Suppressing Domain Style in Authorship
+Analysis,”</span> May. <a href="https://arxiv.org/abs/2005.14714" class="external-link">https://arxiv.org/abs/2005.14714</a>.
 </div>
 <div id="ref-halvani2021" class="csl-entry">
 Halvani, Oren, and Lukas Graner. 2021. <span>“16th International
@@ -884,7 +883,7 @@ Franke, 3–17. Forensic Science in Focus. Hoboken, NJ: Wiley.
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.0.</p>
 </div>
 
     </footer>

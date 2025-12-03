@@ -1,0 +1,131 @@
+# idiolect
+
+The `idiolect` R package is designed to provide a comprehensive suite of
+tools for performing comparative authorship analysis within a forensic
+context using the Likelihood Ratio Framework (e.g. Ishihara 2021; Nini
+2023). The package contains a set of authorship analysis functions that
+take a set of texts as input and output scores that can then be
+calibrated into likelihood ratios. The package is dependent on
+[`quanteda`](https://quanteda.io) (Benoit et al. 2018) for all Natural
+Language Processing functions.
+
+## Installation
+
+You can install `idiolect` from CRAN:
+
+``` r
+install.packages("idiolect")
+```
+
+## Workflow
+
+The main functions contained in the package reflect the typical workflow
+for authorship analysis for forensic problems:
+
+1.  Input data using
+    [`create_corpus()`](https://andreanini.github.io/idiolect/reference/create_corpus.md);
+
+2.  Optionally mask the content/topic of the texts using
+    [`contentmask()`](https://andreanini.github.io/idiolect/reference/contentmask.md);
+
+3.  Launch an analysis
+    (e.g. [`delta()`](https://andreanini.github.io/idiolect/reference/delta.md),
+    [`ngram_tracing()`](https://andreanini.github.io/idiolect/reference/ngram_tracing.md),
+    [`impostors()`](https://andreanini.github.io/idiolect/reference/impostors.md));
+
+4.  Test the performance of the method on ground truth data using
+    [`performance()`](https://andreanini.github.io/idiolect/reference/performance.md);
+
+5.  Finally, apply the method to the questioned text and generate a
+    likelihood ratio with
+    [`calibrate_LLR()`](https://andreanini.github.io/idiolect/reference/calibrate_LLR.md).
+
+Check the website and the vignette for examples.
+
+## References
+
+Benoit, Kenneth, Kohei Watanabe, Haiyan Wang, Paul Nulty, Adam Obeng,
+Stefan Müller, and Akitaka Matsuo. 2018. “Quanteda: An r Package for the
+Quantitative Analysis of Textual Data.” *Journal of Open Source
+Software* 3 (30). <https://doi.org/10.21105/joss.00774>.
+
+Ishihara, Shunichi. 2021. “Score-Based Likelihood Ratios for Linguistic
+Text Evidence with a Bag-of-Words Model.” *Forensic Science
+International* 327: 110980.
+<https://doi.org/10.1016/j.forsciint.2021.110980>.
+
+Nini, Andrea. 2023. *A Theory of Linguistic Individuality for Authorship
+Analysis*. Elements in Forensic Linguistics. Cambridge, UK: Cambridge
+University Press.
+
+# Package index
+
+## Input and pre-processing
+
+Functions to input the data and prepare it for an analysis
+
+- [`create_corpus()`](https://andreanini.github.io/idiolect/reference/create_corpus.md)
+  : Create a corpus
+- [`chunk_texts()`](https://andreanini.github.io/idiolect/reference/chunk_texts.md)
+  : Chunk a corpus
+- [`contentmask()`](https://andreanini.github.io/idiolect/reference/contentmask.md)
+  : Content masking
+- [`tokenize_sents()`](https://andreanini.github.io/idiolect/reference/tokenize_sents.md)
+  : Tokenize to sentences
+
+## Authorship analysis functions
+
+Functions to run an authorship analysis
+
+- [`delta()`](https://andreanini.github.io/idiolect/reference/delta.md)
+  : Delta
+- [`impostors()`](https://andreanini.github.io/idiolect/reference/impostors.md)
+  : Impostors Method
+- [`lambdaG()`](https://andreanini.github.io/idiolect/reference/lambdaG.md)
+  : Apply the LambdaG algorithm
+- [`ngram_tracing()`](https://andreanini.github.io/idiolect/reference/ngram_tracing.md)
+  : N-gram tracing
+
+## Likelihood ratio
+
+Functions to calibrate, interpret, and evaluate likelihood ratios
+
+- [`calibrate_LLR()`](https://andreanini.github.io/idiolect/reference/calibrate_LLR.md)
+  : Calibrate scores into Log-Likelihood Ratios
+- [`density_plot()`](https://andreanini.github.io/idiolect/reference/density_plot.md)
+  : Plot density of TRUE/FALSE distributions
+- [`performance()`](https://andreanini.github.io/idiolect/reference/performance.md)
+  : Performance evaluation
+- [`posterior()`](https://andreanini.github.io/idiolect/reference/posterior.md)
+  : Posterior prosecution probabilities and odds
+
+## Post-hoc and intepretation
+
+Functions to interpret the output
+
+- [`lambdaG_visualize()`](https://andreanini.github.io/idiolect/reference/lambdaG_visualize.md)
+  : Visualize the output of the LambdaG algorithm
+- [`concordance()`](https://andreanini.github.io/idiolect/reference/concordance.md)
+  : Qualitative examination of evidence
+
+## Optional advanced functions for analysis
+
+Typically only needed in special cases
+
+- [`vectorize()`](https://andreanini.github.io/idiolect/reference/vectorize.md)
+  : Vectorize data
+- [`most_similar()`](https://andreanini.github.io/idiolect/reference/most_similar.md)
+  : Select the most similar texts to a specific text
+
+## Data
+
+Sample dataset for testing
+
+- [`enron.sample`](https://andreanini.github.io/idiolect/reference/enron.sample.md)
+  : Enron sample
+
+# Articles
+
+### All vignettes
+
+- [idiolect](https://andreanini.github.io/idiolect/articles/idiolect.md):
