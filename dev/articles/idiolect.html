@@ -164,23 +164,31 @@ two competing hypotheses.</li>
 <div class="section level2">
 <h2 id="preparation">Preparation<a class="anchor" aria-label="anchor" href="#preparation"></a>
 </h2>
-<p><code>idiolect</code> has a function to import texts into
-<code>R</code> called <code><a href="../reference/create_corpus.html">create_corpus()</a></code>. This function is
-simply calling <code>readtext</code> (therefore this package must be
-installed) while scanning the name of the files for the metadata of each
-text, specifically the name of the author and the name of the file. The
-syntax to follow to name the files is</p>
+<p>The input for the key functions of <code>idiolect</code> is a
+<code>quanteda</code> corpus object with two <code>docvars</code>:
+<em>author</em>, containing the unique names of the authors of each
+text, and <em>textname</em>, the name of each text. Users can create
+this corpus using <code>quanteda</code>. For guidance on how to create a
+corpus with <code>quanteda</code> see <a href="https://quanteda.io/articles/quickstart.html" class="external-link">this page</a>.</p>
+<p>However, for users who are less experienced with
+<code>quanteda</code>, <code>idiolect</code> has a convenience function
+called <code><a href="../reference/create_corpus.html">create_corpus()</a></code> to import texts in this format
+starting from a folder of plain texts. This function is simply calling
+<code>readtext</code> (therefore this package must be installed) while
+scanning the name of the files for the metadata of each text,
+specifically the name of the author and the name of the file. The syntax
+to follow to name the files is:</p>
 <div class="line-block">authorname_textname.txt
 (e.g. smith_text1.txt).</div>
 <p>Assuming that a folder of plain text files with names according to
 this syntax are ready on the user’s computer, then the following command
 (not executed here) loads the folder as a <code>quanteda</code> corpus
-object with the metadata as <code>docvars</code>.</p>
+object containing the required <code>docvars</code>.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">corpus</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/create_corpus.html">create_corpus</a></span><span class="op">(</span><span class="st">"path/to/folder"</span><span class="op">)</span></span></code></pre></div>
-<p>In this vignette, instead, the workflow is demonstrated using a small
-dataset of the Enron corpus that is included in this package (see
-<code><a href="../reference/enron.sample.html">?enron.sample</a></code>).</p>
+<p>In this vignette, instead, the rest of the workflow is demonstrated
+using a small dataset of the Enron corpus that is included in this
+package (see <code><a href="../reference/enron.sample.html">?enron.sample</a></code>).</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">corpus</span> <span class="op">&lt;-</span> <span class="va">enron.sample</span></span></code></pre></div>
 <p>This corpus is a <code>quanteda</code> corpus object that contains

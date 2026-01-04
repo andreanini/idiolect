@@ -71,26 +71,36 @@ steps:
 
 ## Preparation
 
-`idiolect` has a function to import texts into `R` called
-[`create_corpus()`](https://andreanini.github.io/idiolect/dev/reference/create_corpus.md).
+The input for the key functions of `idiolect` is a `quanteda` corpus
+object with two `docvars`: *author*, containing the unique names of the
+authors of each text, and *textname*, the name of each text. Users can
+create this corpus using `quanteda`. For guidance on how to create a
+corpus with `quanteda` see [this
+page](https://quanteda.io/articles/quickstart.html).
+
+However, for users who are less experienced with `quanteda`, `idiolect`
+has a convenience function called
+[`create_corpus()`](https://andreanini.github.io/idiolect/dev/reference/create_corpus.md)
+to import texts in this format starting from a folder of plain texts.
 This function is simply calling `readtext` (therefore this package must
 be installed) while scanning the name of the files for the metadata of
 each text, specifically the name of the author and the name of the file.
-The syntax to follow to name the files is
+The syntax to follow to name the files is:
 
 authorname_textname.txt(e.g. smith_text1.txt).
 
 Assuming that a folder of plain text files with names according to this
 syntax are ready on the user’s computer, then the following command (not
-executed here) loads the folder as a `quanteda` corpus object with the
-metadata as `docvars`.
+executed here) loads the folder as a `quanteda` corpus object containing
+the required `docvars`.
 
 ``` r
 corpus <- create_corpus("path/to/folder")
 ```
 
-In this vignette, instead, the workflow is demonstrated using a small
-dataset of the Enron corpus that is included in this package (see
+In this vignette, instead, the rest of the workflow is demonstrated
+using a small dataset of the Enron corpus that is included in this
+package (see
 [`?enron.sample`](https://andreanini.github.io/idiolect/dev/reference/enron.sample.md)).
 
 ``` r

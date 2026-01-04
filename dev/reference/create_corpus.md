@@ -19,7 +19,8 @@ create_corpus(path)
 
 ## Value
 
-A `quanteda` corpus object with the authors' names as a docvar.
+A `quanteda` corpus object with the authors' names and the text names as
+docvars.
 
 ## Examples
 
