@@ -4,6 +4,8 @@
 
 ## idiolect 1.1.1
 
+CRAN release: 2025-12-03
+
 - minor bug fixes
 
 - [`concordance()`](https://andreanini.github.io/idiolect/dev/reference/concordance.md)
