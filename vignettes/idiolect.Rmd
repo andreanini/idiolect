@@ -71,10 +71,17 @@ corpus
 
 The *POSnoise* algorithm essentially replaces all words that tend to contain meaning (nouns, verbs, adjectives, adverbs) with their Part of Speech tag (N, V, J, B) while all the other words or tokens are left unchanged. In addition to this operation, *POSnoise* contains a white list of content words that mostly tend to be functional in English, such as verbs like *do, have, make* or adverbs such as *consequently*, *therefore*.
 
-The following code should be used to run the `contentmask()` function. This will require installing and initiating a [*spacy*](https://spacy.io) parsing model for the language chosen. This process should happen automatically
+The following code should be used to run the `contentmask()` function. This will require installing and initiating a [*spacy*](https://spacy.io) parsing model for the language chosen. This process should happen automatically.
 
 ```{r eval=FALSE, include=TRUE}
 posnoised.corpus <- contentmask(corpus, model = "en_core_web_sm", algorithm = "POSnoise")
+```
+
+If the installation did not start automatically, then you can try this code:
+
+```{r eval=FALSE, include=TRUE}
+install.packages("spacyr")
+spacyr::install_spacy()
 ```
 
 ## Data labelling

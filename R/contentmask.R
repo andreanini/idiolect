@@ -8,7 +8,7 @@
 #'
 #' Finally, the last algorithm implemented is a version of `textdistortion`, as originally proposed by Stamatatos (2017). This version of the algorithm is essentially `POSnoise` but without POS tag information. The default implementation uses the same list of function words that are used for `POSnoise`. In addition to the function words provided, the function treats all punctuation marks and new line breaks as function words to keep. The basic tokenization is done using `spacyr` so the right model for the language being analysed should be selected.
 #'
-#' If you have never used `spacyr` before then please follow the instructions to set it up and install a model before using this function.
+#' If you have never used `spacyr` before then please follow the instructions to set it up and install a model before using this function here: [https://spacyr.quanteda.io](https://spacyr.quanteda.io).
 #'
 #' The removal of non-ASCII characters is done using the `textclean` package.
 #'
@@ -34,14 +34,20 @@
 #' contentmask(toy.corpus, algorithm = "textdistortion")
 #' }
 #' @export
-contentmask <- function(corpus, model = "en_core_web_sm", algorithm = "POSnoise", fw_list = "eng_halvani", replace_non_ascii = TRUE){
+contentmask <- function(
+    corpus,
+    model = "en_core_web_sm",
+    algorithm = "POSnoise",
+    fw_list = "eng_halvani",
+    replace_non_ascii = TRUE
+  ){
 
   if(replace_non_ascii == TRUE){
 
     meta <- quanteda::docvars(corpus)
     names <- quanteda::docnames(corpus)
 
-    corpus |>
+    c <- corpus |>
       sapply(function(x){
 
         x |>
@@ -50,7 +56,7 @@ contentmask <- function(corpus, model = "en_core_web_sm", algorithm = "POSnoise"
           stringr::str_replace_all("--NL--", "\n")
 
       }) |>
-      quanteda::corpus() -> c
+      quanteda::corpus()
 
     quanteda::docvars(c) <- meta
     quanteda::docnames(c) <- names
@@ -76,8 +82,13 @@ contentmask <- function(corpus, model = "en_core_web_sm", algorithm = "POSnoise"
 
     if(fw_list == "eng_halvani"){
 
-      keeplist <- c(c("&", "'", "\\", "[", "]", "{", "}", ":", ",", "-", "\"", "...", "!", ".", "(", ")",
-                      "?", ";", "/", "\n"), halvani)
+      keeplist <- c(
+        c(
+          "&", "'", "\\", "[", "]", "{", "}", ":", ",", "-", "\"", "...", "!", ".", "(", ")", "?", ";",
+          "/", "\n"
+        ),
+        halvani
+      )
 
     }else{
 
@@ -85,44 +96,57 @@ contentmask <- function(corpus, model = "en_core_web_sm", algorithm = "POSnoise"
 
     }
 
-    toks |>
+    x.corp <- toks |>
       dplyr::filter(token != " ") |>
       dplyr::mutate(token = stringr::str_to_lower(token)) |>
       dplyr::mutate(token = dplyr::if_else(token %in% keeplist, token, "*")) |>
       dplyr::group_by(doc_id) |>
       dplyr::summarise(text = paste(token, collapse = " ")) |>
-      quanteda::corpus() -> x.corp
+      quanteda::corpus()
 
   }else{
 
     spacyr::spacy_initialize(model = model, entity = FALSE)
-    parsed.corpus <- spacyr::spacy_parse(c, lemma = FALSE, entity = FALSE, tag = TRUE,
-                                         additional_attributes = c("like_url", "like_email"))
+    parsed.corpus <- spacyr::spacy_parse(
+      c,
+      lemma = FALSE,
+      entity = FALSE,
+      tag = TRUE,
+      additional_attributes = c("like_url", "like_email")
+    )
     spacyr::spacy_finalize()
 
     if(algorithm == "POSnoise"){
 
       content <- c("N", "P", "V", "J", "B", "D", "S")
 
-      parsed.corpus |>
+      x.pos <- parsed.corpus |>
         dplyr::mutate(token = tolower(token)) |>
-        dplyr::mutate(pos = dplyr::case_when(like_email == TRUE ~ "N",
-                                             like_url == TRUE ~ "N",
-                                             pos == "NOUN" ~ "N",
-                                             pos == "PROPN" ~ "P",
-                                             pos == "VERB" ~ "V",
-                                             pos == "ADJ" ~ "J",
-                                             pos == "ADV" ~ "B",
-                                             pos == "NUM" ~ "D",
-                                             pos == "SYM" ~ "S",
-                                             TRUE ~ pos)) |>
-        dplyr::mutate(POSnoise = dplyr::case_when(token %in% halvani ~ token,
-                                                  !(pos %in% content) ~ token,
-                                                  pos == "SPACE" ~ token,
-                                                  TRUE ~ pos)) |>
+        dplyr::mutate(
+          pos = dplyr::case_when(
+            like_email == TRUE ~ "N",
+            like_url == TRUE ~ "N",
+            pos == "NOUN" ~ "N",
+            pos == "PROPN" ~ "P",
+            pos == "VERB" ~ "V",
+            pos == "ADJ" ~ "J",
+            pos == "ADV" ~ "B",
+            pos == "NUM" ~ "D",
+            pos == "SYM" ~ "S",
+            TRUE ~ pos
+          )
+        ) |>
+        dplyr::mutate(
+          POSnoise = dplyr::case_when(
+            token %in% halvani ~ token,
+            !(pos %in% content) ~ token,
+            pos == "SPACE" ~ token,
+            TRUE ~ pos
+          )
+        ) |>
         dplyr::select(doc_id, POSnoise) |>
         dplyr::rename(token = POSnoise) |>
-        quanteda::as.tokens() -> x.pos
+        quanteda::as.tokens()
 
       x.corp <- sapply(x.pos, function(x) { paste(x, collapse = " ") }) |> quanteda::corpus()
 
@@ -130,17 +154,22 @@ contentmask <- function(corpus, model = "en_core_web_sm", algorithm = "POSnoise"
 
     if(algorithm == "frames"){
 
-      content = c("ADD", "CD", "NN", "NNP", "NNPS", "NNS", "PRP", "PRP$", "VB", "VBD", "VBG", "VBN", "VBP",
-                  "VBZ")
+      content <- c(
+        "ADD", "CD", "NN", "NNP", "NNPS", "NNS", "PRP", "PRP$", "VB", "VBD", "VBG", "VBN", "VBP", "VBZ"
+      )
 
-      parsed.corpus |>
+      x.pos <- parsed.corpus |>
         dplyr::mutate(token = tolower(token)) |>
-        dplyr::mutate(POSnoise = dplyr::case_when(tag %in% content ~ tag,
-                                                  tag == "_SP" ~ token,
-                                                  TRUE ~ token)) |>
+        dplyr::mutate(
+          POSnoise = dplyr::case_when(
+            tag %in% content ~ tag,
+            tag == "_SP" ~ token,
+            TRUE ~ token
+          )
+        ) |>
         dplyr::select(doc_id, POSnoise) |>
         dplyr::rename(token = POSnoise) |>
-        quanteda::as.tokens() -> x.pos
+        quanteda::as.tokens()
 
       x.corp <- sapply(x.pos, function(x) { paste(x, collapse = " ") }) |> quanteda::corpus()
 

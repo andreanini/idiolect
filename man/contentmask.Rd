@@ -36,7 +36,7 @@ Another algorithm implemented is Nini's (2023) \code{frames} or \verb{frame n-gr
 
 Finally, the last algorithm implemented is a version of \code{textdistortion}, as originally proposed by Stamatatos (2017). This version of the algorithm is essentially \code{POSnoise} but without POS tag information. The default implementation uses the same list of function words that are used for \code{POSnoise}. In addition to the function words provided, the function treats all punctuation marks and new line breaks as function words to keep. The basic tokenization is done using \code{spacyr} so the right model for the language being analysed should be selected.
 
-If you have never used \code{spacyr} before then please follow the instructions to set it up and install a model before using this function.
+If you have never used \code{spacyr} before then please follow the instructions to set it up and install a model before using this function here: \url{https://spacyr.quanteda.io}.
 
 The removal of non-ASCII characters is done using the \code{textclean} package.
 }
