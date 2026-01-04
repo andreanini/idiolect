@@ -161,10 +161,18 @@ The following code should be used to run the
 [`contentmask()`](https://andreanini.github.io/idiolect/dev/reference/contentmask.md)
 function. This will require installing and initiating a
 [*spacy*](https://spacy.io) parsing model for the language chosen. This
-process should happen automatically
+process should happen automatically.
 
 ``` r
 posnoised.corpus <- contentmask(corpus, model = "en_core_web_sm", algorithm = "POSnoise")
+```
+
+If the installation did not start automatically, then you can try this
+code:
+
+``` r
+install.packages("spacyr")
+spacyr::install_spacy()
 ```
 
 ### Data labelling
@@ -405,7 +413,7 @@ function
 density_plot(res)
 ```
 
-![](idiolect_files/figure-html/unnamed-chunk-15-1.png)
+![](idiolect_files/figure-html/unnamed-chunk-16-1.png)
 
 This plot shows the values of the score on the horizontal axis and the
 density for TRUE (red) vs. FALSE (blue) on the vertical axis.
@@ -628,7 +636,7 @@ of $Q$.
 density_plot(res, q = q.res$score)
 ```
 
-![](idiolect_files/figure-html/unnamed-chunk-24-1.png)
+![](idiolect_files/figure-html/unnamed-chunk-25-1.png)
 
 To perform this calibration the
 [`calibrate_LLR()`](https://andreanini.github.io/idiolect/dev/reference/calibrate_LLR.md)

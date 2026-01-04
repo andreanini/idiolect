@@ -79,8 +79,8 @@ as function words to keep. The basic tokenization is done using `spacyr`
 so the right model for the language being analysed should be selected.
 
 If you have never used `spacyr` before then please follow the
-instructions to set it up and install a model before using this
-function.
+instructions to set it up and install a model before using this function
+here: <https://spacyr.quanteda.io>.
 
 The removal of non-ASCII characters is done using the `textclean`
 package.
