@@ -1,5 +1,7 @@
 # idiolect (development version)
 
+* `create_corpus()` tests for the correct syntax of the file names and returns an error if not correct (plus showing which file names are incorrect).
+
 # idiolect 1.1.1
 
 * minor bug fixes
