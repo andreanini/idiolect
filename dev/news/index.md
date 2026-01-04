@@ -2,6 +2,10 @@
 
 ## idiolect (development version)
 
+- [`create_corpus()`](https://andreanini.github.io/idiolect/dev/reference/create_corpus.md)
+  tests for the correct syntax of the file names and returns an error if
+  not correct (plus showing which file names are incorrect).
+
 ## idiolect 1.1.1
 
 CRAN release: 2025-12-03
