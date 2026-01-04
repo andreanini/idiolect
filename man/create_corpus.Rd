@@ -10,7 +10,7 @@ create_corpus(path)
 \item{path}{A string containing the path to a folder of plain text files (ending in .txt) with their name structured as following: authorname_textname.txt (e.g. smith_text1.txt).}
 }
 \value{
-A \code{quanteda} corpus object with the authors' names as a docvar.
+A \code{quanteda} corpus object with the authors' names and the text names as docvars.
 }
 \description{
 Function to read in text data and turn it into a \code{quanteda} corpus object.
