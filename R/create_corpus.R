@@ -13,24 +13,18 @@
 #' }
 #'
 #' @export
-create_corpus <- function(path){
-
+create_corpus <- function(path) {
   #### test syntax of file names ####
   filenames <- list.files(path)
 
   tests <- filenames |>
     sapply(\(x){
-
       stringr::str_detect(x, "(.+)_(.+)\\.txt")
-
     })
 
-  if(any(!tests)){
-
+  if (any(!tests)) {
     wrong.files <- names(tests[tests == FALSE]) |> paste(collapse = ", ")
-
     stop("Some files do not follow the required syntax: ", wrong.files)
-
   }
 
   #### main function ####
@@ -41,5 +35,4 @@ create_corpus <- function(path){
     quanteda::corpus()
 
   return(corpus)
-
 }
