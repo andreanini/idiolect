@@ -23,7 +23,16 @@ library(idiolect)
 
 # Introduction
 
-Authorship Analysis is defined as the task of determining the likelihood that a certain candidate is the author of a certain set of questioned or disputed texts. We call *Forensic* Authorship Analysis a task of this kind applied in a real forensic case. In such settings, the disputed texts could be anonymous malicious documents, such as a threatening letter, but could also be text messages, emails, or any other document that, for various reasons, becomes evidence in a forensic case. In Forensic Linguistics, typically a set of disputed or *questioned* text is indicated as $Q$, while a set of texts of known origin, for example the texts written by the candidate author and collected as comparison material, is labelled using $K$. In addition to these two datasets, the analysis also necessitates of a comparison reference corpus that we call $R$. This reference dataset might have to be compiled by the analyst for the specific case [@ishihara2024].
+Authorship Analysis is defined as the task of determining the likelihood that a certain candidate is the author of a certain set of questioned or disputed texts. We call *Forensic* Authorship Analysis a task of this kind applied in a real forensic case. 
+
+In Forensic Linguistics, typically:
+
+- $Q$ indicates the set of disputed or *questioned* texts.
+- $K$ indicates the texts written by the candidate author and collected as comparison material.
+
+We then indicate with $R$ the reference dataset that might have to be compiled by the analyst for the specific case [@ishihara2024].
+
+As an example, the $Q$ text could be a text committing a crime, such as a threatening letter, or some text that is evidence in an investigation, such as a set of text messages. $K$ would then be the set of texts authored by the suspect author of $Q$. Finally, $R$ would be made up of texts that are comparable to $Q$ and $K$, for example in genre/register, mode of production, and any other parameter that the linguist maintains as being important for the analysis in the particular case.
 
 A crucial difference between Authorship Analysis and Forensic Authorship Analysis is that whereas the former can be treated as a classification task where the final answer is binary ('candidate is the author' vs. 'candidate is NOT the author'), the latter needs an expression of likelihood for the two competing propositions or hypotheses, the Prosecution Hypothesis $H_p$ vs. the Defence Hypothesis $H_d$, for example:
 
