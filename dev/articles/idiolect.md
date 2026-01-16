@@ -392,14 +392,14 @@ p$evaluation
 ```
 
 The $C_{llr}$ and $C_{llr}^{min}$ coefficients are used to evaluate the
-performance of the $LLR$(Ramos et al. 2013). These coefficients estimate
-the accuracy of the $LLR$, where a value of 1 indicates chance-level
-accuracy and a lower coefficient $C_{llr} < 1$ suggests that there is
-valuable information in the results, with lower values of $C_{llr}$
-suggesting better performance. The other binary classification metrics
-returned, such as Precision, Recall, and F1, are all calculated using
-$LLR > 0$ as the threshold for a TRUE (or same-author in this case)
-classification.
+performance of the $LLR$ system (Ramos et al. 2013). These coefficients
+estimate the accuracy of the $LLR$, where a value of 1 indicates
+chance-level accuracy and a lower coefficient $C_{llr} < 1$ suggests
+that there is valuable information in the results, with lower values of
+$C_{llr}$ suggesting better performance. The other binary classification
+metrics returned, such as Precision, Recall, and F1, are all calculated
+using $LLR > 0$ as the threshold for a TRUE (or same-author in this
+case) classification.
 
 In the present example, a $C_{llr} =$ 0.798 suggests that the
 performance is acceptable to be able to proceed with the actual forensic
