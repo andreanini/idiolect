@@ -119,25 +119,25 @@ Cambridge University Press.
 Q <- enron.sample[c(5:6)]
 K <- enron.sample[-c(5:6)]
 ngram_tracing(Q, K, coefficient = 'phi')
-#>                          Q  K target  score
-#> 1  unknown [Kh Mail_2].txt Kh   TRUE  0.032
-#> 2  unknown [Kw Mail_3].txt Kh  FALSE  0.030
-#> 3  unknown [Kh Mail_2].txt Kw  FALSE  0.031
-#> 4  unknown [Kw Mail_3].txt Kw   TRUE  0.086
-#> 5  unknown [Kh Mail_2].txt Lc  FALSE  0.028
-#> 6  unknown [Kw Mail_3].txt Lc  FALSE  0.027
-#> 7  unknown [Kh Mail_2].txt Ld  FALSE  0.026
-#> 8  unknown [Kw Mail_3].txt Ld  FALSE  0.046
-#> 9  unknown [Kh Mail_2].txt Lt  FALSE  0.033
-#> 10 unknown [Kw Mail_3].txt Lt  FALSE  0.048
-#> 11 unknown [Kh Mail_2].txt Lk  FALSE  0.014
-#> 12 unknown [Kw Mail_3].txt Lk  FALSE  0.027
-#> 13 unknown [Kh Mail_2].txt Lb  FALSE  0.017
-#> 14 unknown [Kw Mail_3].txt Lb  FALSE  0.040
-#> 15 unknown [Kh Mail_2].txt La  FALSE  0.006
-#> 16 unknown [Kw Mail_3].txt La  FALSE -0.018
-#> 17 unknown [Kh Mail_2].txt Mf  FALSE  0.021
-#> 18 unknown [Kw Mail_3].txt Mf  FALSE  0.038
-#> 19 unknown [Kh Mail_2].txt Ml  FALSE  0.016
-#> 20 unknown [Kw Mail_3].txt Ml  FALSE  0.047
+#>                    Q          K target  score
+#> 1     Kevin_h_Mail_2    Kevin_h   TRUE  0.032
+#> 2  Kimberly_w_Mail_3    Kevin_h  FALSE  0.030
+#> 3     Kevin_h_Mail_2 Kimberly_w  FALSE  0.031
+#> 4  Kimberly_w_Mail_3 Kimberly_w   TRUE  0.086
+#> 5     Kevin_h_Mail_2    Larry_c  FALSE  0.028
+#> 6  Kimberly_w_Mail_3    Larry_c  FALSE  0.027
+#> 7     Kevin_h_Mail_2    Lindy_d  FALSE  0.026
+#> 8  Kimberly_w_Mail_3    Lindy_d  FALSE  0.046
+#> 9     Kevin_h_Mail_2      Liz_t  FALSE  0.033
+#> 10 Kimberly_w_Mail_3      Liz_t  FALSE  0.048
+#> 11    Kevin_h_Mail_2   Louise_k  FALSE  0.014
+#> 12 Kimberly_w_Mail_3   Louise_k  FALSE  0.027
+#> 13    Kevin_h_Mail_2     Lynn_b  FALSE  0.017
+#> 14 Kimberly_w_Mail_3     Lynn_b  FALSE  0.040
+#> 15    Kevin_h_Mail_2     Lysa_a  FALSE  0.006
+#> 16 Kimberly_w_Mail_3     Lysa_a  FALSE -0.018
+#> 17    Kevin_h_Mail_2        M_f  FALSE  0.021
+#> 18 Kimberly_w_Mail_3        M_f  FALSE  0.038
+#> 19    Kevin_h_Mail_2        M_l  FALSE  0.016
+#> 20 Kimberly_w_Mail_3        M_l  FALSE  0.047
 ```

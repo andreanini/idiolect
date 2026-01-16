@@ -86,9 +86,9 @@ data frame containing \(\lambda_G\), an uncalibrated log-likelihood ratio (base 
 <span class="r-in"><span><span class="va">k.data</span> <span class="op">&lt;-</span> <span class="va">enron.sample</span><span class="op">[</span><span class="fl">2</span><span class="op">:</span><span class="fl">10</span><span class="op">]</span> <span class="op">|&gt;</span> <span class="fu">quanteda</span><span class="fu">::</span><span class="fu"><a href="https://quanteda.io/reference/tokens.html" class="external-link">tokens</a></span><span class="op">(</span><span class="st">"sentence"</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">ref.data</span> <span class="op">&lt;-</span> <span class="va">enron.sample</span><span class="op">[</span><span class="fl">11</span><span class="op">:</span><span class="fu">ndoc</span><span class="op">(</span><span class="va">enron.sample</span><span class="op">)</span><span class="op">]</span> <span class="op">|&gt;</span> <span class="fu">quanteda</span><span class="fu">::</span><span class="fu"><a href="https://quanteda.io/reference/tokens.html" class="external-link">tokens</a></span><span class="op">(</span><span class="st">"sentence"</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu">lambdaG</span><span class="op">(</span><span class="va">q.data</span>, <span class="va">k.data</span>, <span class="va">ref.data</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    K                     Q target  score</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1 Kh known [Kh Mail_1].txt   TRUE 37.171</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2 Kw known [Kh Mail_1].txt  FALSE -6.720</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>            K              Q target  score</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1    Kevin_h Kevin_h_Mail_1   TRUE 37.171</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2 Kimberly_w Kevin_h_Mail_1  FALSE -6.720</span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>

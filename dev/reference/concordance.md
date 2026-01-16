@@ -77,53 +77,53 @@ search pattern.
 
 ``` r
 concordance(enron.sample[1], enron.sample[2], enron.sample[3], "wants to", token.type = "word")
-#>                 docname from to     pre     node           post authorship
-#> 1 known [Kh Mail_1].txt    5  6 N N N N wants to be N when he V          Q
+#>          docname from to     pre     node           post authorship
+#> 1 Kevin_h_Mail_1    5  6 N N N N wants to be N when he V          Q
 
 #using wildcards
 concordance(enron.sample[1], enron.sample[2], enron.sample[3], "wants * be", token.type = "word")
-#>                 docname from to     pre        node           post authorship
-#> 1 known [Kh Mail_1].txt    5  7 N N N N wants to be N when he V up          Q
+#>          docname from to     pre        node           post authorship
+#> 1 Kevin_h_Mail_1    5  7 N N N N wants to be N when he V up          Q
 
 #searching character sequences with wildcards
 concordance(enron.sample[1], enron.sample[2], enron.sample[3], "help*", token.type = "character")
-#>                 docname from   to   pre  node  post authorship
-#> 1 known [Kh Mail_1].txt  703  707 need  help  V it           Q
-#> 2 known [Kh Mail_1].txt 2014 2018 want  help  V it           Q
-#> 3 known [Kh Mail_3].txt 1797 1801  N ,  helpe d the          K
-#> 4 known [Kh Mail_4].txt   52   56  P P  helpe d the  Reference
+#>          docname from   to   pre  node  post authorship
+#> 1 Kevin_h_Mail_1  703  707 need  help  V it           Q
+#> 2 Kevin_h_Mail_1 2014 2018 want  help  V it           Q
+#> 3 Kevin_h_Mail_3 1797 1801  N ,  helpe d the          K
+#> 4 Kevin_h_Mail_4   52   56  P P  helpe d the  Reference
 
 #using sentences
 enron.sents <- tokens(enron.sample, "sentence")
 concordance(enron.sents[1], enron.sents[2], enron.sents[3], ". _EOS_", token.type = "word")
-#>                  docname from  to                       pre    node
-#> 1  known [Kh Mail_1].txt  114 115               N , but V D . _EOS_
-#> 2  known [Kh Mail_1].txt  160 161            D N in first N . _EOS_
-#> 3  known [Kh Mail_1].txt  189 190             N about a N N . _EOS_
-#> 4  known [Kh Mail_1].txt  369 370             and we V to V . _EOS_
-#> 5  known [Kh Mail_1].txt  409 410           ' re V with her . _EOS_
-#> 6  known [Kh Mail_1].txt  545 546            the N of the N . _EOS_
-#> 7  known [Kh Mail_1].txt  698 699  V in you getting neither . _EOS_
-#> 8  known [Kh Mail_1].txt  713 714       just the N it works . _EOS_
-#> 9  known [Kh Mail_1].txt  735 736                N is a J N . _EOS_
-#> 10 known [Kh Mail_1].txt  873 874      have to say during N . _EOS_
-#> 11 known [Kh Mail_3].txt  173 174                J as a J N . _EOS_
-#> 12 known [Kh Mail_3].txt  235 236       get V into the call . _EOS_
-#> 13 known [Kh Mail_3].txt  285 286      , please let me know . _EOS_
-#> 14 known [Kh Mail_3].txt  341 342            you who V of N . _EOS_
-#> 15 known [Kh Mail_3].txt  366 367               B for a N N . _EOS_
-#> 16 known [Kh Mail_3].txt  410 411     P went well last week . _EOS_
-#> 17 known [Kh Mail_3].txt  560 561             of N in its N . _EOS_
-#> 18 known [Kh Mail_3].txt  599 600             for the B J N . _EOS_
-#> 19 known [Kh Mail_3].txt  625 626               N N and N N . _EOS_
-#> 20 known [Kh Mail_3].txt  715 716                 N J J J N . _EOS_
-#> 21 known [Kh Mail_4].txt  222 223            , and V your N . _EOS_
-#> 22 known [Kh Mail_4].txt  302 303            J N with the N . _EOS_
-#> 23 known [Kh Mail_4].txt  666 667             V for a few N . _EOS_
-#> 24 known [Kh Mail_4].txt  716 717 especially on the first N . _EOS_
-#> 25 known [Kh Mail_4].txt  754 755             her to N on N . _EOS_
-#> 26 known [Kh Mail_4].txt  774 775         after the N has V . _EOS_
-#> 27 known [Kh Mail_4].txt  785 786             to N on the N . _EOS_
+#>           docname from  to                       pre    node
+#> 1  Kevin_h_Mail_1  114 115               N , but V D . _EOS_
+#> 2  Kevin_h_Mail_1  160 161            D N in first N . _EOS_
+#> 3  Kevin_h_Mail_1  189 190             N about a N N . _EOS_
+#> 4  Kevin_h_Mail_1  369 370             and we V to V . _EOS_
+#> 5  Kevin_h_Mail_1  409 410           ' re V with her . _EOS_
+#> 6  Kevin_h_Mail_1  545 546            the N of the N . _EOS_
+#> 7  Kevin_h_Mail_1  698 699  V in you getting neither . _EOS_
+#> 8  Kevin_h_Mail_1  713 714       just the N it works . _EOS_
+#> 9  Kevin_h_Mail_1  735 736                N is a J N . _EOS_
+#> 10 Kevin_h_Mail_1  873 874      have to say during N . _EOS_
+#> 11 Kevin_h_Mail_3  173 174                J as a J N . _EOS_
+#> 12 Kevin_h_Mail_3  235 236       get V into the call . _EOS_
+#> 13 Kevin_h_Mail_3  285 286      , please let me know . _EOS_
+#> 14 Kevin_h_Mail_3  341 342            you who V of N . _EOS_
+#> 15 Kevin_h_Mail_3  366 367               B for a N N . _EOS_
+#> 16 Kevin_h_Mail_3  410 411     P went well last week . _EOS_
+#> 17 Kevin_h_Mail_3  560 561             of N in its N . _EOS_
+#> 18 Kevin_h_Mail_3  599 600             for the B J N . _EOS_
+#> 19 Kevin_h_Mail_3  625 626               N N and N N . _EOS_
+#> 20 Kevin_h_Mail_3  715 716                 N J J J N . _EOS_
+#> 21 Kevin_h_Mail_4  222 223            , and V your N . _EOS_
+#> 22 Kevin_h_Mail_4  302 303            J N with the N . _EOS_
+#> 23 Kevin_h_Mail_4  666 667             V for a few N . _EOS_
+#> 24 Kevin_h_Mail_4  716 717 especially on the first N . _EOS_
+#> 25 Kevin_h_Mail_4  754 755             her to N on N . _EOS_
+#> 26 Kevin_h_Mail_4  774 775         after the N has V . _EOS_
+#> 27 Kevin_h_Mail_4  785 786             to N on the N . _EOS_
 #>                       post authorship
 #> 1        _BOS_ P V us they          Q
 #> 2        _BOS_ N is in the          Q

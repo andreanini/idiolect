@@ -99,13 +99,8 @@ using
 In addition to these two datasets, the analysis also necessitates of a
 comparison reference corpus that we call
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>R</mi><annotation encoding="application/x-tex">R</annotation></semantics></math>.
-In a classic case involving a closed set of suspects, the texts written
-by the suspects minus the candidate form
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>R</mi><annotation encoding="application/x-tex">R</annotation></semantics></math>.
-In <em>Authorship Verification</em> cases that only involve one
-candidate author, then the reference dataset might have to be compiled
-by the analyst for the specific case <span class="citation">(Ishihara et
-al. 2024)</span>.</p>
+This reference dataset might have to be compiled by the analyst for the
+specific case <span class="citation">(Ishihara et al. 2024)</span>.</p>
 <p>A crucial difference between Authorship Analysis and Forensic
 Authorship Analysis is that whereas the former can be treated as a
 classification task where the final answer is binary (‘candidate is the
@@ -143,18 +138,21 @@ the workflow for this analysis involves four steps:</p>
 <ol style="list-style-type: decimal">
 <li>
 <strong>Preparation</strong>: This step involves any pre-processing
-step that is necessary for the analysis with the chosen method;</li>
+step that is necessary for the analysis with the chosen method.</li>
 <li>
 <strong>Validation</strong>: Carry out an analysis on the case data
 or on a separate dataset that has been designed to be similar to the
-case material in order to validate the method for this particular
-case;</li>
+case material in order to validate that the chosen method works for this
+particular case. Even though all the methods contained in
+<code>idiolect</code> have been tested in various published academic
+studies, it is also important that the methods are tested
+(i.e. <em>validated</em>) for any specific case <span class="citation">(Ishihara et al. 2024)</span>.</li>
 <li>
 <strong>Analysis</strong>: Carry out the analysis on the real
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>K</mi><annotation encoding="application/x-tex">K</annotation></semantics></math>,
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>Q</mi><annotation encoding="application/x-tex">Q</annotation></semantics></math>,
 and
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>R</mi><annotation encoding="application/x-tex">R</annotation></semantics></math>;</li>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>R</mi><annotation encoding="application/x-tex">R</annotation></semantics></math>.</li>
 <li>
 <strong>Calibration</strong>: Turn the output of (3) into a
 Likelihood Ratio that expresses the strength of the evidence given the
@@ -219,23 +217,23 @@ already been content-masked using <em>POSnoise</em>, as can be seen from
 the preview of the corpus</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">corpus</span></span>
-<span><span class="co">#&gt; Corpus consisting of 49 documents and 1 docvar.</span></span>
-<span><span class="co">#&gt; known [Kh Mail_1].txt :</span></span>
+<span><span class="co">#&gt; Corpus consisting of 49 documents and 2 docvars.</span></span>
+<span><span class="co">#&gt; Kevin_h_Mail_1 :</span></span>
 <span><span class="co">#&gt; "N N N N wants to be N when he V up likes N P , N for doing t..."</span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; known [Kh Mail_3].txt :</span></span>
+<span><span class="co">#&gt; Kevin_h_Mail_3 :</span></span>
 <span><span class="co">#&gt; "i 've V a J one , but the only N N N i have is on a N N from..."</span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; known [Kh Mail_4].txt :</span></span>
+<span><span class="co">#&gt; Kevin_h_Mail_4 :</span></span>
 <span><span class="co">#&gt; "this was J towards the N of a J N N N . in N , P P helped th..."</span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; known [Kh Mail_5].txt :</span></span>
+<span><span class="co">#&gt; Kevin_h_Mail_5 :</span></span>
 <span><span class="co">#&gt; "V the N for more than D N may get you V . a N N with a N and..."</span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; unknown [Kh Mail_2].txt :</span></span>
+<span><span class="co">#&gt; Kevin_h_Mail_2 :</span></span>
 <span><span class="co">#&gt; "P , here 's the J N on our P P N V to V the V needs of the P..."</span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; unknown [Kw Mail_3].txt :</span></span>
+<span><span class="co">#&gt; Kimberly_w_Mail_3 :</span></span>
 <span><span class="co">#&gt; "they also have J N at the J N of P D per N and only a D J ea..."</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; [ reached max_ndoc ... 43 more documents ]</span></span></code></pre></div>
@@ -244,16 +242,17 @@ tend to contain meaning (nouns, verbs, adjectives, adverbs) with their
 Part of Speech tag (N, V, J, B) while all the other words or tokens are
 left unchanged. In addition to this operation, <em>POSnoise</em>
 contains a white list of content words that mostly tend to be functional
-in English, such as verbs like <em>do, have, make</em> or adverbs such
-as <em>consequently</em>, <em>therefore</em>.</p>
+in English, such as verbs like <em>do</em>, <em>have</em>, <em>make</em>
+or adverbs such as <em>consequently</em>, <em>therefore</em>.</p>
 <p>The following code should be used to run the
 <code><a href="../reference/contentmask.html">contentmask()</a></code> function. This will require installing and
 initiating a <a href="https://spacy.io" class="external-link"><em>spacy</em></a> parsing model
 for the language chosen. This process should happen automatically.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">posnoised.corpus</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/contentmask.html">contentmask</a></span><span class="op">(</span><span class="va">corpus</span>, model <span class="op">=</span> <span class="st">"en_core_web_sm"</span>, algorithm <span class="op">=</span> <span class="st">"POSnoise"</span><span class="op">)</span></span></code></pre></div>
-<p>If the installation did not start automatically, then you can try
-this code:</p>
+<p>If the installation did not start automatically, then the
+installatino of the <code>spacyr</code> package and of the default model
+can be done as follows:</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"spacyr"</span><span class="op">)</span></span>
 <span><span class="fu">spacyr</span><span class="fu">::</span><span class="fu">install_spacy</span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
@@ -261,19 +260,18 @@ this code:</p>
 <div class="section level3">
 <h3 id="data-labelling">Data labelling<a class="anchor" aria-label="anchor" href="#data-labelling"></a>
 </h3>
-<p>In this example it is simulated that the first text written by the
-author <em>Kw</em> is the real
+<p>In this example it is simulated that <em>Kimberly_w_Mail_3</em>,
+written by the author <em>Kimberly_w</em>, is the real
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>Q</mi><annotation encoding="application/x-tex">Q</annotation></semantics></math>
-text (the one labelled as ‘unknown’) and all the other known texts
-written by <em>Kw</em> (labelled as ‘known’) are therefore the set of
-known texts
+text and all the other known texts written by <em>Kimberly_w</em> are
+therefore the set of known texts
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>K</mi><annotation encoding="application/x-tex">K</annotation></semantics></math>.
 The remaining texts from the other authors are the reference samples
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>R</mi><annotation encoding="application/x-tex">R</annotation></semantics></math>.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">Q</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://quanteda.io/reference/corpus_subset.html" class="external-link">corpus_subset</a></span><span class="op">(</span><span class="va">corpus</span>, <span class="va">author</span> <span class="op">==</span> <span class="st">"Kw"</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span></span>
-<span><span class="va">K</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://quanteda.io/reference/corpus_subset.html" class="external-link">corpus_subset</a></span><span class="op">(</span><span class="va">corpus</span>, <span class="va">author</span> <span class="op">==</span> <span class="st">"Kw"</span><span class="op">)</span><span class="op">[</span><span class="fl">2</span><span class="op">:</span><span class="fl">5</span><span class="op">]</span></span>
-<span><span class="va">R</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://quanteda.io/reference/corpus_subset.html" class="external-link">corpus_subset</a></span><span class="op">(</span><span class="va">corpus</span>, <span class="va">author</span> <span class="op">!=</span> <span class="st">"Kw"</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">Q</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://quanteda.io/reference/corpus_subset.html" class="external-link">corpus_subset</a></span><span class="op">(</span><span class="va">corpus</span>, <span class="va">author</span> <span class="op">==</span> <span class="st">"Kimberly_w"</span> <span class="op">&amp;</span> <span class="va">textname</span> <span class="op">==</span> <span class="st">"Mail_3"</span><span class="op">)</span></span>
+<span><span class="va">K</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://quanteda.io/reference/corpus_subset.html" class="external-link">corpus_subset</a></span><span class="op">(</span><span class="va">corpus</span>, <span class="va">author</span> <span class="op">==</span> <span class="st">"Kimberly_w"</span> <span class="op">&amp;</span> <span class="va">textname</span> <span class="op">!=</span> <span class="st">"Mail_3"</span><span class="op">)</span></span>
+<span><span class="va">R</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://quanteda.io/reference/corpus_subset.html" class="external-link">corpus_subset</a></span><span class="op">(</span><span class="va">corpus</span>, <span class="va">author</span> <span class="op">!=</span> <span class="st">"Kimberly_w"</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="vectorisation">Vectorisation<a class="anchor" aria-label="anchor" href="#vectorisation"></a>
@@ -293,21 +291,21 @@ this code.</p>
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/vectorize.html">vectorize</a></span><span class="op">(</span><span class="va">Q</span>, tokens <span class="op">=</span> <span class="st">"word"</span>, remove_punct <span class="op">=</span> <span class="cn">F</span>, remove_symbols <span class="op">=</span> <span class="cn">T</span>, remove_numbers <span class="op">=</span> <span class="cn">T</span>,</span>
 <span>          lowercase <span class="op">=</span> <span class="cn">T</span>, n <span class="op">=</span> <span class="fl">1</span>, weighting <span class="op">=</span> <span class="st">"rel"</span>, trim <span class="op">=</span> <span class="cn">F</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span>max_nfeat <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Document-feature matrix of: 1 document, 136 features (0.00% sparse) and 1 docvar.</span></span>
-<span><span class="co">#&gt;                          features</span></span>
-<span><span class="co">#&gt; docs                            they        also      have</span></span>
-<span><span class="co">#&gt;   unknown [Kw Mail_3].txt 0.00289296 0.009643202 0.0192864</span></span>
+<span><span class="co">#&gt; Document-feature matrix of: 1 document, 136 features (0.00% sparse) and 2 docvars.</span></span>
+<span><span class="co">#&gt;                    features</span></span>
+<span><span class="co">#&gt; docs                      they        also      have</span></span>
+<span><span class="co">#&gt;   Kimberly_w_Mail_3 0.00289296 0.009643202 0.0192864</span></span>
 <span><span class="co">#&gt; [ reached max_nfeat ... 133 more features ]</span></span></code></pre></div>
-<p>or, as the most frequent 1,000 character 4-grams relative
-frequencies, for example, using</p>
+<p>or, as the most frequent 1000 character 4-grams relative frequencies,
+for example, using</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/vectorize.html">vectorize</a></span><span class="op">(</span><span class="va">Q</span>, tokens <span class="op">=</span> <span class="st">"character"</span>, remove_punct <span class="op">=</span> <span class="cn">F</span>, remove_symbols <span class="op">=</span> <span class="cn">T</span>, remove_numbers <span class="op">=</span> <span class="cn">T</span>,</span>
 <span>          lowercase <span class="op">=</span> <span class="cn">T</span>, n <span class="op">=</span> <span class="fl">4</span>, weighting <span class="op">=</span> <span class="st">"rel"</span>, trim <span class="op">=</span> <span class="cn">T</span>, threshold <span class="op">=</span> <span class="fl">1000</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span>max_nfeat <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Document-feature matrix of: 1 document, 1,094 features (0.00% sparse) and 1 docvar.</span></span>
-<span><span class="co">#&gt;                          features</span></span>
-<span><span class="co">#&gt; docs                              they         hey          ey a</span></span>
-<span><span class="co">#&gt;   unknown [Kw Mail_3].txt 0.0009771987 0.0009771987 0.0003257329</span></span>
+<span><span class="co">#&gt; Document-feature matrix of: 1 document, 1,094 features (0.00% sparse) and 2 docvars.</span></span>
+<span><span class="co">#&gt;                    features</span></span>
+<span><span class="co">#&gt; docs                        they         hey          ey a</span></span>
+<span><span class="co">#&gt;   Kimberly_w_Mail_3 0.0009771987 0.0009771987 0.0003257329</span></span>
 <span><span class="co">#&gt; [ reached max_nfeat ... 1,091 more features ]</span></span></code></pre></div>
 <p>The output of the function is a <code>quanteda</code>
 <em>document-feature matrix</em> (or <em>dfm</em>) that can efficiently
@@ -319,8 +317,8 @@ addition, since most authorship analysis methods already have a default
 setting of these parameters, these are already the default for the
 authorship analysis functions.</p>
 <p>This step is therefore not necessary unless there are specific
-requirements as any vectorisation is handled by the functions that apply
-the authorship analysis methods.</p>
+requirements, as any vectorisation is handled by the functions that
+apply the authorship analysis methods.</p>
 </div>
 </div>
 <div class="section level2">
@@ -337,45 +335,38 @@ and
 datasets</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">validation</span> <span class="op">&lt;-</span> <span class="va">K</span> <span class="op">+</span> <span class="va">R</span></span></code></pre></div>
-<p>This dataset can now be re-divided into ‘fake’
+<p>This dataset must now be re-divided into ‘fake’
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>Q</mi><annotation encoding="application/x-tex">Q</annotation></semantics></math>
 texts and ‘fake’
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>K</mi><annotation encoding="application/x-tex">K</annotation></semantics></math>
-texts. Each text in this corpus is labelled as ‘unknown’ or ‘known’ so
-two new disjoint datasets, <code>validation.Q</code> and
-<code>validation.K</code> can be created by selecting the texts based on
-this label.</p>
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">validation.Q</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://quanteda.io/reference/corpus_subset.html" class="external-link">corpus_subset</a></span><span class="op">(</span><span class="va">validation</span>, <span class="fu"><a href="https://rdrr.io/r/base/grep.html" class="external-link">grepl</a></span><span class="op">(</span><span class="st">"^unknown"</span>, <span class="fu"><a href="https://quanteda.io/reference/docnames.html" class="external-link">docnames</a></span><span class="op">(</span><span class="va">validation</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="va">validation.K</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://quanteda.io/reference/corpus_subset.html" class="external-link">corpus_subset</a></span><span class="op">(</span><span class="va">validation</span>, <span class="fu"><a href="https://rdrr.io/r/base/grep.html" class="external-link">grepl</a></span><span class="op">(</span><span class="st">"^known"</span>, <span class="fu"><a href="https://quanteda.io/reference/docnames.html" class="external-link">docnames</a></span><span class="op">(</span><span class="va">validation</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<p>This is not the only way in which a validation analysis can be
-conducted. For example, one could adopt a leave-one-out approach by
-taking each single text and treat it as a
+texts.</p>
+<p>To create two new disjoint datasets, <code>validation.Q</code> and
+<code>validation.K</code>, we randomly sample one text for each author
+to be the ‘fake’
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>Q</mi><annotation encoding="application/x-tex">Q</annotation></semantics></math>
-and then run an authorship analysis method for each one of them.
-Alternatively, a completely different dataset that is similar to the
-case data could be used. This simpler approach is more suitable for this
-small example.</p>
+and we leave the rest to be their ‘fake’
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>K</mi><annotation encoding="application/x-tex">K</annotation></semantics></math>
+texts.</p>
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">validation.Q</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://quanteda.io/reference/corpus_sample.html" class="external-link">corpus_sample</a></span><span class="op">(</span><span class="va">validation</span>, size <span class="op">=</span> <span class="fl">1</span>, by <span class="op">=</span> <span class="va">author</span><span class="op">)</span></span>
+<span><span class="va">validation.K</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://quanteda.io/reference/corpus_subset.html" class="external-link">corpus_subset</a></span><span class="op">(</span><span class="va">validation</span>, <span class="op">!</span><span class="fu"><a href="https://quanteda.io/reference/docnames.html" class="external-link">docnames</a></span><span class="op">(</span><span class="va">validation</span><span class="op">)</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fu"><a href="https://quanteda.io/reference/docnames.html" class="external-link">docnames</a></span><span class="op">(</span><span class="va">validation.Q</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<p>This is not the only way in which a validation analysis can be
+conducted. A completely different dataset that is similar to the case
+data could be used, for example. This simpler approach is more suitable
+for this small example.</p>
 <div class="section level3">
 <h3 id="authorship-analysis">Authorship analysis<a class="anchor" aria-label="anchor" href="#authorship-analysis"></a>
 </h3>
-<p>The analysis that is being validated is the same analysis that will
-be applied to the
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>Q</mi><annotation encoding="application/x-tex">Q</annotation></semantics></math>
-text. Therefore, a choice of method has to be made depending on the
-right choice to analyse
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>Q</mi><annotation encoding="application/x-tex">Q</annotation></semantics></math>.
-In this example, the scenario simulated is a <em>verification</em>: was
-the unknown
+<p>In this example, the scenario simulated is a <em>verification</em>:
+was the unknown
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>Q</mi><annotation encoding="application/x-tex">Q</annotation></semantics></math>
 text written by the
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>K</mi><annotation encoding="application/x-tex">K</annotation></semantics></math>
-author, <em>Kw</em>? For this reason, the method chosen is one of the
-most successful authorship verification methods available today, the
-<em>Impostors Method</em> <span class="citation">(Koppel and Winter
-2014)</span>, and in particular one of its latest variants called the
-<em>Rank-Based Impostors Method</em> <span class="citation">(Potha and
-Stamatatos 2017, 2020)</span>.</p>
+author, <em>Kimberly_w</em>? For this reason, the method chosen is one
+of the most successful authorship verification methods available at
+present, the <em>Impostors Method</em> <span class="citation">(Koppel
+and Winter 2014)</span>, and in particular one of its latest variants
+called the <em>Rank-Based Impostors Method</em> <span class="citation">(Potha and Stamatatos 2017, 2020)</span>.</p>
 <p>This analysis can be run in <code>idiolect</code> using the function
 <code><a href="../reference/impostors.html">impostors()</a></code> and then selecting the default parameter for
 the <em>algorithm</em> argument, “<em>RBI</em>”. The main argument of
@@ -399,11 +390,10 @@ use the texts written by other authors as impostors.</p>
 <code><a href="../reference/impostors.html">impostors()</a></code> does not offer additional parameters to modify
 the vectorisation process because all the Impostors Method algorithms
 already have a well-specified default setting. If the user wants to
-change that they should then vectorise the corpus separately using
+change these they should then vectorise the corpus separately using
 <code><a href="../reference/vectorize.html">vectorize()</a></code> and then use the <em>dfm</em> as the input of
 <code><a href="../reference/impostors.html">impostors()</a></code>.</p>
-<p>The RBI variant of the method also requires setting a parameter
-called
+<p>The RBI variant of the method requires setting a parameter called
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>k</mi><annotation encoding="application/x-tex">k</annotation></semantics></math>,
 which is the number of most similar impostors texts to sample from the
 wider set of impostors. The recommended setting is
@@ -411,13 +401,14 @@ wider set of impostors. The recommended setting is
 or
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>k</mi><mo>=</mo><mn>300</mn></mrow><annotation encoding="application/x-tex">k=300</annotation></semantics></math>
 but for simplicity this is set to
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>k</mi><mo>=</mo><mn>50</mn></mrow><annotation encoding="application/x-tex">k=50</annotation></semantics></math>
-in this example.</p>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>k</mi><mo>=</mo><mn>10</mn></mrow><annotation encoding="application/x-tex">k=10</annotation></semantics></math>
+in this example. This is not a realistic setting and it is used here
+only as an example.</p>
 <p>Because an analysis using the Impostors Method can have long run
 times, this function can also be parallelised using more than one
 core.</p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/impostors.html">impostors</a></span><span class="op">(</span><span class="va">validation.Q</span>, <span class="va">validation.K</span>, <span class="va">validation.K</span>, algorithm <span class="op">=</span> <span class="st">"RBI"</span>, k <span class="op">=</span> <span class="fl">50</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/impostors.html">impostors</a></span><span class="op">(</span><span class="va">validation.Q</span>, <span class="va">validation.K</span>, <span class="va">validation.K</span>, algorithm <span class="op">=</span> <span class="st">"RBI"</span>, k <span class="op">=</span> <span class="fl">10</span><span class="op">)</span></span></code></pre></div>
 <p>The output of <code><a href="../reference/impostors.html">impostors()</a></code> is a data frame showing the
 results of comparing each
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>K</mi><annotation encoding="application/x-tex">K</annotation></semantics></math>
@@ -434,17 +425,17 @@ function used (e.g. for <code><a href="../reference/delta.html">delta()</a></co
 coefficient, and so on).</p>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">res</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span>,<span class="op">]</span></span>
-<span><span class="co">#&gt;     K                       Q target score</span></span>
-<span><span class="co">#&gt; 1  Kw unknown [Kh Mail_2].txt  FALSE 0.404</span></span>
-<span><span class="co">#&gt; 2  Kw unknown [Lc Mail_1].txt  FALSE 0.243</span></span>
-<span><span class="co">#&gt; 3  Kw unknown [Ld Mail_4].txt  FALSE 0.752</span></span>
-<span><span class="co">#&gt; 4  Kw unknown [Lt Mail_2].txt  FALSE 0.215</span></span>
-<span><span class="co">#&gt; 5  Kw unknown [Lk Mail_4].txt  FALSE 0.306</span></span>
-<span><span class="co">#&gt; 6  Kw unknown [Lb Mail_3].txt  FALSE 0.975</span></span>
-<span><span class="co">#&gt; 7  Kw unknown [La Mail_3].txt  FALSE 0.262</span></span>
-<span><span class="co">#&gt; 8  Kw unknown [Mf Mail_1].txt  FALSE 0.933</span></span>
-<span><span class="co">#&gt; 9  Kw unknown [Ml Mail_3].txt  FALSE 0.846</span></span>
-<span><span class="co">#&gt; 10 Kh unknown [Kh Mail_2].txt   TRUE 0.555</span></span></code></pre></div>
+<span><span class="co">#&gt;             K                 Q target score</span></span>
+<span><span class="co">#&gt; 1  Kimberly_w    Kevin_h_Mail_1  FALSE 0.750</span></span>
+<span><span class="co">#&gt; 2  Kimberly_w Kimberly_w_Mail_5   TRUE 1.000</span></span>
+<span><span class="co">#&gt; 3  Kimberly_w    Larry_c_Mail_2  FALSE 0.500</span></span>
+<span><span class="co">#&gt; 4  Kimberly_w    Lindy_d_Mail_3  FALSE 0.833</span></span>
+<span><span class="co">#&gt; 5  Kimberly_w      Liz_t_Mail_4  FALSE 0.667</span></span>
+<span><span class="co">#&gt; 6  Kimberly_w   Louise_k_Mail_2  FALSE 0.667</span></span>
+<span><span class="co">#&gt; 7  Kimberly_w     Lynn_b_Mail_3  FALSE 1.000</span></span>
+<span><span class="co">#&gt; 8  Kimberly_w     Lysa_a_Mail_5  FALSE 0.500</span></span>
+<span><span class="co">#&gt; 9  Kimberly_w        M_f_Mail_3  FALSE 0.750</span></span>
+<span><span class="co">#&gt; 10 Kimberly_w        M_l_Mail_2  FALSE 0.833</span></span></code></pre></div>
 <p>In order to assess the results of this validation analysis, the
 function <code><a href="../reference/performance.html">performance()</a></code> can be used to return a series of
 performance metrics. This function can take one or two result data
@@ -460,32 +451,29 @@ This analysis is done using the <code><a href="../reference/calibrate_LLR.html">
 which fits a logistic regression model to calibrate the score into a
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>L</mi><mi>L</mi><mi>R</mi></mrow><annotation encoding="application/x-tex">LLR</annotation></semantics></math><span class="citation">Ishihara (2021)</span> using the <code>ROC</code>
 library <span class="citation">(Leeuwen 2015)</span>.</p>
-<p>The output of the function is the following</p>
+<p>The output of the function is the following:</p>
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">p</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/performance.html">performance</a></span><span class="op">(</span><span class="va">res</span><span class="op">)</span></span>
-<span><span class="co">#&gt;   |                                                                              |                                                                      |   0%  |                                                                              |=                                                                     |   1%  |                                                                              |==                                                                    |   2%  |                                                                              |==                                                                    |   3%  |                                                                              |===                                                                   |   4%  |                                                                              |====                                                                  |   6%  |                                                                              |=====                                                                 |   7%  |                                                                              |======                                                                |   8%  |                                                                              |======                                                                |   9%  |                                                                              |=======                                                               |  10%  |                                                                              |========                                                              |  11%  |                                                                              |=========                                                             |  12%  |                                                                              |=========                                                             |  13%  |                                                                              |==========                                                            |  15%  |                                                                              |===========                                                           |  16%  |                                                                              |============                                                          |  17%  |                                                                              |=============                                                         |  18%  |                                                                              |=============                                                         |  19%  |                                                                              |==============                                                        |  20%  |                                                                              |===============                                                       |  21%  |                                                                              |================                                                      |  22%  |                                                                              |=================                                                     |  24%  |                                                                              |=================                                                     |  25%  |                                                                              |==================                                                    |  26%  |                                                                              |===================                                                   |  27%  |                                                                              |====================                                                  |  28%  |                                                                              |====================                                                  |  29%  |                                                                              |=====================                                                 |  30%  |                                                                              |======================                                                |  31%  |                                                                              |=======================                                               |  33%  |                                                                              |========================                                              |  34%  |                                                                              |========================                                              |  35%  |                                                                              |=========================                                             |  36%  |                                                                              |==========================                                            |  37%  |                                                                              |===========================                                           |  38%  |                                                                              |============================                                          |  39%  |                                                                              |============================                                          |  40%  |                                                                              |=============================                                         |  42%  |                                                                              |==============================                                        |  43%  |                                                                              |===============================                                       |  44%  |                                                                              |===============================                                       |  45%  |                                                                              |================================                                      |  46%  |                                                                              |=================================                                     |  47%  |                                                                              |==================================                                    |  48%  |                                                                              |===================================                                   |  49%  |                                                                              |===================================                                   |  51%  |                                                                              |====================================                                  |  52%  |                                                                              |=====================================                                 |  53%  |                                                                              |======================================                                |  54%  |                                                                              |=======================================                               |  55%  |                                                                              |=======================================                               |  56%  |                                                                              |========================================                              |  57%  |                                                                              |=========================================                             |  58%  |                                                                              |==========================================                            |  60%  |                                                                              |==========================================                            |  61%  |                                                                              |===========================================                           |  62%  |                                                                              |============================================                          |  63%  |                                                                              |=============================================                         |  64%  |                                                                              |==============================================                        |  65%  |                                                                              |==============================================                        |  66%  |                                                                              |===============================================                       |  67%  |                                                                              |================================================                      |  69%  |                                                                              |=================================================                     |  70%  |                                                                              |==================================================                    |  71%  |                                                                              |==================================================                    |  72%  |                                                                              |===================================================                   |  73%  |                                                                              |====================================================                  |  74%  |                                                                              |=====================================================                 |  75%  |                                                                              |=====================================================                 |  76%  |                                                                              |======================================================                |  78%  |                                                                              |=======================================================               |  79%  |                                                                              |========================================================              |  80%  |                                                                              |=========================================================             |  81%  |                                                                              |=========================================================             |  82%  |                                                                              |==========================================================            |  83%  |                                                                              |===========================================================           |  84%  |                                                                              |============================================================          |  85%  |                                                                              |=============================================================         |  87%  |                                                                              |=============================================================         |  88%  |                                                                              |==============================================================        |  89%  |                                                                              |===============================================================       |  90%  |                                                                              |================================================================      |  91%  |                                                                              |================================================================      |  92%  |                                                                              |=================================================================     |  93%  |                                                                              |==================================================================    |  94%  |                                                                              |===================================================================   |  96%  |                                                                              |====================================================================  |  97%  |                                                                              |====================================================================  |  98%  |                                                                              |===================================================================== |  99%  |                                                                              |======================================================================| 100%</span></span>
+<code class="sourceCode R"><span><span class="va">p</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/performance.html">performance</a></span><span class="op">(</span><span class="va">res</span>, progress <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
 <span><span class="va">p</span><span class="op">$</span><span class="va">evaluation</span></span>
 <span><span class="co">#&gt;        Cllr  Cllr_min      EER Mean TRUE LLR Mean FALSE LLR TRUE trials</span></span>
-<span><span class="co">#&gt; 1 0.8043863 0.6155326 19.04762      0.413398     -0.3864078          11</span></span>
-<span><span class="co">#&gt;   FALSE trials      AUC Balanced Accuracy Precision    Recall        F1 TP FN</span></span>
-<span><span class="co">#&gt; 1           83 0.829904          0.845679 0.3333333 0.8888889 0.4848485  8  1</span></span>
-<span><span class="co">#&gt;   FP TN</span></span>
-<span><span class="co">#&gt; 1 16 65</span></span></code></pre></div>
+<span><span class="co">#&gt; 1 0.7979282 0.7183427 26.26582     0.4062006     -0.4368895          12</span></span>
+<span><span class="co">#&gt;   FALSE trials       AUC Balanced Accuracy Precision Recall        F1 TP FN FP</span></span>
+<span><span class="co">#&gt; 1           92 0.7766667         0.7666667      0.25    0.8 0.3809524  8  2 24</span></span>
+<span><span class="co">#&gt;   TN</span></span>
+<span><span class="co">#&gt; 1 66</span></span></code></pre></div>
 <p>The
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>C</mi><mrow><mi>l</mi><mi>l</mi><mi>r</mi></mrow></msub><annotation encoding="application/x-tex">C_{llr}</annotation></semantics></math>
 and
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msubsup><mi>C</mi><mrow><mi>l</mi><mi>l</mi><mi>r</mi></mrow><mrow><mi>m</mi><mi>i</mi><mi>n</mi></mrow></msubsup><annotation encoding="application/x-tex">C_{llr}^{min}</annotation></semantics></math>
 coefficients are used to evaluate the performance of the
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>L</mi><mi>L</mi><mi>R</mi></mrow><annotation encoding="application/x-tex">LLR</annotation></semantics></math><span class="citation">(Ramos et al. 2013)</span>. These coefficients
-estimate the cost of the
+estimate the accuracy of the
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>L</mi><mi>L</mi><mi>R</mi></mrow><annotation encoding="application/x-tex">LLR</annotation></semantics></math>,
-where a value of 1 indicates no information in the
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>L</mi><mi>L</mi><mi>R</mi></mrow><annotation encoding="application/x-tex">LLR</annotation></semantics></math>
-and a lower coefficient
+where a value of 1 indicates chance-level accuracy and a lower
+coefficient
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>C</mi><mrow><mi>l</mi><mi>l</mi><mi>r</mi></mrow></msub><mo>&lt;</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">C_{llr}&lt;1</annotation></semantics></math>
-suggests that there is information in the
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>L</mi><mi>L</mi><mi>R</mi></mrow><annotation encoding="application/x-tex">LLR</annotation></semantics></math>,
-with lower values of
+suggests that there is valuable information in the results, with lower
+values of
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>C</mi><mrow><mi>l</mi><mi>l</mi><mi>r</mi></mrow></msub><annotation encoding="application/x-tex">C_{llr}</annotation></semantics></math>
 suggesting better performance. The other binary classification metrics
 returned, such as Precision, Recall, and F1, are all calculated using
@@ -494,17 +482,16 @@ as the threshold for a TRUE (or same-author in this case)
 classification.</p>
 <p>In the present example, a
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>C</mi><mrow><mi>l</mi><mi>l</mi><mi>r</mi></mrow></msub><mo>=</mo></mrow><annotation encoding="application/x-tex">C_{llr}=</annotation></semantics></math>
-0.804 suggests that there is enough information in the
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>L</mi><mi>L</mi><mi>R</mi></mrow><annotation encoding="application/x-tex">LLR</annotation></semantics></math>
-to be able to proceed with the actual forensic analysis. The
+0.798 suggests that the performance is acceptable to be able to proceed
+with the actual forensic analysis. The
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msubsup><mi>C</mi><mrow><mi>l</mi><mi>l</mi><mi>r</mi></mrow><mrow><mi>m</mi><mi>i</mi><mi>n</mi></mrow></msubsup><annotation encoding="application/x-tex">C_{llr}^{min}</annotation></semantics></math>,
 which is the component of
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>C</mi><mrow><mi>l</mi><mi>l</mi><mi>r</mi></mrow></msub><annotation encoding="application/x-tex">C_{llr}</annotation></semantics></math>
 measuring the amount of discrimination, is even lower, which means that
 there is a substantial difference in the two distributions. This is
-confirmed by the Area Under the Curve value of 0.83. Because of the
+confirmed by the Area Under the Curve value of 0.777. Because of the
 large disparity between the TRUE and FALSE test cases, the values of
-Precision and F1 are misleading. The Balanced Accuracy value of 0.846,
+Precision and F1 are misleading. The Balanced Accuracy value of 0.767,
 however, again suggests a substantial amount of discrimination at
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>L</mi><mi>L</mi><mi>R</mi><mo>=</mo><mn>0</mn></mrow><annotation encoding="application/x-tex">LLR=0</annotation></semantics></math>.</p>
 <p>The results of the analysis can also be plotted using a density plot
@@ -512,9 +499,9 @@ for each of the two distributions, TRUE and FALSE. This can be done
 using the <code><a href="../reference/density_plot.html">density_plot()</a></code> function</p>
 <div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/density_plot.html">density_plot</a></span><span class="op">(</span><span class="va">res</span><span class="op">)</span></span></code></pre></div>
-<p><img src="idiolect_files/figure-html/unnamed-chunk-16-1.png" class="r-plt" alt="" width="660"></p>
+<p><img src="idiolect_files/figure-html/unnamed-chunk-17-1.png" class="r-plt" alt="" width="660"></p>
 <p>This plot shows the values of the score on the horizontal axis and
-the density for TRUE (red) vs. FALSE (blue) on the vertical axis.</p>
+the density for TRUE (blue) vs. FALSE (red) on the vertical axis.</p>
 <p>These findings are evidence that the method is validated for this
 dataset and it is now possible to analyse the
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>Q</mi><annotation encoding="application/x-tex">Q</annotation></semantics></math>
@@ -537,14 +524,14 @@ and
 into the <code><a href="../reference/impostors.html">impostors()</a></code> function using the same settings used
 for the validation.</p>
 <div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">q.res</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/impostors.html">impostors</a></span><span class="op">(</span><span class="va">Q</span>, <span class="va">K</span>, <span class="va">R</span>, algorithm <span class="op">=</span> <span class="st">"RBI"</span>, k <span class="op">=</span> <span class="fl">50</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">q.res</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/impostors.html">impostors</a></span><span class="op">(</span><span class="va">Q</span>, <span class="va">K</span>, <span class="va">R</span>, algorithm <span class="op">=</span> <span class="st">"RBI"</span>, k <span class="op">=</span> <span class="fl">10</span><span class="op">)</span></span></code></pre></div>
 <p>Because there is only one
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>Q</mi><annotation encoding="application/x-tex">Q</annotation></semantics></math>
 text, the final table of results only contains one row</p>
 <div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">q.res</span></span>
-<span><span class="co">#&gt;    K                       Q target score</span></span>
-<span><span class="co">#&gt; 1 Kw unknown [Kw Mail_3].txt   TRUE 0.975</span></span></code></pre></div>
+<span><span class="co">#&gt;            K                 Q target score</span></span>
+<span><span class="co">#&gt; 1 Kimberly_w Kimberly_w_Mail_3   TRUE     1</span></span></code></pre></div>
 <div class="section level3">
 <h3 id="qualitative-examination-of-evidence">Qualitative examination of evidence<a class="anchor" aria-label="anchor" href="#qualitative-examination-of-evidence"></a>
 </h3>
@@ -723,7 +710,7 @@ distributions at the horizontal axis corresponding to the score of
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>Q</mi><annotation encoding="application/x-tex">Q</annotation></semantics></math>.</p>
 <div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/density_plot.html">density_plot</a></span><span class="op">(</span><span class="va">res</span>, q <span class="op">=</span> <span class="va">q.res</span><span class="op">$</span><span class="va">score</span><span class="op">)</span></span></code></pre></div>
-<p><img src="idiolect_files/figure-html/unnamed-chunk-25-1.png" class="r-plt" alt="" width="660"></p>
+<p><img src="idiolect_files/figure-html/unnamed-chunk-26-1.png" class="r-plt" alt="" width="660"></p>
 <p>To perform this calibration the <code><a href="../reference/calibrate_LLR.html">calibrate_LLR()</a></code> function
 is used again by using the validation results as calibration data</p>
 <div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
@@ -731,7 +718,7 @@ is used again by using the validation results as calibration data</p>
 <span><span class="va">q.llr</span><span class="op">$</span><span class="va">`Verbal label`</span></span>
 <span><span class="co">#&gt; [1] "Moderate support for $H_p$"</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/strwrap.html" class="external-link">strwrap</a></span><span class="op">(</span><span class="va">q.llr</span><span class="op">$</span><span class="va">Interpretation</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] "The similarity is 27.04 times more likely to be observed in the case of"</span></span>
+<span><span class="co">#&gt; [1] "The similarity is 13.24 times more likely to be observed in the case of"</span></span>
 <span><span class="co">#&gt; [2] "$H_p$ than in the case of $H_d$"</span></span></code></pre></div>
 <p>This function not only returns the
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>L</mi><mi>L</mi><mi>R</mi></mrow><annotation encoding="application/x-tex">LLR</annotation></semantics></math>
@@ -742,9 +729,9 @@ value but also the verbal labels and their interpretation <span class="citation"
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>Q</mi><annotation encoding="application/x-tex">Q</annotation></semantics></math>
 given
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>K</mi><annotation encoding="application/x-tex">K</annotation></semantics></math>
-is 0.975, which corresponds to
+is 1, which corresponds to
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>L</mi><mi>L</mi><mi>R</mi><mo>=</mo></mrow><annotation encoding="application/x-tex">LLR=</annotation></semantics></math>
-1.432. The similarity is 27.04 times more likely to be observed in the
+1.122. The similarity is 13.24 times more likely to be observed in the
 case of
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>H</mi><mi>p</mi></msub><annotation encoding="application/x-tex">H_p</annotation></semantics></math>
 than in the case of
@@ -764,34 +751,34 @@ input the value of the
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 11 × 2</span></span></span>
 <span><span class="co">#&gt;    prosecution_prior_probs prosecution_post_probs</span></span>
 <span><span class="co">#&gt;                      <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>                  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span>                0.000<span style="text-decoration: underline;">001</span>              0.000<span style="text-decoration: underline;">027</span>0</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span>                0.01                  0.215    </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span>                0.1                   0.750    </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span>                0.2                   0.871    </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span>                0.3                   0.921    </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span>                0.4                   0.947    </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span>                0.5                   0.964    </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span>                0.6                   0.976    </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span>                0.7                   0.984    </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span>                0.8                   0.991    </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">11</span>                0.9                   0.996</span></span></code></pre></div>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span>                0.000<span style="text-decoration: underline;">001</span>              0.000<span style="text-decoration: underline;">013</span>2</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span>                0.01                  0.118    </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span>                0.1                   0.595    </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span>                0.2                   0.768    </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span>                0.3                   0.850    </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span>                0.4                   0.898    </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span>                0.5                   0.930    </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span>                0.6                   0.952    </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span>                0.7                   0.969    </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span>                0.8                   0.981    </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">11</span>                0.9                   0.992</span></span></code></pre></div>
 <p>The table above reveals that, assuming a prior probability for
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>H</mi><mi>p</mi></msub><annotation encoding="application/x-tex">H_p</annotation></semantics></math>
 of 0.00001 (roughly, one out of the population of Manchester), then this
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>L</mi><mi>L</mi><mi>R</mi></mrow><annotation encoding="application/x-tex">LLR</annotation></semantics></math>
 would transform this probability to a posterior probability for
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>H</mi><mi>p</mi></msub><annotation encoding="application/x-tex">H_p</annotation></semantics></math>
-of 0.000027. In other words, it would not make much substantial
+of 0.000018. In other words, it would not make much substantial
 difference for the trial.</p>
 <p>However, if the prior probability of
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>H</mi><mi>p</mi></msub><annotation encoding="application/x-tex">H_p</annotation></semantics></math>
-was 0.5, then these results would turn it to 0.96, which is a
+was 0.5, then these results would turn it to 0.95, which is a
 substantial change.</p>
 <p>The table shows that the present evidence could change the
 probability that
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>H</mi><mi>p</mi></msub><annotation encoding="application/x-tex">H_p</annotation></semantics></math>
 is true to equal or higher than 0.9 only with a prior greater than
-0.2.</p>
+0.3.</p>
 </div>
 </div>
 <div class="section level2">
@@ -808,12 +795,15 @@ helpful comments on the first draft of this vignette.</p>
 Bischoff, Sebastian, Niklas Deckers, Marcel Schliebs, Ben Thies,
 Matthias Hagen, Efstathios Stamatatos, Benno Stein, and Martin Potthast.
 2020. <span>“The Importance of Suppressing Domain Style in Authorship
-Analysis,”</span> May. <a href="https://arxiv.org/abs/2005.14714" class="external-link">https://arxiv.org/abs/2005.14714</a>.
+Analysis.”</span> <a href="https://arxiv.org/abs/2005.14714" class="external-link">https://arxiv.org/abs/2005.14714</a>.
 </div>
 <div id="ref-halvani2021" class="csl-entry">
-Halvani, Oren, and Lukas Graner. 2021. <span>“16th International
-Conference on Availability, Reliability and Security.”</span> In, 1–12.
-Vienna, Austria: Association for Computing Machinery. <a href="https://doi.org/10.1145/3465481.3470050" class="external-link">https://doi.org/10.1145/3465481.3470050</a>.
+Halvani, Oren, and Lukas Graner. 2021. <span>“<span>POSNoise</span>:
+<span>An Effective Countermeasure Against Topic Biases</span> in
+<span>Authorship Analysis</span>.”</span> In <em>Proceedings of the 16th
+<span>International Conference</span> on <span>Availability</span>,
+<span>Reliability</span> and <span>Security</span></em>, 1–12. Vienna,
+Austria: Association for Computing Machinery. <a href="https://doi.org/10.1145/3465481.3470050" class="external-link">https://doi.org/10.1145/3465481.3470050</a>.
 </div>
 <div id="ref-ishihara2021" class="csl-entry">
 Ishihara, Shunichi. 2021. <span>“Score-Based Likelihood Ratios for
@@ -844,8 +834,9 @@ Avoid Misunderstandings.”</span> <em>Science &amp; Justice</em> 56 (5):
 </div>
 <div id="ref-morrison2013" class="csl-entry">
 Morrison, Geoffrey Stewart. 2013. <span>“Tutorial on Logistic-Regression
-Calibration and Fusion:converting a Score to a Likelihood Ratio.”</span>
-<em>Australian Journal of Forensic Sciences</em> 45 (2): 173–97. <a href="https://doi.org/10.1080/00450618.2012.733025" class="external-link">https://doi.org/10.1080/00450618.2012.733025</a>.
+Calibration and Fusion: Converting a Score to a Likelihood
+Ratio.”</span> <em>Australian Journal of Forensic Sciences</em> 45 (2):
+173–97. <a href="https://doi.org/10.1080/00450618.2012.733025" class="external-link">https://doi.org/10.1080/00450618.2012.733025</a>.
 </div>
 <div id="ref-nini2023" class="csl-entry">
 Nini, Andrea. 2023. <em>A Theory of Linguistic Individuality for
@@ -853,11 +844,14 @@ Authorship Analysis</em>. Elements in Forensic Linguistics. Cambridge,
 UK: Cambridge University Press.
 </div>
 <div id="ref-potha2017" class="csl-entry">
-Potha, Nektaria, and Efstathios Stamatatos. 2017. <span>“An Improved
-Impostors Method for Authorship Verification.”</span> In, edited by
-Gareth J. F. Jones, Séamus Lawless, Julio Gonzalo, Liadh Kelly, Lorraine
-Goeuriot, Thomas Mandl, Linda Cappellato, and Nicola Ferro,
-10456:138–44. Lecture Notes in Computer Science. Springer, Cham. <a href="https://doi.org/10.1007/978-3-319-65813-1_14" class="external-link">https://doi.org/10.1007/978-3-319-65813-1_14</a>.
+Potha, Nektaria, and Efstathios Stamatatos. 2017. <span>“An
+<span>Improved Impostors Method</span> for <span>Authorship
+Verification</span>.”</span> In <em>Experimental <span>IR Meets
+Multilinguality</span>, <span>Multimodality</span>, and
+<span>Interaction</span></em>, edited by Gareth J. F. Jones, Séamus
+Lawless, Julio Gonzalo, Liadh Kelly, Lorraine Goeuriot, Thomas Mandl,
+Linda Cappellato, and Nicola Ferro, 10456:138–44. Lecture
+<span>Notes</span> in <span>Computer Science</span>. Springer, Cham.
 </div>
 <div id="ref-potha2020" class="csl-entry">
 ———. 2020. <span>“Improved Algorithms for Extrinsic Author
@@ -879,10 +873,13 @@ Text Distortion</span>.”</span> In <em>Proceedings of the 15th
 Spain: Association for Computational Linguistics.
 </div>
 <div id="ref-ypma2023" class="csl-entry">
-Ypma, Rolf J. F., Daniel Ramos, and Didier Meuwly. 2023. <span>“AI-Based
-Forensic Evaluation in Court: The Desirability of Explanation and the
-Necessity of Validation.”</span> In, edited by Zeno Geradts and Katrin
-Franke, 3–17. Forensic Science in Focus. Hoboken, NJ: Wiley.
+Ypma, Rolf J. F., Daniel Ramos, and Didier Meuwly. 2023. <span>“<span class="nocase">AI-based Forensic Evaluation</span> in
+<span>Court</span>: <span>The Desirability</span> of
+<span>Explanation</span> and the <span>Necessity</span> of
+<span>Validation</span>.”</span> In <em>Artificial
+<span>Intelligence</span> (<span>AI</span>) in <span>Forensic
+Sciences</span></em>, edited by Zeno Geradts and Katrin Franke, 3–17.
+Forensic <span>Science</span> in <span>Focus</span>. Hoboken, NJ: Wiley.
 </div>
 </div>
 </div>

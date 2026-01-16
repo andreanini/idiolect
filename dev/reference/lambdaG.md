@@ -71,7 +71,7 @@ q.data <- enron.sample[1] |> quanteda::tokens("sentence")
 k.data <- enron.sample[2:10] |> quanteda::tokens("sentence")
 ref.data <- enron.sample[11:ndoc(enron.sample)] |> quanteda::tokens("sentence")
 lambdaG(q.data, k.data, ref.data)
-#>    K                     Q target  score
-#> 1 Kh known [Kh Mail_1].txt   TRUE 37.171
-#> 2 Kw known [Kh Mail_1].txt  FALSE -6.720
+#>            K              Q target  score
+#> 1    Kevin_h Kevin_h_Mail_1   TRUE 37.171
+#> 2 Kimberly_w Kevin_h_Mail_1  FALSE -6.720
 ```

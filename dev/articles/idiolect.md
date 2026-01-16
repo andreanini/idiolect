@@ -31,11 +31,8 @@ is indicated as $Q$, while a set of texts of known origin, for example
 the texts written by the candidate author and collected as comparison
 material, is labelled using $K$. In addition to these two datasets, the
 analysis also necessitates of a comparison reference corpus that we call
-$R$. In a classic case involving a closed set of suspects, the texts
-written by the suspects minus the candidate form $R$. In *Authorship
-Verification* cases that only involve one candidate author, then the
-reference dataset might have to be compiled by the analyst for the
-specific case (Ishihara et al. 2024).
+$R$. This reference dataset might have to be compiled by the analyst for
+the specific case (Ishihara et al. 2024).
 
 A crucial difference between Authorship Analysis and Forensic Authorship
 Analysis is that whereas the former can be treated as a classification
@@ -60,11 +57,15 @@ Given $K$, $Q$ and $R$, the workflow for this analysis involves four
 steps:
 
 1.  **Preparation**: This step involves any pre-processing step that is
-    necessary for the analysis with the chosen method;
+    necessary for the analysis with the chosen method.
 2.  **Validation**: Carry out an analysis on the case data or on a
     separate dataset that has been designed to be similar to the case
-    material in order to validate the method for this particular case;
-3.  **Analysis**: Carry out the analysis on the real $K$, $Q$, and $R$;
+    material in order to validate that the chosen method works for this
+    particular case. Even though all the methods contained in `idiolect`
+    have been tested in various published academic studies, it is also
+    important that the methods are tested (i.e. *validated*) for any
+    specific case (Ishihara et al. 2024).
+3.  **Analysis**: Carry out the analysis on the real $K$, $Q$, and $R$.
 4.  **Calibration**: Turn the output of (3) into a Likelihood Ratio that
     expresses the strength of the evidence given the two competing
     hypotheses.
@@ -137,23 +138,23 @@ preview of the corpus
 
 ``` r
 corpus
-#> Corpus consisting of 49 documents and 1 docvar.
-#> known [Kh Mail_1].txt :
+#> Corpus consisting of 49 documents and 2 docvars.
+#> Kevin_h_Mail_1 :
 #> "N N N N wants to be N when he V up likes N P , N for doing t..."
 #> 
-#> known [Kh Mail_3].txt :
+#> Kevin_h_Mail_3 :
 #> "i 've V a J one , but the only N N N i have is on a N N from..."
 #> 
-#> known [Kh Mail_4].txt :
+#> Kevin_h_Mail_4 :
 #> "this was J towards the N of a J N N N . in N , P P helped th..."
 #> 
-#> known [Kh Mail_5].txt :
+#> Kevin_h_Mail_5 :
 #> "V the N for more than D N may get you V . a N N with a N and..."
 #> 
-#> unknown [Kh Mail_2].txt :
+#> Kevin_h_Mail_2 :
 #> "P , here 's the J N on our P P N V to V the V needs of the P..."
 #> 
-#> unknown [Kw Mail_3].txt :
+#> Kimberly_w_Mail_3 :
 #> "they also have J N at the J N of P D per N and only a D J ea..."
 #> 
 #> [ reached max_ndoc ... 43 more documents ]
@@ -164,7 +165,7 @@ contain meaning (nouns, verbs, adjectives, adverbs) with their Part of
 Speech tag (N, V, J, B) while all the other words or tokens are left
 unchanged. In addition to this operation, *POSnoise* contains a white
 list of content words that mostly tend to be functional in English, such
-as verbs like *do, have, make* or adverbs such as *consequently*,
+as verbs like *do*, *have*, *make* or adverbs such as *consequently*,
 *therefore*.
 
 The following code should be used to run the
@@ -177,8 +178,8 @@ process should happen automatically.
 posnoised.corpus <- contentmask(corpus, model = "en_core_web_sm", algorithm = "POSnoise")
 ```
 
-If the installation did not start automatically, then you can try this
-code:
+If the installation did not start automatically, then the installatino
+of the `spacyr` package and of the default model can be done as follows:
 
 ``` r
 install.packages("spacyr")
@@ -187,16 +188,15 @@ spacyr::install_spacy()
 
 ### Data labelling
 
-In this example it is simulated that the first text written by the
-author *Kw* is the real $Q$ text (the one labelled as ‘unknown’) and all
-the other known texts written by *Kw* (labelled as ‘known’) are
-therefore the set of known texts $K$. The remaining texts from the other
-authors are the reference samples $R$.
+In this example it is simulated that *Kimberly_w_Mail_3*, written by the
+author *Kimberly_w*, is the real $Q$ text and all the other known texts
+written by *Kimberly_w* are therefore the set of known texts $K$. The
+remaining texts from the other authors are the reference samples $R$.
 
 ``` r
-Q <- corpus_subset(corpus, author == "Kw")[1]
-K <- corpus_subset(corpus, author == "Kw")[2:5]
-R <- corpus_subset(corpus, author != "Kw")
+Q <- corpus_subset(corpus, author == "Kimberly_w" & textname == "Mail_3")
+K <- corpus_subset(corpus, author == "Kimberly_w" & textname != "Mail_3")
+R <- corpus_subset(corpus, author != "Kimberly_w")
 ```
 
 ### Vectorisation
@@ -215,24 +215,24 @@ using this code.
 vectorize(Q, tokens = "word", remove_punct = F, remove_symbols = T, remove_numbers = T,
           lowercase = T, n = 1, weighting = "rel", trim = F) |> 
   print(max_nfeat = 3)
-#> Document-feature matrix of: 1 document, 136 features (0.00% sparse) and 1 docvar.
-#>                          features
-#> docs                            they        also      have
-#>   unknown [Kw Mail_3].txt 0.00289296 0.009643202 0.0192864
+#> Document-feature matrix of: 1 document, 136 features (0.00% sparse) and 2 docvars.
+#>                    features
+#> docs                      they        also      have
+#>   Kimberly_w_Mail_3 0.00289296 0.009643202 0.0192864
 #> [ reached max_nfeat ... 133 more features ]
 ```
 
-or, as the most frequent 1,000 character 4-grams relative frequencies,
+or, as the most frequent 1000 character 4-grams relative frequencies,
 for example, using
 
 ``` r
 vectorize(Q, tokens = "character", remove_punct = F, remove_symbols = T, remove_numbers = T,
           lowercase = T, n = 4, weighting = "rel", trim = T, threshold = 1000) |> 
   print(max_nfeat = 3)
-#> Document-feature matrix of: 1 document, 1,094 features (0.00% sparse) and 1 docvar.
-#>                          features
-#> docs                              they         hey          ey a
-#>   unknown [Kw Mail_3].txt 0.0009771987 0.0009771987 0.0003257329
+#> Document-feature matrix of: 1 document, 1,094 features (0.00% sparse) and 2 docvars.
+#>                    features
+#> docs                        they         hey          ey a
+#>   Kimberly_w_Mail_3 0.0009771987 0.0009771987 0.0003257329
 #> [ reached max_nfeat ... 1,091 more features ]
 ```
 
@@ -248,8 +248,8 @@ analysis methods already have a default setting of these parameters,
 these are already the default for the authorship analysis functions.
 
 This step is therefore not necessary unless there are specific
-requirements as any vectorisation is handled by the functions that apply
-the authorship analysis methods.
+requirements, as any vectorisation is handled by the functions that
+apply the authorship analysis methods.
 
 ## Validation
 
@@ -262,34 +262,32 @@ only the $K$ and $R$ datasets
 validation <- K + R
 ```
 
-This dataset can now be re-divided into ‘fake’ $Q$ texts and ‘fake’ $K$
-texts. Each text in this corpus is labelled as ‘unknown’ or ‘known’ so
-two new disjoint datasets, `validation.Q` and `validation.K` can be
-created by selecting the texts based on this label.
+This dataset must now be re-divided into ‘fake’ $Q$ texts and ‘fake’ $K$
+texts.
+
+To create two new disjoint datasets, `validation.Q` and `validation.K`,
+we randomly sample one text for each author to be the ‘fake’ $Q$ and we
+leave the rest to be their ‘fake’ $K$ texts.
 
 ``` r
-validation.Q <- corpus_subset(validation, grepl("^unknown", docnames(validation)))
-validation.K <- corpus_subset(validation, grepl("^known", docnames(validation)))
+validation.Q <- corpus_sample(validation, size = 1, by = author)
+validation.K <- corpus_subset(validation, !docnames(validation) %in% docnames(validation.Q))
 ```
 
 This is not the only way in which a validation analysis can be
-conducted. For example, one could adopt a leave-one-out approach by
-taking each single text and treat it as a $Q$ and then run an authorship
-analysis method for each one of them. Alternatively, a completely
-different dataset that is similar to the case data could be used. This
-simpler approach is more suitable for this small example.
+conducted. A completely different dataset that is similar to the case
+data could be used, for example. This simpler approach is more suitable
+for this small example.
 
 ### Authorship analysis
 
-The analysis that is being validated is the same analysis that will be
-applied to the $Q$ text. Therefore, a choice of method has to be made
-depending on the right choice to analyse $Q$. In this example, the
-scenario simulated is a *verification*: was the unknown $Q$ text written
-by the $K$ author, *Kw*? For this reason, the method chosen is one of
-the most successful authorship verification methods available today, the
-*Impostors Method* (Koppel and Winter 2014), and in particular one of
-its latest variants called the *Rank-Based Impostors Method* (Potha and
-Stamatatos 2017, 2020).
+In this example, the scenario simulated is a *verification*: was the
+unknown $Q$ text written by the $K$ author, *Kimberly_w*? For this
+reason, the method chosen is one of the most successful authorship
+verification methods available at present, the *Impostors Method*
+(Koppel and Winter 2014), and in particular one of its latest variants
+called the *Rank-Based Impostors Method* (Potha and Stamatatos 2017,
+2020).
 
 This analysis can be run in `idiolect` using the function
 [`impostors()`](https://andreanini.github.io/idiolect/dev/reference/impostors.md)
@@ -317,22 +315,23 @@ and
 [`impostors()`](https://andreanini.github.io/idiolect/dev/reference/impostors.md)
 does not offer additional parameters to modify the vectorisation process
 because all the Impostors Method algorithms already have a
-well-specified default setting. If the user wants to change that they
+well-specified default setting. If the user wants to change these they
 should then vectorise the corpus separately using
 [`vectorize()`](https://andreanini.github.io/idiolect/dev/reference/vectorize.md)
 and then use the *dfm* as the input of
 [`impostors()`](https://andreanini.github.io/idiolect/dev/reference/impostors.md).
 
-The RBI variant of the method also requires setting a parameter called
-$k$, which is the number of most similar impostors texts to sample from
-the wider set of impostors. The recommended setting is $k = 100$ or
-$k = 300$ but for simplicity this is set to $k = 50$ in this example.
+The RBI variant of the method requires setting a parameter called $k$,
+which is the number of most similar impostors texts to sample from the
+wider set of impostors. The recommended setting is $k = 100$ or
+$k = 300$ but for simplicity this is set to $k = 10$ in this example.
+This is not a realistic setting and it is used here only as an example.
 
 Because an analysis using the Impostors Method can have long run times,
 this function can also be parallelised using more than one core.
 
 ``` r
-res <- impostors(validation.Q, validation.K, validation.K, algorithm = "RBI", k = 50)
+res <- impostors(validation.Q, validation.K, validation.K, algorithm = "RBI", k = 10)
 ```
 
 The output of
@@ -349,17 +348,17 @@ this is the $\Delta$ coefficient, and so on).
 
 ``` r
 res[1:10,]
-#>     K                       Q target score
-#> 1  Kw unknown [Kh Mail_2].txt  FALSE 0.404
-#> 2  Kw unknown [Lc Mail_1].txt  FALSE 0.243
-#> 3  Kw unknown [Ld Mail_4].txt  FALSE 0.752
-#> 4  Kw unknown [Lt Mail_2].txt  FALSE 0.215
-#> 5  Kw unknown [Lk Mail_4].txt  FALSE 0.306
-#> 6  Kw unknown [Lb Mail_3].txt  FALSE 0.975
-#> 7  Kw unknown [La Mail_3].txt  FALSE 0.262
-#> 8  Kw unknown [Mf Mail_1].txt  FALSE 0.933
-#> 9  Kw unknown [Ml Mail_3].txt  FALSE 0.846
-#> 10 Kh unknown [Kh Mail_2].txt   TRUE 0.555
+#>             K                 Q target score
+#> 1  Kimberly_w    Kevin_h_Mail_1  FALSE 0.750
+#> 2  Kimberly_w Kimberly_w_Mail_5   TRUE 1.000
+#> 3  Kimberly_w    Larry_c_Mail_2  FALSE 0.500
+#> 4  Kimberly_w    Lindy_d_Mail_3  FALSE 0.833
+#> 5  Kimberly_w      Liz_t_Mail_4  FALSE 0.667
+#> 6  Kimberly_w   Louise_k_Mail_2  FALSE 0.667
+#> 7  Kimberly_w     Lynn_b_Mail_3  FALSE 1.000
+#> 8  Kimberly_w     Lysa_a_Mail_5  FALSE 0.500
+#> 9  Kimberly_w        M_f_Mail_3  FALSE 0.750
+#> 10 Kimberly_w        M_l_Mail_2  FALSE 0.833
 ```
 
 In order to assess the results of this validation analysis, the function
@@ -379,37 +378,37 @@ using the
 function, which fits a logistic regression model to calibrate the score
 into a $LLR$Ishihara (2021) using the `ROC` library (Leeuwen 2015).
 
-The output of the function is the following
+The output of the function is the following:
 
 ``` r
-p <- performance(res)
-#>   |                                                                              |                                                                      |   0%  |                                                                              |=                                                                     |   1%  |                                                                              |==                                                                    |   2%  |                                                                              |==                                                                    |   3%  |                                                                              |===                                                                   |   4%  |                                                                              |====                                                                  |   6%  |                                                                              |=====                                                                 |   7%  |                                                                              |======                                                                |   8%  |                                                                              |======                                                                |   9%  |                                                                              |=======                                                               |  10%  |                                                                              |========                                                              |  11%  |                                                                              |=========                                                             |  12%  |                                                                              |=========                                                             |  13%  |                                                                              |==========                                                            |  15%  |                                                                              |===========                                                           |  16%  |                                                                              |============                                                          |  17%  |                                                                              |=============                                                         |  18%  |                                                                              |=============                                                         |  19%  |                                                                              |==============                                                        |  20%  |                                                                              |===============                                                       |  21%  |                                                                              |================                                                      |  22%  |                                                                              |=================                                                     |  24%  |                                                                              |=================                                                     |  25%  |                                                                              |==================                                                    |  26%  |                                                                              |===================                                                   |  27%  |                                                                              |====================                                                  |  28%  |                                                                              |====================                                                  |  29%  |                                                                              |=====================                                                 |  30%  |                                                                              |======================                                                |  31%  |                                                                              |=======================                                               |  33%  |                                                                              |========================                                              |  34%  |                                                                              |========================                                              |  35%  |                                                                              |=========================                                             |  36%  |                                                                              |==========================                                            |  37%  |                                                                              |===========================                                           |  38%  |                                                                              |============================                                          |  39%  |                                                                              |============================                                          |  40%  |                                                                              |=============================                                         |  42%  |                                                                              |==============================                                        |  43%  |                                                                              |===============================                                       |  44%  |                                                                              |===============================                                       |  45%  |                                                                              |================================                                      |  46%  |                                                                              |=================================                                     |  47%  |                                                                              |==================================                                    |  48%  |                                                                              |===================================                                   |  49%  |                                                                              |===================================                                   |  51%  |                                                                              |====================================                                  |  52%  |                                                                              |=====================================                                 |  53%  |                                                                              |======================================                                |  54%  |                                                                              |=======================================                               |  55%  |                                                                              |=======================================                               |  56%  |                                                                              |========================================                              |  57%  |                                                                              |=========================================                             |  58%  |                                                                              |==========================================                            |  60%  |                                                                              |==========================================                            |  61%  |                                                                              |===========================================                           |  62%  |                                                                              |============================================                          |  63%  |                                                                              |=============================================                         |  64%  |                                                                              |==============================================                        |  65%  |                                                                              |==============================================                        |  66%  |                                                                              |===============================================                       |  67%  |                                                                              |================================================                      |  69%  |                                                                              |=================================================                     |  70%  |                                                                              |==================================================                    |  71%  |                                                                              |==================================================                    |  72%  |                                                                              |===================================================                   |  73%  |                                                                              |====================================================                  |  74%  |                                                                              |=====================================================                 |  75%  |                                                                              |=====================================================                 |  76%  |                                                                              |======================================================                |  78%  |                                                                              |=======================================================               |  79%  |                                                                              |========================================================              |  80%  |                                                                              |=========================================================             |  81%  |                                                                              |=========================================================             |  82%  |                                                                              |==========================================================            |  83%  |                                                                              |===========================================================           |  84%  |                                                                              |============================================================          |  85%  |                                                                              |=============================================================         |  87%  |                                                                              |=============================================================         |  88%  |                                                                              |==============================================================        |  89%  |                                                                              |===============================================================       |  90%  |                                                                              |================================================================      |  91%  |                                                                              |================================================================      |  92%  |                                                                              |=================================================================     |  93%  |                                                                              |==================================================================    |  94%  |                                                                              |===================================================================   |  96%  |                                                                              |====================================================================  |  97%  |                                                                              |====================================================================  |  98%  |                                                                              |===================================================================== |  99%  |                                                                              |======================================================================| 100%
+p <- performance(res, progress = FALSE)
 p$evaluation
 #>        Cllr  Cllr_min      EER Mean TRUE LLR Mean FALSE LLR TRUE trials
-#> 1 0.8043863 0.6155326 19.04762      0.413398     -0.3864078          11
-#>   FALSE trials      AUC Balanced Accuracy Precision    Recall        F1 TP FN
-#> 1           83 0.829904          0.845679 0.3333333 0.8888889 0.4848485  8  1
-#>   FP TN
-#> 1 16 65
+#> 1 0.7979282 0.7183427 26.26582     0.4062006     -0.4368895          12
+#>   FALSE trials       AUC Balanced Accuracy Precision Recall        F1 TP FN FP
+#> 1           92 0.7766667         0.7666667      0.25    0.8 0.3809524  8  2 24
+#>   TN
+#> 1 66
 ```
 
 The $C_{llr}$ and $C_{llr}^{min}$ coefficients are used to evaluate the
 performance of the $LLR$(Ramos et al. 2013). These coefficients estimate
-the cost of the $LLR$, where a value of 1 indicates no information in
-the $LLR$ and a lower coefficient $C_{llr} < 1$ suggests that there is
-information in the $LLR$, with lower values of $C_{llr}$ suggesting
-better performance. The other binary classification metrics returned,
-such as Precision, Recall, and F1, are all calculated using $LLR > 0$ as
-the threshold for a TRUE (or same-author in this case) classification.
+the accuracy of the $LLR$, where a value of 1 indicates chance-level
+accuracy and a lower coefficient $C_{llr} < 1$ suggests that there is
+valuable information in the results, with lower values of $C_{llr}$
+suggesting better performance. The other binary classification metrics
+returned, such as Precision, Recall, and F1, are all calculated using
+$LLR > 0$ as the threshold for a TRUE (or same-author in this case)
+classification.
 
-In the present example, a $C_{llr} =$ 0.804 suggests that there is
-enough information in the $LLR$ to be able to proceed with the actual
-forensic analysis. The $C_{llr}^{min}$, which is the component of
-$C_{llr}$ measuring the amount of discrimination, is even lower, which
-means that there is a substantial difference in the two distributions.
-This is confirmed by the Area Under the Curve value of 0.83. Because of
-the large disparity between the TRUE and FALSE test cases, the values of
-Precision and F1 are misleading. The Balanced Accuracy value of 0.846,
+In the present example, a $C_{llr} =$ 0.798 suggests that the
+performance is acceptable to be able to proceed with the actual forensic
+analysis. The $C_{llr}^{min}$, which is the component of $C_{llr}$
+measuring the amount of discrimination, is even lower, which means that
+there is a substantial difference in the two distributions. This is
+confirmed by the Area Under the Curve value of 0.777. Because of the
+large disparity between the TRUE and FALSE test cases, the values of
+Precision and F1 are misleading. The Balanced Accuracy value of 0.767,
 however, again suggests a substantial amount of discrimination at
 $LLR = 0$.
 
@@ -423,10 +422,10 @@ function
 density_plot(res)
 ```
 
-![](idiolect_files/figure-html/unnamed-chunk-16-1.png)
+![](idiolect_files/figure-html/unnamed-chunk-17-1.png)
 
 This plot shows the values of the score on the horizontal axis and the
-density for TRUE (red) vs. FALSE (blue) on the vertical axis.
+density for TRUE (blue) vs. FALSE (red) on the vertical axis.
 
 These findings are evidence that the method is validated for this
 dataset and it is now possible to analyse the $Q$ text and use these
@@ -440,7 +439,7 @@ by feeding the real $Q$, $K$, and $R$ into the
 function using the same settings used for the validation.
 
 ``` r
-q.res <- impostors(Q, K, R, algorithm = "RBI", k = 50)
+q.res <- impostors(Q, K, R, algorithm = "RBI", k = 10)
 ```
 
 Because there is only one $Q$ text, the final table of results only
@@ -448,8 +447,8 @@ contains one row
 
 ``` r
 q.res
-#>    K                       Q target score
-#> 1 Kw unknown [Kw Mail_3].txt   TRUE 0.975
+#>            K                 Q target score
+#> 1 Kimberly_w Kimberly_w_Mail_3   TRUE     1
 ```
 
 ### Qualitative examination of evidence
@@ -646,7 +645,7 @@ of $Q$.
 density_plot(res, q = q.res$score)
 ```
 
-![](idiolect_files/figure-html/unnamed-chunk-25-1.png)
+![](idiolect_files/figure-html/unnamed-chunk-26-1.png)
 
 To perform this calibration the
 [`calibrate_LLR()`](https://andreanini.github.io/idiolect/dev/reference/calibrate_LLR.md)
@@ -658,7 +657,7 @@ q.llr <- calibrate_LLR(res, q.res, latex = T)
 q.llr$`Verbal label`
 #> [1] "Moderate support for $H_p$"
 strwrap(q.llr$Interpretation)
-#> [1] "The similarity is 27.04 times more likely to be observed in the case of"
+#> [1] "The similarity is 13.24 times more likely to be observed in the case of"
 #> [2] "$H_p$ than in the case of $H_d$"
 ```
 
@@ -667,8 +666,8 @@ labels and their interpretation (Marquis et al. 2016).
 
 The final conclusion of the analysis is therefore the following:
 
-> The similarity score of $Q$ given $K$ is 0.975, which corresponds to
-> $LLR =$ 1.432. The similarity is 27.04 times more likely to be
+> The similarity score of $Q$ given $K$ is 1, which corresponds to
+> $LLR =$ 1.122. The similarity is 13.24 times more likely to be
 > observed in the case of $H_{p}$ than in the case of $H_{d}$.
 > Therefore, the linguistic analysis offers **Moderate support for
 > $H_{p}$**.
@@ -686,31 +685,31 @@ posterior(q.llr$LLR) |>
 #> # A tibble: 11 × 2
 #>    prosecution_prior_probs prosecution_post_probs
 #>                      <dbl>                  <dbl>
-#>  1                0.000001              0.0000270
-#>  2                0.01                  0.215    
-#>  3                0.1                   0.750    
-#>  4                0.2                   0.871    
-#>  5                0.3                   0.921    
-#>  6                0.4                   0.947    
-#>  7                0.5                   0.964    
-#>  8                0.6                   0.976    
-#>  9                0.7                   0.984    
-#> 10                0.8                   0.991    
-#> 11                0.9                   0.996
+#>  1                0.000001              0.0000132
+#>  2                0.01                  0.118    
+#>  3                0.1                   0.595    
+#>  4                0.2                   0.768    
+#>  5                0.3                   0.850    
+#>  6                0.4                   0.898    
+#>  7                0.5                   0.930    
+#>  8                0.6                   0.952    
+#>  9                0.7                   0.969    
+#> 10                0.8                   0.981    
+#> 11                0.9                   0.992
 ```
 
 The table above reveals that, assuming a prior probability for $H_{p}$
 of 0.00001 (roughly, one out of the population of Manchester), then this
 $LLR$ would transform this probability to a posterior probability for
-$H_{p}$ of 0.000027. In other words, it would not make much substantial
+$H_{p}$ of 0.000018. In other words, it would not make much substantial
 difference for the trial.
 
 However, if the prior probability of $H_{p}$ was 0.5, then these results
-would turn it to 0.96, which is a substantial change.
+would turn it to 0.95, which is a substantial change.
 
 The table shows that the present evidence could change the probability
 that $H_{p}$ is true to equal or higher than 0.9 only with a prior
-greater than 0.2.
+greater than 0.3.
 
 ## Acknowledgements
 
@@ -722,12 +721,13 @@ helpful comments on the first draft of this vignette.
 Bischoff, Sebastian, Niklas Deckers, Marcel Schliebs, Ben Thies,
 Matthias Hagen, Efstathios Stamatatos, Benno Stein, and Martin Potthast.
 2020. “The Importance of Suppressing Domain Style in Authorship
-Analysis,” May. <https://arxiv.org/abs/2005.14714>.
+Analysis.” <https://arxiv.org/abs/2005.14714>.
 
-Halvani, Oren, and Lukas Graner. 2021. “16th International Conference on
-Availability, Reliability and Security.” In, 1–12. Vienna, Austria:
-Association for Computing Machinery.
-<https://doi.org/10.1145/3465481.3470050>.
+Halvani, Oren, and Lukas Graner. 2021. “POSNoise: An Effective
+Countermeasure Against Topic Biases in Authorship Analysis.” In
+*Proceedings of the 16th International Conference on Availability,
+Reliability and Security*, 1–12. Vienna, Austria: Association for
+Computing Machinery. <https://doi.org/10.1145/3465481.3470050>.
 
 Ishihara, Shunichi. 2021. “Score-Based Likelihood Ratios for Linguistic
 Text Evidence with a Bag-of-Words Model.” *Forensic Science
@@ -755,7 +755,7 @@ Misunderstandings.” *Science & Justice* 56 (5): 364–70.
 <https://doi.org/10.1016/j.scijus.2016.05.009>.
 
 Morrison, Geoffrey Stewart. 2013. “Tutorial on Logistic-Regression
-Calibration and Fusion:converting a Score to a Likelihood Ratio.”
+Calibration and Fusion: Converting a Score to a Likelihood Ratio.”
 *Australian Journal of Forensic Sciences* 45 (2): 173–97.
 <https://doi.org/10.1080/00450618.2012.733025>.
 
@@ -764,11 +764,11 @@ Analysis*. Elements in Forensic Linguistics. Cambridge, UK: Cambridge
 University Press.
 
 Potha, Nektaria, and Efstathios Stamatatos. 2017. “An Improved Impostors
-Method for Authorship Verification.” In, edited by Gareth J. F. Jones,
-Séamus Lawless, Julio Gonzalo, Liadh Kelly, Lorraine Goeuriot, Thomas
-Mandl, Linda Cappellato, and Nicola Ferro, 10456:138–44. Lecture Notes
-in Computer Science. Springer, Cham.
-<https://doi.org/10.1007/978-3-319-65813-1_14>.
+Method for Authorship Verification.” In *Experimental IR Meets
+Multilinguality, Multimodality, and Interaction*, edited by Gareth J. F.
+Jones, Séamus Lawless, Julio Gonzalo, Liadh Kelly, Lorraine Goeuriot,
+Thomas Mandl, Linda Cappellato, and Nicola Ferro, 10456:138–44. Lecture
+Notes in Computer Science. Springer, Cham.
 
 ———. 2020. “Improved Algorithms for Extrinsic Author Verification.”
 *Knowledge and Information Systems* 62 (5): 1903–21.
@@ -785,7 +785,8 @@ Chapter of the Association for Computational Linguistics: Volume 1, Long
 Papers*, 1138–49. Valencia, Spain: Association for Computational
 Linguistics.
 
-Ypma, Rolf J. F., Daniel Ramos, and Didier Meuwly. 2023. “AI-Based
+Ypma, Rolf J. F., Daniel Ramos, and Didier Meuwly. 2023. “AI-based
 Forensic Evaluation in Court: The Desirability of Explanation and the
-Necessity of Validation.” In, edited by Zeno Geradts and Katrin Franke,
-3–17. Forensic Science in Focus. Hoboken, NJ: Wiley.
+Necessity of Validation.” In *Artificial Intelligence (AI) in Forensic
+Sciences*, edited by Zeno Geradts and Katrin Franke, 3–17. Forensic
+Science in Focus. Hoboken, NJ: Wiley.

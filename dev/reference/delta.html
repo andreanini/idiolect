@@ -122,101 +122,101 @@ Smith, Peter W H &amp; W Aldridge. 2011. Improving Authorship Attribution: Optim
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">Q</span> <span class="op">&lt;-</span> <span class="va">enron.sample</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">5</span><span class="op">:</span><span class="fl">6</span><span class="op">)</span><span class="op">]</span></span></span>
 <span class="r-in"><span><span class="va">K</span> <span class="op">&lt;-</span> <span class="va">enron.sample</span><span class="op">[</span><span class="op">-</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">5</span><span class="op">:</span><span class="fl">6</span><span class="op">)</span><span class="op">]</span></span></span>
 <span class="r-in"><span><span class="fu">delta</span><span class="op">(</span><span class="va">Q</span>, <span class="va">K</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                          Q                       K target  score</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1  unknown [Kh Mail_2].txt   known [Kh Mail_1].txt   TRUE -0.039</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2  unknown [Kw Mail_3].txt   known [Kh Mail_1].txt  FALSE -0.061</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3  unknown [Kh Mail_2].txt   known [Kh Mail_3].txt   TRUE  0.177</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4  unknown [Kw Mail_3].txt   known [Kh Mail_3].txt  FALSE  0.075</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5  unknown [Kh Mail_2].txt   known [Kh Mail_4].txt   TRUE -0.068</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6  unknown [Kw Mail_3].txt   known [Kh Mail_4].txt  FALSE -0.078</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 7  unknown [Kh Mail_2].txt   known [Kh Mail_5].txt   TRUE -0.018</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8  unknown [Kw Mail_3].txt   known [Kh Mail_5].txt  FALSE -0.161</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 9  unknown [Kh Mail_2].txt   known [Kw Mail_1].txt  FALSE -0.144</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 10 unknown [Kw Mail_3].txt   known [Kw Mail_1].txt   TRUE  0.110</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 11 unknown [Kh Mail_2].txt   known [Kw Mail_2].txt  FALSE -0.091</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 12 unknown [Kw Mail_3].txt   known [Kw Mail_2].txt   TRUE  0.195</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 13 unknown [Kh Mail_2].txt   known [Kw Mail_4].txt  FALSE -0.072</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 14 unknown [Kw Mail_3].txt   known [Kw Mail_4].txt   TRUE  0.315</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 15 unknown [Kh Mail_2].txt   known [Kw Mail_5].txt  FALSE -0.113</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 16 unknown [Kw Mail_3].txt   known [Kw Mail_5].txt   TRUE  0.243</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 17 unknown [Kh Mail_2].txt unknown [Lc Mail_1].txt  FALSE  0.177</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 18 unknown [Kw Mail_3].txt unknown [Lc Mail_1].txt  FALSE -0.073</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 19 unknown [Kh Mail_2].txt   known [Lc Mail_2].txt  FALSE -0.084</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 20 unknown [Kw Mail_3].txt   known [Lc Mail_2].txt  FALSE -0.192</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 21 unknown [Kh Mail_2].txt   known [Lc Mail_3].txt  FALSE -0.059</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 22 unknown [Kw Mail_3].txt   known [Lc Mail_3].txt  FALSE -0.009</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 23 unknown [Kh Mail_2].txt   known [Lc Mail_4].txt  FALSE  0.073</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 24 unknown [Kw Mail_3].txt   known [Lc Mail_4].txt  FALSE  0.028</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 25 unknown [Kh Mail_2].txt   known [Lc Mail_5].txt  FALSE  0.087</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 26 unknown [Kw Mail_3].txt   known [Lc Mail_5].txt  FALSE -0.172</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 27 unknown [Kh Mail_2].txt unknown [Ld Mail_4].txt  FALSE  0.017</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 28 unknown [Kw Mail_3].txt unknown [Ld Mail_4].txt  FALSE -0.021</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 29 unknown [Kh Mail_2].txt   known [Ld Mail_1].txt  FALSE -0.155</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 30 unknown [Kw Mail_3].txt   known [Ld Mail_1].txt  FALSE  0.082</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 31 unknown [Kh Mail_2].txt   known [Ld Mail_2].txt  FALSE -0.046</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 32 unknown [Kw Mail_3].txt   known [Ld Mail_2].txt  FALSE -0.086</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 33 unknown [Kh Mail_2].txt   known [Ld Mail_3].txt  FALSE -0.168</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 34 unknown [Kw Mail_3].txt   known [Ld Mail_3].txt  FALSE -0.084</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 35 unknown [Kh Mail_2].txt   known [Ld Mail_5].txt  FALSE -0.018</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 36 unknown [Kw Mail_3].txt   known [Ld Mail_5].txt  FALSE  0.032</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 37 unknown [Kh Mail_2].txt unknown [Lt Mail_2].txt  FALSE  0.032</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 38 unknown [Kw Mail_3].txt unknown [Lt Mail_2].txt  FALSE -0.143</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 39 unknown [Kh Mail_2].txt   known [Lt Mail_1].txt  FALSE  0.113</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 40 unknown [Kw Mail_3].txt   known [Lt Mail_1].txt  FALSE  0.116</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 41 unknown [Kh Mail_2].txt   known [Lt Mail_3].txt  FALSE  0.139</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 42 unknown [Kw Mail_3].txt   known [Lt Mail_3].txt  FALSE  0.080</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 43 unknown [Kh Mail_2].txt   known [Lt Mail_4].txt  FALSE  0.145</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 44 unknown [Kw Mail_3].txt   known [Lt Mail_4].txt  FALSE -0.032</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 45 unknown [Kh Mail_2].txt unknown [Lk Mail_4].txt  FALSE  0.030</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 46 unknown [Kw Mail_3].txt unknown [Lk Mail_4].txt  FALSE -0.154</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 47 unknown [Kh Mail_2].txt   known [Lk Mail_1].txt  FALSE -0.038</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 48 unknown [Kw Mail_3].txt   known [Lk Mail_1].txt  FALSE -0.012</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 49 unknown [Kh Mail_2].txt   known [Lk Mail_2].txt  FALSE -0.065</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 50 unknown [Kw Mail_3].txt   known [Lk Mail_2].txt  FALSE -0.104</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 51 unknown [Kh Mail_2].txt   known [Lk Mail_3].txt  FALSE  0.152</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 52 unknown [Kw Mail_3].txt   known [Lk Mail_3].txt  FALSE -0.002</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 53 unknown [Kh Mail_2].txt   known [Lk Mail_5].txt  FALSE -0.008</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 54 unknown [Kw Mail_3].txt   known [Lk Mail_5].txt  FALSE -0.060</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 55 unknown [Kh Mail_2].txt unknown [Lb Mail_3].txt  FALSE -0.203</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 56 unknown [Kw Mail_3].txt unknown [Lb Mail_3].txt  FALSE  0.072</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 57 unknown [Kh Mail_2].txt   known [Lb Mail_1].txt  FALSE -0.111</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 58 unknown [Kw Mail_3].txt   known [Lb Mail_1].txt  FALSE  0.114</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 59 unknown [Kh Mail_2].txt   known [Lb Mail_2].txt  FALSE -0.094</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 60 unknown [Kw Mail_3].txt   known [Lb Mail_2].txt  FALSE  0.052</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 61 unknown [Kh Mail_2].txt   known [Lb Mail_4].txt  FALSE  0.042</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 62 unknown [Kw Mail_3].txt   known [Lb Mail_4].txt  FALSE  0.132</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 63 unknown [Kh Mail_2].txt   known [Lb Mail_5].txt  FALSE -0.106</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 64 unknown [Kw Mail_3].txt   known [Lb Mail_5].txt  FALSE -0.070</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 65 unknown [Kh Mail_2].txt unknown [La Mail_3].txt  FALSE -0.006</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 66 unknown [Kw Mail_3].txt unknown [La Mail_3].txt  FALSE -0.278</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 67 unknown [Kh Mail_2].txt   known [La Mail_1].txt  FALSE -0.004</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 68 unknown [Kw Mail_3].txt   known [La Mail_1].txt  FALSE -0.193</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 69 unknown [Kh Mail_2].txt   known [La Mail_2].txt  FALSE -0.044</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 70 unknown [Kw Mail_3].txt   known [La Mail_2].txt  FALSE -0.134</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 71 unknown [Kh Mail_2].txt   known [La Mail_4].txt  FALSE  0.137</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 72 unknown [Kw Mail_3].txt   known [La Mail_4].txt  FALSE -0.270</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 73 unknown [Kh Mail_2].txt   known [La Mail_5].txt  FALSE  0.081</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 74 unknown [Kw Mail_3].txt   known [La Mail_5].txt  FALSE -0.220</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 75 unknown [Kh Mail_2].txt unknown [Mf Mail_1].txt  FALSE -0.242</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 76 unknown [Kw Mail_3].txt unknown [Mf Mail_1].txt  FALSE  0.024</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 77 unknown [Kh Mail_2].txt   known [Mf Mail_2].txt  FALSE -0.096</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 78 unknown [Kw Mail_3].txt   known [Mf Mail_2].txt  FALSE -0.023</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 79 unknown [Kh Mail_2].txt   known [Mf Mail_3].txt  FALSE  0.123</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 80 unknown [Kw Mail_3].txt   known [Mf Mail_3].txt  FALSE -0.017</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 81 unknown [Kh Mail_2].txt   known [Mf Mail_4].txt  FALSE -0.148</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 82 unknown [Kw Mail_3].txt   known [Mf Mail_4].txt  FALSE  0.057</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 83 unknown [Kh Mail_2].txt   known [Mf Mail_5].txt  FALSE  0.058</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 84 unknown [Kw Mail_3].txt   known [Mf Mail_5].txt  FALSE -0.135</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 85 unknown [Kh Mail_2].txt unknown [Ml Mail_3].txt  FALSE -0.214</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 86 unknown [Kw Mail_3].txt unknown [Ml Mail_3].txt  FALSE  0.053</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 87 unknown [Kh Mail_2].txt   known [Ml Mail_1].txt  FALSE  0.009</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 88 unknown [Kw Mail_3].txt   known [Ml Mail_1].txt  FALSE  0.051</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 89 unknown [Kh Mail_2].txt   known [Ml Mail_2].txt  FALSE -0.143</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 90 unknown [Kw Mail_3].txt   known [Ml Mail_2].txt  FALSE -0.046</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 91 unknown [Kh Mail_2].txt   known [Ml Mail_4].txt  FALSE  0.024</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 92 unknown [Kw Mail_3].txt   known [Ml Mail_4].txt  FALSE -0.032</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 93 unknown [Kh Mail_2].txt   known [Ml Mail_5].txt  FALSE  0.036</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 94 unknown [Kw Mail_3].txt   known [Ml Mail_5].txt  FALSE  0.064</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                    Q                 K target  score</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1     Kevin_h_Mail_2    Kevin_h_Mail_1   TRUE -0.039</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2  Kimberly_w_Mail_3    Kevin_h_Mail_1  FALSE -0.061</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3     Kevin_h_Mail_2    Kevin_h_Mail_3   TRUE  0.177</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4  Kimberly_w_Mail_3    Kevin_h_Mail_3  FALSE  0.075</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5     Kevin_h_Mail_2    Kevin_h_Mail_4   TRUE -0.068</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6  Kimberly_w_Mail_3    Kevin_h_Mail_4  FALSE -0.078</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 7     Kevin_h_Mail_2    Kevin_h_Mail_5   TRUE -0.018</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 8  Kimberly_w_Mail_3    Kevin_h_Mail_5  FALSE -0.161</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9     Kevin_h_Mail_2 Kimberly_w_Mail_1  FALSE -0.144</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10 Kimberly_w_Mail_3 Kimberly_w_Mail_1   TRUE  0.110</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 11    Kevin_h_Mail_2 Kimberly_w_Mail_2  FALSE -0.091</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 12 Kimberly_w_Mail_3 Kimberly_w_Mail_2   TRUE  0.195</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 13    Kevin_h_Mail_2 Kimberly_w_Mail_4  FALSE -0.072</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 14 Kimberly_w_Mail_3 Kimberly_w_Mail_4   TRUE  0.315</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 15    Kevin_h_Mail_2 Kimberly_w_Mail_5  FALSE -0.113</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 16 Kimberly_w_Mail_3 Kimberly_w_Mail_5   TRUE  0.243</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 17    Kevin_h_Mail_2    Larry_c_Mail_1  FALSE  0.177</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 18 Kimberly_w_Mail_3    Larry_c_Mail_1  FALSE -0.073</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 19    Kevin_h_Mail_2    Larry_c_Mail_2  FALSE -0.084</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 20 Kimberly_w_Mail_3    Larry_c_Mail_2  FALSE -0.192</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 21    Kevin_h_Mail_2    Larry_c_Mail_3  FALSE -0.059</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 22 Kimberly_w_Mail_3    Larry_c_Mail_3  FALSE -0.009</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 23    Kevin_h_Mail_2    Larry_c_Mail_4  FALSE  0.073</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 24 Kimberly_w_Mail_3    Larry_c_Mail_4  FALSE  0.028</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 25    Kevin_h_Mail_2    Larry_c_Mail_5  FALSE  0.087</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 26 Kimberly_w_Mail_3    Larry_c_Mail_5  FALSE -0.172</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 27    Kevin_h_Mail_2    Lindy_d_Mail_4  FALSE  0.017</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 28 Kimberly_w_Mail_3    Lindy_d_Mail_4  FALSE -0.021</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 29    Kevin_h_Mail_2    Lindy_d_Mail_1  FALSE -0.155</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 30 Kimberly_w_Mail_3    Lindy_d_Mail_1  FALSE  0.082</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 31    Kevin_h_Mail_2    Lindy_d_Mail_2  FALSE -0.046</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 32 Kimberly_w_Mail_3    Lindy_d_Mail_2  FALSE -0.086</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 33    Kevin_h_Mail_2    Lindy_d_Mail_3  FALSE -0.168</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 34 Kimberly_w_Mail_3    Lindy_d_Mail_3  FALSE -0.084</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 35    Kevin_h_Mail_2    Lindy_d_Mail_5  FALSE -0.018</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 36 Kimberly_w_Mail_3    Lindy_d_Mail_5  FALSE  0.032</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 37    Kevin_h_Mail_2      Liz_t_Mail_2  FALSE  0.032</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 38 Kimberly_w_Mail_3      Liz_t_Mail_2  FALSE -0.143</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 39    Kevin_h_Mail_2      Liz_t_Mail_1  FALSE  0.113</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 40 Kimberly_w_Mail_3      Liz_t_Mail_1  FALSE  0.116</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 41    Kevin_h_Mail_2      Liz_t_Mail_3  FALSE  0.139</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 42 Kimberly_w_Mail_3      Liz_t_Mail_3  FALSE  0.080</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 43    Kevin_h_Mail_2      Liz_t_Mail_4  FALSE  0.145</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 44 Kimberly_w_Mail_3      Liz_t_Mail_4  FALSE -0.032</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 45    Kevin_h_Mail_2   Louise_k_Mail_4  FALSE  0.030</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 46 Kimberly_w_Mail_3   Louise_k_Mail_4  FALSE -0.154</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 47    Kevin_h_Mail_2   Louise_k_Mail_1  FALSE -0.038</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 48 Kimberly_w_Mail_3   Louise_k_Mail_1  FALSE -0.012</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 49    Kevin_h_Mail_2   Louise_k_Mail_2  FALSE -0.065</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 50 Kimberly_w_Mail_3   Louise_k_Mail_2  FALSE -0.104</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 51    Kevin_h_Mail_2   Louise_k_Mail_3  FALSE  0.152</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 52 Kimberly_w_Mail_3   Louise_k_Mail_3  FALSE -0.002</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 53    Kevin_h_Mail_2   Louise_k_Mail_5  FALSE -0.008</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 54 Kimberly_w_Mail_3   Louise_k_Mail_5  FALSE -0.060</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 55    Kevin_h_Mail_2     Lynn_b_Mail_3  FALSE -0.203</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 56 Kimberly_w_Mail_3     Lynn_b_Mail_3  FALSE  0.072</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 57    Kevin_h_Mail_2     Lynn_b_Mail_1  FALSE -0.111</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 58 Kimberly_w_Mail_3     Lynn_b_Mail_1  FALSE  0.114</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 59    Kevin_h_Mail_2     Lynn_b_Mail_2  FALSE -0.094</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 60 Kimberly_w_Mail_3     Lynn_b_Mail_2  FALSE  0.052</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 61    Kevin_h_Mail_2     Lynn_b_Mail_4  FALSE  0.042</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 62 Kimberly_w_Mail_3     Lynn_b_Mail_4  FALSE  0.132</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 63    Kevin_h_Mail_2     Lynn_b_Mail_5  FALSE -0.106</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 64 Kimberly_w_Mail_3     Lynn_b_Mail_5  FALSE -0.070</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 65    Kevin_h_Mail_2     Lysa_a_Mail_3  FALSE -0.006</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 66 Kimberly_w_Mail_3     Lysa_a_Mail_3  FALSE -0.278</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 67    Kevin_h_Mail_2     Lysa_a_Mail_1  FALSE -0.004</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 68 Kimberly_w_Mail_3     Lysa_a_Mail_1  FALSE -0.193</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 69    Kevin_h_Mail_2     Lysa_a_Mail_2  FALSE -0.044</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 70 Kimberly_w_Mail_3     Lysa_a_Mail_2  FALSE -0.134</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 71    Kevin_h_Mail_2     Lysa_a_Mail_4  FALSE  0.137</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 72 Kimberly_w_Mail_3     Lysa_a_Mail_4  FALSE -0.270</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 73    Kevin_h_Mail_2     Lysa_a_Mail_5  FALSE  0.081</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 74 Kimberly_w_Mail_3     Lysa_a_Mail_5  FALSE -0.220</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 75    Kevin_h_Mail_2        M_f_Mail_1  FALSE -0.242</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 76 Kimberly_w_Mail_3        M_f_Mail_1  FALSE  0.024</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 77    Kevin_h_Mail_2        M_f_Mail_2  FALSE -0.096</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 78 Kimberly_w_Mail_3        M_f_Mail_2  FALSE -0.023</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 79    Kevin_h_Mail_2        M_f_Mail_3  FALSE  0.123</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 80 Kimberly_w_Mail_3        M_f_Mail_3  FALSE -0.017</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 81    Kevin_h_Mail_2        M_f_Mail_4  FALSE -0.148</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 82 Kimberly_w_Mail_3        M_f_Mail_4  FALSE  0.057</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 83    Kevin_h_Mail_2        M_f_Mail_5  FALSE  0.058</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 84 Kimberly_w_Mail_3        M_f_Mail_5  FALSE -0.135</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 85    Kevin_h_Mail_2        M_l_Mail_3  FALSE -0.214</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 86 Kimberly_w_Mail_3        M_l_Mail_3  FALSE  0.053</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 87    Kevin_h_Mail_2        M_l_Mail_1  FALSE  0.009</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 88 Kimberly_w_Mail_3        M_l_Mail_1  FALSE  0.051</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 89    Kevin_h_Mail_2        M_l_Mail_2  FALSE -0.143</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 90 Kimberly_w_Mail_3        M_l_Mail_2  FALSE -0.046</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 91    Kevin_h_Mail_2        M_l_Mail_4  FALSE  0.024</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 92 Kimberly_w_Mail_3        M_l_Mail_4  FALSE -0.032</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 93    Kevin_h_Mail_2        M_l_Mail_5  FALSE  0.036</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 94 Kimberly_w_Mail_3        M_l_Mail_5  FALSE  0.064</span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
