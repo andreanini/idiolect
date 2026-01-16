@@ -212,8 +212,8 @@ $Q$ text can be vectorised into the relative frequencies of its words
 using this code.
 
 ``` r
-vectorize(Q, tokens = "word", remove_punct = F, remove_symbols = T, remove_numbers = T,
-          lowercase = T, n = 1, weighting = "rel", trim = F) |> 
+vectorize(Q, tokens = "word", remove_punct = FALSE, remove_symbols = TRUE, remove_numbers = TRUE,
+          lowercase = TRUE, n = 1, weighting = "rel", trim = FALSE) |> 
   print(max_nfeat = 3)
 #> Document-feature matrix of: 1 document, 136 features (0.00% sparse) and 2 docvars.
 #>                    features
@@ -226,8 +226,8 @@ or, as the most frequent 1000 character 4-grams relative frequencies,
 for example, using
 
 ``` r
-vectorize(Q, tokens = "character", remove_punct = F, remove_symbols = T, remove_numbers = T,
-          lowercase = T, n = 4, weighting = "rel", trim = T, threshold = 1000) |> 
+vectorize(Q, tokens = "character", remove_punct = FALSE, remove_symbols = TRUE, remove_numbers = TRUE,
+          lowercase = TRUE, n = 4, weighting = "rel", trim = TRUE, threshold = 1000) |> 
   print(max_nfeat = 3)
 #> Document-feature matrix of: 1 document, 1,094 features (0.00% sparse) and 2 docvars.
 #>                    features
@@ -472,60 +472,63 @@ of important features. Running this again with this parameter switched
 on produces the following results
 
 ``` r
-q.res2 <- impostors(Q, K, R, algorithm = "RBI", k = 50, features = T)
+q.res2 <- impostors(Q, K, R, algorithm = "RBI", k = 10, features = TRUE)
 strwrap(q.res2$features, width = 70)
-#>  [1] ", her|lso ,|so , |P P f|, i w|N N .| too |our P|ur P |also |re is|i"  
-#>  [2] "jus|ll me|l me |ere i|st wa|P , h|u hav| yet | , he|ou ha|ust w|you"  
-#>  [3] "h| also|rom P|om P |ve no|u and|he J |N N N|the J|V our| here|ve a"   
-#>  [4] "|ith y|re al|few N|ew N | so i|ou an|e a N|P P i|P on |th yo| V my|V" 
-#>  [5] "my |e N w| , so|me to| few |eithe|ither| him |V it | P on|out w|at i" 
-#>  [6] "|t kno| may |P P V| N fr|u to |N fro|e is |V wit| V it|P for|, i h|"  
-#>  [7] "is o|u nee|ou to| V wi|s for| P fo|a N a|do no|h you| P in|P in | B ,"
-#>  [8] "| J N | me t| 'll |you n|ou ne|o not|, N a|t to |n N .|N in |o be |ke"
-#>  [9] "a |n P ,| N or|N or | look|t wan|ave a| it .|ave n|o V i|r J N|e an"  
-#> [10] "|as i |P D .|e tha|is J |o V w|r N w| , i |N who|t V a|e N s|se le| N"
-#> [11] "on|nd th|s you|ng th| is a|N N w|ase l| one | can |e hav| 's N|'s N |"
-#> [12] "i wo|i was|in V |e let| at t|are a| our |t the|N on |i hav|is V | as" 
-#> [13] "i|e J N|you t| to m|P 's |P P o|ake a|e thi|s N N| a N |in a |n you|" 
-#> [14] "you |hat P|o see| week|week |r N o|nt to| N if|N if |or V |N for|ut i"
-#> [15] "| N J |the N|he N | into|into |o hav| P 's|hat y|n our|if yo| N fo|to"
-#> [16] "do|o do | is J|P P .| my N| N in|me N |t you| i ha| do n| get |an V"  
-#> [17] "|e N N|V tha| i am|e P P|you N|ant t| on P| is V| i V |ome N|ore"     
-#> [18] "N|ave b|other|with | a J |at yo| N i | we w| the |did n|thing|hing |e"
-#> [19] "wil| J in|J in |on P |to me|o me |s the|ed to|or P |ve V |my N |to"   
-#> [20] "se| in a| but | , th| P , |t is | see |i wil|this |ou N |V thi|or N |"
-#> [21] "have|is a |N has|J to |have |i V t|o V o| V a | V fo|ther |e V i|i am"
-#> [22] "| J fo|J for|is N |a J N|V and|V on |as V |V for|N , h|can V|J N"     
-#> [23] "N|his N| J , |J N .| N th|f you|some | N wi| V an| with| be J|be J |d"
-#> [24] "the|V to |V in |but i| star|start|ng on|g on |a N t| N wh| just|r"    
-#> [25] "you| V to|re N | this| in P|P to |ow if|w if |e you| for |to be| V N" 
-#> [26] "|P P P|and t|in P | work|our J|ur J | to b| P to| and |e als|r N i|ou"
-#> [27] "wo|i 'll|ch of|o V .|ach o|r D N|ase V|se V |h of |o mak|e and|to"    
-#> [28] "ma|nning|e V y|o the|ill V|and g|y N N|o V u|P tha|look | out"        
-#> [29] "|ether|ve an| it t|t i w|ere w|o V y|ning |o J N| by N|e nee|t V i|," 
-#> [30] "as |e to | if y|by N | we n|P , a| give| N P | , as|N we |just |e"    
-#> [31] "any|V you|we wo| N V | each|our N|ur N |each |ill h|pleas|lease|ease" 
-#> [32] "|you a|e wou|e in |for D|here | she |needs|eeds | P N |tart |d you|"  
-#> [33] "othe|for N| plea| both|your |ll V |eek .|make | , we|, we | V yo|or D"
-#> [34] "|r N a|both |V any|a N f|worki|orkin|rking|N V N|re J | P V |n the|we"
-#> [35] "ne|o V N|N N a|more | more|s to |ld li| afte| V on|s tha| P D | J"    
-#> [36] "to|in th|any N|ny N |P , w| me a|fter |V the|e V a|be V | be V| who |"
-#> [37] "in t|give | , yo|, you| need|is th| call| did |at we| what|d to |V a" 
-#> [38] "N| any |d lik|after|at P |r N .| has | N we|her N| N , |s a N|ing a|N"
-#> [39] "is | of N|of N |ou ar|u are| V in|would|P P a|ing o|of yo| two |you"  
-#> [40] "w|N N i| your|r N N|t thi|we ar| N is|N N ,| P is| is t|y N o| we V|" 
-#> [41] "a fe|a few|ke to|i wou|r our|uld l|th N |ike t|V P P|e J t|like |"    
-#> [42] "like|e if |ow wh| woul| N by|N by |e V f|ee if|for h|y hav|, ple| ,"  
-#> [43] "pl| a D |V N o| find|find |now w|hat h|ted t|you m|i nee|N , s|th P |"
-#> [44] ", bu|, but|e V t|lso V|so V |ith P|eed t| to V|o V t|to V |to th|ill" 
-#> [45] "n| on t|ould | make| let |P and| per |f the|d P P| N yo|you s|V up |" 
-#> [46] "P ha|and h|s N w| P an|N you|or th|e N o|not V|V J N|nd N |ot V | to" 
-#> [47] "s|for t|er N |e bee|ve be|see i|and N| will|are V|n to |ne of|them |" 
-#> [48] "them|N tha|one o|me of|id no|d not|f N .|t wit|N so |o V a|to ta| N"  
-#> [49] "so|e J .|e of |ome o|king |m to |l hav| i wa| of y|ll ha|we ha|a N"   
-#> [50] "o|u V t|need | we '|, P ,| N ar|N are| was | to g|hat N| from|r the|" 
-#> [51] "N B |from | N N |it is|take |to P |at th| to P|e N .|e V .|he P |the" 
-#> [52] "P| V th"
+#>  [1] "to me|o me |, her| P on|P on |re al|ve no|i jus|lso ,|so , |P P f|N N"
+#>  [2] ".|also |ll me|l me | also| N i |e N s| few |you n|ou ne|u nee|our"    
+#>  [3] "J|ur J |ust w|st wa|few N|ew N |P P V|ve a | him |as i | , he|u"      
+#>  [4] "and|the J|he J |V J N|u hav|, i w|P P i|N N N|P P o|, N a|do no|o"    
+#>  [5] "not|P D .|you h|ou ha| too |re is|s for|r N o| P in|P in |our P|ur P" 
+#>  [6] "| P fo|P for| may | at t|e a N|o V i| P to|P to |o be |lso V|so V"    
+#>  [7] "|thing|hing |V it |is J |r N w|P , h|nd th|ou an|to do|o do | two |"  
+#>  [8] "we w| do n|rom P|om P | N fr|ave n|e N w| here|t is |but i|, i h|"    
+#>  [9] "into|into | we V| yet |you N|ou N |ke a | V it|ave a|ng th|s N N|n P" 
+#> [10] ",| our |s you|N fro|ere i|N who|me N | see | N or|N or |is V | can |" 
+#> [11] "we '|ut i | V wi|V wit|P , w|V our|N for| but |an V | one |ome N| N"  
+#> [12] "fo|ave b|or V |other| to m| is o| a N | J N |e hav|J N o|e tha|"      
+#> [13] "look|i am | , bu|, but|eithe|ither|P P .|t wan|can V|t to |in P |in V"
+#> [14] "|to se| N J |ore N| get |N in |N , N| as i| in P|e is |ith y|th yo|h" 
+#> [15] "you|e J N|ve V | , th|n N .| i ha|some | is J|are a|e an |i hav|"     
+#> [16] "othe|this | a J |a N N|my N | is a| J fo|J for|e thi|n our|s the|may" 
+#> [17] "b|ay be|y be |ase l|se le|e let|o see|did n|o hav| V ou| it .|"       
+#> [18] "some|or P | N on| P 's|P 's | is V| so i|d the|d you| , i |e P P|n"   
+#> [19] "you|if yo| you |is a |the N|he N | B , |P , P|t V a|and t| this|N on" 
+#> [20] "|a N t|V tha|want |in a |e wil|a N f| , so|ther |we ar| have|i wil|"  
+#> [21] "my N|have | P N |o V o| V J |hat P|r N a|t the|a J N| V an| 's N|'s N"
+#> [22] "|P P P| the | N if|N if | P is|at i | work| on P|on P |with |N , b|N" 
+#> [23] "has|a N a|ant t|nt to|ow if|w if |V and|ake a| in a|e of | are |is N" 
+#> [24] "|as V | week|week | J in|J in | N of|N of |e V i|V to |or N |, we |to"
+#> [25] "be| to b|N N o|e you| V to| V my|V my |r J N| V fo|V for|you t|V thi|"
+#> [26] "to s| know|e N N|V in |f you| , wh| V a |me to| N in|t kno|u to |ed"  
+#> [27] "to|his N|P P N|fter | me t| star|start|the P|he P |know |for t|out w|"
+#> [28] "'ll | N th| was |now i|N V N| afte|P , a|r N i|ere w|ach o|ch of|h of"
+#> [29] "|o J N|i 'll|after|r D N|ill h| it t|ether|e als|P tha|o V .|"        
+#> [30] "only|nning|ning |y N N|e V y|ou to| out |se V |ase V|J N ,| just|"    
+#> [31] "each|each |ill V|t you|eek .|are V|look |o mak|only |ou wo| P D |l"   
+#> [32] "hav|worki|orkin|rking|to ma|at yo|tart | N P |our N|ur N | both|both" 
+#> [33] "|e in | of N|of N |J N .|V you| give|N N a|and g|just |at P |o the|t" 
+#> [34] "V i|e and|s to | in t|here |V any|o V y| by N|ll V |o you| , as|, as" 
+#> [35] "|N we |e J t|in th| , we|n the|needs|eeds |ll ha|for N|hat y| N we|re"
+#> [36] "V |N N ,|N N i|your |s N ,|is th|ve an|by th| V yo| , yo|,"           
+#> [37] "you|pleas|lease|ease |re J | call|e nee|y N .| and |make |P is |N"    
+#> [38] "tha|ough |by N | if y|t i w|s tha|V a N| is t|o V u| me a|her N|you"  
+#> [39] "a|e V a|call |V the| any |er N | be V|be V |e wou|or th| plea| she"   
+#> [40] "|at we|more |P P a| P th| J , |or D |we ne|e to | P , | we n|ing o|t" 
+#> [41] "thi| V in| that|r P P|we wo| N an|e N .|N and|o V N| J to|J to | P V" 
+#> [42] "|d to | V N |ch N | has | did | V on|hat i|V P P|r our| N by|N by |th"
+#> [43] "N | a fe|a few|V N o| a D |d lik|e V f|i wou|hat h|ke to|ill n|"      
+#> [44] "find|find |ld li|uld l| per | let |N , s|N , h|ike t|ve be|e bee|for" 
+#> [45] "h|y hav|s N w| woul|would| like|like |e if | be J|be J |ith P|th P"   
+#> [46] "|in N |e V t| P ha|give |ow wh|ee if|you m|and i|o V t| to V|to V |"  
+#> [47] "on t| with|ted t|or yo| , pl|, ple|P and|at th| make|for y|t me |now" 
+#> [48] "w|not V|and h| P an|o P P|let m|et me| me k|me kn|e kno|ith N| V up|V"
+#> [49] "up | i am| in N|any N|ny N |J N N| will|ot V |d P P| i V | , P |r N"  
+#> [50] ".|f the|ould |eed t| N wi|nd i | for |ome o|me of|t wit|f N .|o V w|" 
+#> [51] "N so|N so |m to |ne of|e V .|king | them|them |one o|to ta|n to |we"  
+#> [52] "ha| your|id no|see i|hat N|e J .|ave V| N B |nd N |o V a| of y|of"    
+#> [53] "yo|and N| N N | what| to t|to ge|o get|a N o| if t|e V N| we h| V"    
+#> [54] "th|i nee|if we|f we |oing |r the| from| had | N , |d not|e N o|u V t|"
+#> [55] "want|need |from | , N |N V t"
 ```
 
 The RBI method uses as features character 4-grams and a list of these
@@ -538,8 +541,8 @@ which uses `quanteda`’s
 
 [`concordance()`](https://andreanini.github.io/idiolect/dev/reference/concordance.md)
 takes as input a string representing one or more words (or punctuation
-marks). For example, the most important character 4-gram seems to be
-\<*, her*\> so this could be the search target.
+marks). For example, one of the most important character 4-gram seems to
+be \<*, her*\> so this could be the search target.
 
 ``` r
 concordance(Q, K, R, search = ", her", token.type = "character") |> 
@@ -701,15 +704,15 @@ posterior(q.llr$LLR) |>
 The table above reveals that, assuming a prior probability for $H_{p}$
 of 0.00001 (roughly, one out of the population of Manchester), then this
 $LLR$ would transform this probability to a posterior probability for
-$H_{p}$ of 0.000018. In other words, it would not make much substantial
+$H_{p}$ of 0.000013. In other words, it would not make much substantial
 difference for the trial.
 
 However, if the prior probability of $H_{p}$ was 0.5, then these results
-would turn it to 0.95, which is a substantial change.
+would turn it to 0.93, which is a substantial change.
 
 The table shows that the present evidence could change the probability
 that $H_{p}$ is true to equal or higher than 0.9 only with a prior
-greater than 0.3.
+greater than 0.4.
 
 ## Acknowledgements
 

@@ -288,8 +288,8 @@ of words and punctuation marks or characters. For example, the
 text can be vectorised into the relative frequencies of its words using
 this code.</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/vectorize.html">vectorize</a></span><span class="op">(</span><span class="va">Q</span>, tokens <span class="op">=</span> <span class="st">"word"</span>, remove_punct <span class="op">=</span> <span class="cn">F</span>, remove_symbols <span class="op">=</span> <span class="cn">T</span>, remove_numbers <span class="op">=</span> <span class="cn">T</span>,</span>
-<span>          lowercase <span class="op">=</span> <span class="cn">T</span>, n <span class="op">=</span> <span class="fl">1</span>, weighting <span class="op">=</span> <span class="st">"rel"</span>, trim <span class="op">=</span> <span class="cn">F</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/vectorize.html">vectorize</a></span><span class="op">(</span><span class="va">Q</span>, tokens <span class="op">=</span> <span class="st">"word"</span>, remove_punct <span class="op">=</span> <span class="cn">FALSE</span>, remove_symbols <span class="op">=</span> <span class="cn">TRUE</span>, remove_numbers <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>          lowercase <span class="op">=</span> <span class="cn">TRUE</span>, n <span class="op">=</span> <span class="fl">1</span>, weighting <span class="op">=</span> <span class="st">"rel"</span>, trim <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span>max_nfeat <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Document-feature matrix of: 1 document, 136 features (0.00% sparse) and 2 docvars.</span></span>
 <span><span class="co">#&gt;                    features</span></span>
@@ -299,8 +299,8 @@ this code.</p>
 <p>or, as the most frequent 1000 character 4-grams relative frequencies,
 for example, using</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/vectorize.html">vectorize</a></span><span class="op">(</span><span class="va">Q</span>, tokens <span class="op">=</span> <span class="st">"character"</span>, remove_punct <span class="op">=</span> <span class="cn">F</span>, remove_symbols <span class="op">=</span> <span class="cn">T</span>, remove_numbers <span class="op">=</span> <span class="cn">T</span>,</span>
-<span>          lowercase <span class="op">=</span> <span class="cn">T</span>, n <span class="op">=</span> <span class="fl">4</span>, weighting <span class="op">=</span> <span class="st">"rel"</span>, trim <span class="op">=</span> <span class="cn">T</span>, threshold <span class="op">=</span> <span class="fl">1000</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/vectorize.html">vectorize</a></span><span class="op">(</span><span class="va">Q</span>, tokens <span class="op">=</span> <span class="st">"character"</span>, remove_punct <span class="op">=</span> <span class="cn">FALSE</span>, remove_symbols <span class="op">=</span> <span class="cn">TRUE</span>, remove_numbers <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>          lowercase <span class="op">=</span> <span class="cn">TRUE</span>, n <span class="op">=</span> <span class="fl">4</span>, weighting <span class="op">=</span> <span class="st">"rel"</span>, trim <span class="op">=</span> <span class="cn">TRUE</span>, threshold <span class="op">=</span> <span class="fl">1000</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span>max_nfeat <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Document-feature matrix of: 1 document, 1,094 features (0.00% sparse) and 2 docvars.</span></span>
 <span><span class="co">#&gt;                    features</span></span>
@@ -551,69 +551,72 @@ parameter <em>features</em> can be switched to TRUE to obtain a list of
 important features. Running this again with this parameter switched on
 produces the following results</p>
 <div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">q.res2</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/impostors.html">impostors</a></span><span class="op">(</span><span class="va">Q</span>, <span class="va">K</span>, <span class="va">R</span>, algorithm <span class="op">=</span> <span class="st">"RBI"</span>, k <span class="op">=</span> <span class="fl">50</span>, features <span class="op">=</span> <span class="cn">T</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="va">q.res2</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/impostors.html">impostors</a></span><span class="op">(</span><span class="va">Q</span>, <span class="va">K</span>, <span class="va">R</span>, algorithm <span class="op">=</span> <span class="st">"RBI"</span>, k <span class="op">=</span> <span class="fl">10</span>, features <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/strwrap.html" class="external-link">strwrap</a></span><span class="op">(</span><span class="va">q.res2</span><span class="op">$</span><span class="va">features</span>, width <span class="op">=</span> <span class="fl">70</span><span class="op">)</span></span>
-<span><span class="co">#&gt;  [1] ", her|lso ,|so , |P P f|, i w|N N .| too |our P|ur P |also |re is|i"  </span></span>
-<span><span class="co">#&gt;  [2] "jus|ll me|l me |ere i|st wa|P , h|u hav| yet | , he|ou ha|ust w|you"  </span></span>
-<span><span class="co">#&gt;  [3] "h| also|rom P|om P |ve no|u and|he J |N N N|the J|V our| here|ve a"   </span></span>
-<span><span class="co">#&gt;  [4] "|ith y|re al|few N|ew N | so i|ou an|e a N|P P i|P on |th yo| V my|V" </span></span>
-<span><span class="co">#&gt;  [5] "my |e N w| , so|me to| few |eithe|ither| him |V it | P on|out w|at i" </span></span>
-<span><span class="co">#&gt;  [6] "|t kno| may |P P V| N fr|u to |N fro|e is |V wit| V it|P for|, i h|"  </span></span>
-<span><span class="co">#&gt;  [7] "is o|u nee|ou to| V wi|s for| P fo|a N a|do no|h you| P in|P in | B ,"</span></span>
-<span><span class="co">#&gt;  [8] "| J N | me t| 'll |you n|ou ne|o not|, N a|t to |n N .|N in |o be |ke"</span></span>
-<span><span class="co">#&gt;  [9] "a |n P ,| N or|N or | look|t wan|ave a| it .|ave n|o V i|r J N|e an"  </span></span>
-<span><span class="co">#&gt; [10] "|as i |P D .|e tha|is J |o V w|r N w| , i |N who|t V a|e N s|se le| N"</span></span>
-<span><span class="co">#&gt; [11] "on|nd th|s you|ng th| is a|N N w|ase l| one | can |e hav| 's N|'s N |"</span></span>
-<span><span class="co">#&gt; [12] "i wo|i was|in V |e let| at t|are a| our |t the|N on |i hav|is V | as" </span></span>
-<span><span class="co">#&gt; [13] "i|e J N|you t| to m|P 's |P P o|ake a|e thi|s N N| a N |in a |n you|" </span></span>
-<span><span class="co">#&gt; [14] "you |hat P|o see| week|week |r N o|nt to| N if|N if |or V |N for|ut i"</span></span>
-<span><span class="co">#&gt; [15] "| N J |the N|he N | into|into |o hav| P 's|hat y|n our|if yo| N fo|to"</span></span>
-<span><span class="co">#&gt; [16] "do|o do | is J|P P .| my N| N in|me N |t you| i ha| do n| get |an V"  </span></span>
-<span><span class="co">#&gt; [17] "|e N N|V tha| i am|e P P|you N|ant t| on P| is V| i V |ome N|ore"     </span></span>
-<span><span class="co">#&gt; [18] "N|ave b|other|with | a J |at yo| N i | we w| the |did n|thing|hing |e"</span></span>
-<span><span class="co">#&gt; [19] "wil| J in|J in |on P |to me|o me |s the|ed to|or P |ve V |my N |to"   </span></span>
-<span><span class="co">#&gt; [20] "se| in a| but | , th| P , |t is | see |i wil|this |ou N |V thi|or N |"</span></span>
-<span><span class="co">#&gt; [21] "have|is a |N has|J to |have |i V t|o V o| V a | V fo|ther |e V i|i am"</span></span>
-<span><span class="co">#&gt; [22] "| J fo|J for|is N |a J N|V and|V on |as V |V for|N , h|can V|J N"     </span></span>
-<span><span class="co">#&gt; [23] "N|his N| J , |J N .| N th|f you|some | N wi| V an| with| be J|be J |d"</span></span>
-<span><span class="co">#&gt; [24] "the|V to |V in |but i| star|start|ng on|g on |a N t| N wh| just|r"    </span></span>
-<span><span class="co">#&gt; [25] "you| V to|re N | this| in P|P to |ow if|w if |e you| for |to be| V N" </span></span>
-<span><span class="co">#&gt; [26] "|P P P|and t|in P | work|our J|ur J | to b| P to| and |e als|r N i|ou"</span></span>
-<span><span class="co">#&gt; [27] "wo|i 'll|ch of|o V .|ach o|r D N|ase V|se V |h of |o mak|e and|to"    </span></span>
-<span><span class="co">#&gt; [28] "ma|nning|e V y|o the|ill V|and g|y N N|o V u|P tha|look | out"        </span></span>
-<span><span class="co">#&gt; [29] "|ether|ve an| it t|t i w|ere w|o V y|ning |o J N| by N|e nee|t V i|," </span></span>
-<span><span class="co">#&gt; [30] "as |e to | if y|by N | we n|P , a| give| N P | , as|N we |just |e"    </span></span>
-<span><span class="co">#&gt; [31] "any|V you|we wo| N V | each|our N|ur N |each |ill h|pleas|lease|ease" </span></span>
-<span><span class="co">#&gt; [32] "|you a|e wou|e in |for D|here | she |needs|eeds | P N |tart |d you|"  </span></span>
-<span><span class="co">#&gt; [33] "othe|for N| plea| both|your |ll V |eek .|make | , we|, we | V yo|or D"</span></span>
-<span><span class="co">#&gt; [34] "|r N a|both |V any|a N f|worki|orkin|rking|N V N|re J | P V |n the|we"</span></span>
-<span><span class="co">#&gt; [35] "ne|o V N|N N a|more | more|s to |ld li| afte| V on|s tha| P D | J"    </span></span>
-<span><span class="co">#&gt; [36] "to|in th|any N|ny N |P , w| me a|fter |V the|e V a|be V | be V| who |"</span></span>
-<span><span class="co">#&gt; [37] "in t|give | , yo|, you| need|is th| call| did |at we| what|d to |V a" </span></span>
-<span><span class="co">#&gt; [38] "N| any |d lik|after|at P |r N .| has | N we|her N| N , |s a N|ing a|N"</span></span>
-<span><span class="co">#&gt; [39] "is | of N|of N |ou ar|u are| V in|would|P P a|ing o|of yo| two |you"  </span></span>
-<span><span class="co">#&gt; [40] "w|N N i| your|r N N|t thi|we ar| N is|N N ,| P is| is t|y N o| we V|" </span></span>
-<span><span class="co">#&gt; [41] "a fe|a few|ke to|i wou|r our|uld l|th N |ike t|V P P|e J t|like |"    </span></span>
-<span><span class="co">#&gt; [42] "like|e if |ow wh| woul| N by|N by |e V f|ee if|for h|y hav|, ple| ,"  </span></span>
-<span><span class="co">#&gt; [43] "pl| a D |V N o| find|find |now w|hat h|ted t|you m|i nee|N , s|th P |"</span></span>
-<span><span class="co">#&gt; [44] ", bu|, but|e V t|lso V|so V |ith P|eed t| to V|o V t|to V |to th|ill" </span></span>
-<span><span class="co">#&gt; [45] "n| on t|ould | make| let |P and| per |f the|d P P| N yo|you s|V up |" </span></span>
-<span><span class="co">#&gt; [46] "P ha|and h|s N w| P an|N you|or th|e N o|not V|V J N|nd N |ot V | to" </span></span>
-<span><span class="co">#&gt; [47] "s|for t|er N |e bee|ve be|see i|and N| will|are V|n to |ne of|them |" </span></span>
-<span><span class="co">#&gt; [48] "them|N tha|one o|me of|id no|d not|f N .|t wit|N so |o V a|to ta| N"  </span></span>
-<span><span class="co">#&gt; [49] "so|e J .|e of |ome o|king |m to |l hav| i wa| of y|ll ha|we ha|a N"   </span></span>
-<span><span class="co">#&gt; [50] "o|u V t|need | we '|, P ,| N ar|N are| was | to g|hat N| from|r the|" </span></span>
-<span><span class="co">#&gt; [51] "N B |from | N N |it is|take |to P |at th| to P|e N .|e V .|he P |the" </span></span>
-<span><span class="co">#&gt; [52] "P| V th"</span></span></code></pre></div>
+<span><span class="co">#&gt;  [1] "to me|o me |, her| P on|P on |re al|ve no|i jus|lso ,|so , |P P f|N N"</span></span>
+<span><span class="co">#&gt;  [2] ".|also |ll me|l me | also| N i |e N s| few |you n|ou ne|u nee|our"    </span></span>
+<span><span class="co">#&gt;  [3] "J|ur J |ust w|st wa|few N|ew N |P P V|ve a | him |as i | , he|u"      </span></span>
+<span><span class="co">#&gt;  [4] "and|the J|he J |V J N|u hav|, i w|P P i|N N N|P P o|, N a|do no|o"    </span></span>
+<span><span class="co">#&gt;  [5] "not|P D .|you h|ou ha| too |re is|s for|r N o| P in|P in |our P|ur P" </span></span>
+<span><span class="co">#&gt;  [6] "| P fo|P for| may | at t|e a N|o V i| P to|P to |o be |lso V|so V"    </span></span>
+<span><span class="co">#&gt;  [7] "|thing|hing |V it |is J |r N w|P , h|nd th|ou an|to do|o do | two |"  </span></span>
+<span><span class="co">#&gt;  [8] "we w| do n|rom P|om P | N fr|ave n|e N w| here|t is |but i|, i h|"    </span></span>
+<span><span class="co">#&gt;  [9] "into|into | we V| yet |you N|ou N |ke a | V it|ave a|ng th|s N N|n P" </span></span>
+<span><span class="co">#&gt; [10] ",| our |s you|N fro|ere i|N who|me N | see | N or|N or |is V | can |" </span></span>
+<span><span class="co">#&gt; [11] "we '|ut i | V wi|V wit|P , w|V our|N for| but |an V | one |ome N| N"  </span></span>
+<span><span class="co">#&gt; [12] "fo|ave b|or V |other| to m| is o| a N | J N |e hav|J N o|e tha|"      </span></span>
+<span><span class="co">#&gt; [13] "look|i am | , bu|, but|eithe|ither|P P .|t wan|can V|t to |in P |in V"</span></span>
+<span><span class="co">#&gt; [14] "|to se| N J |ore N| get |N in |N , N| as i| in P|e is |ith y|th yo|h" </span></span>
+<span><span class="co">#&gt; [15] "you|e J N|ve V | , th|n N .| i ha|some | is J|are a|e an |i hav|"     </span></span>
+<span><span class="co">#&gt; [16] "othe|this | a J |a N N|my N | is a| J fo|J for|e thi|n our|s the|may" </span></span>
+<span><span class="co">#&gt; [17] "b|ay be|y be |ase l|se le|e let|o see|did n|o hav| V ou| it .|"       </span></span>
+<span><span class="co">#&gt; [18] "some|or P | N on| P 's|P 's | is V| so i|d the|d you| , i |e P P|n"   </span></span>
+<span><span class="co">#&gt; [19] "you|if yo| you |is a |the N|he N | B , |P , P|t V a|and t| this|N on" </span></span>
+<span><span class="co">#&gt; [20] "|a N t|V tha|want |in a |e wil|a N f| , so|ther |we ar| have|i wil|"  </span></span>
+<span><span class="co">#&gt; [21] "my N|have | P N |o V o| V J |hat P|r N a|t the|a J N| V an| 's N|'s N"</span></span>
+<span><span class="co">#&gt; [22] "|P P P| the | N if|N if | P is|at i | work| on P|on P |with |N , b|N" </span></span>
+<span><span class="co">#&gt; [23] "has|a N a|ant t|nt to|ow if|w if |V and|ake a| in a|e of | are |is N" </span></span>
+<span><span class="co">#&gt; [24] "|as V | week|week | J in|J in | N of|N of |e V i|V to |or N |, we |to"</span></span>
+<span><span class="co">#&gt; [25] "be| to b|N N o|e you| V to| V my|V my |r J N| V fo|V for|you t|V thi|"</span></span>
+<span><span class="co">#&gt; [26] "to s| know|e N N|V in |f you| , wh| V a |me to| N in|t kno|u to |ed"  </span></span>
+<span><span class="co">#&gt; [27] "to|his N|P P N|fter | me t| star|start|the P|he P |know |for t|out w|"</span></span>
+<span><span class="co">#&gt; [28] "'ll | N th| was |now i|N V N| afte|P , a|r N i|ere w|ach o|ch of|h of"</span></span>
+<span><span class="co">#&gt; [29] "|o J N|i 'll|after|r D N|ill h| it t|ether|e als|P tha|o V .|"        </span></span>
+<span><span class="co">#&gt; [30] "only|nning|ning |y N N|e V y|ou to| out |se V |ase V|J N ,| just|"    </span></span>
+<span><span class="co">#&gt; [31] "each|each |ill V|t you|eek .|are V|look |o mak|only |ou wo| P D |l"   </span></span>
+<span><span class="co">#&gt; [32] "hav|worki|orkin|rking|to ma|at yo|tart | N P |our N|ur N | both|both" </span></span>
+<span><span class="co">#&gt; [33] "|e in | of N|of N |J N .|V you| give|N N a|and g|just |at P |o the|t" </span></span>
+<span><span class="co">#&gt; [34] "V i|e and|s to | in t|here |V any|o V y| by N|ll V |o you| , as|, as" </span></span>
+<span><span class="co">#&gt; [35] "|N we |e J t|in th| , we|n the|needs|eeds |ll ha|for N|hat y| N we|re"</span></span>
+<span><span class="co">#&gt; [36] "V |N N ,|N N i|your |s N ,|is th|ve an|by th| V yo| , yo|,"           </span></span>
+<span><span class="co">#&gt; [37] "you|pleas|lease|ease |re J | call|e nee|y N .| and |make |P is |N"    </span></span>
+<span><span class="co">#&gt; [38] "tha|ough |by N | if y|t i w|s tha|V a N| is t|o V u| me a|her N|you"  </span></span>
+<span><span class="co">#&gt; [39] "a|e V a|call |V the| any |er N | be V|be V |e wou|or th| plea| she"   </span></span>
+<span><span class="co">#&gt; [40] "|at we|more |P P a| P th| J , |or D |we ne|e to | P , | we n|ing o|t" </span></span>
+<span><span class="co">#&gt; [41] "thi| V in| that|r P P|we wo| N an|e N .|N and|o V N| J to|J to | P V" </span></span>
+<span><span class="co">#&gt; [42] "|d to | V N |ch N | has | did | V on|hat i|V P P|r our| N by|N by |th"</span></span>
+<span><span class="co">#&gt; [43] "N | a fe|a few|V N o| a D |d lik|e V f|i wou|hat h|ke to|ill n|"      </span></span>
+<span><span class="co">#&gt; [44] "find|find |ld li|uld l| per | let |N , s|N , h|ike t|ve be|e bee|for" </span></span>
+<span><span class="co">#&gt; [45] "h|y hav|s N w| woul|would| like|like |e if | be J|be J |ith P|th P"   </span></span>
+<span><span class="co">#&gt; [46] "|in N |e V t| P ha|give |ow wh|ee if|you m|and i|o V t| to V|to V |"  </span></span>
+<span><span class="co">#&gt; [47] "on t| with|ted t|or yo| , pl|, ple|P and|at th| make|for y|t me |now" </span></span>
+<span><span class="co">#&gt; [48] "w|not V|and h| P an|o P P|let m|et me| me k|me kn|e kno|ith N| V up|V"</span></span>
+<span><span class="co">#&gt; [49] "up | i am| in N|any N|ny N |J N N| will|ot V |d P P| i V | , P |r N"  </span></span>
+<span><span class="co">#&gt; [50] ".|f the|ould |eed t| N wi|nd i | for |ome o|me of|t wit|f N .|o V w|" </span></span>
+<span><span class="co">#&gt; [51] "N so|N so |m to |ne of|e V .|king | them|them |one o|to ta|n to |we"  </span></span>
+<span><span class="co">#&gt; [52] "ha| your|id no|see i|hat N|e J .|ave V| N B |nd N |o V a| of y|of"    </span></span>
+<span><span class="co">#&gt; [53] "yo|and N| N N | what| to t|to ge|o get|a N o| if t|e V N| we h| V"    </span></span>
+<span><span class="co">#&gt; [54] "th|i nee|if we|f we |oing |r the| from| had | N , |d not|e N o|u V t|"</span></span>
+<span><span class="co">#&gt; [55] "want|need |from | , N |N V t"</span></span></code></pre></div>
 <p>The RBI method uses as features character 4-grams and a list of these
 features is clearly hard to interpret by a human analyst. Despite the
 complexity, this is not an impossible task. <code>idiolect</code> offers
 a function to aid exploration called <code><a href="../reference/concordance.html">concordance()</a></code>, which
 uses <code>quanteda</code>’s <code><a href="https://quanteda.io/reference/kwic.html" class="external-link">kwic()</a></code> as its engine.</p>
 <p><code><a href="../reference/concordance.html">concordance()</a></code> takes as input a string representing one
-or more words (or punctuation marks). For example, the most important
-character 4-gram seems to be &lt;<em>, her</em>&gt; so this could be the
-search target.</p>
+or more words (or punctuation marks). For example, one of the most
+important character 4-gram seems to be &lt;<em>, her</em>&gt; so this
+could be the search target.</p>
 <div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/concordance.html">concordance</a></span><span class="op">(</span><span class="va">Q</span>, <span class="va">K</span>, <span class="va">R</span>, search <span class="op">=</span> <span class="st">", her"</span>, token.type <span class="op">=</span> <span class="st">"character"</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">pre</span>, <span class="va">node</span>, <span class="va">post</span>, <span class="va">authorship</span><span class="op">)</span></span>
@@ -768,17 +771,17 @@ of 0.00001 (roughly, one out of the population of Manchester), then this
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>L</mi><mi>L</mi><mi>R</mi></mrow><annotation encoding="application/x-tex">LLR</annotation></semantics></math>
 would transform this probability to a posterior probability for
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>H</mi><mi>p</mi></msub><annotation encoding="application/x-tex">H_p</annotation></semantics></math>
-of 0.000018. In other words, it would not make much substantial
+of 0.000013. In other words, it would not make much substantial
 difference for the trial.</p>
 <p>However, if the prior probability of
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>H</mi><mi>p</mi></msub><annotation encoding="application/x-tex">H_p</annotation></semantics></math>
-was 0.5, then these results would turn it to 0.95, which is a
+was 0.5, then these results would turn it to 0.93, which is a
 substantial change.</p>
 <p>The table shows that the present evidence could change the
 probability that
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>H</mi><mi>p</mi></msub><annotation encoding="application/x-tex">H_p</annotation></semantics></math>
 is true to equal or higher than 0.9 only with a prior greater than
-0.3.</p>
+0.4.</p>
 </div>
 </div>
 <div class="section level2">
