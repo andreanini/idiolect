@@ -2,6 +2,16 @@
 
 ## idiolect (development version)
 
+- minor bug fixes
+
+- [`contentmask()`](https://andreanini.github.io/idiolect/dev/reference/contentmask.md)
+  no longer has the option to replace ASCII; removed dependency on
+  `textclean` package.
+
+- [`contentmask()`](https://andreanini.github.io/idiolect/dev/reference/contentmask.md)
+  used with the “frames” algorithm now adopts the Universal POS-tags,
+  making it more compatible with other languages.
+
 - [`create_corpus()`](https://andreanini.github.io/idiolect/dev/reference/create_corpus.md)
   tests for the correct syntax of the file names and returns an error if
   not correct (plus showing which file names are incorrect).
