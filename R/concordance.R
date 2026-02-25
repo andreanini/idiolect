@@ -15,105 +15,98 @@
 #' @examples
 #' concordance(enron.sample[1], enron.sample[2], enron.sample[3], "wants to", token.type = "word")
 #'
-#' #using wildcards
+#' # using wildcards
 #' concordance(enron.sample[1], enron.sample[2], enron.sample[3], "wants * be", token.type = "word")
 #'
-#' #searching character sequences with wildcards
+#' # searching character sequences with wildcards
 #' concordance(enron.sample[1], enron.sample[2], enron.sample[3], "help*", token.type = "character")
 #'
-#' #using sentences
+#' # using sentences
 #' enron.sents <- tokens(enron.sample, "sentence")
 #' concordance(enron.sents[1], enron.sents[2], enron.sents[3], ". _EOS_", token.type = "word")
 #'
 #' @export
-concordance <- function(q.data, k.data, reference.data, search, token.type = "word", window = 5, case_insensitive = TRUE){
-
+concordance <- function(q.data, k.data, reference.data, search, token.type = "word", window = 5, case_insensitive = TRUE) {
   # this condition is needed to make reference.data optional
-  if(missing(reference.data)){
-
+  if (missing(reference.data)) {
     reference.data <- quanteda::corpus("")
-
   }
 
   q.data <- corpus_transform(q.data)
   k.data <- corpus_transform(k.data)
   reference.data <- corpus_transform(reference.data)
 
-  if(token.type == "word"){
-
+  if (token.type == "word") {
     kw <- quanteda::tokens(search, what = token.type)
 
     q.data |>
       quanteda::tokens(what = token.type) |>
       quanteda::kwic(quanteda::as.phrase(kw), window = window, case_insensitive = case_insensitive) |>
       as.data.frame() |>
-      dplyr::select(-pattern) |>
+      dplyr::select(-pattern, -from, -to) |>
       dplyr::mutate(authorship = "Q") -> q.kwic
 
     k.data |>
       quanteda::tokens(what = token.type) |>
       quanteda::kwic(quanteda::as.phrase(kw), window = window, case_insensitive = case_insensitive) |>
       as.data.frame() |>
-      dplyr::select(-pattern) |>
+      dplyr::select(-pattern, -from, -to) |>
       dplyr::mutate(authorship = "K") -> k.kwic
 
     reference.data |>
       quanteda::tokens(what = token.type) |>
       quanteda::kwic(quanteda::as.phrase(kw), window = window, case_insensitive = case_insensitive) |>
       as.data.frame() |>
-      dplyr::select(-pattern) |>
+      dplyr::select(-pattern, -from, -to) |>
       dplyr::mutate(authorship = "Reference") -> r.kwic
-
-  }else if(token.type == "character"){
-
+  } else if (token.type == "character") {
     kw <- quanteda::tokens(search, what = token.type, remove_separators = FALSE)
 
     q.data |>
       quanteda::tokens(what = token.type, remove_separators = FALSE) |>
-      quanteda::kwic(quanteda::as.phrase(kw), window = window, case_insensitive = case_insensitive,
-                     separator = "") |>
+      quanteda::kwic(quanteda::as.phrase(kw),
+        window = window, case_insensitive = case_insensitive,
+        separator = ""
+      ) |>
       as.data.frame() |>
-      dplyr::select(-pattern) |>
+      dplyr::select(-pattern, -from, -to) |>
       dplyr::mutate(authorship = "Q") -> q.kwic
 
     k.data |>
       quanteda::tokens(what = token.type, remove_separators = FALSE) |>
-      quanteda::kwic(quanteda::as.phrase(kw), window = window, case_insensitive = case_insensitive,
-                     separator = "") |>
+      quanteda::kwic(quanteda::as.phrase(kw),
+        window = window, case_insensitive = case_insensitive,
+        separator = ""
+      ) |>
       as.data.frame() |>
-      dplyr::select(-pattern) |>
+      dplyr::select(-pattern, -from, -to) |>
       dplyr::mutate(authorship = "K") -> k.kwic
 
     reference.data |>
       quanteda::tokens(what = token.type, remove_separators = FALSE) |>
-      quanteda::kwic(quanteda::as.phrase(kw), window = window, case_insensitive = case_insensitive,
-                     separator = "") |>
+      quanteda::kwic(quanteda::as.phrase(kw),
+        window = window, case_insensitive = case_insensitive,
+        separator = ""
+      ) |>
       as.data.frame() |>
-      dplyr::select(-pattern) |>
+      dplyr::select(-pattern, -from, -to) |>
       dplyr::mutate(authorship = "Reference") -> r.kwic
-
   }
 
-  output <- rbind(q.kwic, k.kwic) |> rbind(r.kwic) |> dplyr::rename(node = keyword)
+  output <- rbind(q.kwic, k.kwic) |>
+    rbind(r.kwic) |>
+    dplyr::rename(node = keyword)
 
   return(output)
-
 }
 
-#this function returns a corpus if the object is already corpus or otherwise it combines the tokens (assumed to be sentences) back to a corpus after adding sentence boundaries
-corpus_transform <- function(x){
-
-  if(quanteda::is.corpus(x)){
-
+# this function returns a corpus if the object is already corpus or otherwise it combines the tokens (assumed to be sentences) back to a corpus after adding sentence boundaries
+corpus_transform <- function(x) {
+  if (quanteda::is.corpus(x)) {
     y <- x
-
-  }else{
-
+  } else {
     y <- detokenize(x, sentence.boundaries = TRUE)
-
   }
 
   return(y)
-
 }
-

@@ -38,13 +38,13 @@ This function uses \code{\link[quanteda:kwic]{quanteda::kwic()}} to return a con
 \examples{
 concordance(enron.sample[1], enron.sample[2], enron.sample[3], "wants to", token.type = "word")
 
-#using wildcards
+# using wildcards
 concordance(enron.sample[1], enron.sample[2], enron.sample[3], "wants * be", token.type = "word")
 
-#searching character sequences with wildcards
+# searching character sequences with wildcards
 concordance(enron.sample[1], enron.sample[2], enron.sample[3], "help*", token.type = "character")
 
-#using sentences
+# using sentences
 enron.sents <- tokens(enron.sample, "sentence")
 concordance(enron.sents[1], enron.sents[2], enron.sents[3], ". _EOS_", token.type = "word")
 
