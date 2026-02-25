@@ -51,11 +51,11 @@ by taking as input either a single table of results or two tables, one
 for training and one for the test, and then returning as output a list
 with the following performance statistics: the log-likelihood ratio cost
 (both \\C\_{llr}\\ and \\C\_{llr}^{min}\\), Equal Error Rate (ERR), the
-mean values of the log-likelihood ratio for both the same-author (TRUE)
-and different-author (FALSE) cases, the Area Under the Curve (AUC),
-Balanced Accuracy, Precision, Recall, F1, and the full confusion matrix.
-The binary classification statistics are all calculated considering a
-Log-Likelihood Ratio score of 0 as a threshold.
+mean values of the log-likelihood ratio (base 10) for both the
+same-author (TRUE) and different-author (FALSE) cases, the Area Under
+the Curve (AUC), Balanced Accuracy, Precision, Recall, F1, and the full
+confusion matrix. The binary classification statistics are all
+calculated considering a Log-Likelihood Ratio score of 0 as a threshold.
 
 ## Examples
 
@@ -64,8 +64,8 @@ results <- data.frame(score = c(0.5, 0.2, 0.8, 0.01), target = c(TRUE, FALSE, TR
 perf <- performance(results)
 #>   |                                                                              |                                                                      |   0%  |                                                                              |=======================                                               |  33%  |                                                                              |===============================================                       |  67%  |                                                                              |======================================================================| 100%
 perf$evaluation
-#>        Cllr  Cllr_min EER Mean TRUE LLR Mean FALSE LLR TRUE trials FALSE trials
-#> 1 0.2422848 0.4150375  25      14.91206      -12.77601           4            4
-#>   AUC Balanced Accuracy Precision Recall F1 TP FN FP TN
-#> 1   1                 1         1      1  1  2  0  0  2
+#>        Cllr  Cllr_min EER Mean TRUE LLR10 Mean FALSE LLR10 TRUE cases
+#> 1 0.1704182 0.4150375  25        14.91206        -12.77601          2
+#>   FALSE cases AUC Balanced Accuracy Precision Recall F1 TP FN FP TN
+#> 1           2   1                 1         1      1  1  2  0  0  2
 ```

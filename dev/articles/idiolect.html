@@ -472,10 +472,10 @@ library <span class="citation">(Leeuwen 2015)</span>.</p>
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">p</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/performance.html">performance</a></span><span class="op">(</span><span class="va">res</span>, progress <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
 <span><span class="va">p</span><span class="op">$</span><span class="va">evaluation</span></span>
-<span><span class="co">#&gt;        Cllr  Cllr_min      EER Mean TRUE LLR Mean FALSE LLR TRUE trials</span></span>
-<span><span class="co">#&gt; 1 0.7979282 0.7183427 26.26582     0.4062006     -0.4368895          12</span></span>
-<span><span class="co">#&gt;   FALSE trials       AUC Balanced Accuracy Precision Recall        F1 TP FN FP</span></span>
-<span><span class="co">#&gt; 1           92 0.7766667         0.7666667      0.25    0.8 0.3809524  8  2 24</span></span>
+<span><span class="co">#&gt;        Cllr  Cllr_min      EER Mean TRUE LLR10 Mean FALSE LLR10 TRUE cases</span></span>
+<span><span class="co">#&gt; 1 0.7620334 0.7183427 26.26582       0.4062006       -0.4368895         10</span></span>
+<span><span class="co">#&gt;   FALSE cases       AUC Balanced Accuracy Precision Recall        F1 TP FN FP</span></span>
+<span><span class="co">#&gt; 1          90 0.7766667         0.7666667      0.25    0.8 0.3809524  8  2 24</span></span>
 <span><span class="co">#&gt;   TN</span></span>
 <span><span class="co">#&gt; 1 66</span></span></code></pre></div>
 <p>The
@@ -500,7 +500,7 @@ as the threshold for a TRUE (or same-author in this case)
 classification.</p>
 <p>In the present example, a
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>C</mi><mrow><mi>l</mi><mi>l</mi><mi>r</mi></mrow></msub><mo>=</mo></mrow><annotation encoding="application/x-tex">C_{llr}=</annotation></semantics></math>
-0.798 suggests that the performance is acceptable to be able to proceed
+0.762 suggests that the performance is acceptable to be able to proceed
 with the actual forensic analysis. The
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msubsup><mi>C</mi><mrow><mi>l</mi><mi>l</mi><mi>r</mi></mrow><mrow><mi>m</mi><mi>i</mi><mi>n</mi></mrow></msubsup><annotation encoding="application/x-tex">C_{llr}^{min}</annotation></semantics></math>,
 which is the component of

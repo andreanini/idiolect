@@ -390,10 +390,10 @@ The output of the function is the following:
 ``` r
 p <- performance(res, progress = FALSE)
 p$evaluation
-#>        Cllr  Cllr_min      EER Mean TRUE LLR Mean FALSE LLR TRUE trials
-#> 1 0.7979282 0.7183427 26.26582     0.4062006     -0.4368895          12
-#>   FALSE trials       AUC Balanced Accuracy Precision Recall        F1 TP FN FP
-#> 1           92 0.7766667         0.7666667      0.25    0.8 0.3809524  8  2 24
+#>        Cllr  Cllr_min      EER Mean TRUE LLR10 Mean FALSE LLR10 TRUE cases
+#> 1 0.7620334 0.7183427 26.26582       0.4062006       -0.4368895         10
+#>   FALSE cases       AUC Balanced Accuracy Precision Recall        F1 TP FN FP
+#> 1          90 0.7766667         0.7666667      0.25    0.8 0.3809524  8  2 24
 #>   TN
 #> 1 66
 ```
@@ -408,7 +408,7 @@ metrics returned, such as Precision, Recall, and F1, are all calculated
 using $LLR > 0$ as the threshold for a TRUE (or same-author in this
 case) classification.
 
-In the present example, a $C_{llr} =$ 0.798 suggests that the
+In the present example, a $C_{llr} =$ 0.762 suggests that the
 performance is acceptable to be able to proceed with the actual forensic
 analysis. The $C_{llr}^{min}$, which is the component of $C_{llr}$
 measuring the amount of discrimination, is even lower, which means that

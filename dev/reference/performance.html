@@ -68,7 +68,7 @@
     </div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
-    <p>Before applying a method to a real authorship case, it is good practice to test it on known ground truth data. This function performs this test by taking as input either a single table of results or two tables, one for training and one for the test, and then returning as output a list with the following performance statistics: the log-likelihood ratio cost (both \(C_{llr}\) and \(C_{llr}^{min}\)), Equal Error Rate (ERR), the mean values of the log-likelihood ratio for both the same-author (TRUE) and different-author (FALSE) cases, the Area Under the Curve (AUC), Balanced Accuracy, Precision, Recall, F1, and the full confusion matrix. The binary classification statistics are all calculated considering a Log-Likelihood Ratio score of 0 as a threshold.</p>
+    <p>Before applying a method to a real authorship case, it is good practice to test it on known ground truth data. This function performs this test by taking as input either a single table of results or two tables, one for training and one for the test, and then returning as output a list with the following performance statistics: the log-likelihood ratio cost (both \(C_{llr}\) and \(C_{llr}^{min}\)), Equal Error Rate (ERR), the mean values of the log-likelihood ratio (base 10) for both the same-author (TRUE) and different-author (FALSE) cases, the Area Under the Curve (AUC), Balanced Accuracy, Precision, Recall, F1, and the full confusion matrix. The binary classification statistics are all calculated considering a Log-Likelihood Ratio score of 0 as a threshold.</p>
     </div>
 
     <div class="section level2">
@@ -77,10 +77,10 @@
 <span class="r-in"><span><span class="va">perf</span> <span class="op">&lt;-</span> <span class="fu">performance</span><span class="op">(</span><span class="va">results</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   |                                                                              |                                                                      |   0%  |                                                                              |=======================                                               |  33%  |                                                                              |===============================================                       |  67%  |                                                                              |======================================================================| 100%</span>
 <span class="r-in"><span><span class="va">perf</span><span class="op">$</span><span class="va">evaluation</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>        Cllr  Cllr_min EER Mean TRUE LLR Mean FALSE LLR TRUE trials FALSE trials</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1 0.2422848 0.4150375  25      14.91206      -12.77601           4            4</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   AUC Balanced Accuracy Precision Recall F1 TP FN FP TN</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1   1                 1         1      1  1  2  0  0  2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>        Cllr  Cllr_min EER Mean TRUE LLR10 Mean FALSE LLR10 TRUE cases</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1 0.1704182 0.4150375  25        14.91206        -12.77601          2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   FALSE cases AUC Balanced Accuracy Precision Recall F1 TP FN FP TN</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1           2   1                 1         1      1  1  2  0  0  2</span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
