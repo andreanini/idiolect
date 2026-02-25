@@ -8,8 +8,7 @@ contentmask(
   corpus,
   model = "en_core_web_sm",
   algorithm = "POSnoise",
-  fw_list = "eng_halvani",
-  replace_non_ascii = TRUE
+  fw_list = "eng_halvani"
 )
 }
 \arguments{
@@ -20,8 +19,6 @@ contentmask(
 \item{algorithm}{A string, either "POSnoise" (default), "frames", or "textdistortion".}
 
 \item{fw_list}{The list of function words to use for the \code{textdistortion} algorithm. This is either the default ("eng_halvani") for the same list of function words used for \code{POSnoise} or it can be a vector of strings where each string is a function word to keep.}
-
-\item{replace_non_ascii}{A logical value indicating whether to remove non-ASCII characters (including emojis). This is the default.}
 }
 \value{
 A \code{quanteda} corpus object only containing functional tokens, depending on the algorithm chosen. The corpus contains the same docvars as the input. Email addresses or URLs are treated like nouns.
@@ -32,19 +29,18 @@ This function offers three algorithms for topic/content masking. In order to run
 \details{
 The default algorithm for content masking that this function applies is \code{POSnoise} (Halvani and Graner 2021). This algorithm only works for English and it transforms a text by masking tokens using their POS tag if these tokens are: nouns, verbs, adjectives, adverbs, digits, and symbols while leaving all the rest unchanged. \code{POSnoise} uses a list of function words for English that also includes frequent words belonging to the masked Part of Speech tags that tend to be mostly functional (e.g. make, recently, well).
 
-Another algorithm implemented is Nini's (2023) \code{frames} or \verb{frame n-grams}. This algorithm does not involve a special list of tokens and therefore can potentially work for any language provided that the correct \code{spacy} model is loaded. This algorithm consists in masking all tokens using their POS tag only when these are nouns, verbs, or personal pronouns.
+Another algorithm implemented is Nini's (2023) \code{frames} or \verb{frame n-grams}. This algorithm does not involve a special list of tokens and therefore can potentially work for any language provided that the correct \code{spacy} model is loaded. This algorithm consists in masking all tokens using their POS tag only when these are nouns, verbs, or numbers. The original version of the algorithms also masked personal pronouns but this is not done here to make this more applicable for various languages (the spacy universal tagset does not distinguish personal pronouns from other types of pronouns).
 
 Finally, the last algorithm implemented is a version of \code{textdistortion}, as originally proposed by Stamatatos (2017). This version of the algorithm is essentially \code{POSnoise} but without POS tag information. The default implementation uses the same list of function words that are used for \code{POSnoise}. In addition to the function words provided, the function treats all punctuation marks and new line breaks as function words to keep. The basic tokenization is done using \code{spacyr} so the right model for the language being analysed should be selected.
 
 If you have never used \code{spacyr} before then please follow the instructions to set it up and install a model before using this function here: \url{https://spacyr.quanteda.io}.
-
-The removal of non-ASCII characters is done using the \code{textclean} package.
 }
 \examples{
 \dontrun{
 text <- "The cat was on the chair. He didn't move\ncat@pets.com;\nhttp://quanteda.io/. i.e. a test "
 toy.corpus <- quanteda::corpus(text)
 contentmask(toy.corpus, algorithm = "POSnoise")
+contentmask(toy.corpus, algorithm = "frames")
 contentmask(toy.corpus, algorithm = "textdistortion")
 }
 }

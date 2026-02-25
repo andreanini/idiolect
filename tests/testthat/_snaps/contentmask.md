@@ -25,13 +25,13 @@
     Output
       Corpus consisting of 3 documents and 2 docvars.
       allen-p_16.txt :
-      "NNP , the back NN VBZ VBG a hard NN VBG with the CD NNS that..."
+      "PROPN , the back NOUN is VERB a hard NOUN VERB with the NUM ..."
       
       allen-p_37.txt :
-      "NNP , NNP NNP VBD together the NN NN for CD NNS while NNP NN..."
+      "PROPN , PROPN PROPN VERB together the NOUN NOUN for NUM NOUN..."
       
       bass-e_195.txt :
-      "NNP , PRP VBP for NNP NNP on the NNP NNP NNP NNP and PRP VBZ..."
+      "PROPN , i VERB for PROPN PROPN on the PROPN PROPN PROPN PROP..."
       
 
 ---
@@ -67,16 +67,13 @@
 ---
 
     Code
-      contentmask(toy.corpus, algorithm = "POSnoise", replace_non_ascii = F)
+      contentmask(toy.corpus, algorithm = "frames")
     Message
       successfully initialized (spaCy Version: 3.7.6, language model: en_core_web_sm)
     Output
-      Corpus consisting of 2 documents.
+      Corpus consisting of 1 document.
       text1 :
-      "the N was on the N . he did n't move   N ;   N i.e. a N B 👍"
-      
-      text2 :
-      "D 👍"
+      "the NOUN was on the NOUN . he did n't VERB   NOUN ;   NOUN i..."
       
 
 ---
@@ -89,5 +86,29 @@
       Corpus consisting of 1 document.
       text1 :
       "the * was on the * . he did n't move   * ;   * i.e. a *"
+      
+
+---
+
+    Code
+      contentmask(toy.corpus, algorithm = "textdistortion", fw_list = c("the", "on"))
+    Message
+      successfully initialized (spaCy Version: 3.7.6, language model: en_core_web_sm)
+    Output
+      Corpus consisting of 1 document.
+      text1 :
+      "the * * on the * * * * * * * * * * * * * *"
+      
+
+---
+
+    Code
+      contentmask(toy.corpus, algorithm = "textdistortion", fw_list = "the")
+    Message
+      successfully initialized (spaCy Version: 3.7.6, language model: en_core_web_sm)
+    Output
+      Corpus consisting of 1 document.
+      text1 :
+      "the * * * the * * * * * * * * * * * * * *"
       
 
