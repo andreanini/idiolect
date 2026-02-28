@@ -185,7 +185,7 @@ process should happen automatically.
 posnoised.corpus <- contentmask(corpus, model = "en_core_web_sm", algorithm = "POSnoise")
 ```
 
-If the installation did not start automatically, then the installatino
+If the installation did not start automatically, then the installation
 of the `spacyr` package and of the default model can be done as follows:
 
 ``` r
@@ -293,7 +293,7 @@ unknown $Q$ text written by the $K$ author, *Kimberly_w*? For this
 reason, the method chosen is one of the most successful authorship
 verification methods available at present, the *Impostors Method*
 (Koppel and Winter 2014), and in particular one of its latest variants
-called the *Rank-Based Impostors Method* (Potha and Stamatatos 2017,
+called the *Ranking-Based Impostors Method* (Potha and Stamatatos 2017,
 2020).
 
 This analysis can be run in `idiolect` using the function
@@ -383,7 +383,8 @@ to calculate a *Log-Likelihood Ratio* ($LLR$). This analysis is done
 using the
 [`calibrate_LLR()`](https://andreanini.github.io/idiolect/dev/reference/calibrate_LLR.md)
 function, which fits a logistic regression model to calibrate the score
-into a $LLR$Ishihara (2021) using the `ROC` library (Leeuwen 2015).
+into a log-likelihood ratio Ishihara (2021) using the `ROC` library
+(Leeuwen 2015).
 
 The output of the function is the following:
 
