@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">idiolect</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">1.1.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">1.2.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -43,8 +43,7 @@
 <span>  <span class="va">corpus</span>,</span>
 <span>  model <span class="op">=</span> <span class="st">"en_core_web_sm"</span>,</span>
 <span>  algorithm <span class="op">=</span> <span class="st">"POSnoise"</span>,</span>
-<span>  fw_list <span class="op">=</span> <span class="st">"eng_halvani"</span>,</span>
-<span>  replace_non_ascii <span class="op">=</span> <span class="cn">TRUE</span></span>
+<span>  fw_list <span class="op">=</span> <span class="st">"eng_halvani"</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -67,10 +66,6 @@
 <dt id="arg-fw-list">fw_list<a class="anchor" aria-label="anchor" href="#arg-fw-list"></a></dt>
 <dd><p>The list of function words to use for the <code>textdistortion</code> algorithm. This is either the default ("eng_halvani") for the same list of function words used for <code>POSnoise</code> or it can be a vector of strings where each string is a function word to keep.</p></dd>
 
-
-<dt id="arg-replace-non-ascii">replace_non_ascii<a class="anchor" aria-label="anchor" href="#arg-replace-non-ascii"></a></dt>
-<dd><p>A logical value indicating whether to remove non-ASCII characters (including emojis). This is the default.</p></dd>
-
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
@@ -79,10 +74,9 @@
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
     <p>The default algorithm for content masking that this function applies is <code>POSnoise</code> (Halvani and Graner 2021). This algorithm only works for English and it transforms a text by masking tokens using their POS tag if these tokens are: nouns, verbs, adjectives, adverbs, digits, and symbols while leaving all the rest unchanged. <code>POSnoise</code> uses a list of function words for English that also includes frequent words belonging to the masked Part of Speech tags that tend to be mostly functional (e.g. make, recently, well).</p>
-<p>Another algorithm implemented is Nini's (2023) <code>frames</code> or <code>frame n-grams</code>. This algorithm does not involve a special list of tokens and therefore can potentially work for any language provided that the correct <code>spacy</code> model is loaded. This algorithm consists in masking all tokens using their POS tag only when these are nouns, verbs, or personal pronouns.</p>
+<p>Another algorithm implemented is Nini's (2023) <code>frames</code> or <code>frame n-grams</code>. This algorithm does not involve a special list of tokens and therefore can potentially work for any language provided that the correct <code>spacy</code> model is loaded. This algorithm consists in masking all tokens using their POS tag only when these are nouns, verbs, or numbers. The original version of the algorithms also masked personal pronouns but this is not done here to make this more applicable for various languages (the spacy universal tagset does not distinguish personal pronouns from other types of pronouns).</p>
 <p>Finally, the last algorithm implemented is a version of <code>textdistortion</code>, as originally proposed by Stamatatos (2017). This version of the algorithm is essentially <code>POSnoise</code> but without POS tag information. The default implementation uses the same list of function words that are used for <code>POSnoise</code>. In addition to the function words provided, the function treats all punctuation marks and new line breaks as function words to keep. The basic tokenization is done using <code>spacyr</code> so the right model for the language being analysed should be selected.</p>
-<p>If you have never used <code>spacyr</code> before then please follow the instructions to set it up and install a model before using this function.</p>
-<p>The removal of non-ASCII characters is done using the <code>textclean</code> package.</p>
+<p>If you have never used <code>spacyr</code> before then please follow the instructions to set it up and install a model before using this function here: <a href="https://spacyr.quanteda.io" class="external-link">https://spacyr.quanteda.io</a>.</p>
     </div>
     <div class="section level2">
     <h2 id="references">References<a class="anchor" aria-label="anchor" href="#references"></a></h2>
@@ -97,6 +91,7 @@ Stamatatos, Efstathios. 2017. Masking topic-related information to enhance autho
 <span class="r-in"><span><span class="va">text</span> <span class="op">&lt;-</span> <span class="st">"The cat was on the chair. He didn't move\ncat@pets.com;\nhttp://quanteda.io/. i.e. a test "</span></span></span>
 <span class="r-in"><span><span class="va">toy.corpus</span> <span class="op">&lt;-</span> <span class="fu">quanteda</span><span class="fu">::</span><span class="fu"><a href="https://quanteda.io/reference/corpus.html" class="external-link">corpus</a></span><span class="op">(</span><span class="va">text</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu">contentmask</span><span class="op">(</span><span class="va">toy.corpus</span>, algorithm <span class="op">=</span> <span class="st">"POSnoise"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">contentmask</span><span class="op">(</span><span class="va">toy.corpus</span>, algorithm <span class="op">=</span> <span class="st">"frames"</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu">contentmask</span><span class="op">(</span><span class="va">toy.corpus</span>, algorithm <span class="op">=</span> <span class="st">"textdistortion"</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">}</span> <span class="co"># }</span></span></span>
 </code></pre></div>

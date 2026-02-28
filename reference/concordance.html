@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">idiolect</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">1.1.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">1.2.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -90,81 +90,81 @@
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu">concordance</span><span class="op">(</span><span class="va">enron.sample</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span>, <span class="va">enron.sample</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span>, <span class="va">enron.sample</span><span class="op">[</span><span class="fl">3</span><span class="op">]</span>, <span class="st">"wants to"</span>, token.type <span class="op">=</span> <span class="st">"word"</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                 docname from to     pre     node           post authorship</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1 known [Kh Mail_1].txt    5  6 N N N N wants to be N when he V          Q</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>          docname     pre     node           post authorship</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1 Kevin_h_Mail_1 N N N N wants to be N when he V          Q</span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co">#using wildcards</span></span></span>
+<span class="r-in"><span><span class="co"># using wildcards</span></span></span>
 <span class="r-in"><span><span class="fu">concordance</span><span class="op">(</span><span class="va">enron.sample</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span>, <span class="va">enron.sample</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span>, <span class="va">enron.sample</span><span class="op">[</span><span class="fl">3</span><span class="op">]</span>, <span class="st">"wants * be"</span>, token.type <span class="op">=</span> <span class="st">"word"</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                 docname from to     pre        node           post authorship</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1 known [Kh Mail_1].txt    5  7 N N N N wants to be N when he V up          Q</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>          docname     pre        node           post authorship</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1 Kevin_h_Mail_1 N N N N wants to be N when he V up          Q</span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co">#searching character sequences with wildcards</span></span></span>
+<span class="r-in"><span><span class="co"># searching character sequences with wildcards</span></span></span>
 <span class="r-in"><span><span class="fu">concordance</span><span class="op">(</span><span class="va">enron.sample</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span>, <span class="va">enron.sample</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span>, <span class="va">enron.sample</span><span class="op">[</span><span class="fl">3</span><span class="op">]</span>, <span class="st">"help*"</span>, token.type <span class="op">=</span> <span class="st">"character"</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                 docname from   to   pre  node  post authorship</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1 known [Kh Mail_1].txt  703  707 need  help  V it           Q</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2 known [Kh Mail_1].txt 2014 2018 want  help  V it           Q</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3 known [Kh Mail_3].txt 1797 1801  N ,  helpe d the          K</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4 known [Kh Mail_4].txt   52   56  P P  helpe d the  Reference</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>          docname   pre  node  post authorship</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1 Kevin_h_Mail_1 need  help  V it           Q</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2 Kevin_h_Mail_1 want  help  V it           Q</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3 Kevin_h_Mail_3  N ,  helpe d the          K</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4 Kevin_h_Mail_4  P P  helpe d the  Reference</span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co">#using sentences</span></span></span>
+<span class="r-in"><span><span class="co"># using sentences</span></span></span>
 <span class="r-in"><span><span class="va">enron.sents</span> <span class="op">&lt;-</span> <span class="fu">tokens</span><span class="op">(</span><span class="va">enron.sample</span>, <span class="st">"sentence"</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu">concordance</span><span class="op">(</span><span class="va">enron.sents</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span>, <span class="va">enron.sents</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span>, <span class="va">enron.sents</span><span class="op">[</span><span class="fl">3</span><span class="op">]</span>, <span class="st">". _EOS_"</span>, token.type <span class="op">=</span> <span class="st">"word"</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                  docname from  to                       pre    node</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1  known [Kh Mail_1].txt  114 115               N , but V D . _EOS_</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2  known [Kh Mail_1].txt  160 161            D N in first N . _EOS_</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3  known [Kh Mail_1].txt  189 190             N about a N N . _EOS_</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4  known [Kh Mail_1].txt  369 370             and we V to V . _EOS_</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5  known [Kh Mail_1].txt  409 410           ' re V with her . _EOS_</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6  known [Kh Mail_1].txt  545 546            the N of the N . _EOS_</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 7  known [Kh Mail_1].txt  698 699  V in you getting neither . _EOS_</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8  known [Kh Mail_1].txt  713 714       just the N it works . _EOS_</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 9  known [Kh Mail_1].txt  735 736                N is a J N . _EOS_</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 10 known [Kh Mail_1].txt  873 874      have to say during N . _EOS_</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 11 known [Kh Mail_3].txt  173 174                J as a J N . _EOS_</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 12 known [Kh Mail_3].txt  235 236       get V into the call . _EOS_</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 13 known [Kh Mail_3].txt  285 286      , please let me know . _EOS_</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 14 known [Kh Mail_3].txt  341 342            you who V of N . _EOS_</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 15 known [Kh Mail_3].txt  366 367               B for a N N . _EOS_</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 16 known [Kh Mail_3].txt  410 411     P went well last week . _EOS_</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 17 known [Kh Mail_3].txt  560 561             of N in its N . _EOS_</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 18 known [Kh Mail_3].txt  599 600             for the B J N . _EOS_</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 19 known [Kh Mail_3].txt  625 626               N N and N N . _EOS_</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 20 known [Kh Mail_3].txt  715 716                 N J J J N . _EOS_</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 21 known [Kh Mail_4].txt  222 223            , and V your N . _EOS_</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 22 known [Kh Mail_4].txt  302 303            J N with the N . _EOS_</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 23 known [Kh Mail_4].txt  666 667             V for a few N . _EOS_</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 24 known [Kh Mail_4].txt  716 717 especially on the first N . _EOS_</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 25 known [Kh Mail_4].txt  754 755             her to N on N . _EOS_</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 26 known [Kh Mail_4].txt  774 775         after the N has V . _EOS_</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 27 known [Kh Mail_4].txt  785 786             to N on the N . _EOS_</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                       post authorship</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1        _BOS_ P V us they          Q</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2        _BOS_ N is in the          Q</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3           _BOS_ P , V is          Q</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4      _BOS_ J N is always          Q</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5            _BOS_ P , P ,          Q</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6         _BOS_ N is not a          Q</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 7          _BOS_ J N , but          Q</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8     _BOS_ P is what your          Q</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 9          _BOS_ J N are B          Q</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 10                                  Q</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 11 _BOS_ P had already run          K</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 12      _BOS_ V the N from          K</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 13      _BOS_ P i am still          K</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 14           _BOS_ P P P N          K</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 15       _BOS_ P per our N          K</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 16         _BOS_ P V to me          K</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 17        _BOS_ N of the N          K</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 18          _BOS_ P P , in          K</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 19           _BOS_ P P V a          K</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 20                                  K</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 21        _BOS_ N , over J  Reference</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 22          _BOS_ B to D i  Reference</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 23     _BOS_ N and N under  Reference</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 24      _BOS_ V , with her  Reference</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 25     _BOS_ V N should be  Reference</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 26 _BOS_ V from talking to  Reference</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 27                          Reference</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>           docname                       pre    node                    post</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1  Kevin_h_Mail_1               N , but V D . _EOS_       _BOS_ P V us they</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2  Kevin_h_Mail_1            D N in first N . _EOS_       _BOS_ N is in the</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3  Kevin_h_Mail_1             N about a N N . _EOS_          _BOS_ P , V is</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4  Kevin_h_Mail_1             and we V to V . _EOS_     _BOS_ J N is always</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5  Kevin_h_Mail_1           ' re V with her . _EOS_           _BOS_ P , P ,</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6  Kevin_h_Mail_1            the N of the N . _EOS_        _BOS_ N is not a</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 7  Kevin_h_Mail_1  V in you getting neither . _EOS_         _BOS_ J N , but</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 8  Kevin_h_Mail_1       just the N it works . _EOS_    _BOS_ P is what your</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9  Kevin_h_Mail_1                N is a J N . _EOS_         _BOS_ J N are B</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10 Kevin_h_Mail_1      have to say during N . _EOS_                        </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 11 Kevin_h_Mail_3                J as a J N . _EOS_ _BOS_ P had already run</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 12 Kevin_h_Mail_3       get V into the call . _EOS_      _BOS_ V the N from</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 13 Kevin_h_Mail_3      , please let me know . _EOS_      _BOS_ P i am still</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 14 Kevin_h_Mail_3            you who V of N . _EOS_           _BOS_ P P P N</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 15 Kevin_h_Mail_3               B for a N N . _EOS_       _BOS_ P per our N</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 16 Kevin_h_Mail_3     P went well last week . _EOS_         _BOS_ P V to me</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 17 Kevin_h_Mail_3             of N in its N . _EOS_        _BOS_ N of the N</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 18 Kevin_h_Mail_3             for the B J N . _EOS_          _BOS_ P P , in</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 19 Kevin_h_Mail_3               N N and N N . _EOS_           _BOS_ P P V a</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 20 Kevin_h_Mail_3                 N J J J N . _EOS_                        </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 21 Kevin_h_Mail_4            , and V your N . _EOS_        _BOS_ N , over J</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 22 Kevin_h_Mail_4            J N with the N . _EOS_          _BOS_ B to D i</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 23 Kevin_h_Mail_4             V for a few N . _EOS_     _BOS_ N and N under</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 24 Kevin_h_Mail_4 especially on the first N . _EOS_      _BOS_ V , with her</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 25 Kevin_h_Mail_4             her to N on N . _EOS_     _BOS_ V N should be</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 26 Kevin_h_Mail_4         after the N has V . _EOS_ _BOS_ V from talking to</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 27 Kevin_h_Mail_4             to N on the N . _EOS_                        </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    authorship</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1           Q</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2           Q</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3           Q</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4           Q</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5           Q</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6           Q</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 7           Q</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 8           Q</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9           Q</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10          Q</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 11          K</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 12          K</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 13          K</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 14          K</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 15          K</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 16          K</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 17          K</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 18          K</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 19          K</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 20          K</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 21  Reference</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 22  Reference</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 23  Reference</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 24  Reference</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 25  Reference</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 26  Reference</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 27  Reference</span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>

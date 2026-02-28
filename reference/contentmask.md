@@ -12,8 +12,7 @@ contentmask(
   corpus,
   model = "en_core_web_sm",
   algorithm = "POSnoise",
-  fw_list = "eng_halvani",
-  replace_non_ascii = TRUE
+  fw_list = "eng_halvani"
 )
 ```
 
@@ -40,11 +39,6 @@ contentmask(
   function words used for `POSnoise` or it can be a vector of strings
   where each string is a function word to keep.
 
-- replace_non_ascii:
-
-  A logical value indicating whether to remove non-ASCII characters
-  (including emojis). This is the default.
-
 ## Value
 
 A `quanteda` corpus object only containing functional tokens, depending
@@ -67,7 +61,10 @@ Another algorithm implemented is Nini's (2023) `frames` or
 tokens and therefore can potentially work for any language provided that
 the correct `spacy` model is loaded. This algorithm consists in masking
 all tokens using their POS tag only when these are nouns, verbs, or
-personal pronouns.
+numbers. The original version of the algorithms also masked personal
+pronouns but this is not done here to make this more applicable for
+various languages (the spacy universal tagset does not distinguish
+personal pronouns from other types of pronouns).
 
 Finally, the last algorithm implemented is a version of
 `textdistortion`, as originally proposed by Stamatatos (2017). This
@@ -79,11 +76,8 @@ as function words to keep. The basic tokenization is done using `spacyr`
 so the right model for the language being analysed should be selected.
 
 If you have never used `spacyr` before then please follow the
-instructions to set it up and install a model before using this
-function.
-
-The removal of non-ASCII characters is done using the `textclean`
-package.
+instructions to set it up and install a model before using this function
+here: <https://spacyr.quanteda.io>.
 
 ## References
 
@@ -106,6 +100,7 @@ if (FALSE) { # \dontrun{
 text <- "The cat was on the chair. He didn't move\ncat@pets.com;\nhttp://quanteda.io/. i.e. a test "
 toy.corpus <- quanteda::corpus(text)
 contentmask(toy.corpus, algorithm = "POSnoise")
+contentmask(toy.corpus, algorithm = "frames")
 contentmask(toy.corpus, algorithm = "textdistortion")
 } # }
 ```

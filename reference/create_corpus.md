@@ -6,7 +6,7 @@ object.
 ## Usage
 
 ``` r
-create_corpus(path)
+create_corpus(path, encoding = "UTF-8")
 ```
 
 ## Arguments
@@ -17,9 +17,16 @@ create_corpus(path)
   in .txt) with their name structured as following:
   authorname_textname.txt (e.g. smith_text1.txt).
 
+- encoding:
+
+  Either a single string indicating the encoding for all files or a
+  vector of strings indicating the encodings for each file. The default
+  is UTF-8.
+
 ## Value
 
-A `quanteda` corpus object with the authors' names as a docvar.
+A `quanteda` corpus object with the authors' names and the text names as
+docvars.
 
 ## Examples
 
