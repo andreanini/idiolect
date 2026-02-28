@@ -1,3 +1,5 @@
+# idiolect (development version)
+
 # idiolect 1.2.0
 
 * minor bug fixes
