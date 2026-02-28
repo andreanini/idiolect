@@ -18,6 +18,7 @@ knitr::opts_chunk$set(
 
 <!-- badges: start -->
 [![CRAN status](https://www.r-pkg.org/badges/version/idiolect)](https://CRAN.R-project.org/package=idiolect)
+[![R-CMD-check](https://github.com/andreanini/idiolect/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/andreanini/idiolect/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 
 The `idiolect` R package is designed to provide a comprehensive suite of tools for performing comparative authorship analysis within a forensic context using the Likelihood Ratio Framework [e.g. @ishihara2021; @nini2023]. The package contains a set of authorship analysis functions that take a set of texts as input and output scores that can then be calibrated into likelihood ratios. The package is dependent on [`quanteda`](https://quanteda.io) [@benoit2018] for all Natural Language Processing functions.
