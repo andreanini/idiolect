@@ -23,12 +23,12 @@ library(idiolect)
 
 # Introduction
 
-Authorship Analysis is defined as the task of determining the likelihood that a certain candidate is the author of a certain set of questioned or disputed texts. We call *Forensic* Authorship Analysis a task of this kind applied in a real forensic case. 
+Authorship Analysis is defined as the task of determining the likelihood that a certain candidate is the author of a certain set of questioned or disputed texts. We call *Forensic* Authorship Analysis a task of this kind applied in a real forensic case.
 
 In Forensic Linguistics, typically:
 
-- $Q$ indicates the set of disputed or *questioned* texts.
-- $K$ indicates the texts written by the candidate author and collected as comparison material.
+-   $Q$ indicates the set of disputed or *questioned* texts.
+-   $K$ indicates the texts written by the candidate author and collected as comparison material.
 
 We then indicate with $R$ the reference dataset that might have to be compiled by the analyst for the specific case [@ishihara2024].
 
@@ -88,7 +88,7 @@ The following code should be used to run the `contentmask()` function. This will
 posnoised.corpus <- contentmask(corpus, model = "en_core_web_sm", algorithm = "POSnoise")
 ```
 
-If the installation did not start automatically, then the installatino of the `spacyr` package and of the default model can be done as follows:
+If the installation did not start automatically, then the installation of the `spacyr` package and of the default model can be done as follows:
 
 ```{r eval=FALSE, include=TRUE}
 install.packages("spacyr")
@@ -154,7 +154,7 @@ This is not the only way in which a validation analysis can be conducted. A comp
 
 ## Authorship analysis
 
-In this example, the scenario simulated is a *verification*: was the unknown $Q$ text written by the $K$ author, *Kimberly_w*? For this reason, the method chosen is one of the most successful authorship verification methods available at present, the *Impostors Method* [@koppel2014], and in particular one of its latest variants called the *Rank-Based Impostors Method* [@potha2017; @potha2020].
+In this example, the scenario simulated is a *verification*: was the unknown $Q$ text written by the $K$ author, *Kimberly_w*? For this reason, the method chosen is one of the most successful authorship verification methods available at present, the *Impostors Method* [@koppel2014], and in particular one of its latest variants called the *Ranking-Based Impostors Method* [@potha2017; @potha2020].
 
 This analysis can be run in `idiolect` using the function `impostors()` and then selecting the default parameter for the *algorithm* argument, "*RBI*". The main argument of this function are the *q.data*, which is the set of $Q$ texts to test, and the *k.data*, which is the set of $K$ texts from one or more authors that are going to be tested, and finally the set of impostors data, *cand.imps*. For this example, the impostors data is $R$ set but generally the recommendation is to use another dataset when possible.
 
@@ -182,7 +182,7 @@ res[1:10,]
 
 In order to assess the results of this validation analysis, the function `performance()` can be used to return a series of performance metrics. This function can take one or two result data frames as input. If two are provided, then one is used as training and the other one as test. If only one data frame is provided, then the performance metrics are calculated using a leave-one-out approach.
 
-The procedure followed by this function is to held out one text (if leave-one-out, otherwise the test dataset in its entirety) and then use the rest of the data (or the training dataset) as a calibration dataset to calculate a *Log-Likelihood Ratio* ($LLR$). This analysis is done using the `calibrate_LLR()` function, which fits a logistic regression model to calibrate the score into a $LLR$ [@morrison2013, @ishihara2021] using the `ROC` library [@vanleeuwen2015].
+The procedure followed by this function is to held out one text (if leave-one-out, otherwise the test dataset in its entirety) and then use the rest of the data (or the training dataset) as a calibration dataset to calculate a *Log-Likelihood Ratio* ($LLR$). This analysis is done using the `calibrate_LLR()` function, which fits a logistic regression model to calibrate the score into a log-likelihood ratio [@morrison2013, @ishihara2021] using the `ROC` library [@vanleeuwen2015].
 
 The output of the function is the following:
 
