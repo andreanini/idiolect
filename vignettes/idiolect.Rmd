@@ -182,7 +182,7 @@ res[1:10,]
 
 In order to assess the results of this validation analysis, the function `performance()` can be used to return a series of performance metrics. This function can take one or two result data frames as input. If two are provided, then one is used as training and the other one as test. If only one data frame is provided, then the performance metrics are calculated using a leave-one-out approach.
 
-The procedure followed by this function is to held out one text (if leave-one-out, otherwise the test dataset in its entirety) and then use the rest of the data (or the training dataset) as a calibration dataset to calculate a *Log-Likelihood Ratio* ($LLR$). This analysis is done using the `calibrate_LLR()` function, which fits a logistic regression model to calibrate the score into a log-likelihood ratio [@morrison2013, @ishihara2021] using the `ROC` library [@vanleeuwen2015].
+The procedure followed by this function is to held out one text (if leave-one-out, otherwise the test dataset in its entirety) and then use the rest of the data (or the training dataset) as a calibration dataset to calculate a *Log-Likelihood Ratio* ($LLR$). This analysis is done using the `calibrate_LLR()` function, which fits a logistic regression model to calibrate the score into a $LLR$ [@morrison2013; @ishihara2021] using the `ROC` library [@vanleeuwen2015].
 
 The output of the function is the following:
 
