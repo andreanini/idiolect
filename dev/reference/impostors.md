@@ -161,5 +161,5 @@ K <- enron.sample[2:3]
 imps <- enron.sample[4:9]
 impostors(Q, K, imps, algorithm = "KGI")
 #>         K              Q target score
-#> 1 Kevin_h Kevin_h_Mail_1   TRUE  0.36
+#> 1 Kevin_h Kevin_h_Mail_1   TRUE  0.41
 ```

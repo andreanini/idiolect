@@ -13,12 +13,18 @@
 Source:
 [`inst/CITATION`](https://github.com/andreanini/idiolect/blob/main/inst/CITATION)
 
-Andrea Nini (2024). *Idiolect: An R package for forensic authorship
-analysis*. <https://andreanini.github.io/idiolect/>.
+Nini A (2026). “idiolect: An R package for forensic authorship
+analysis.” *Journal of Open Source Software*, **11**(119), 7575.
+[doi:10.21105/joss.07575](https://doi.org/10.21105/joss.07575).
 
-    @Manual{,
-      title = {Idiolect: An R package for forensic authorship analysis},
-      author = {{Andrea Nini}},
-      year = {2024},
-      url = {https://andreanini.github.io/idiolect/},
+    @Article{,
+      title = {{idiolect}: An {R} package for forensic authorship analysis},
+      author = {Andrea Nini},
+      year = {2026},
+      journal = {Journal of Open Source Software},
+      volume = {11},
+      number = {119},
+      pages = {7575},
+      publisher = {The Open Journal},
+      doi = {10.21105/joss.07575},
     }

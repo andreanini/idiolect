@@ -111,20 +111,20 @@ ref.data <- enron.sample[6:ndoc(enron.sample)] |> quanteda::tokens("sentence")
 outputs <- lambdaG_visualize(q.data, k.data, ref.data, r = 2)
 outputs$table
 #> # A tibble: 13 × 8
-#>    sentence_id token_id t          lambdaG sentence_lambdaG zlambdaG
-#>          <int>    <int> <chr>        <dbl>            <dbl>    <dbl>
-#>  1           1        1 J          0.00220            0.311   -0.055
-#>  2           1        2 N          0.0641             0.311    0.102
-#>  3           1        3 ,         -0.748              0.311   -1.96 
-#>  4           1        4 but        0.430              0.311    1.03 
-#>  5           1        5 that      -0.120              0.311   -0.365
-#>  6           1        6 's         1.02               0.311    2.53 
-#>  7           1        7 just      -0.0203             0.311   -0.112
-#>  8           1        8 the        0.0379             0.311    0.035
-#>  9           1        9 N          0.0181             0.311   -0.015
-#> 10           1       10 it        -0.236              0.311   -0.658
-#> 11           1       11 works     -0.0908             0.311   -0.291
-#> 12           1       12 .          0.0214             0.311   -0.006
-#> 13           1       13 ___EOS___ -0.0696             0.311   -0.237
+#>    sentence_id token_id t         lambdaG sentence_lambdaG zlambdaG
+#>          <int>    <int> <chr>       <dbl>            <dbl>    <dbl>
+#>  1           1        1 J          0.771             0.726    1.40 
+#>  2           1        2 N          0.220             0.726    0.323
+#>  3           1        3 ,         -1.16              0.726   -2.38 
+#>  4           1        4 but        0.326             0.726    0.531
+#>  5           1        5 that      -0.0955            0.726   -0.297
+#>  6           1        6 's         0.991             0.726    1.84 
+#>  7           1        7 just      -0.0210            0.726   -0.151
+#>  8           1        8 the        0.0194            0.726   -0.072
+#>  9           1        9 N          0.0259            0.726   -0.059
+#> 10           1       10 it        -0.252             0.726   -0.605
+#> 11           1       11 works     -0.102             0.726   -0.31 
+#> 12           1       12 .          0.0365            0.726   -0.038
+#> 13           1       13 ___EOS___ -0.0385            0.726   -0.185
 #> # ℹ 2 more variables: token_contribution <dbl>, sent_contribution <dbl>
 ```

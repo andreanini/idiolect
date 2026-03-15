@@ -2,7 +2,12 @@
 
 ## idiolect (development version)
 
+- associated Journal of Open Source Software paper now published and
+  should be used as reference.
+
 ## idiolect 1.2.0
+
+CRAN release: 2026-02-28
 
 - minor bug fixes
 

@@ -383,7 +383,7 @@ to calculate a *Log-Likelihood Ratio* ($LLR$). This analysis is done
 using the
 [`calibrate_LLR()`](https://andreanini.github.io/idiolect/dev/reference/calibrate_LLR.md)
 function, which fits a logistic regression model to calibrate the score
-into a log-likelihood ratio Ishihara (2021) using the `ROC` library
+into a $LLR$(Morrison 2013; Ishihara 2021) using the `ROC` library
 (Leeuwen 2015).
 
 The output of the function is the following:
