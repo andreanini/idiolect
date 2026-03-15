@@ -1,5 +1,7 @@
 # idiolect (development version)
 
+* associated Journal of Open Source Software paper now published and should be used as reference.
+
 # idiolect 1.2.0
 
 * minor bug fixes

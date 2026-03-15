@@ -1,9 +1,14 @@
 citHeader("To cite `idiolect` in publications use:")
 
 bibentry(
-  bibtype  = "Manual",
-  title    = "Idiolect: An R package for forensic authorship analysis",
-  author   = person("Andrea Nini"),
-  year     = 2024,
-  url      = "https://andreanini.github.io/idiolect/"
+  bibtype     = "Article",
+  title       = "{idiolect}: An {R} package for forensic authorship analysis",
+  author      = "Andrea Nini",
+  year        = 2026,
+  journal     = "Journal of Open Source Software",
+  volume      = 11,
+  number      = 119,
+  pages       = 7575,
+  publisher   = "The Open Journal",
+  doi         = "10.21105/joss.07575"
 )

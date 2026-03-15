@@ -8,6 +8,7 @@
 [![CRAN
 status](https://www.r-pkg.org/badges/version/idiolect)](https://CRAN.R-project.org/package=idiolect)
 [![R-CMD-check](https://github.com/andreanini/idiolect/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/andreanini/idiolect/actions/workflows/R-CMD-check.yaml)
+[![DOI](https://joss.theoj.org/papers/10.21105/joss.07575/status.svg)](https://doi.org/10.21105/joss.07575)
 <!-- badges: end -->
 
 The `idiolect` R package is designed to provide a comprehensive suite of
