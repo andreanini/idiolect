@@ -5,14 +5,14 @@
 \title{Content masking}
 \usage{
 contentmask(
-  corpus,
+  input,
   model = "en_core_web_sm",
   algorithm = "POSnoise",
   fw_list = "eng_halvani"
 )
 }
 \arguments{
-\item{corpus}{A \code{quanteda} corpus object, typically the output of the \code{\link[=create_corpus]{create_corpus()}} function.}
+\item{input}{A \code{quanteda} corpus object, typically the output of the \code{\link[=create_corpus]{create_corpus()}} function, or a \code{quanteda} tokens object where each token is a sentence (the output of \code{\link[=tokenize_sents]{tokenize_sents()}}).}
 
 \item{model}{The spacy model to use. The default is "en_core_web_sm".}
 
@@ -21,7 +21,7 @@ contentmask(
 \item{fw_list}{The list of function words to use for the \code{textdistortion} algorithm. This is either the default ("eng_halvani") for the same list of function words used for \code{POSnoise} or it can be a vector of strings where each string is a function word to keep.}
 }
 \value{
-A \code{quanteda} corpus object only containing functional tokens, depending on the algorithm chosen. The corpus contains the same docvars as the input. Email addresses or URLs are treated like nouns.
+Either a \code{quanteda} corpus object or a \code{quanteda} tokens object containing sentences, depending on the input, but only containing functional tokens according to the chosen content-masking algorithm. The corpus contains the same docvars as the input. Email addresses or URLs are treated like nouns.
 }
 \description{
 This function offers three algorithms for topic/content masking. In order to run the masking algorithms, a \code{spacy} tokenizer or POS-tagger has to be run first (via \code{spacyr}). For more information about the masking algorithms see Details below.

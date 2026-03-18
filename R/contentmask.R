@@ -10,7 +10,7 @@
 #'
 #' If you have never used `spacyr` before then please follow the instructions to set it up and install a model before using this function here: [https://spacyr.quanteda.io](https://spacyr.quanteda.io).
 #'
-#' @param corpus A `quanteda` corpus object, typically the output of the [create_corpus()] function.
+#' @param input A `quanteda` corpus object, typically the output of the [create_corpus()] function, or a `quanteda` tokens object where each token is a sentence (the output of [tokenize_sents()]).
 #' @param algorithm A string, either "POSnoise" (default), "frames", or "textdistortion".
 #' @param fw_list The list of function words to use for the `textdistortion` algorithm. This is either the default ("eng_halvani") for the same list of function words used for `POSnoise` or it can be a vector of strings where each string is a function word to keep.
 #' @param model The spacy model to use. The default is "en_core_web_sm".
@@ -20,7 +20,7 @@
 #' Stamatatos, Efstathios. 2017. Masking topic-related information to enhance authorship attribution. Journal of the Association for Information Science and Technology. https://doi.org/10.1002/asi.23968.
 #'
 #'
-#' @return A `quanteda` corpus object only containing functional tokens, depending on the algorithm chosen. The corpus contains the same docvars as the input. Email addresses or URLs are treated like nouns.
+#' @return Either a `quanteda` corpus object or a `quanteda` tokens object containing sentences, depending on the input, but only containing functional tokens according to the chosen content-masking algorithm. The corpus contains the same docvars as the input. Email addresses or URLs are treated like nouns.
 #'
 #'
 #' @examples
@@ -33,113 +33,226 @@
 #' }
 #' @export
 contentmask <- function(
-    corpus,
+    input,
     model = "en_core_web_sm",
     algorithm = "POSnoise",
     fw_list = "eng_halvani") {
-  # this removes potential empty documents in the corpus, which are anyway removed by spacy
-  c <- quanteda::corpus_subset(corpus, quanteda::ntoken(corpus) > 0)
+  docids <- quanteda::docid(input)
+  meta <- quanteda::docvars(input)
+  names <- quanteda::docnames(input)
 
-  docids <- quanteda::docid(c)
-  meta <- quanteda::docvars(c)
-  names <- quanteda::docnames(c)
-
-  if (algorithm == "textdistortion") {
-    spacyr::spacy_initialize(model = model, entity = FALSE)
-    toks <- spacyr::spacy_tokenize(c, "word", remove_separators = FALSE, output = "data.frame")
-    spacyr::spacy_finalize()
-
-    if (length(fw_list) > 1) {
-      keeplist <- fw_list
-    } else if (fw_list == "eng_halvani") {
-      keeplist <- c(
-        c(
-          "&", "'", "\\", "[", "]", "{", "}", ":", ",", "-", "\"", "...", "!", ".", "(", ")", "?", ";",
-          "/", "\n"
-        ),
-        halvani
-      )
-    } else {
-      keeplist <- fw_list
-    }
-
-    x.corp <- toks |>
-      dplyr::filter(token != " ") |>
-      dplyr::mutate(token = stringr::str_to_lower(token)) |>
-      dplyr::mutate(token = dplyr::if_else(token %in% keeplist, token, "*")) |>
-      dplyr::group_by(doc_id) |>
-      dplyr::summarise(text = paste(token, collapse = " ")) |>
-      quanteda::corpus()
-  } else {
-    spacyr::spacy_initialize(model = model, entity = FALSE)
-    parsed.corpus <- spacyr::spacy_parse(
-      c,
-      lemma = FALSE,
-      entity = FALSE,
-      additional_attributes = c("like_url", "like_email")
+  # this is only for textdistortion
+  if (length(fw_list) > 1) {
+    keeplist <- fw_list
+  } else if (fw_list == "eng_halvani") {
+    keeplist <- c(
+      c(
+        "&", "'", "\\", "[", "]", "{", "}", ":", ",", "-", "\"", "...", "!", ".", "(", ")", "?", ";",
+        "/", "\n"
+      ),
+      halvani
     )
-    spacyr::spacy_finalize()
+  } else {
+    keeplist <- fw_list
+  }
 
-    if (algorithm == "POSnoise") {
-      content <- c("N", "P", "V", "J", "B", "D", "S")
+  # this is only for POSnoise
+  content <- c("N", "P", "V", "J", "B", "D", "S")
 
-      x.pos <- parsed.corpus |>
-        dplyr::mutate(token = tolower(token)) |>
-        dplyr::mutate(
-          pos = dplyr::case_when(
-            like_email == TRUE ~ "N",
-            like_url == TRUE ~ "N",
-            pos == "NOUN" ~ "N",
-            pos == "PROPN" ~ "P",
-            pos == "VERB" ~ "V",
-            pos == "ADJ" ~ "J",
-            pos == "ADV" ~ "B",
-            pos == "NUM" ~ "D",
-            pos == "SYM" ~ "S",
-            TRUE ~ pos
-          )
-        ) |>
-        dplyr::mutate(
-          POSnoise = dplyr::case_when(
-            token %in% halvani ~ token,
-            !(pos %in% content) ~ token,
-            pos == "SPACE" ~ token,
-            TRUE ~ pos
-          )
-        ) |>
-        dplyr::select(doc_id, POSnoise) |>
-        dplyr::rename(token = POSnoise) |>
-        quanteda::as.tokens()
+  spacyr::spacy_initialize(model = model, entity = FALSE)
 
-      x.corp <- sapply(x.pos, function(x) {
-        paste(x, collapse = " ")
-      }) |> quanteda::corpus()
+  if (quanteda::is.corpus(input)) {
+    # this removes potential empty documents in the corpus, which are anyway removed by spacy
+    c <- quanteda::corpus_subset(input, quanteda::ntoken(input) > 0)
+
+    if (algorithm == "textdistortion") {
+      toks <- spacyr::spacy_tokenize(c, "word", remove_separators = FALSE, output = "data.frame")
+
+
+      x.corp <- toks |>
+        dplyr::filter(token != " ") |>
+        dplyr::mutate(token = stringr::str_to_lower(token)) |>
+        dplyr::mutate(token = dplyr::if_else(token %in% keeplist, token, "*")) |>
+        dplyr::group_by(doc_id) |>
+        dplyr::summarise(text = paste(token, collapse = " ")) |>
+        quanteda::corpus()
+    } else {
+      parsed.corpus <- spacyr::spacy_parse(
+        c,
+        lemma = FALSE,
+        entity = FALSE,
+        additional_attributes = c("like_url", "like_email")
+      )
+      if (algorithm == "POSnoise") {
+        x.pos <- parsed.corpus |>
+          dplyr::mutate(token = tolower(token)) |>
+          dplyr::mutate(
+            pos = dplyr::case_when(
+              like_email == TRUE ~ "N",
+              like_url == TRUE ~ "N",
+              pos == "NOUN" ~ "N",
+              pos == "PROPN" ~ "P",
+              pos == "VERB" ~ "V",
+              pos == "ADJ" ~ "J",
+              pos == "ADV" ~ "B",
+              pos == "NUM" ~ "D",
+              pos == "SYM" ~ "S",
+              TRUE ~ pos
+            )
+          ) |>
+          dplyr::mutate(
+            POSnoise = dplyr::case_when(
+              token %in% halvani ~ token,
+              !(pos %in% content) ~ token,
+              pos == "SPACE" ~ token,
+              TRUE ~ pos
+            )
+          ) |>
+          dplyr::select(doc_id, POSnoise) |>
+          dplyr::rename(token = POSnoise) |>
+          quanteda::as.tokens()
+        x.corp <- sapply(x.pos, function(x) {
+          paste(x, collapse = " ")
+        }) |> quanteda::corpus()
+      }
+      if (algorithm == "frames") {
+        x.pos <- parsed.corpus |>
+          dplyr::mutate(token = tolower(token)) |>
+          dplyr::mutate(
+            POSnoise = dplyr::case_when(
+              like_email == TRUE ~ "NOUN",
+              like_url == TRUE ~ "NOUN",
+              pos %in% c("PROPN", "NOUN", "VERB", "NUM") ~ pos,
+              pos == "SPACE" ~ token,
+              TRUE ~ token
+            )
+          ) |>
+          dplyr::select(doc_id, POSnoise) |>
+          dplyr::rename(token = POSnoise) |>
+          quanteda::as.tokens()
+        x.corp <- sapply(x.pos, function(x) {
+          paste(x, collapse = " ")
+        }) |> quanteda::corpus()
+      }
     }
-
-    if (algorithm == "frames") {
-      x.pos <- parsed.corpus |>
-        dplyr::mutate(token = tolower(token)) |>
-        dplyr::mutate(
-          POSnoise = dplyr::case_when(
-            like_email == TRUE ~ "NOUN",
-            like_url == TRUE ~ "NOUN",
-            pos %in% c("PROPN", "NOUN", "VERB", "NUM") ~ pos,
-            pos == "SPACE" ~ token,
-            TRUE ~ token
+  } else if (quanteda::is.tokens(input)) {
+    if (algorithm == "textdistortion") {
+      x.corp <- pbapply::pblapply(
+        input,
+        \(x){
+          sapply(
+            x,
+            \(s){
+              toks <- spacyr::spacy_tokenize(s, "word", remove_separators = FALSE, output = "data.frame")
+              output <- toks |>
+                dplyr::filter(token != " ") |>
+                dplyr::mutate(token = stringr::str_to_lower(token)) |>
+                dplyr::mutate(token = dplyr::if_else(token %in% keeplist, token, "*")) |>
+                dplyr::group_by(doc_id) |>
+                dplyr::summarise(text = paste(token, collapse = " ")) |>
+                dplyr::pull(text)
+            }
           )
-        ) |>
-        dplyr::select(doc_id, POSnoise) |>
-        dplyr::rename(token = POSnoise) |>
+        }
+      ) |>
         quanteda::as.tokens()
+    } else if (algorithm == "POSnoise") {
+      x.corp <- pbapply::pblapply(
+        input,
+        \(x){
+          sapply(
+            x,
+            \(s){
+              parsed <- spacyr::spacy_parse(
+                s,
+                lemma = FALSE,
+                entity = FALSE,
+                additional_attributes = c("like_url", "like_email")
+              )
+              masked <- parsed |>
+                dplyr::mutate(token = tolower(token)) |>
+                dplyr::mutate(
+                  pos = dplyr::case_when(
+                    like_email == TRUE ~ "N",
+                    like_url == TRUE ~ "N",
+                    pos == "NOUN" ~ "N",
+                    pos == "PROPN" ~ "P",
+                    pos == "VERB" ~ "V",
+                    pos == "ADJ" ~ "J",
+                    pos == "ADV" ~ "B",
+                    pos == "NUM" ~ "D",
+                    pos == "SYM" ~ "S",
+                    TRUE ~ pos
+                  )
+                ) |>
+                dplyr::mutate(
+                  POSnoise = dplyr::case_when(
+                    token %in% halvani ~ token,
+                    !(pos %in% content) ~ token,
+                    pos == "SPACE" ~ token,
+                    TRUE ~ pos
+                  )
+                ) |>
+                dplyr::select(doc_id, POSnoise) |>
+                dplyr::rename(token = POSnoise) |>
+                quanteda::as.tokens()
+              output <- sapply(
+                masked,
+                \(x) {
+                  paste(x, collapse = " ")
+                }
+              )
+            }
+          )
+        }
+      ) |>
+        quanteda::as.tokens()
+    } else if (algorithm == "frames") {
+      x.corp <- pbapply::pblapply(
+        input,
+        \(x){
+          sapply(
+            x,
+            \(s){
+              parsed <- spacyr::spacy_parse(
+                s,
+                lemma = FALSE,
+                entity = FALSE,
+                additional_attributes = c("like_url", "like_email")
+              )
 
-      x.corp <- sapply(x.pos, function(x) {
-        paste(x, collapse = " ")
-      }) |> quanteda::corpus()
+              masked <- parsed |>
+                dplyr::mutate(token = tolower(token)) |>
+                dplyr::mutate(
+                  POSnoise = dplyr::case_when(
+                    like_email == TRUE ~ "NOUN",
+                    like_url == TRUE ~ "NOUN",
+                    pos %in% c("PROPN", "NOUN", "VERB", "NUM") ~ pos,
+                    pos == "SPACE" ~ token,
+                    TRUE ~ token
+                  )
+                ) |>
+                dplyr::select(doc_id, POSnoise) |>
+                dplyr::rename(token = POSnoise) |>
+                quanteda::as.tokens()
+
+              output <- sapply(
+                masked,
+                \(x) {
+                  paste(x, collapse = " ")
+                }
+              )
+            }
+          )
+        }
+      ) |>
+        quanteda::as.tokens()
     }
   }
 
+  spacyr::spacy_finalize()
+
   quanteda::docvars(x.corp) <- meta
   quanteda::docnames(x.corp) <- names
-
   return(x.corp)
 }

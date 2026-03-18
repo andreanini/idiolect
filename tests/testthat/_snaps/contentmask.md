@@ -1,7 +1,7 @@
 # content masking works
 
     Code
-      suppressMessages(contentmask(enron.small, algorithm = "POSnoise"))
+      enron.pos
     Output
       Corpus consisting of 3 documents and 2 docvars.
       allen-p_16.txt :
@@ -17,7 +17,7 @@
 ---
 
     Code
-      suppressMessages(contentmask(enron.small, algorithm = "frames"))
+      enron.frames
     Output
       Corpus consisting of 3 documents and 2 docvars.
       allen-p_16.txt :
@@ -33,7 +33,7 @@
 ---
 
     Code
-      suppressMessages(contentmask(enron.small, algorithm = "textdistortion"))
+      enron.dist
     Output
       Corpus consisting of 3 documents and 2 docvars.
       allen-p_16.txt :
