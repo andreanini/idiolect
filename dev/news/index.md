@@ -5,6 +5,11 @@
 - associated Journal of Open Source Software paper now published and
   should be used as reference.
 
+- [`contentmask()`](https://andreanini.github.io/idiolect/dev/reference/contentmask.md)
+  also accepts sentence-tokenised corpora (the outputs of
+  [`tokenize_sents()`](https://andreanini.github.io/idiolect/dev/reference/tokenize_sents.md))
+  as input.
+
 - [`chunk_texts()`](https://andreanini.github.io/idiolect/dev/reference/chunk_texts.md)
   now outputs texts that keep the same spaces present in the original
   and no longer outputs texts with spaces around the punctuation marks.

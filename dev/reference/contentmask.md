@@ -9,7 +9,7 @@ masking algorithms see Details below.
 
 ``` r
 contentmask(
-  corpus,
+  input,
   model = "en_core_web_sm",
   algorithm = "POSnoise",
   fw_list = "eng_halvani"
@@ -18,11 +18,13 @@ contentmask(
 
 ## Arguments
 
-- corpus:
+- input:
 
   A `quanteda` corpus object, typically the output of the
   [`create_corpus()`](https://andreanini.github.io/idiolect/dev/reference/create_corpus.md)
-  function.
+  function, or a `quanteda` tokens object where each token is a sentence
+  (the output of
+  [`tokenize_sents()`](https://andreanini.github.io/idiolect/dev/reference/tokenize_sents.md)).
 
 - model:
 
@@ -41,9 +43,11 @@ contentmask(
 
 ## Value
 
-A `quanteda` corpus object only containing functional tokens, depending
-on the algorithm chosen. The corpus contains the same docvars as the
-input. Email addresses or URLs are treated like nouns.
+Either a `quanteda` corpus object or a `quanteda` tokens object
+containing sentences, depending on the input, but only containing
+functional tokens according to the chosen content-masking algorithm. The
+corpus contains the same docvars as the input. Email addresses or URLs
+are treated like nouns.
 
 ## Details
 
