@@ -3,26 +3,26 @@
     Code
       chunked
     Output
-      Corpus consisting of 1,623 documents and 3 docvars.
+      Corpus consisting of 1,608 documents and 3 docvars.
       known [Kevin.hyatt - Mail_1].txt.1 :
       "N N N N wants to be N when he V up likes N P , N for doing t..."
       
       known [Kevin.hyatt - Mail_1].txt.2 :
-      ". we got D N on P N , but V D . P V us they are about to V a..."
+      "got D N on P N , but V D . P V us they are about to V an J N..."
       
       known [Kevin.hyatt - Mail_1].txt.3 :
-      ". i V one N since called P P . the N B has more N than you n..."
+      "V one N since called P P . the N B has more N than you need ..."
       
       known [Kevin.hyatt - Mail_1].txt.4 :
-      "V the J N N , do you ? if you wo n't V like the P ' s J N , ..."
+      ", do you ? if you wo n't V like the P 's J N , do n't V us t..."
       
       known [Kevin.hyatt - Mail_1].txt.5 :
-      "are not N to see if we can find the J N yet again ! if you a..."
+      "find the J N yet again ! if you ask a N you do n't want an N..."
       
       known [Kevin.hyatt - Mail_1].txt.6 :
-      "as N N , the N N , or N N . it ' s like the J N or the N of ..."
+      "N . it 's like the J N or the N of the N . N is not a N , an..."
       
-      [ reached max_ndoc ... 1,617 more documents ]
+      [ reached max_ndoc ... 1,602 more documents ]
 
 ---
 
@@ -201,7 +201,7 @@
       169   Enron       Liz.taylor    known
       170   Enron       Liz.taylor    known
       171   Enron       Liz.taylor    known
-      172   Enron       Liz.taylor    known
+      172   Enron   Louise.kitchen  unknown
       173   Enron   Louise.kitchen  unknown
       174   Enron   Louise.kitchen  unknown
       175   Enron   Louise.kitchen  unknown
@@ -210,7 +210,7 @@
       178   Enron   Louise.kitchen  unknown
       179   Enron   Louise.kitchen  unknown
       180   Enron   Louise.kitchen  unknown
-      181   Enron   Louise.kitchen  unknown
+      181   Enron   Louise.kitchen    known
       182   Enron   Louise.kitchen    known
       183   Enron   Louise.kitchen    known
       184   Enron   Louise.kitchen    known
@@ -239,7 +239,7 @@
       207   Enron   Louise.kitchen    known
       208   Enron   Louise.kitchen    known
       209   Enron   Louise.kitchen    known
-      210   Enron   Louise.kitchen    known
+      210   Enron       Lynn.blair  unknown
       211   Enron       Lynn.blair  unknown
       212   Enron       Lynn.blair  unknown
       213   Enron       Lynn.blair  unknown
@@ -247,7 +247,7 @@
       215   Enron       Lynn.blair  unknown
       216   Enron       Lynn.blair  unknown
       217   Enron       Lynn.blair  unknown
-      218   Enron       Lynn.blair  unknown
+      218   Enron       Lynn.blair    known
       219   Enron       Lynn.blair    known
       220   Enron       Lynn.blair    known
       221   Enron       Lynn.blair    known
@@ -275,7 +275,7 @@
       243   Enron       Lynn.blair    known
       244   Enron       Lynn.blair    known
       245   Enron       Lynn.blair    known
-      246   Enron       Lynn.blair    known
+      246   Enron        Lysa.akin  unknown
       247   Enron        Lysa.akin  unknown
       248   Enron        Lysa.akin  unknown
       249   Enron        Lysa.akin  unknown
@@ -283,8 +283,8 @@
       251   Enron        Lysa.akin  unknown
       252   Enron        Lysa.akin  unknown
       253   Enron        Lysa.akin  unknown
-      254   Enron        Lysa.akin  unknown
-      255   Enron        Lysa.akin  unknown
+      254   Enron        Lysa.akin    known
+      255   Enron        Lysa.akin    known
       256   Enron        Lysa.akin    known
       257   Enron        Lysa.akin    known
       258   Enron        Lysa.akin    known
@@ -311,20 +311,20 @@
       279   Enron        Lysa.akin    known
       280   Enron        Lysa.akin    known
       281   Enron        Lysa.akin    known
-      282   Enron        Lysa.akin    known
-      283   Enron        Lysa.akin    known
-      284   Enron        Lysa.akin    known
-      285   Enron        Lysa.akin    known
+      282   Enron         M.forney  unknown
+      283   Enron         M.forney  unknown
+      284   Enron         M.forney  unknown
+      285   Enron         M.forney  unknown
       286   Enron         M.forney  unknown
       287   Enron         M.forney  unknown
       288   Enron         M.forney  unknown
       289   Enron         M.forney  unknown
       290   Enron         M.forney  unknown
       291   Enron         M.forney  unknown
-      292   Enron         M.forney  unknown
-      293   Enron         M.forney  unknown
-      294   Enron         M.forney  unknown
-      295   Enron         M.forney  unknown
+      292   Enron         M.forney    known
+      293   Enron         M.forney    known
+      294   Enron         M.forney    known
+      295   Enron         M.forney    known
       296   Enron         M.forney    known
       297   Enron         M.forney    known
       298   Enron         M.forney    known
@@ -354,19 +354,19 @@
       322   Enron         M.forney    known
       323   Enron         M.forney    known
       324   Enron         M.forney    known
-      325   Enron         M.forney    known
-      326   Enron         M.forney    known
-      327   Enron         M.forney    known
-      328   Enron         M.forney    known
+      325   Enron           M.love  unknown
+      326   Enron           M.love  unknown
+      327   Enron           M.love  unknown
+      328   Enron           M.love  unknown
       329   Enron           M.love  unknown
       330   Enron           M.love  unknown
       331   Enron           M.love  unknown
       332   Enron           M.love  unknown
       333   Enron           M.love  unknown
-      334   Enron           M.love  unknown
-      335   Enron           M.love  unknown
-      336   Enron           M.love  unknown
-      337   Enron           M.love  unknown
+      334   Enron           M.love    known
+      335   Enron           M.love    known
+      336   Enron           M.love    known
+      337   Enron           M.love    known
       338   Enron           M.love    known
       339   Enron           M.love    known
       340   Enron           M.love    known
@@ -391,18 +391,18 @@
       359   Enron           M.love    known
       360   Enron           M.love    known
       361   Enron           M.love    known
-      362   Enron           M.love    known
-      363   Enron           M.love    known
-      364   Enron           M.love    known
-      365   Enron           M.love    known
-      366   Enron           M.love    known
+      362   Enron         M.presto  unknown
+      363   Enron         M.presto  unknown
+      364   Enron         M.presto  unknown
+      365   Enron         M.presto  unknown
+      366   Enron         M.presto  unknown
       367   Enron         M.presto  unknown
       368   Enron         M.presto  unknown
-      369   Enron         M.presto  unknown
-      370   Enron         M.presto  unknown
-      371   Enron         M.presto  unknown
-      372   Enron         M.presto  unknown
-      373   Enron         M.presto  unknown
+      369   Enron         M.presto    known
+      370   Enron         M.presto    known
+      371   Enron         M.presto    known
+      372   Enron         M.presto    known
+      373   Enron         M.presto    known
       374   Enron         M.presto    known
       375   Enron         M.presto    known
       376   Enron         M.presto    known
@@ -412,22 +412,22 @@
       380   Enron         M.presto    known
       381   Enron         M.presto    known
       382   Enron         M.presto    known
-      383   Enron         M.presto    known
-      384   Enron         M.presto    known
-      385   Enron         M.presto    known
-      386   Enron         M.presto    known
-      387   Enron         M.presto    known
-      388   Enron         M.presto    known
+      383   Enron          M.scott  unknown
+      384   Enron          M.scott  unknown
+      385   Enron          M.scott  unknown
+      386   Enron          M.scott  unknown
+      387   Enron          M.scott  unknown
+      388   Enron          M.scott  unknown
       389   Enron          M.scott  unknown
       390   Enron          M.scott  unknown
       391   Enron          M.scott  unknown
       392   Enron          M.scott  unknown
-      393   Enron          M.scott  unknown
-      394   Enron          M.scott  unknown
-      395   Enron          M.scott  unknown
-      396   Enron          M.scott  unknown
-      397   Enron          M.scott  unknown
-      398   Enron          M.scott  unknown
+      393   Enron          M.scott    known
+      394   Enron          M.scott    known
+      395   Enron          M.scott    known
+      396   Enron          M.scott    known
+      397   Enron          M.scott    known
+      398   Enron          M.scott    known
       399   Enron          M.scott    known
       400   Enron          M.scott    known
       401   Enron          M.scott    known
@@ -461,21 +461,21 @@
       429   Enron          M.scott    known
       430   Enron          M.scott    known
       431   Enron          M.scott    known
-      432   Enron          M.scott    known
-      433   Enron          M.scott    known
-      434   Enron          M.scott    known
-      435   Enron          M.scott    known
-      436   Enron          M.scott    known
-      437   Enron          M.scott    known
-      438   Enron          M.scott    known
+      432   Enron      Marie.heard  unknown
+      433   Enron      Marie.heard  unknown
+      434   Enron      Marie.heard  unknown
+      435   Enron      Marie.heard  unknown
+      436   Enron      Marie.heard  unknown
+      437   Enron      Marie.heard  unknown
+      438   Enron      Marie.heard  unknown
       439   Enron      Marie.heard  unknown
-      440   Enron      Marie.heard  unknown
-      441   Enron      Marie.heard  unknown
-      442   Enron      Marie.heard  unknown
-      443   Enron      Marie.heard  unknown
-      444   Enron      Marie.heard  unknown
-      445   Enron      Marie.heard  unknown
-      446   Enron      Marie.heard  unknown
+      440   Enron      Marie.heard    known
+      441   Enron      Marie.heard    known
+      442   Enron      Marie.heard    known
+      443   Enron      Marie.heard    known
+      444   Enron      Marie.heard    known
+      445   Enron      Marie.heard    known
+      446   Enron      Marie.heard    known
       447   Enron      Marie.heard    known
       448   Enron      Marie.heard    known
       449   Enron      Marie.heard    known
@@ -491,23 +491,23 @@
       459   Enron      Marie.heard    known
       460   Enron      Marie.heard    known
       461   Enron      Marie.heard    known
-      462   Enron      Marie.heard    known
-      463   Enron      Marie.heard    known
-      464   Enron      Marie.heard    known
-      465   Enron      Marie.heard    known
-      466   Enron      Marie.heard    known
-      467   Enron      Marie.heard    known
-      468   Enron      Marie.heard    known
+      462   Enron      Mark.guzman  unknown
+      463   Enron      Mark.guzman  unknown
+      464   Enron      Mark.guzman  unknown
+      465   Enron      Mark.guzman  unknown
+      466   Enron      Mark.guzman  unknown
+      467   Enron      Mark.guzman  unknown
+      468   Enron      Mark.guzman  unknown
       469   Enron      Mark.guzman  unknown
       470   Enron      Mark.guzman  unknown
       471   Enron      Mark.guzman  unknown
-      472   Enron      Mark.guzman  unknown
-      473   Enron      Mark.guzman  unknown
-      474   Enron      Mark.guzman  unknown
-      475   Enron      Mark.guzman  unknown
-      476   Enron      Mark.guzman  unknown
-      477   Enron      Mark.guzman  unknown
-      478   Enron      Mark.guzman  unknown
+      472   Enron      Mark.guzman    known
+      473   Enron      Mark.guzman    known
+      474   Enron      Mark.guzman    known
+      475   Enron      Mark.guzman    known
+      476   Enron      Mark.guzman    known
+      477   Enron      Mark.guzman    known
+      478   Enron      Mark.guzman    known
       479   Enron      Mark.guzman    known
       480   Enron      Mark.guzman    known
       481   Enron      Mark.guzman    known
@@ -541,23 +541,23 @@
       509   Enron      Mark.guzman    known
       510   Enron      Mark.guzman    known
       511   Enron      Mark.guzman    known
-      512   Enron      Mark.guzman    known
-      513   Enron      Mark.guzman    known
-      514   Enron      Mark.guzman    known
-      515   Enron      Mark.guzman    known
-      516   Enron      Mark.guzman    known
-      517   Enron      Mark.guzman    known
-      518   Enron      Mark.guzman    known
+      512   Enron    Mark.haedicke  unknown
+      513   Enron    Mark.haedicke  unknown
+      514   Enron    Mark.haedicke  unknown
+      515   Enron    Mark.haedicke  unknown
+      516   Enron    Mark.haedicke  unknown
+      517   Enron    Mark.haedicke  unknown
+      518   Enron    Mark.haedicke  unknown
       519   Enron    Mark.haedicke  unknown
       520   Enron    Mark.haedicke  unknown
       521   Enron    Mark.haedicke  unknown
-      522   Enron    Mark.haedicke  unknown
-      523   Enron    Mark.haedicke  unknown
-      524   Enron    Mark.haedicke  unknown
-      525   Enron    Mark.haedicke  unknown
-      526   Enron    Mark.haedicke  unknown
-      527   Enron    Mark.haedicke  unknown
-      528   Enron    Mark.haedicke  unknown
+      522   Enron    Mark.haedicke    known
+      523   Enron    Mark.haedicke    known
+      524   Enron    Mark.haedicke    known
+      525   Enron    Mark.haedicke    known
+      526   Enron    Mark.haedicke    known
+      527   Enron    Mark.haedicke    known
+      528   Enron    Mark.haedicke    known
       529   Enron    Mark.haedicke    known
       530   Enron    Mark.haedicke    known
       531   Enron    Mark.haedicke    known
@@ -582,21 +582,21 @@
       550   Enron    Mark.haedicke    known
       551   Enron    Mark.haedicke    known
       552   Enron    Mark.haedicke    known
-      553   Enron    Mark.haedicke    known
-      554   Enron    Mark.haedicke    known
-      555   Enron    Mark.haedicke    known
-      556   Enron    Mark.haedicke    known
-      557   Enron    Mark.haedicke    known
-      558   Enron    Mark.haedicke    known
-      559   Enron    Mark.haedicke    known
+      553   Enron      Mark.taylor  unknown
+      554   Enron      Mark.taylor  unknown
+      555   Enron      Mark.taylor  unknown
+      556   Enron      Mark.taylor  unknown
+      557   Enron      Mark.taylor  unknown
+      558   Enron      Mark.taylor  unknown
+      559   Enron      Mark.taylor  unknown
       560   Enron      Mark.taylor  unknown
-      561   Enron      Mark.taylor  unknown
-      562   Enron      Mark.taylor  unknown
-      563   Enron      Mark.taylor  unknown
-      564   Enron      Mark.taylor  unknown
-      565   Enron      Mark.taylor  unknown
-      566   Enron      Mark.taylor  unknown
-      567   Enron      Mark.taylor  unknown
+      561   Enron      Mark.taylor    known
+      562   Enron      Mark.taylor    known
+      563   Enron      Mark.taylor    known
+      564   Enron      Mark.taylor    known
+      565   Enron      Mark.taylor    known
+      566   Enron      Mark.taylor    known
+      567   Enron      Mark.taylor    known
       568   Enron      Mark.taylor    known
       569   Enron      Mark.taylor    known
       570   Enron      Mark.taylor    known
@@ -622,23 +622,23 @@
       590   Enron      Mark.taylor    known
       591   Enron      Mark.taylor    known
       592   Enron      Mark.taylor    known
-      593   Enron      Mark.taylor    known
-      594   Enron      Mark.taylor    known
-      595   Enron      Mark.taylor    known
-      596   Enron      Mark.taylor    known
-      597   Enron      Mark.taylor    known
-      598   Enron      Mark.taylor    known
-      599   Enron      Mark.taylor    known
+      593   Enron    Martin.cuilla  unknown
+      594   Enron    Martin.cuilla  unknown
+      595   Enron    Martin.cuilla  unknown
+      596   Enron    Martin.cuilla  unknown
+      597   Enron    Martin.cuilla  unknown
+      598   Enron    Martin.cuilla  unknown
+      599   Enron    Martin.cuilla  unknown
       600   Enron    Martin.cuilla  unknown
       601   Enron    Martin.cuilla  unknown
       602   Enron    Martin.cuilla  unknown
-      603   Enron    Martin.cuilla  unknown
-      604   Enron    Martin.cuilla  unknown
-      605   Enron    Martin.cuilla  unknown
-      606   Enron    Martin.cuilla  unknown
-      607   Enron    Martin.cuilla  unknown
-      608   Enron    Martin.cuilla  unknown
-      609   Enron    Martin.cuilla  unknown
+      603   Enron    Martin.cuilla    known
+      604   Enron    Martin.cuilla    known
+      605   Enron    Martin.cuilla    known
+      606   Enron    Martin.cuilla    known
+      607   Enron    Martin.cuilla    known
+      608   Enron    Martin.cuilla    known
+      609   Enron    Martin.cuilla    known
       610   Enron    Martin.cuilla    known
       611   Enron    Martin.cuilla    known
       612   Enron    Martin.cuilla    known
@@ -654,19 +654,19 @@
       622   Enron    Martin.cuilla    known
       623   Enron    Martin.cuilla    known
       624   Enron    Martin.cuilla    known
-      625   Enron    Martin.cuilla    known
-      626   Enron    Martin.cuilla    known
-      627   Enron    Martin.cuilla    known
-      628   Enron    Martin.cuilla    known
-      629   Enron    Martin.cuilla    known
-      630   Enron    Martin.cuilla    known
-      631   Enron    Martin.cuilla    known
-      632   Enron        Mary.hain  unknown
-      633   Enron        Mary.hain  unknown
-      634   Enron        Mary.hain  unknown
-      635   Enron        Mary.hain  unknown
-      636   Enron        Mary.hain  unknown
-      637   Enron        Mary.hain  unknown
+      625   Enron        Mary.hain  unknown
+      626   Enron        Mary.hain  unknown
+      627   Enron        Mary.hain  unknown
+      628   Enron        Mary.hain  unknown
+      629   Enron        Mary.hain  unknown
+      630   Enron        Mary.hain  unknown
+      631   Enron        Mary.hain    known
+      632   Enron        Mary.hain    known
+      633   Enron        Mary.hain    known
+      634   Enron        Mary.hain    known
+      635   Enron        Mary.hain    known
+      636   Enron        Mary.hain    known
+      637   Enron        Mary.hain    known
       638   Enron        Mary.hain    known
       639   Enron        Mary.hain    known
       640   Enron        Mary.hain    known
@@ -681,23 +681,23 @@
       649   Enron        Mary.hain    known
       650   Enron        Mary.hain    known
       651   Enron        Mary.hain    known
-      652   Enron        Mary.hain    known
-      653   Enron        Mary.hain    known
-      654   Enron        Mary.hain    known
-      655   Enron        Mary.hain    known
-      656   Enron        Mary.hain    known
-      657   Enron        Mary.hain    known
-      658   Enron        Mary.hain    known
+      652   Enron       Matt.smith  unknown
+      653   Enron       Matt.smith  unknown
+      654   Enron       Matt.smith  unknown
+      655   Enron       Matt.smith  unknown
+      656   Enron       Matt.smith  unknown
+      657   Enron       Matt.smith  unknown
+      658   Enron       Matt.smith  unknown
       659   Enron       Matt.smith  unknown
       660   Enron       Matt.smith  unknown
       661   Enron       Matt.smith  unknown
-      662   Enron       Matt.smith  unknown
-      663   Enron       Matt.smith  unknown
-      664   Enron       Matt.smith  unknown
-      665   Enron       Matt.smith  unknown
-      666   Enron       Matt.smith  unknown
-      667   Enron       Matt.smith  unknown
-      668   Enron       Matt.smith  unknown
+      662   Enron       Matt.smith    known
+      663   Enron       Matt.smith    known
+      664   Enron       Matt.smith    known
+      665   Enron       Matt.smith    known
+      666   Enron       Matt.smith    known
+      667   Enron       Matt.smith    known
+      668   Enron       Matt.smith    known
       669   Enron       Matt.smith    known
       670   Enron       Matt.smith    known
       671   Enron       Matt.smith    known
@@ -727,21 +727,21 @@
       695   Enron       Matt.smith    known
       696   Enron       Matt.smith    known
       697   Enron       Matt.smith    known
-      698   Enron       Matt.smith    known
-      699   Enron       Matt.smith    known
-      700   Enron       Matt.smith    known
-      701   Enron       Matt.smith    known
-      702   Enron       Matt.smith    known
-      703   Enron       Matt.smith    known
-      704   Enron       Matt.smith    known
+      698   Enron Maureen.mcvicker  unknown
+      699   Enron Maureen.mcvicker  unknown
+      700   Enron Maureen.mcvicker  unknown
+      701   Enron Maureen.mcvicker  unknown
+      702   Enron Maureen.mcvicker  unknown
+      703   Enron Maureen.mcvicker  unknown
+      704   Enron Maureen.mcvicker  unknown
       705   Enron Maureen.mcvicker  unknown
-      706   Enron Maureen.mcvicker  unknown
-      707   Enron Maureen.mcvicker  unknown
-      708   Enron Maureen.mcvicker  unknown
-      709   Enron Maureen.mcvicker  unknown
-      710   Enron Maureen.mcvicker  unknown
-      711   Enron Maureen.mcvicker  unknown
-      712   Enron Maureen.mcvicker  unknown
+      706   Enron Maureen.mcvicker    known
+      707   Enron Maureen.mcvicker    known
+      708   Enron Maureen.mcvicker    known
+      709   Enron Maureen.mcvicker    known
+      710   Enron Maureen.mcvicker    known
+      711   Enron Maureen.mcvicker    known
+      712   Enron Maureen.mcvicker    known
       713   Enron Maureen.mcvicker    known
       714   Enron Maureen.mcvicker    known
       715   Enron Maureen.mcvicker    known
@@ -758,23 +758,23 @@
       726   Enron Maureen.mcvicker    known
       727   Enron Maureen.mcvicker    known
       728   Enron Maureen.mcvicker    known
-      729   Enron Maureen.mcvicker    known
-      730   Enron Maureen.mcvicker    known
-      731   Enron Maureen.mcvicker    known
-      732   Enron Maureen.mcvicker    known
-      733   Enron Maureen.mcvicker    known
-      734   Enron Maureen.mcvicker    known
-      735   Enron Maureen.mcvicker    known
+      729   Enron    Michelle.cash  unknown
+      730   Enron    Michelle.cash  unknown
+      731   Enron    Michelle.cash  unknown
+      732   Enron    Michelle.cash  unknown
+      733   Enron    Michelle.cash  unknown
+      734   Enron    Michelle.cash  unknown
+      735   Enron    Michelle.cash  unknown
       736   Enron    Michelle.cash  unknown
       737   Enron    Michelle.cash  unknown
       738   Enron    Michelle.cash  unknown
-      739   Enron    Michelle.cash  unknown
-      740   Enron    Michelle.cash  unknown
-      741   Enron    Michelle.cash  unknown
-      742   Enron    Michelle.cash  unknown
-      743   Enron    Michelle.cash  unknown
-      744   Enron    Michelle.cash  unknown
-      745   Enron    Michelle.cash  unknown
+      739   Enron    Michelle.cash    known
+      740   Enron    Michelle.cash    known
+      741   Enron    Michelle.cash    known
+      742   Enron    Michelle.cash    known
+      743   Enron    Michelle.cash    known
+      744   Enron    Michelle.cash    known
+      745   Enron    Michelle.cash    known
       746   Enron    Michelle.cash    known
       747   Enron    Michelle.cash    known
       748   Enron    Michelle.cash    known
@@ -799,18 +799,18 @@
       767   Enron    Michelle.cash    known
       768   Enron    Michelle.cash    known
       769   Enron    Michelle.cash    known
-      770   Enron    Michelle.cash    known
-      771   Enron    Michelle.cash    known
-      772   Enron    Michelle.cash    known
-      773   Enron    Michelle.cash    known
-      774   Enron    Michelle.cash    known
-      775   Enron    Michelle.cash    known
-      776   Enron    Michelle.cash    known
-      777   Enron   Michelle.lokay  unknown
-      778   Enron   Michelle.lokay  unknown
-      779   Enron   Michelle.lokay  unknown
-      780   Enron   Michelle.lokay  unknown
-      781   Enron   Michelle.lokay  unknown
+      770   Enron   Michelle.lokay  unknown
+      771   Enron   Michelle.lokay  unknown
+      772   Enron   Michelle.lokay  unknown
+      773   Enron   Michelle.lokay  unknown
+      774   Enron   Michelle.lokay  unknown
+      775   Enron   Michelle.lokay    known
+      776   Enron   Michelle.lokay    known
+      777   Enron   Michelle.lokay    known
+      778   Enron   Michelle.lokay    known
+      779   Enron   Michelle.lokay    known
+      780   Enron   Michelle.lokay    known
+      781   Enron   Michelle.lokay    known
       782   Enron   Michelle.lokay    known
       783   Enron   Michelle.lokay    known
       784   Enron   Michelle.lokay    known
@@ -820,22 +820,22 @@
       788   Enron   Michelle.lokay    known
       789   Enron   Michelle.lokay    known
       790   Enron   Michelle.lokay    known
-      791   Enron   Michelle.lokay    known
-      792   Enron   Michelle.lokay    known
-      793   Enron   Michelle.lokay    known
-      794   Enron   Michelle.lokay    known
-      795   Enron   Michelle.lokay    known
-      796   Enron   Michelle.lokay    known
-      797   Enron   Michelle.lokay    known
+      791   Enron     Mike.grigsby  unknown
+      792   Enron     Mike.grigsby  unknown
+      793   Enron     Mike.grigsby  unknown
+      794   Enron     Mike.grigsby  unknown
+      795   Enron     Mike.grigsby  unknown
+      796   Enron     Mike.grigsby  unknown
+      797   Enron     Mike.grigsby  unknown
       798   Enron     Mike.grigsby  unknown
       799   Enron     Mike.grigsby  unknown
-      800   Enron     Mike.grigsby  unknown
-      801   Enron     Mike.grigsby  unknown
-      802   Enron     Mike.grigsby  unknown
-      803   Enron     Mike.grigsby  unknown
-      804   Enron     Mike.grigsby  unknown
-      805   Enron     Mike.grigsby  unknown
-      806   Enron     Mike.grigsby  unknown
+      800   Enron     Mike.grigsby    known
+      801   Enron     Mike.grigsby    known
+      802   Enron     Mike.grigsby    known
+      803   Enron     Mike.grigsby    known
+      804   Enron     Mike.grigsby    known
+      805   Enron     Mike.grigsby    known
+      806   Enron     Mike.grigsby    known
       807   Enron     Mike.grigsby    known
       808   Enron     Mike.grigsby    known
       809   Enron     Mike.grigsby    known
@@ -861,23 +861,23 @@
       829   Enron     Mike.grigsby    known
       830   Enron     Mike.grigsby    known
       831   Enron     Mike.grigsby    known
-      832   Enron     Mike.grigsby    known
-      833   Enron     Mike.grigsby    known
-      834   Enron     Mike.grigsby    known
-      835   Enron     Mike.grigsby    known
-      836   Enron     Mike.grigsby    known
-      837   Enron     Mike.grigsby    known
-      838   Enron     Mike.grigsby    known
+      832   Enron   Mike.mcconnell  unknown
+      833   Enron   Mike.mcconnell  unknown
+      834   Enron   Mike.mcconnell  unknown
+      835   Enron   Mike.mcconnell  unknown
+      836   Enron   Mike.mcconnell  unknown
+      837   Enron   Mike.mcconnell  unknown
+      838   Enron   Mike.mcconnell  unknown
       839   Enron   Mike.mcconnell  unknown
       840   Enron   Mike.mcconnell  unknown
       841   Enron   Mike.mcconnell  unknown
-      842   Enron   Mike.mcconnell  unknown
-      843   Enron   Mike.mcconnell  unknown
-      844   Enron   Mike.mcconnell  unknown
-      845   Enron   Mike.mcconnell  unknown
-      846   Enron   Mike.mcconnell  unknown
-      847   Enron   Mike.mcconnell  unknown
-      848   Enron   Mike.mcconnell  unknown
+      842   Enron   Mike.mcconnell    known
+      843   Enron   Mike.mcconnell    known
+      844   Enron   Mike.mcconnell    known
+      845   Enron   Mike.mcconnell    known
+      846   Enron   Mike.mcconnell    known
+      847   Enron   Mike.mcconnell    known
+      848   Enron   Mike.mcconnell    known
       849   Enron   Mike.mcconnell    known
       850   Enron   Mike.mcconnell    known
       851   Enron   Mike.mcconnell    known
@@ -896,21 +896,21 @@
       864   Enron   Mike.mcconnell    known
       865   Enron   Mike.mcconnell    known
       866   Enron   Mike.mcconnell    known
-      867   Enron   Mike.mcconnell    known
-      868   Enron   Mike.mcconnell    known
-      869   Enron   Mike.mcconnell    known
-      870   Enron   Mike.mcconnell    known
-      871   Enron   Mike.mcconnell    known
-      872   Enron   Mike.mcconnell    known
-      873   Enron   Mike.mcconnell    known
+      867   Enron     Paul.y'barbo  unknown
+      868   Enron     Paul.y'barbo  unknown
+      869   Enron     Paul.y'barbo  unknown
+      870   Enron     Paul.y'barbo  unknown
+      871   Enron     Paul.y'barbo  unknown
+      872   Enron     Paul.y'barbo  unknown
+      873   Enron     Paul.y'barbo  unknown
       874   Enron     Paul.y'barbo  unknown
-      875   Enron     Paul.y'barbo  unknown
-      876   Enron     Paul.y'barbo  unknown
-      877   Enron     Paul.y'barbo  unknown
-      878   Enron     Paul.y'barbo  unknown
-      879   Enron     Paul.y'barbo  unknown
-      880   Enron     Paul.y'barbo  unknown
-      881   Enron     Paul.y'barbo  unknown
+      875   Enron     Paul.y'barbo    known
+      876   Enron     Paul.y'barbo    known
+      877   Enron     Paul.y'barbo    known
+      878   Enron     Paul.y'barbo    known
+      879   Enron     Paul.y'barbo    known
+      880   Enron     Paul.y'barbo    known
+      881   Enron     Paul.y'barbo    known
       882   Enron     Paul.y'barbo    known
       883   Enron     Paul.y'barbo    known
       884   Enron     Paul.y'barbo    known
@@ -918,24 +918,24 @@
       886   Enron     Paul.y'barbo    known
       887   Enron     Paul.y'barbo    known
       888   Enron     Paul.y'barbo    known
-      889   Enron     Paul.y'barbo    known
-      890   Enron     Paul.y'barbo    known
-      891   Enron     Paul.y'barbo    known
-      892   Enron     Paul.y'barbo    known
-      893   Enron     Paul.y'barbo    known
-      894   Enron     Paul.y'barbo    known
-      895   Enron     Paul.y'barbo    known
-      896   Enron     Paul.y'barbo    known
+      889   Enron     Phillip.love  unknown
+      890   Enron     Phillip.love  unknown
+      891   Enron     Phillip.love  unknown
+      892   Enron     Phillip.love  unknown
+      893   Enron     Phillip.love  unknown
+      894   Enron     Phillip.love  unknown
+      895   Enron     Phillip.love  unknown
+      896   Enron     Phillip.love  unknown
       897   Enron     Phillip.love  unknown
-      898   Enron     Phillip.love  unknown
-      899   Enron     Phillip.love  unknown
-      900   Enron     Phillip.love  unknown
-      901   Enron     Phillip.love  unknown
-      902   Enron     Phillip.love  unknown
-      903   Enron     Phillip.love  unknown
-      904   Enron     Phillip.love  unknown
-      905   Enron     Phillip.love  unknown
-      906   Enron     Phillip.love  unknown
+      898   Enron     Phillip.love    known
+      899   Enron     Phillip.love    known
+      900   Enron     Phillip.love    known
+      901   Enron     Phillip.love    known
+      902   Enron     Phillip.love    known
+      903   Enron     Phillip.love    known
+      904   Enron     Phillip.love    known
+      905   Enron     Phillip.love    known
+      906   Enron     Phillip.love    known
       907   Enron     Phillip.love    known
       908   Enron     Phillip.love    known
       909   Enron     Phillip.love    known
@@ -952,24 +952,24 @@
       920   Enron     Phillip.love    known
       921   Enron     Phillip.love    known
       922   Enron     Phillip.love    known
-      923   Enron     Phillip.love    known
-      924   Enron     Phillip.love    known
-      925   Enron     Phillip.love    known
-      926   Enron     Phillip.love    known
-      927   Enron     Phillip.love    known
-      928   Enron     Phillip.love    known
-      929   Enron     Phillip.love    known
-      930   Enron     Phillip.love    known
-      931   Enron     Phillip.love    known
-      932   Enron  Richard.sanders  unknown
-      933   Enron  Richard.sanders  unknown
-      934   Enron  Richard.sanders  unknown
-      935   Enron  Richard.sanders  unknown
-      936   Enron  Richard.sanders  unknown
-      937   Enron  Richard.sanders  unknown
-      938   Enron  Richard.sanders  unknown
-      939   Enron  Richard.sanders  unknown
-      940   Enron  Richard.sanders  unknown
+      923   Enron  Richard.sanders  unknown
+      924   Enron  Richard.sanders  unknown
+      925   Enron  Richard.sanders  unknown
+      926   Enron  Richard.sanders  unknown
+      927   Enron  Richard.sanders  unknown
+      928   Enron  Richard.sanders  unknown
+      929   Enron  Richard.sanders  unknown
+      930   Enron  Richard.sanders  unknown
+      931   Enron  Richard.sanders  unknown
+      932   Enron  Richard.sanders    known
+      933   Enron  Richard.sanders    known
+      934   Enron  Richard.sanders    known
+      935   Enron  Richard.sanders    known
+      936   Enron  Richard.sanders    known
+      937   Enron  Richard.sanders    known
+      938   Enron  Richard.sanders    known
+      939   Enron  Richard.sanders    known
+      940   Enron  Richard.sanders    known
       941   Enron  Richard.sanders    known
       942   Enron  Richard.sanders    known
       943   Enron  Richard.sanders    known
@@ -980,24 +980,24 @@
       948   Enron  Richard.sanders    known
       949   Enron  Richard.sanders    known
       950   Enron  Richard.sanders    known
-      951   Enron  Richard.sanders    known
-      952   Enron  Richard.sanders    known
-      953   Enron  Richard.sanders    known
-      954   Enron  Richard.sanders    known
-      955   Enron  Richard.sanders    known
-      956   Enron  Richard.sanders    known
-      957   Enron  Richard.sanders    known
-      958   Enron  Richard.sanders    known
-      959   Enron  Richard.sanders    known
-      960   Enron         Rick.buy  unknown
-      961   Enron         Rick.buy  unknown
-      962   Enron         Rick.buy  unknown
-      963   Enron         Rick.buy  unknown
-      964   Enron         Rick.buy  unknown
-      965   Enron         Rick.buy  unknown
-      966   Enron         Rick.buy  unknown
-      967   Enron         Rick.buy  unknown
-      968   Enron         Rick.buy  unknown
+      951   Enron         Rick.buy  unknown
+      952   Enron         Rick.buy  unknown
+      953   Enron         Rick.buy  unknown
+      954   Enron         Rick.buy  unknown
+      955   Enron         Rick.buy  unknown
+      956   Enron         Rick.buy  unknown
+      957   Enron         Rick.buy  unknown
+      958   Enron         Rick.buy  unknown
+      959   Enron         Rick.buy  unknown
+      960   Enron         Rick.buy    known
+      961   Enron         Rick.buy    known
+      962   Enron         Rick.buy    known
+      963   Enron         Rick.buy    known
+      964   Enron         Rick.buy    known
+      965   Enron         Rick.buy    known
+      966   Enron         Rick.buy    known
+      967   Enron         Rick.buy    known
+      968   Enron         Rick.buy    known
       969   Enron         Rick.buy    known
       970   Enron         Rick.buy    known
       971   Enron         Rick.buy    known
@@ -1012,22 +1012,22 @@
       980   Enron         Rick.buy    known
       981   Enron         Rick.buy    known
       982   Enron         Rick.buy    known
-      983   Enron         Rick.buy    known
-      984   Enron         Rick.buy    known
-      985   Enron         Rick.buy    known
-      986   Enron         Rick.buy    known
-      987   Enron         Rick.buy    known
-      988   Enron         Rick.buy    known
-      989   Enron         Rick.buy    known
-      990   Enron         Rick.buy    known
-      991   Enron         Rick.buy    known
-      992   Enron          Rob.gay  unknown
-      993   Enron          Rob.gay  unknown
-      994   Enron          Rob.gay  unknown
-      995   Enron          Rob.gay  unknown
-      996   Enron          Rob.gay  unknown
-      997   Enron          Rob.gay  unknown
-      998   Enron          Rob.gay  unknown
+      983   Enron          Rob.gay  unknown
+      984   Enron          Rob.gay  unknown
+      985   Enron          Rob.gay  unknown
+      986   Enron          Rob.gay  unknown
+      987   Enron          Rob.gay  unknown
+      988   Enron          Rob.gay  unknown
+      989   Enron          Rob.gay  unknown
+      990   Enron          Rob.gay    known
+      991   Enron          Rob.gay    known
+      992   Enron          Rob.gay    known
+      993   Enron          Rob.gay    known
+      994   Enron          Rob.gay    known
+      995   Enron          Rob.gay    known
+      996   Enron          Rob.gay    known
+      997   Enron          Rob.gay    known
+      998   Enron          Rob.gay    known
       999   Enron          Rob.gay    known
       1000  Enron          Rob.gay    known
       1001  Enron          Rob.gay    known
@@ -1036,22 +1036,22 @@
       1004  Enron          Rob.gay    known
       1005  Enron          Rob.gay    known
       1006  Enron          Rob.gay    known
-      1007  Enron          Rob.gay    known
-      1008  Enron          Rob.gay    known
-      1009  Enron          Rob.gay    known
-      1010  Enron          Rob.gay    known
-      1011  Enron          Rob.gay    known
-      1012  Enron          Rob.gay    known
-      1013  Enron          Rob.gay    known
-      1014  Enron          Rob.gay    known
-      1015  Enron          Rob.gay    known
-      1016  Enron     Rod.hayslett  unknown
-      1017  Enron     Rod.hayslett  unknown
-      1018  Enron     Rod.hayslett  unknown
-      1019  Enron     Rod.hayslett  unknown
-      1020  Enron     Rod.hayslett  unknown
-      1021  Enron     Rod.hayslett  unknown
-      1022  Enron     Rod.hayslett  unknown
+      1007  Enron     Rod.hayslett  unknown
+      1008  Enron     Rod.hayslett  unknown
+      1009  Enron     Rod.hayslett  unknown
+      1010  Enron     Rod.hayslett  unknown
+      1011  Enron     Rod.hayslett  unknown
+      1012  Enron     Rod.hayslett  unknown
+      1013  Enron     Rod.hayslett  unknown
+      1014  Enron     Rod.hayslett    known
+      1015  Enron     Rod.hayslett    known
+      1016  Enron     Rod.hayslett    known
+      1017  Enron     Rod.hayslett    known
+      1018  Enron     Rod.hayslett    known
+      1019  Enron     Rod.hayslett    known
+      1020  Enron     Rod.hayslett    known
+      1021  Enron     Rod.hayslett    known
+      1022  Enron     Rod.hayslett    known
       1023  Enron     Rod.hayslett    known
       1024  Enron     Rod.hayslett    known
       1025  Enron     Rod.hayslett    known
@@ -1062,24 +1062,24 @@
       1030  Enron     Rod.hayslett    known
       1031  Enron     Rod.hayslett    known
       1032  Enron     Rod.hayslett    known
-      1033  Enron     Rod.hayslett    known
-      1034  Enron     Rod.hayslett    known
-      1035  Enron     Rod.hayslett    known
-      1036  Enron     Rod.hayslett    known
-      1037  Enron     Rod.hayslett    known
-      1038  Enron     Rod.hayslett    known
-      1039  Enron     Rod.hayslett    known
-      1040  Enron     Rod.hayslett    known
-      1041  Enron     Rod.hayslett    known
-      1042  Enron  Rosalee.fleming  unknown
-      1043  Enron  Rosalee.fleming  unknown
-      1044  Enron  Rosalee.fleming  unknown
-      1045  Enron  Rosalee.fleming  unknown
-      1046  Enron  Rosalee.fleming  unknown
-      1047  Enron  Rosalee.fleming  unknown
-      1048  Enron  Rosalee.fleming  unknown
-      1049  Enron  Rosalee.fleming  unknown
-      1050  Enron  Rosalee.fleming  unknown
+      1033  Enron  Rosalee.fleming  unknown
+      1034  Enron  Rosalee.fleming  unknown
+      1035  Enron  Rosalee.fleming  unknown
+      1036  Enron  Rosalee.fleming  unknown
+      1037  Enron  Rosalee.fleming  unknown
+      1038  Enron  Rosalee.fleming  unknown
+      1039  Enron  Rosalee.fleming  unknown
+      1040  Enron  Rosalee.fleming  unknown
+      1041  Enron  Rosalee.fleming  unknown
+      1042  Enron  Rosalee.fleming    known
+      1043  Enron  Rosalee.fleming    known
+      1044  Enron  Rosalee.fleming    known
+      1045  Enron  Rosalee.fleming    known
+      1046  Enron  Rosalee.fleming    known
+      1047  Enron  Rosalee.fleming    known
+      1048  Enron  Rosalee.fleming    known
+      1049  Enron  Rosalee.fleming    known
+      1050  Enron  Rosalee.fleming    known
       1051  Enron  Rosalee.fleming    known
       1052  Enron  Rosalee.fleming    known
       1053  Enron  Rosalee.fleming    known
@@ -1095,25 +1095,25 @@
       1063  Enron  Rosalee.fleming    known
       1064  Enron  Rosalee.fleming    known
       1065  Enron  Rosalee.fleming    known
-      1066  Enron  Rosalee.fleming    known
-      1067  Enron  Rosalee.fleming    known
-      1068  Enron  Rosalee.fleming    known
-      1069  Enron  Rosalee.fleming    known
-      1070  Enron  Rosalee.fleming    known
-      1071  Enron  Rosalee.fleming    known
-      1072  Enron  Rosalee.fleming    known
-      1073  Enron  Rosalee.fleming    known
-      1074  Enron  Rosalee.fleming    known
+      1066  Enron       Sally.beck  unknown
+      1067  Enron       Sally.beck  unknown
+      1068  Enron       Sally.beck  unknown
+      1069  Enron       Sally.beck  unknown
+      1070  Enron       Sally.beck  unknown
+      1071  Enron       Sally.beck  unknown
+      1072  Enron       Sally.beck  unknown
+      1073  Enron       Sally.beck  unknown
+      1074  Enron       Sally.beck  unknown
       1075  Enron       Sally.beck  unknown
-      1076  Enron       Sally.beck  unknown
-      1077  Enron       Sally.beck  unknown
-      1078  Enron       Sally.beck  unknown
-      1079  Enron       Sally.beck  unknown
-      1080  Enron       Sally.beck  unknown
-      1081  Enron       Sally.beck  unknown
-      1082  Enron       Sally.beck  unknown
-      1083  Enron       Sally.beck  unknown
-      1084  Enron       Sally.beck  unknown
+      1076  Enron       Sally.beck    known
+      1077  Enron       Sally.beck    known
+      1078  Enron       Sally.beck    known
+      1079  Enron       Sally.beck    known
+      1080  Enron       Sally.beck    known
+      1081  Enron       Sally.beck    known
+      1082  Enron       Sally.beck    known
+      1083  Enron       Sally.beck    known
+      1084  Enron       Sally.beck    known
       1085  Enron       Sally.beck    known
       1086  Enron       Sally.beck    known
       1087  Enron       Sally.beck    known
@@ -1131,22 +1131,22 @@
       1099  Enron       Sally.beck    known
       1100  Enron       Sally.beck    known
       1101  Enron       Sally.beck    known
-      1102  Enron       Sally.beck    known
-      1103  Enron       Sally.beck    known
-      1104  Enron       Sally.beck    known
-      1105  Enron       Sally.beck    known
-      1106  Enron       Sally.beck    known
-      1107  Enron       Sally.beck    known
-      1108  Enron       Sally.beck    known
-      1109  Enron       Sally.beck    known
-      1110  Enron       Sally.beck    known
-      1111  Enron  Sara.shackleton  unknown
-      1112  Enron  Sara.shackleton  unknown
-      1113  Enron  Sara.shackleton  unknown
-      1114  Enron  Sara.shackleton  unknown
-      1115  Enron  Sara.shackleton  unknown
-      1116  Enron  Sara.shackleton  unknown
-      1117  Enron  Sara.shackleton  unknown
+      1102  Enron  Sara.shackleton  unknown
+      1103  Enron  Sara.shackleton  unknown
+      1104  Enron  Sara.shackleton  unknown
+      1105  Enron  Sara.shackleton  unknown
+      1106  Enron  Sara.shackleton  unknown
+      1107  Enron  Sara.shackleton  unknown
+      1108  Enron  Sara.shackleton  unknown
+      1109  Enron  Sara.shackleton    known
+      1110  Enron  Sara.shackleton    known
+      1111  Enron  Sara.shackleton    known
+      1112  Enron  Sara.shackleton    known
+      1113  Enron  Sara.shackleton    known
+      1114  Enron  Sara.shackleton    known
+      1115  Enron  Sara.shackleton    known
+      1116  Enron  Sara.shackleton    known
+      1117  Enron  Sara.shackleton    known
       1118  Enron  Sara.shackleton    known
       1119  Enron  Sara.shackleton    known
       1120  Enron  Sara.shackleton    known
@@ -1163,24 +1163,24 @@
       1131  Enron  Sara.shackleton    known
       1132  Enron  Sara.shackleton    known
       1133  Enron  Sara.shackleton    known
-      1134  Enron  Sara.shackleton    known
-      1135  Enron  Sara.shackleton    known
-      1136  Enron  Sara.shackleton    known
-      1137  Enron  Sara.shackleton    known
-      1138  Enron  Sara.shackleton    known
-      1139  Enron  Sara.shackleton    known
-      1140  Enron  Sara.shackleton    known
-      1141  Enron  Sara.shackleton    known
-      1142  Enron  Sara.shackleton    known
-      1143  Enron       Scott.neal  unknown
-      1144  Enron       Scott.neal  unknown
-      1145  Enron       Scott.neal  unknown
-      1146  Enron       Scott.neal  unknown
-      1147  Enron       Scott.neal  unknown
-      1148  Enron       Scott.neal  unknown
-      1149  Enron       Scott.neal  unknown
-      1150  Enron       Scott.neal  unknown
-      1151  Enron       Scott.neal  unknown
+      1134  Enron       Scott.neal  unknown
+      1135  Enron       Scott.neal  unknown
+      1136  Enron       Scott.neal  unknown
+      1137  Enron       Scott.neal  unknown
+      1138  Enron       Scott.neal  unknown
+      1139  Enron       Scott.neal  unknown
+      1140  Enron       Scott.neal  unknown
+      1141  Enron       Scott.neal  unknown
+      1142  Enron       Scott.neal  unknown
+      1143  Enron       Scott.neal    known
+      1144  Enron       Scott.neal    known
+      1145  Enron       Scott.neal    known
+      1146  Enron       Scott.neal    known
+      1147  Enron       Scott.neal    known
+      1148  Enron       Scott.neal    known
+      1149  Enron       Scott.neal    known
+      1150  Enron       Scott.neal    known
+      1151  Enron       Scott.neal    known
       1152  Enron       Scott.neal    known
       1153  Enron       Scott.neal    known
       1154  Enron       Scott.neal    known
@@ -1195,46 +1195,46 @@
       1163  Enron       Scott.neal    known
       1164  Enron       Scott.neal    known
       1165  Enron       Scott.neal    known
-      1166  Enron       Scott.neal    known
-      1167  Enron       Scott.neal    known
-      1168  Enron       Scott.neal    known
-      1169  Enron       Scott.neal    known
-      1170  Enron       Scott.neal    known
-      1171  Enron       Scott.neal    known
-      1172  Enron       Scott.neal    known
-      1173  Enron       Scott.neal    known
-      1174  Enron       Scott.neal    known
-      1175  Enron    Sean.crandall  unknown
-      1176  Enron    Sean.crandall  unknown
-      1177  Enron    Sean.crandall  unknown
-      1178  Enron    Sean.crandall  unknown
-      1179  Enron    Sean.crandall  unknown
-      1180  Enron    Sean.crandall  unknown
+      1166  Enron    Sean.crandall  unknown
+      1167  Enron    Sean.crandall  unknown
+      1168  Enron    Sean.crandall  unknown
+      1169  Enron    Sean.crandall  unknown
+      1170  Enron    Sean.crandall  unknown
+      1171  Enron    Sean.crandall  unknown
+      1172  Enron    Sean.crandall    known
+      1173  Enron    Sean.crandall    known
+      1174  Enron    Sean.crandall    known
+      1175  Enron    Sean.crandall    known
+      1176  Enron    Sean.crandall    known
+      1177  Enron    Sean.crandall    known
+      1178  Enron    Sean.crandall    known
+      1179  Enron    Sean.crandall    known
+      1180  Enron    Sean.crandall    known
       1181  Enron    Sean.crandall    known
       1182  Enron    Sean.crandall    known
       1183  Enron    Sean.crandall    known
       1184  Enron    Sean.crandall    known
       1185  Enron    Sean.crandall    known
       1186  Enron    Sean.crandall    known
-      1187  Enron    Sean.crandall    known
-      1188  Enron    Sean.crandall    known
-      1189  Enron    Sean.crandall    known
-      1190  Enron    Sean.crandall    known
-      1191  Enron    Sean.crandall    known
-      1192  Enron    Sean.crandall    known
-      1193  Enron    Sean.crandall    known
-      1194  Enron    Sean.crandall    known
-      1195  Enron    Sean.crandall    known
-      1196  Enron   Shelley.corman  unknown
-      1197  Enron   Shelley.corman  unknown
-      1198  Enron   Shelley.corman  unknown
-      1199  Enron   Shelley.corman  unknown
-      1200  Enron   Shelley.corman  unknown
-      1201  Enron   Shelley.corman  unknown
-      1202  Enron   Shelley.corman  unknown
-      1203  Enron   Shelley.corman  unknown
-      1204  Enron   Shelley.corman  unknown
-      1205  Enron   Shelley.corman  unknown
+      1187  Enron   Shelley.corman  unknown
+      1188  Enron   Shelley.corman  unknown
+      1189  Enron   Shelley.corman  unknown
+      1190  Enron   Shelley.corman  unknown
+      1191  Enron   Shelley.corman  unknown
+      1192  Enron   Shelley.corman  unknown
+      1193  Enron   Shelley.corman  unknown
+      1194  Enron   Shelley.corman  unknown
+      1195  Enron   Shelley.corman  unknown
+      1196  Enron   Shelley.corman    known
+      1197  Enron   Shelley.corman    known
+      1198  Enron   Shelley.corman    known
+      1199  Enron   Shelley.corman    known
+      1200  Enron   Shelley.corman    known
+      1201  Enron   Shelley.corman    known
+      1202  Enron   Shelley.corman    known
+      1203  Enron   Shelley.corman    known
+      1204  Enron   Shelley.corman    known
+      1205  Enron   Shelley.corman    known
       1206  Enron   Shelley.corman    known
       1207  Enron   Shelley.corman    known
       1208  Enron   Shelley.corman    known
@@ -1258,44 +1258,44 @@
       1226  Enron   Shelley.corman    known
       1227  Enron   Shelley.corman    known
       1228  Enron   Shelley.corman    known
-      1229  Enron   Shelley.corman    known
-      1230  Enron   Shelley.corman    known
-      1231  Enron   Shelley.corman    known
-      1232  Enron   Shelley.corman    known
-      1233  Enron   Shelley.corman    known
-      1234  Enron   Shelley.corman    known
-      1235  Enron   Shelley.corman    known
-      1236  Enron   Shelley.corman    known
-      1237  Enron   Shelley.corman    known
-      1238  Enron   Shelley.corman    known
-      1239  Enron  Sherri.reinartz  unknown
-      1240  Enron  Sherri.reinartz  unknown
-      1241  Enron  Sherri.reinartz  unknown
-      1242  Enron  Sherri.reinartz  unknown
-      1243  Enron  Sherri.reinartz  unknown
-      1244  Enron  Sherri.reinartz  unknown
-      1245  Enron  Sherri.reinartz  unknown
+      1229  Enron  Sherri.reinartz  unknown
+      1230  Enron  Sherri.reinartz  unknown
+      1231  Enron  Sherri.reinartz  unknown
+      1232  Enron  Sherri.reinartz  unknown
+      1233  Enron  Sherri.reinartz  unknown
+      1234  Enron  Sherri.reinartz  unknown
+      1235  Enron  Sherri.reinartz  unknown
+      1236  Enron  Sherri.reinartz    known
+      1237  Enron  Sherri.reinartz    known
+      1238  Enron  Sherri.reinartz    known
+      1239  Enron  Sherri.reinartz    known
+      1240  Enron  Sherri.reinartz    known
+      1241  Enron  Sherri.reinartz    known
+      1242  Enron  Sherri.reinartz    known
+      1243  Enron  Sherri.reinartz    known
+      1244  Enron  Sherri.reinartz    known
+      1245  Enron  Sherri.reinartz    known
       1246  Enron  Sherri.reinartz    known
       1247  Enron  Sherri.reinartz    known
       1248  Enron  Sherri.reinartz    known
       1249  Enron  Sherri.reinartz    known
       1250  Enron  Sherri.reinartz    known
-      1251  Enron  Sherri.reinartz    known
-      1252  Enron  Sherri.reinartz    known
-      1253  Enron  Sherri.reinartz    known
-      1254  Enron  Sherri.reinartz    known
-      1255  Enron  Sherri.reinartz    known
-      1256  Enron  Sherri.reinartz    known
-      1257  Enron  Sherri.reinartz    known
-      1258  Enron  Sherri.reinartz    known
-      1259  Enron  Sherri.reinartz    known
-      1260  Enron  Sherri.reinartz    known
-      1261  Enron    Stacy.dickson  unknown
-      1262  Enron    Stacy.dickson  unknown
-      1263  Enron    Stacy.dickson  unknown
-      1264  Enron    Stacy.dickson  unknown
-      1265  Enron    Stacy.dickson  unknown
-      1266  Enron    Stacy.dickson  unknown
+      1251  Enron    Stacy.dickson  unknown
+      1252  Enron    Stacy.dickson  unknown
+      1253  Enron    Stacy.dickson  unknown
+      1254  Enron    Stacy.dickson  unknown
+      1255  Enron    Stacy.dickson  unknown
+      1256  Enron    Stacy.dickson  unknown
+      1257  Enron    Stacy.dickson    known
+      1258  Enron    Stacy.dickson    known
+      1259  Enron    Stacy.dickson    known
+      1260  Enron    Stacy.dickson    known
+      1261  Enron    Stacy.dickson    known
+      1262  Enron    Stacy.dickson    known
+      1263  Enron    Stacy.dickson    known
+      1264  Enron    Stacy.dickson    known
+      1265  Enron    Stacy.dickson    known
+      1266  Enron    Stacy.dickson    known
       1267  Enron    Stacy.dickson    known
       1268  Enron    Stacy.dickson    known
       1269  Enron    Stacy.dickson    known
@@ -1308,25 +1308,25 @@
       1276  Enron    Stacy.dickson    known
       1277  Enron    Stacy.dickson    known
       1278  Enron    Stacy.dickson    known
-      1279  Enron    Stacy.dickson    known
-      1280  Enron    Stacy.dickson    known
-      1281  Enron    Stacy.dickson    known
-      1282  Enron    Stacy.dickson    known
-      1283  Enron    Stacy.dickson    known
-      1284  Enron    Stacy.dickson    known
-      1285  Enron    Stacy.dickson    known
-      1286  Enron    Stacy.dickson    known
-      1287  Enron    Stacy.dickson    known
-      1288  Enron    Stacy.dickson    known
-      1289  Enron   Stanley.horton  unknown
-      1290  Enron   Stanley.horton  unknown
-      1291  Enron   Stanley.horton  unknown
-      1292  Enron   Stanley.horton  unknown
-      1293  Enron   Stanley.horton  unknown
-      1294  Enron   Stanley.horton  unknown
-      1295  Enron   Stanley.horton  unknown
-      1296  Enron   Stanley.horton  unknown
-      1297  Enron   Stanley.horton  unknown
+      1279  Enron   Stanley.horton  unknown
+      1280  Enron   Stanley.horton  unknown
+      1281  Enron   Stanley.horton  unknown
+      1282  Enron   Stanley.horton  unknown
+      1283  Enron   Stanley.horton  unknown
+      1284  Enron   Stanley.horton  unknown
+      1285  Enron   Stanley.horton  unknown
+      1286  Enron   Stanley.horton  unknown
+      1287  Enron   Stanley.horton  unknown
+      1288  Enron   Stanley.horton    known
+      1289  Enron   Stanley.horton    known
+      1290  Enron   Stanley.horton    known
+      1291  Enron   Stanley.horton    known
+      1292  Enron   Stanley.horton    known
+      1293  Enron   Stanley.horton    known
+      1294  Enron   Stanley.horton    known
+      1295  Enron   Stanley.horton    known
+      1296  Enron   Stanley.horton    known
+      1297  Enron   Stanley.horton    known
       1298  Enron   Stanley.horton    known
       1299  Enron   Stanley.horton    known
       1300  Enron   Stanley.horton    known
@@ -1344,25 +1344,25 @@
       1312  Enron   Stanley.horton    known
       1313  Enron   Stanley.horton    known
       1314  Enron   Stanley.horton    known
-      1315  Enron   Stanley.horton    known
-      1316  Enron   Stanley.horton    known
-      1317  Enron   Stanley.horton    known
-      1318  Enron   Stanley.horton    known
-      1319  Enron   Stanley.horton    known
-      1320  Enron   Stanley.horton    known
-      1321  Enron   Stanley.horton    known
-      1322  Enron   Stanley.horton    known
-      1323  Enron   Stanley.horton    known
-      1324  Enron   Stanley.horton    known
-      1325  Enron      Steven.kean  unknown
-      1326  Enron      Steven.kean  unknown
-      1327  Enron      Steven.kean  unknown
-      1328  Enron      Steven.kean  unknown
-      1329  Enron      Steven.kean  unknown
-      1330  Enron      Steven.kean  unknown
-      1331  Enron      Steven.kean  unknown
-      1332  Enron      Steven.kean  unknown
-      1333  Enron      Steven.kean  unknown
+      1315  Enron      Steven.kean  unknown
+      1316  Enron      Steven.kean  unknown
+      1317  Enron      Steven.kean  unknown
+      1318  Enron      Steven.kean  unknown
+      1319  Enron      Steven.kean  unknown
+      1320  Enron      Steven.kean  unknown
+      1321  Enron      Steven.kean  unknown
+      1322  Enron      Steven.kean  unknown
+      1323  Enron      Steven.kean  unknown
+      1324  Enron      Steven.kean    known
+      1325  Enron      Steven.kean    known
+      1326  Enron      Steven.kean    known
+      1327  Enron      Steven.kean    known
+      1328  Enron      Steven.kean    known
+      1329  Enron      Steven.kean    known
+      1330  Enron      Steven.kean    known
+      1331  Enron      Steven.kean    known
+      1332  Enron      Steven.kean    known
+      1333  Enron      Steven.kean    known
       1334  Enron      Steven.kean    known
       1335  Enron      Steven.kean    known
       1336  Enron      Steven.kean    known
@@ -1378,24 +1378,24 @@
       1346  Enron      Steven.kean    known
       1347  Enron      Steven.kean    known
       1348  Enron      Steven.kean    known
-      1349  Enron      Steven.kean    known
-      1350  Enron      Steven.kean    known
-      1351  Enron      Steven.kean    known
-      1352  Enron      Steven.kean    known
-      1353  Enron      Steven.kean    known
-      1354  Enron      Steven.kean    known
-      1355  Enron      Steven.kean    known
-      1356  Enron      Steven.kean    known
-      1357  Enron      Steven.kean    known
-      1358  Enron      Steven.kean    known
-      1359  Enron    Susan.pereira  unknown
-      1360  Enron    Susan.pereira  unknown
-      1361  Enron    Susan.pereira  unknown
-      1362  Enron    Susan.pereira  unknown
-      1363  Enron    Susan.pereira  unknown
-      1364  Enron    Susan.pereira  unknown
-      1365  Enron    Susan.pereira  unknown
-      1366  Enron    Susan.pereira  unknown
+      1349  Enron    Susan.pereira  unknown
+      1350  Enron    Susan.pereira  unknown
+      1351  Enron    Susan.pereira  unknown
+      1352  Enron    Susan.pereira  unknown
+      1353  Enron    Susan.pereira  unknown
+      1354  Enron    Susan.pereira  unknown
+      1355  Enron    Susan.pereira  unknown
+      1356  Enron    Susan.pereira    known
+      1357  Enron    Susan.pereira    known
+      1358  Enron    Susan.pereira    known
+      1359  Enron    Susan.pereira    known
+      1360  Enron    Susan.pereira    known
+      1361  Enron    Susan.pereira    known
+      1362  Enron    Susan.pereira    known
+      1363  Enron    Susan.pereira    known
+      1364  Enron    Susan.pereira    known
+      1365  Enron    Susan.pereira    known
+      1366  Enron    Susan.pereira    known
       1367  Enron    Susan.pereira    known
       1368  Enron    Susan.pereira    known
       1369  Enron    Susan.pereira    known
@@ -1405,28 +1405,28 @@
       1373  Enron    Susan.pereira    known
       1374  Enron    Susan.pereira    known
       1375  Enron    Susan.pereira    known
-      1376  Enron    Susan.pereira    known
-      1377  Enron    Susan.pereira    known
-      1378  Enron    Susan.pereira    known
-      1379  Enron    Susan.pereira    known
-      1380  Enron    Susan.pereira    known
-      1381  Enron    Susan.pereira    known
-      1382  Enron    Susan.pereira    known
-      1383  Enron    Susan.pereira    known
-      1384  Enron    Susan.pereira    known
-      1385  Enron    Susan.pereira    known
-      1386  Enron    Susan.pereira    known
-      1387  Enron      Susan.scott  unknown
-      1388  Enron      Susan.scott  unknown
-      1389  Enron      Susan.scott  unknown
-      1390  Enron      Susan.scott  unknown
-      1391  Enron      Susan.scott  unknown
-      1392  Enron      Susan.scott  unknown
-      1393  Enron      Susan.scott  unknown
-      1394  Enron      Susan.scott  unknown
-      1395  Enron      Susan.scott  unknown
-      1396  Enron      Susan.scott  unknown
-      1397  Enron      Susan.scott  unknown
+      1376  Enron      Susan.scott  unknown
+      1377  Enron      Susan.scott  unknown
+      1378  Enron      Susan.scott  unknown
+      1379  Enron      Susan.scott  unknown
+      1380  Enron      Susan.scott  unknown
+      1381  Enron      Susan.scott  unknown
+      1382  Enron      Susan.scott  unknown
+      1383  Enron      Susan.scott  unknown
+      1384  Enron      Susan.scott  unknown
+      1385  Enron      Susan.scott  unknown
+      1386  Enron      Susan.scott  unknown
+      1387  Enron      Susan.scott    known
+      1388  Enron      Susan.scott    known
+      1389  Enron      Susan.scott    known
+      1390  Enron      Susan.scott    known
+      1391  Enron      Susan.scott    known
+      1392  Enron      Susan.scott    known
+      1393  Enron      Susan.scott    known
+      1394  Enron      Susan.scott    known
+      1395  Enron      Susan.scott    known
+      1396  Enron      Susan.scott    known
+      1397  Enron      Susan.scott    known
       1398  Enron      Susan.scott    known
       1399  Enron      Susan.scott    known
       1400  Enron      Susan.scott    known
@@ -1444,27 +1444,27 @@
       1412  Enron      Susan.scott    known
       1413  Enron      Susan.scott    known
       1414  Enron      Susan.scott    known
-      1415  Enron      Susan.scott    known
-      1416  Enron      Susan.scott    known
-      1417  Enron      Susan.scott    known
-      1418  Enron      Susan.scott    known
-      1419  Enron      Susan.scott    known
-      1420  Enron      Susan.scott    known
-      1421  Enron      Susan.scott    known
-      1422  Enron      Susan.scott    known
-      1423  Enron      Susan.scott    known
-      1424  Enron      Susan.scott    known
-      1425  Enron      Susan.scott    known
-      1426  Enron      Susan.scott    known
-      1427  Enron       Tana.jones  unknown
-      1428  Enron       Tana.jones  unknown
-      1429  Enron       Tana.jones  unknown
-      1430  Enron       Tana.jones  unknown
-      1431  Enron       Tana.jones  unknown
-      1432  Enron       Tana.jones  unknown
-      1433  Enron       Tana.jones  unknown
-      1434  Enron       Tana.jones  unknown
-      1435  Enron       Tana.jones  unknown
+      1415  Enron       Tana.jones  unknown
+      1416  Enron       Tana.jones  unknown
+      1417  Enron       Tana.jones  unknown
+      1418  Enron       Tana.jones  unknown
+      1419  Enron       Tana.jones  unknown
+      1420  Enron       Tana.jones  unknown
+      1421  Enron       Tana.jones  unknown
+      1422  Enron       Tana.jones  unknown
+      1423  Enron       Tana.jones  unknown
+      1424  Enron       Tana.jones    known
+      1425  Enron       Tana.jones    known
+      1426  Enron       Tana.jones    known
+      1427  Enron       Tana.jones    known
+      1428  Enron       Tana.jones    known
+      1429  Enron       Tana.jones    known
+      1430  Enron       Tana.jones    known
+      1431  Enron       Tana.jones    known
+      1432  Enron       Tana.jones    known
+      1433  Enron       Tana.jones    known
+      1434  Enron       Tana.jones    known
+      1435  Enron       Tana.jones    known
       1436  Enron       Tana.jones    known
       1437  Enron       Tana.jones    known
       1438  Enron       Tana.jones    known
@@ -1483,24 +1483,24 @@
       1451  Enron       Tana.jones    known
       1452  Enron       Tana.jones    known
       1453  Enron       Tana.jones    known
-      1454  Enron       Tana.jones    known
-      1455  Enron       Tana.jones    known
-      1456  Enron       Tana.jones    known
-      1457  Enron       Tana.jones    known
-      1458  Enron       Tana.jones    known
-      1459  Enron       Tana.jones    known
-      1460  Enron       Tana.jones    known
-      1461  Enron       Tana.jones    known
-      1462  Enron       Tana.jones    known
-      1463  Enron       Tana.jones    known
-      1464  Enron       Tana.jones    known
-      1465  Enron       Tana.jones    known
-      1466  Enron   Tracy.geaccone  unknown
-      1467  Enron   Tracy.geaccone  unknown
-      1468  Enron   Tracy.geaccone  unknown
-      1469  Enron   Tracy.geaccone  unknown
-      1470  Enron   Tracy.geaccone  unknown
-      1471  Enron   Tracy.geaccone  unknown
+      1454  Enron   Tracy.geaccone  unknown
+      1455  Enron   Tracy.geaccone  unknown
+      1456  Enron   Tracy.geaccone  unknown
+      1457  Enron   Tracy.geaccone  unknown
+      1458  Enron   Tracy.geaccone  unknown
+      1459  Enron   Tracy.geaccone  unknown
+      1460  Enron   Tracy.geaccone    known
+      1461  Enron   Tracy.geaccone    known
+      1462  Enron   Tracy.geaccone    known
+      1463  Enron   Tracy.geaccone    known
+      1464  Enron   Tracy.geaccone    known
+      1465  Enron   Tracy.geaccone    known
+      1466  Enron   Tracy.geaccone    known
+      1467  Enron   Tracy.geaccone    known
+      1468  Enron   Tracy.geaccone    known
+      1469  Enron   Tracy.geaccone    known
+      1470  Enron   Tracy.geaccone    known
+      1471  Enron   Tracy.geaccone    known
       1472  Enron   Tracy.geaccone    known
       1473  Enron   Tracy.geaccone    known
       1474  Enron   Tracy.geaccone    known
@@ -1508,52 +1508,52 @@
       1476  Enron   Tracy.geaccone    known
       1477  Enron   Tracy.geaccone    known
       1478  Enron   Tracy.geaccone    known
-      1479  Enron   Tracy.geaccone    known
-      1480  Enron   Tracy.geaccone    known
-      1481  Enron   Tracy.geaccone    known
-      1482  Enron   Tracy.geaccone    known
-      1483  Enron   Tracy.geaccone    known
-      1484  Enron   Tracy.geaccone    known
-      1485  Enron   Tracy.geaccone    known
-      1486  Enron   Tracy.geaccone    known
-      1487  Enron   Tracy.geaccone    known
-      1488  Enron   Tracy.geaccone    known
-      1489  Enron   Tracy.geaccone    known
-      1490  Enron   Tracy.geaccone    known
-      1491  Enron     Twanda.sweet  unknown
-      1492  Enron     Twanda.sweet  unknown
-      1493  Enron     Twanda.sweet  unknown
-      1494  Enron     Twanda.sweet  unknown
-      1495  Enron     Twanda.sweet  unknown
-      1496  Enron     Twanda.sweet  unknown
-      1497  Enron     Twanda.sweet  unknown
+      1479  Enron     Twanda.sweet  unknown
+      1480  Enron     Twanda.sweet  unknown
+      1481  Enron     Twanda.sweet  unknown
+      1482  Enron     Twanda.sweet  unknown
+      1483  Enron     Twanda.sweet  unknown
+      1484  Enron     Twanda.sweet  unknown
+      1485  Enron     Twanda.sweet  unknown
+      1486  Enron     Twanda.sweet    known
+      1487  Enron     Twanda.sweet    known
+      1488  Enron     Twanda.sweet    known
+      1489  Enron     Twanda.sweet    known
+      1490  Enron     Twanda.sweet    known
+      1491  Enron     Twanda.sweet    known
+      1492  Enron     Twanda.sweet    known
+      1493  Enron     Twanda.sweet    known
+      1494  Enron     Twanda.sweet    known
+      1495  Enron     Twanda.sweet    known
+      1496  Enron     Twanda.sweet    known
+      1497  Enron     Twanda.sweet    known
       1498  Enron     Twanda.sweet    known
       1499  Enron     Twanda.sweet    known
       1500  Enron     Twanda.sweet    known
       1501  Enron     Twanda.sweet    known
       1502  Enron     Twanda.sweet    known
       1503  Enron     Twanda.sweet    known
-      1504  Enron     Twanda.sweet    known
-      1505  Enron     Twanda.sweet    known
-      1506  Enron     Twanda.sweet    known
-      1507  Enron     Twanda.sweet    known
-      1508  Enron     Twanda.sweet    known
-      1509  Enron     Twanda.sweet    known
-      1510  Enron     Twanda.sweet    known
-      1511  Enron     Twanda.sweet    known
-      1512  Enron     Twanda.sweet    known
-      1513  Enron     Twanda.sweet    known
-      1514  Enron     Twanda.sweet    known
-      1515  Enron     Twanda.sweet    known
-      1516  Enron         V.weldon  unknown
-      1517  Enron         V.weldon  unknown
-      1518  Enron         V.weldon  unknown
-      1519  Enron         V.weldon  unknown
-      1520  Enron         V.weldon  unknown
-      1521  Enron         V.weldon  unknown
-      1522  Enron         V.weldon  unknown
-      1523  Enron         V.weldon  unknown
-      1524  Enron         V.weldon  unknown
+      1504  Enron         V.weldon  unknown
+      1505  Enron         V.weldon  unknown
+      1506  Enron         V.weldon  unknown
+      1507  Enron         V.weldon  unknown
+      1508  Enron         V.weldon  unknown
+      1509  Enron         V.weldon  unknown
+      1510  Enron         V.weldon  unknown
+      1511  Enron         V.weldon  unknown
+      1512  Enron         V.weldon    known
+      1513  Enron         V.weldon    known
+      1514  Enron         V.weldon    known
+      1515  Enron         V.weldon    known
+      1516  Enron         V.weldon    known
+      1517  Enron         V.weldon    known
+      1518  Enron         V.weldon    known
+      1519  Enron         V.weldon    known
+      1520  Enron         V.weldon    known
+      1521  Enron         V.weldon    known
+      1522  Enron         V.weldon    known
+      1523  Enron         V.weldon    known
+      1524  Enron         V.weldon    known
       1525  Enron         V.weldon    known
       1526  Enron         V.weldon    known
       1527  Enron         V.weldon    known
@@ -1571,30 +1571,30 @@
       1539  Enron         V.weldon    known
       1540  Enron         V.weldon    known
       1541  Enron         V.weldon    known
-      1542  Enron         V.weldon    known
-      1543  Enron         V.weldon    known
-      1544  Enron         V.weldon    known
-      1545  Enron         V.weldon    known
-      1546  Enron         V.weldon    known
-      1547  Enron         V.weldon    known
-      1548  Enron         V.weldon    known
-      1549  Enron         V.weldon    known
-      1550  Enron         V.weldon    known
-      1551  Enron         V.weldon    known
-      1552  Enron         V.weldon    known
-      1553  Enron         V.weldon    known
-      1554  Enron         V.weldon    known
-      1555  Enron         V.weldon    known
-      1556  Enron         V.weldon    known
-      1557  Enron   Vince.kaminski  unknown
-      1558  Enron   Vince.kaminski  unknown
-      1559  Enron   Vince.kaminski  unknown
-      1560  Enron   Vince.kaminski  unknown
-      1561  Enron   Vince.kaminski  unknown
-      1562  Enron   Vince.kaminski  unknown
-      1563  Enron   Vince.kaminski  unknown
-      1564  Enron   Vince.kaminski  unknown
-      1565  Enron   Vince.kaminski  unknown
+      1542  Enron   Vince.kaminski  unknown
+      1543  Enron   Vince.kaminski  unknown
+      1544  Enron   Vince.kaminski  unknown
+      1545  Enron   Vince.kaminski  unknown
+      1546  Enron   Vince.kaminski  unknown
+      1547  Enron   Vince.kaminski  unknown
+      1548  Enron   Vince.kaminski  unknown
+      1549  Enron   Vince.kaminski  unknown
+      1550  Enron   Vince.kaminski  unknown
+      1551  Enron   Vince.kaminski    known
+      1552  Enron   Vince.kaminski    known
+      1553  Enron   Vince.kaminski    known
+      1554  Enron   Vince.kaminski    known
+      1555  Enron   Vince.kaminski    known
+      1556  Enron   Vince.kaminski    known
+      1557  Enron   Vince.kaminski    known
+      1558  Enron   Vince.kaminski    known
+      1559  Enron   Vince.kaminski    known
+      1560  Enron   Vince.kaminski    known
+      1561  Enron   Vince.kaminski    known
+      1562  Enron   Vince.kaminski    known
+      1563  Enron   Vince.kaminski    known
+      1564  Enron   Vince.kaminski    known
+      1565  Enron   Vince.kaminski    known
       1566  Enron   Vince.kaminski    known
       1567  Enron   Vince.kaminski    known
       1568  Enron   Vince.kaminski    known
@@ -1605,30 +1605,30 @@
       1573  Enron   Vince.kaminski    known
       1574  Enron   Vince.kaminski    known
       1575  Enron   Vince.kaminski    known
-      1576  Enron   Vince.kaminski    known
-      1577  Enron   Vince.kaminski    known
-      1578  Enron   Vince.kaminski    known
-      1579  Enron   Vince.kaminski    known
-      1580  Enron   Vince.kaminski    known
-      1581  Enron   Vince.kaminski    known
-      1582  Enron   Vince.kaminski    known
-      1583  Enron   Vince.kaminski    known
-      1584  Enron   Vince.kaminski    known
-      1585  Enron   Vince.kaminski    known
-      1586  Enron   Vince.kaminski    known
-      1587  Enron   Vince.kaminski    known
-      1588  Enron   Vince.kaminski    known
-      1589  Enron   Vince.kaminski    known
-      1590  Enron   Vince.kaminski    known
-      1591  Enron          W.white  unknown
-      1592  Enron          W.white  unknown
-      1593  Enron          W.white  unknown
-      1594  Enron          W.white  unknown
-      1595  Enron          W.white  unknown
-      1596  Enron          W.white  unknown
-      1597  Enron          W.white  unknown
-      1598  Enron          W.white  unknown
-      1599  Enron          W.white  unknown
+      1576  Enron          W.white  unknown
+      1577  Enron          W.white  unknown
+      1578  Enron          W.white  unknown
+      1579  Enron          W.white  unknown
+      1580  Enron          W.white  unknown
+      1581  Enron          W.white  unknown
+      1582  Enron          W.white  unknown
+      1583  Enron          W.white  unknown
+      1584  Enron          W.white  unknown
+      1585  Enron          W.white    known
+      1586  Enron          W.white    known
+      1587  Enron          W.white    known
+      1588  Enron          W.white    known
+      1589  Enron          W.white    known
+      1590  Enron          W.white    known
+      1591  Enron          W.white    known
+      1592  Enron          W.white    known
+      1593  Enron          W.white    known
+      1594  Enron          W.white    known
+      1595  Enron          W.white    known
+      1596  Enron          W.white    known
+      1597  Enron          W.white    known
+      1598  Enron          W.white    known
+      1599  Enron          W.white    known
       1600  Enron          W.white    known
       1601  Enron          W.white    known
       1602  Enron          W.white    known
@@ -1638,19 +1638,4 @@
       1606  Enron          W.white    known
       1607  Enron          W.white    known
       1608  Enron          W.white    known
-      1609  Enron          W.white    known
-      1610  Enron          W.white    known
-      1611  Enron          W.white    known
-      1612  Enron          W.white    known
-      1613  Enron          W.white    known
-      1614  Enron          W.white    known
-      1615  Enron          W.white    known
-      1616  Enron          W.white    known
-      1617  Enron          W.white    known
-      1618  Enron          W.white    known
-      1619  Enron          W.white    known
-      1620  Enron          W.white    known
-      1621  Enron          W.white    known
-      1622  Enron          W.white    known
-      1623  Enron          W.white    known
 

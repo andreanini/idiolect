@@ -16,7 +16,7 @@
 #' @export
 chunk_texts <- function(corpus, size){
 
-  tok <- quanteda::tokens(corpus)
+  tok <- quanteda::tokens(corpus, what = "fastestword")
 
   tok2 <- quanteda::tokens_chunk(tok, size)
 
