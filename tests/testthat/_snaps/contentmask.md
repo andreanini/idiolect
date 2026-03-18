@@ -1,9 +1,7 @@
 # content masking works
 
     Code
-      contentmask(enron.small, algorithm = "POSnoise")
-    Message
-      spaCy is already initialized
+      suppressMessages(contentmask(enron.small, algorithm = "POSnoise"))
     Output
       Corpus consisting of 3 documents and 2 docvars.
       allen-p_16.txt :
@@ -19,9 +17,7 @@
 ---
 
     Code
-      contentmask(enron.small, algorithm = "frames")
-    Message
-      successfully initialized (spaCy Version: 3.7.6, language model: en_core_web_sm)
+      suppressMessages(contentmask(enron.small, algorithm = "frames"))
     Output
       Corpus consisting of 3 documents and 2 docvars.
       allen-p_16.txt :
@@ -37,9 +33,7 @@
 ---
 
     Code
-      contentmask(enron.small, algorithm = "textdistortion")
-    Message
-      successfully initialized (spaCy Version: 3.7.6, language model: en_core_web_sm)
+      suppressMessages(contentmask(enron.small, algorithm = "textdistortion"))
     Output
       Corpus consisting of 3 documents and 2 docvars.
       allen-p_16.txt :
@@ -55,9 +49,7 @@
 ---
 
     Code
-      contentmask(toy.corpus, algorithm = "POSnoise")
-    Message
-      successfully initialized (spaCy Version: 3.7.6, language model: en_core_web_sm)
+      suppressMessages(contentmask(toy.corpus, algorithm = "POSnoise"))
     Output
       Corpus consisting of 1 document.
       text1 :
@@ -67,9 +59,7 @@
 ---
 
     Code
-      contentmask(toy.corpus, algorithm = "frames")
-    Message
-      successfully initialized (spaCy Version: 3.7.6, language model: en_core_web_sm)
+      suppressMessages(contentmask(toy.corpus, algorithm = "frames"))
     Output
       Corpus consisting of 1 document.
       text1 :
@@ -79,9 +69,7 @@
 ---
 
     Code
-      contentmask(toy.corpus, algorithm = "textdistortion")
-    Message
-      successfully initialized (spaCy Version: 3.7.6, language model: en_core_web_sm)
+      suppressMessages(contentmask(toy.corpus, algorithm = "textdistortion"))
     Output
       Corpus consisting of 1 document.
       text1 :
@@ -91,9 +79,8 @@
 ---
 
     Code
-      contentmask(toy.corpus, algorithm = "textdistortion", fw_list = c("the", "on"))
-    Message
-      successfully initialized (spaCy Version: 3.7.6, language model: en_core_web_sm)
+      suppressMessages(contentmask(toy.corpus, algorithm = "textdistortion", fw_list = c(
+        "the", "on")))
     Output
       Corpus consisting of 1 document.
       text1 :
@@ -103,9 +90,7 @@
 ---
 
     Code
-      contentmask(toy.corpus, algorithm = "textdistortion", fw_list = "the")
-    Message
-      successfully initialized (spaCy Version: 3.7.6, language model: en_core_web_sm)
+      suppressMessages(contentmask(toy.corpus, algorithm = "textdistortion", fw_list = "the"))
     Output
       Corpus consisting of 1 document.
       text1 :

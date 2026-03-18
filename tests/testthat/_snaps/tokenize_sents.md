@@ -1,9 +1,7 @@
 # tokenize_sents works
 
     Code
-      tokenize_sents(toy)
-    Message
-      spaCy is already initialized
+      suppressMessages(tokenize_sents(toy))
     Output
       Tokens consisting of 1 document.
       text1 :
@@ -14,9 +12,7 @@
 ---
 
     Code
-      tokenize_sents(toy.pos)
-    Message
-      successfully initialized (spaCy Version: 3.7.6, language model: en_core_web_sm)
+      suppressMessages(tokenize_sents(toy.pos))
     Output
       Tokens consisting of 1 document.
       text1 :
