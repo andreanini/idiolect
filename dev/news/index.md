@@ -8,7 +8,7 @@
 - [`contentmask()`](https://andreanini.github.io/idiolect/dev/reference/contentmask.md)
   also accepts sentence-tokenised corpora (the outputs of
   [`tokenize_sents()`](https://andreanini.github.io/idiolect/dev/reference/tokenize_sents.md))
-  as input.
+  as input, this option also allowing parallel processing.
 
 - [`chunk_texts()`](https://andreanini.github.io/idiolect/dev/reference/chunk_texts.md)
   now outputs texts that keep the same spaces present in the original

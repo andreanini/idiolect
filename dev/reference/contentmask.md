@@ -12,7 +12,8 @@ contentmask(
   input,
   model = "en_core_web_sm",
   algorithm = "POSnoise",
-  fw_list = "eng_halvani"
+  fw_list = "eng_halvani",
+  cores = NULL
 )
 ```
 
@@ -40,6 +41,12 @@ contentmask(
   This is either the default ("eng_halvani") for the same list of
   function words used for `POSnoise` or it can be a vector of strings
   where each string is a function word to keep.
+
+- cores:
+
+  The number of cores to use for parallel processing (the default is
+  one). This option only applies when the input is a tokens object
+  containing sentences.
 
 ## Value
 
