@@ -14,6 +14,7 @@
 #' @param algorithm A string, either "POSnoise" (default), "frames", or "textdistortion".
 #' @param fw_list The list of function words to use for the `textdistortion` algorithm. This is either the default ("eng_halvani") for the same list of function words used for `POSnoise` or it can be a vector of strings where each string is a function word to keep.
 #' @param model The spacy model to use. The default is "en_core_web_sm".
+#' @param cores The number of cores to use for parallel processing (the default is one). This option only applies when the input is a tokens object containing sentences.
 #'
 #' @references Halvani, Oren & Lukas Graner. 2021. POSNoise: An Effective Countermeasure Against Topic Biases in Authorship Analysis. In Proceedings of the 16th International Conference on Availability, Reliability and Security, 1–12. Vienna, Austria: Association for Computing Machinery. https://doi.org/10.1145/3465481.3470050.
 #' Nini, Andrea. 2023. A Theory of Linguistic Individuality for Authorship Analysis (Elements in Forensic Linguistics). Cambridge, UK: Cambridge University Press.
@@ -36,7 +37,9 @@ contentmask <- function(
     input,
     model = "en_core_web_sm",
     algorithm = "POSnoise",
-    fw_list = "eng_halvani") {
+    fw_list = "eng_halvani",
+    cores = NULL
+  ) {
   docids <- quanteda::docid(input)
   meta <- quanteda::docvars(input)
   names <- quanteda::docnames(input)
@@ -64,11 +67,8 @@ contentmask <- function(
   if (quanteda::is.corpus(input)) {
     # this removes potential empty documents in the corpus, which are anyway removed by spacy
     c <- quanteda::corpus_subset(input, quanteda::ntoken(input) > 0)
-
     if (algorithm == "textdistortion") {
       toks <- spacyr::spacy_tokenize(c, "word", remove_separators = FALSE, output = "data.frame")
-
-
       x.corp <- toks |>
         dplyr::filter(token != " ") |>
         dplyr::mutate(token = stringr::str_to_lower(token)) |>
@@ -153,7 +153,8 @@ contentmask <- function(
                 dplyr::pull(text)
             }
           )
-        }
+        },
+        cl = cores
       ) |>
         quanteda::as.tokens()
     } else if (algorithm == "POSnoise") {
@@ -204,7 +205,8 @@ contentmask <- function(
               )
             }
           )
-        }
+        },
+        cl = cores
       ) |>
         quanteda::as.tokens()
     } else if (algorithm == "frames") {
@@ -220,7 +222,6 @@ contentmask <- function(
                 entity = FALSE,
                 additional_attributes = c("like_url", "like_email")
               )
-
               masked <- parsed |>
                 dplyr::mutate(token = tolower(token)) |>
                 dplyr::mutate(
@@ -235,7 +236,6 @@ contentmask <- function(
                 dplyr::select(doc_id, POSnoise) |>
                 dplyr::rename(token = POSnoise) |>
                 quanteda::as.tokens()
-
               output <- sapply(
                 masked,
                 \(x) {
@@ -244,7 +244,8 @@ contentmask <- function(
               )
             }
           )
-        }
+        },
+        cl = cores
       ) |>
         quanteda::as.tokens()
     }

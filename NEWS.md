@@ -2,7 +2,7 @@
 
 * associated Journal of Open Source Software paper now published and should be used as reference.
 
-* `contentmask()` also accepts sentence-tokenised corpora (the outputs of `tokenize_sents()`) as input.
+* `contentmask()` also accepts sentence-tokenised corpora (the outputs of `tokenize_sents()`) as input, this option also allowing parallel processing.
 
 * `chunk_texts()` now outputs texts that keep the same spaces present in the original and no longer outputs texts with spaces around the punctuation marks.
 

@@ -8,7 +8,8 @@ contentmask(
   input,
   model = "en_core_web_sm",
   algorithm = "POSnoise",
-  fw_list = "eng_halvani"
+  fw_list = "eng_halvani",
+  cores = NULL
 )
 }
 \arguments{
@@ -19,6 +20,8 @@ contentmask(
 \item{algorithm}{A string, either "POSnoise" (default), "frames", or "textdistortion".}
 
 \item{fw_list}{The list of function words to use for the \code{textdistortion} algorithm. This is either the default ("eng_halvani") for the same list of function words used for \code{POSnoise} or it can be a vector of strings where each string is a function word to keep.}
+
+\item{cores}{The number of cores to use for parallel processing (the default is one). This option only applies when the input is a tokens object containing sentences.}
 }
 \value{
 Either a \code{quanteda} corpus object or a \code{quanteda} tokens object containing sentences, depending on the input, but only containing functional tokens according to the chosen content-masking algorithm. The corpus contains the same docvars as the input. Email addresses or URLs are treated like nouns.
