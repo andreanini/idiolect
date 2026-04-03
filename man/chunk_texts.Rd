@@ -2,25 +2,29 @@
 % Please edit documentation in R/chunk_texts.R
 \name{chunk_texts}
 \alias{chunk_texts}
-\title{Chunk a corpus}
+\title{Chunk a dataset}
 \usage{
-chunk_texts(corpus, size)
+chunk_texts(input, size)
 }
 \arguments{
-\item{corpus}{A \code{quanteda} corpus.}
+\item{input}{A \code{quanteda} corpus object, typically the output of the \code{\link[=create_corpus]{create_corpus()}} function, or a \code{quanteda} tokens object where each token is a sentence (the output of \code{\link[=tokenize_sents]{tokenize_sents()}}).}
 
 \item{size}{The size of the chunks in number of tokens.}
 }
 \value{
-A \code{quanteda} corpus object where each text is a chunk of the size requested.
+Either a \code{quanteda} corpus object or a \code{quanteda} tokens object containing sentences, depending on the input, where each text is a chunk of the size requested. If the input was a corpus object, then the function divides each unit of the corpus in chunks of the length specified. If the input was a tokens object then the function combines sentences together until the chunk is equal or greater than the size specified.
 }
 \description{
-This function can be used to chunk a corpus in order to control sample sizes.
+This function can be used to chunk a dataset in order to control sample sizes.
 }
 \examples{
 corpus <- quanteda::corpus(c("The cat sat on the mat", "The dog sat on the chair"))
 quanteda::docvars(corpus, "author") <- c("A", "B")
 chunk_texts(corpus, size = 2)
 
+sentences <- quanteda::tokens(corpus, "sentence")
+chunk_texts(sentences, size = 6)
+chunk_texts(sentences, size = 2)
+try(chunk_texts(sentences, size = 7))
 
 }
