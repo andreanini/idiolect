@@ -14,6 +14,11 @@
   now outputs texts that keep the same spaces present in the original
   and no longer outputs texts with spaces around the punctuation marks.
 
+- [`chunk_texts()`](https://andreanini.github.io/idiolect/dev/reference/chunk_texts.md)
+  now also accepts tokens objects as input and in that case returns
+  chunks of sentences for which the total length is equal or greater
+  than the one specified.
+
 ## idiolect 1.2.0
 
 CRAN release: 2026-02-28

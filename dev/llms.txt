@@ -67,7 +67,7 @@ Functions to input the data and prepare it for an analysis
 - [`create_corpus()`](https://andreanini.github.io/idiolect/dev/reference/create_corpus.md)
   : Create a corpus
 - [`chunk_texts()`](https://andreanini.github.io/idiolect/dev/reference/chunk_texts.md)
-  : Chunk a corpus
+  : Chunk a dataset
 - [`contentmask()`](https://andreanini.github.io/idiolect/dev/reference/contentmask.md)
   : Content masking
 - [`tokenize_sents()`](https://andreanini.github.io/idiolect/dev/reference/tokenize_sents.md)
