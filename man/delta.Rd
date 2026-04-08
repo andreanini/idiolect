@@ -13,6 +13,7 @@ delta(
   remove_numbers = TRUE,
   lowercase = TRUE,
   n = 1,
+  cross_boundaries = FALSE,
   trim = TRUE,
   threshold = 150,
   features = FALSE,
@@ -35,6 +36,8 @@ delta(
 \item{lowercase}{A logical value. TRUE (default) transforms all tokens to lower case.}
 
 \item{n}{The order or size of the n-grams being extracted. Default is 1.}
+
+\item{cross_boundaries}{A logical value. If FALSE (default), then n-grams will not cross sentence boundaries (end of sentence punctuation marks or line breaks).}
 
 \item{trim}{A logical value. If TRUE (default) then only the most frequent tokens are kept.}
 

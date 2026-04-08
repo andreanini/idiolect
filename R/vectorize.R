@@ -11,6 +11,7 @@
 #' @param remove_numbers A logical value. TRUE removes numbers and FALSE keeps them.
 #' @param lowercase A logical value. TRUE transforms all tokens to lower case.
 #' @param n The order or size of the n-grams being extracted.
+#' @param cross_boundaries A logical value. If FALSE, then n-grams will not cross sentence boundaries (end of sentence punctuation marks or line breaks).
 #' @param weighting The type of weighting to use, "rel" for relative frequencies, "tf-idf", or "boolean".
 #' @param trim A logical value. If TRUE then only the most frequent tokens are kept.
 #' @param threshold A numeric value indicating how many most frequent tokens to keep.
@@ -20,64 +21,72 @@
 #' @examples
 #' mycorpus <- quanteda::corpus("The cat sat on the mat.")
 #' quanteda::docvars(mycorpus, "author") <- "author1"
-#' matrix <- vectorize(mycorpus, tokens = "character", remove_punct = FALSE, remove_symbols = TRUE,
-#' remove_numbers = TRUE, lowercase = TRUE, n = 5, weighting = "rel", trim = TRUE, threshold = 1500)
+#' matrix <- vectorize(
+#' input = mycorpus,
+#' tokens = "character",
+#' remove_punct = FALSE,
+#' remove_symbols = TRUE,
+#' remove_numbers = TRUE,
+#' lowercase = TRUE,
+#' n = 5,
+#' cross_boundaries = FALSE,
+#' weighting = "rel",
+#' trim = TRUE,
+#' threshold = 1500
+#' )
 #'
 #' @import quanteda
 #'
 #' @export
-vectorize = function(input, tokens, remove_punct, remove_symbols, remove_numbers, lowercase, n, weighting, trim, threshold){
-
-  sents <- quanteda::corpus_segment(input, pattern = "[.?!]+( \\n+)*|\\n+", valuetype = "regex",
-                                    extract_pattern = FALSE, pattern_position = "after")
-
-  if(tokens == "character"){
-
-    sents |>
-      quanteda::tokens(what = tokens, remove_punct = remove_punct, remove_symbols = remove_symbols,
-                       remove_url = TRUE, remove_numbers = remove_numbers, split_hyphens = TRUE,
-                       remove_separators = FALSE) |>
-      quanteda::tokens_ngrams(n, concatenator = "") -> toks
-
+vectorize <- function(input, tokens, remove_punct, remove_symbols, remove_numbers, lowercase, n, cross_boundaries, weighting, trim, threshold) {
+  if (cross_boundaries == FALSE) {
+    c <- input |>
+      quanteda::corpus_segment(
+        pattern = "[.?!]+( \\n+)*|\\n+", valuetype = "regex",
+        extract_pattern = FALSE, pattern_position = "after"
+      )
+  } else {
+    c <- input
   }
 
-  if(tokens == "word"){
+  if (tokens == "character") {
+    c |>
+      quanteda::tokens(
+        what = tokens, remove_punct = remove_punct, remove_symbols = remove_symbols,
+        remove_url = TRUE, remove_numbers = remove_numbers, split_hyphens = TRUE,
+        remove_separators = FALSE
+      ) |>
+      quanteda::tokens_ngrams(n, concatenator = "") -> toks
+  }
 
-    sents |>
-      quanteda::tokens(what = tokens, remove_punct = remove_punct, remove_symbols = remove_symbols,
-                       remove_url = TRUE, remove_numbers = remove_numbers, split_hyphens = TRUE,
-                       remove_separators = TRUE) |>
+  if (tokens == "word") {
+    c |>
+      quanteda::tokens(
+        what = tokens, remove_punct = remove_punct, remove_symbols = remove_symbols,
+        remove_url = TRUE, remove_numbers = remove_numbers, split_hyphens = TRUE,
+        remove_separators = TRUE
+      ) |>
       quanteda::tokens_ngrams(n, concatenator = "_") -> toks
-
   }
 
   d <- quanteda::tokens_group(toks) |>
     quanteda::dfm(tolower = lowercase)
 
-  if(weighting == "tf-idf"){
-
-    d.f = quanteda::dfm_tfidf(d, scheme_tf = "prop")
-
+  if (weighting == "tf-idf") {
+    d.f <- quanteda::dfm_tfidf(d, scheme_tf = "prop")
   }
 
-  if(weighting == "rel"){
-
-    d.f = quanteda::dfm_weight(d, scheme = "prop")
-
+  if (weighting == "rel") {
+    d.f <- quanteda::dfm_weight(d, scheme = "prop")
   }
 
-  if(weighting == "boolean"){
-
-    d.f = quanteda::dfm_weight(d, scheme = "boolean")
-
+  if (weighting == "boolean") {
+    d.f <- quanteda::dfm_weight(d, scheme = "boolean")
   }
 
-  if(trim == TRUE){
-
-    d.f = quanteda::dfm_trim(d.f, min_termfreq = threshold, termfreq_type = "rank") |> suppressWarnings()
-
+  if (trim == TRUE) {
+    d.f <- quanteda::dfm_trim(d.f, min_termfreq = threshold, termfreq_type = "rank") |> suppressWarnings()
   }
 
   return(d.f)
-
 }

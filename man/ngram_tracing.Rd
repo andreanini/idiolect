@@ -13,6 +13,7 @@ ngram_tracing(
   remove_numbers = TRUE,
   lowercase = TRUE,
   n = 9,
+  cross_boundaries = FALSE,
   coefficient = "simpson",
   features = FALSE,
   cores = NULL
@@ -35,6 +36,8 @@ ngram_tracing(
 
 \item{n}{The order or size of the n-grams being extracted. Default is 9.}
 
+\item{cross_boundaries}{A logical value. If FALSE (default), then n-grams will not cross sentence boundaries (end of sentence punctuation marks or line breaks).}
+
 \item{coefficient}{The coefficient to use to compare texts, one of: "simpson" (default), "phi", "jaccard", "kulczynski", or "cole".}
 
 \item{features}{Logical with default FALSE. If TRUE then the result table will contain the features in the overlap that are unique for that overlap in the corpus. If only two texts are present then this will return the n-grams in common.}
@@ -54,7 +57,7 @@ N-gram tracing was originally proposed by Grieve et al (2019). Nini (2023) then 
 \examples{
 Q <- enron.sample[c(5:6)]
 K <- enron.sample[-c(5:6)]
-ngram_tracing(Q, K, coefficient = 'phi')
+ngram_tracing(Q, K, coefficient = "phi")
 
 }
 \references{

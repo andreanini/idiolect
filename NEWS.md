@@ -8,6 +8,8 @@
 
 * `chunk_texts()` now also accepts tokens objects as input and in that case returns chunks of sentences for which the total length is equal or greater than the one specified.
 
+* `vectorize()` and two functions that call it (`delta()` and `ngram_tracing()`) now have a new argument called 'cross_boundaries'. If FALSE, n-grams do not cross sentence boundaries (which was the default behaviour in previous versions). This change simply means that the user can now choose to cross sentence boundaries when making n-grams if they wish. The behaviour of these functions is therefore also now clearer.
+
 # idiolect 1.2.0
 
 * minor bug fixes

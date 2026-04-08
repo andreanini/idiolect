@@ -12,6 +12,7 @@
 #' @param remove_numbers A logical value. TRUE (default) removes numbers.
 #' @param lowercase A logical value. TRUE (default) transforms all tokens to lower case.
 #' @param n The order or size of the n-grams being extracted. Default is 9.
+#' @param cross_boundaries A logical value. If FALSE (default), then n-grams will not cross sentence boundaries (end of sentence punctuation marks or line breaks).
 #' @param coefficient The coefficient to use to compare texts, one of: "simpson" (default), "phi", "jaccard", "kulczynski", or "cole".
 #' @param cores The number of cores to use for parallel processing (the default is one).
 #' @param features Logical with default FALSE. If TRUE then the result table will contain the features in the overlap that are unique for that overlap in the corpus. If only two texts are present then this will return the n-grams in common.
@@ -25,25 +26,20 @@
 #' @examples
 #' Q <- enron.sample[c(5:6)]
 #' K <- enron.sample[-c(5:6)]
-#' ngram_tracing(Q, K, coefficient = 'phi')
+#' ngram_tracing(Q, K, coefficient = "phi")
 #'
 #' @export
-ngram_tracing <- function(q.data, k.data, tokens = "character", remove_punct = FALSE, remove_symbols = TRUE, remove_numbers = TRUE, lowercase = TRUE, n = 9, coefficient = "simpson", features = FALSE, cores = NULL){
-
-  if(quanteda::is.corpus(q.data) & quanteda::is.corpus(k.data)){
-
-    df = vectorize(c(q.data, k.data), tokens = tokens, remove_punct = remove_punct,
-                  remove_symbols = remove_symbols, remove_numbers = remove_numbers, lowercase = lowercase,
-                  n = n, weighting = "boolean", trim = FALSE)
-
-  }else if(quanteda::is.dfm(q.data) & quanteda::is.dfm(k.data)){
-
+ngram_tracing <- function(q.data, k.data, tokens = "character", remove_punct = FALSE, remove_symbols = TRUE, remove_numbers = TRUE, lowercase = TRUE, n = 9, cross_boundaries = FALSE, coefficient = "simpson", features = FALSE, cores = NULL) {
+  if (quanteda::is.corpus(q.data) & quanteda::is.corpus(k.data)) {
+    df <- vectorize(c(q.data, k.data),
+      tokens = tokens, remove_punct = remove_punct,
+      remove_symbols = remove_symbols, remove_numbers = remove_numbers, lowercase = lowercase,
+      n = n, cross_boundaries = cross_boundaries, weighting = "boolean", trim = FALSE
+    )
+  } else if (quanteda::is.dfm(q.data) & quanteda::is.dfm(k.data)) {
     df <- rbind(q.data, k.data)
-
-  }else{
-
+  } else {
     stop("The Q and K objects need to be either quanteda corpora or quanteda dfms.")
-
   }
 
   q.list <- quanteda::docnames(q.data)
@@ -54,34 +50,27 @@ ngram_tracing <- function(q.data, k.data, tokens = "character", remove_punct = F
 
   results <- pbapply::pbapply(tests, 1, similarity, df, k.data, coefficient, features, cl = cores)
 
-  results.table = list_to_df(results)
+  results.table <- list_to_df(results)
 
   return(results.table)
-
 }
 
-overlap <- function(m1, m2, rest.m){
-
+overlap <- function(m1, m2, rest.m) {
   m <- rbind(m1, m2)
 
   overlap <- quanteda::dfm_trim(m, min_docfreq = 2) |> quanteda::featnames()
 
   # this is to control case in which the dfm only contains two samples
-  if(length(rest.m) > 0){
-
+  if (length(rest.m) > 0) {
     to.remove <- quanteda::dfm_trim(rest.m, min_docfreq = 1) |> quanteda::featnames()
-
-  }else{
-
-    to.remove = c()
-
+  } else {
+    to.remove <- c()
   }
 
   unique.overlap <- overlap[!(overlap %in% to.remove)]
 
 
-  if(stringr::str_detect(paste(unique.overlap, collapse = " "), "_")){
-
+  if (stringr::str_detect(paste(unique.overlap, collapse = " "), "_")) {
     # this means it's word n-grams
 
     unique.overlap |>
@@ -90,9 +79,7 @@ overlap <- function(m1, m2, rest.m){
       dplyr::arrange(dplyr::desc(length)) |>
       dplyr::pull(`unique.overlap`) |>
       paste(collapse = "|") -> output
-
-  }else{
-
+  } else {
     # this is for char n-grams
 
     unique.overlap |>
@@ -101,77 +88,71 @@ overlap <- function(m1, m2, rest.m){
       dplyr::arrange(dplyr::desc(length)) |>
       dplyr::pull(`unique.overlap`) |>
       paste(collapse = "|") -> output
-
   }
 
   return(output)
-
 }
 
-similarity <- function(x, df, k.data, coefficient, features){
+similarity <- function(x, df, k.data, coefficient, features) {
+  q.name <- as.character(x["Q"])
+  q <- quanteda::dfm_subset(df, quanteda::docnames(df) == q.name)
 
-  q.name = as.character(x["Q"])
-  q = quanteda::dfm_subset(df, quanteda::docnames(df) == q.name)
-
-  k.name = as.character(x["K"])
-  k = quanteda::dfm_subset(df, author == k.name &
-                             quanteda::docnames(df) != q.name &
-                             quanteda::docnames(df) %in% docnames(k.data)) |>
+  k.name <- as.character(x["K"])
+  k <- quanteda::dfm_subset(df, author == k.name &
+    quanteda::docnames(df) != q.name &
+    quanteda::docnames(df) %in% docnames(k.data)) |>
     quanteda::dfm_group(author) |>
     quanteda::dfm_weight(scheme = "boolean", force = TRUE)
 
-  if(features == TRUE){
-
+  if (features == TRUE) {
     rest <- quanteda::dfm_subset(df, quanteda::docnames(df) != q.name & author != k.name)
 
     # this is to control the case in which the dfm only contains two samples
-    if(length(rest) > 0){
-
+    if (length(rest) > 0) {
       quanteda::docvars(rest, "author") <- "rest"
       rest.m <- quanteda::dfm_group(rest, author) |> quanteda::dfm_weight("boolean", force = TRUE)
-
-    }else{
-
+    } else {
       rest.m <- rest
-
     }
-
   }
 
-  a = as.double(suppressMessages(length(q[q & k])))
-  b = as.double(suppressMessages(length(q[q == 1])) - a)
-  c = as.double(suppressMessages(length(k[k == 1])) - a)
-  p = as.double(ncol(k))
-  d = as.double(p - (a+b+c))
+  a <- as.double(suppressMessages(length(q[q & k])))
+  b <- as.double(suppressMessages(length(q[q == 1])) - a)
+  c <- as.double(suppressMessages(length(k[k == 1])) - a)
+  p <- as.double(ncol(k))
+  d <- as.double(p - (a + b + c))
 
-  if(coefficient == "simpson"){ score = round(a/(a+b), 3)}
-  if(coefficient == "phi"){ score = round((a*d - b*c)/sqrt((a+b)*(a+c)*(c+d)*(b+d)), 3)}
-  if(coefficient == "jaccard"){ score = round(a/(a+b+c), 3)}
-  if(coefficient == "kulczynski"){ score = round(((a/(a+b))+(a/(a+c)))/2, 3)}
-  if(coefficient == "cole"){ score = round((a*d - b*c)/((a+b)*(b+d)), 3)}
-
-  results = data.frame()
-  results[1,"Q"] = q.name
-  results[1,"K"] = k.name
-
-  if(quanteda::docvars(k, "author") == quanteda::docvars(q, "author")){
-
-    results[1,"target"] = TRUE
-
-  }else{
-
-    results[1,"target"] = FALSE
-
+  if (coefficient == "simpson") {
+    score <- round(a / (a + b), 3)
+  }
+  if (coefficient == "phi") {
+    score <- round((a * d - b * c) / sqrt((a + b) * (a + c) * (c + d) * (b + d)), 3)
+  }
+  if (coefficient == "jaccard") {
+    score <- round(a / (a + b + c), 3)
+  }
+  if (coefficient == "kulczynski") {
+    score <- round(((a / (a + b)) + (a / (a + c))) / 2, 3)
+  }
+  if (coefficient == "cole") {
+    score <- round((a * d - b * c) / ((a + b) * (b + d)), 3)
   }
 
-  results[1,"score"] = score
+  results <- data.frame()
+  results[1, "Q"] <- q.name
+  results[1, "K"] <- k.name
 
-  if(features == TRUE){
+  if (quanteda::docvars(k, "author") == quanteda::docvars(q, "author")) {
+    results[1, "target"] <- TRUE
+  } else {
+    results[1, "target"] <- FALSE
+  }
 
-    results[1, "unique_overlap"] = overlap(q, k, rest.m)
+  results[1, "score"] <- score
 
+  if (features == TRUE) {
+    results[1, "unique_overlap"] <- overlap(q, k, rest.m)
   }
 
   return(results)
-
 }

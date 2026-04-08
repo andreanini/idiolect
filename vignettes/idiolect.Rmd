@@ -110,16 +110,37 @@ R <- corpus_subset(corpus, author != "Kimberly_w")
 Before applying certain authorship analysis methods, each text or sample must be turned into a numerical representation called a *feature vector*, a process typically referred to as *vectorisation*. `idiolect` has a function to vectorise a corpus called `vectorize()`. The features normally used by many authorship analysis methods are $n$-grams of words and punctuation marks or characters. For example, the $Q$ text can be vectorised into the relative frequencies of its words using this code.
 
 ```{r}
-vectorize(Q, tokens = "word", remove_punct = FALSE, remove_symbols = TRUE, remove_numbers = TRUE,
-          lowercase = TRUE, n = 1, weighting = "rel", trim = FALSE) |> 
+vectorize(
+  input = Q, 
+  tokens = "word", 
+  remove_punct = FALSE, 
+  remove_symbols = TRUE, 
+  remove_numbers = TRUE,
+  lowercase = TRUE, 
+  n = 1, 
+  cross_boundaries = FALSE, 
+  weighting = "rel", 
+  trim = FALSE
+) |> 
   print(max_nfeat = 3)
 ```
 
 or, as the most frequent 1000 character 4-grams relative frequencies, for example, using
 
 ```{r}
-vectorize(Q, tokens = "character", remove_punct = FALSE, remove_symbols = TRUE, remove_numbers = TRUE,
-          lowercase = TRUE, n = 4, weighting = "rel", trim = TRUE, threshold = 1000) |> 
+vectorize(
+  input = Q, 
+  tokens = "character", 
+  remove_punct = FALSE, 
+  remove_symbols = TRUE, 
+  remove_numbers = TRUE,
+  lowercase = TRUE, 
+  n = 4, 
+  cross_boundaries = FALSE, 
+  weighting = "rel", 
+  trim = TRUE, 
+  threshold = 1000
+) |> 
   print(max_nfeat = 3)
 ```
 

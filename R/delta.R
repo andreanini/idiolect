@@ -10,6 +10,7 @@
 #' @param remove_numbers A logical value. TRUE (default) removes numbers
 #' @param lowercase A logical value. TRUE (default) transforms all tokens to lower case.
 #' @param n The order or size of the n-grams being extracted. Default is 1.
+#' @param cross_boundaries A logical value. If FALSE (default), then n-grams will not cross sentence boundaries (end of sentence punctuation marks or line breaks).
 #' @param trim A logical value. If TRUE (default) then only the most frequent tokens are kept.
 #' @param threshold A numeric value indicating how many most frequent tokens to keep if trim = TRUE. The default is 150.
 #' @param features Logical with default FALSE. If TRUE, then the output will contain the features used.
@@ -26,22 +27,17 @@
 #' delta(Q, K)
 #'
 #' @export
-delta <- function(q.data, k.data, tokens = "word", remove_punct = FALSE, remove_symbols = TRUE, remove_numbers = TRUE, lowercase = TRUE, n = 1, trim = TRUE, threshold = 150, features = FALSE, cores = NULL){
-
-  if(quanteda::is.corpus(q.data) & quanteda::is.corpus(k.data)){
-
-    d = vectorize(c(q.data, k.data), tokens = tokens, remove_punct = remove_punct,
-                  remove_symbols = remove_symbols, remove_numbers = remove_numbers, lowercase = lowercase,
-                  n = n, weighting = "rel", trim = trim, threshold = threshold)
-
-  }else if(quanteda::is.dfm(q.data) & quanteda::is.dfm(k.data)){
-
+delta <- function(q.data, k.data, tokens = "word", remove_punct = FALSE, remove_symbols = TRUE, remove_numbers = TRUE, lowercase = TRUE, n = 1, cross_boundaries = FALSE, trim = TRUE, threshold = 150, features = FALSE, cores = NULL) {
+  if (quanteda::is.corpus(q.data) & quanteda::is.corpus(k.data)) {
+    d <- vectorize(c(q.data, k.data),
+      tokens = tokens, remove_punct = remove_punct,
+      remove_symbols = remove_symbols, remove_numbers = remove_numbers, lowercase = lowercase,
+      n = n, cross_boundaries = cross_boundaries, weighting = "rel", trim = trim, threshold = threshold
+    )
+  } else if (quanteda::is.dfm(q.data) & quanteda::is.dfm(k.data)) {
     d <- rbind(q.data, k.data)
-
-  }else{
-
+  } else {
     stop("The Q and K objects need to be either quanteda corpora or quanteda dfms.")
-
   }
 
   q.list <- quanteda::docnames(q.data)
@@ -55,50 +51,41 @@ delta <- function(q.data, k.data, tokens = "word", remove_punct = FALSE, remove_
 
   results <- pbapply::pbapply(tests, 1, cosine_delta, z, cl = cores)
 
-  results.table = list_to_df(results)
+  results.table <- list_to_df(results)
 
-  if(features == TRUE){
-
+  if (features == TRUE) {
     output <- list(results = results.table, features = colnames(d))
-
-  }else{
-
+  } else {
     output <- results.table
-
   }
 
   return(output)
-
 }
 
-cosine_delta <- function(x, z){
+cosine_delta <- function(x, z) {
+  a.name <- as.character(x["Q"])
+  a <- quanteda::dfm_subset(z, quanteda::docnames(z) == a.name)
+  a.author <- quanteda::docvars(a, "author")
 
-  a.name = as.character(x["Q"])
-  a = quanteda::dfm_subset(z, quanteda::docnames(z) == a.name)
-  a.author = quanteda::docvars(a, "author")
+  b.name <- as.character(x["K"])
+  b <- quanteda::dfm_subset(z, quanteda::docnames(z) == b.name)
+  b.author <- quanteda::docvars(b, "author")
 
-  b.name = as.character(x["K"])
-  b = quanteda::dfm_subset(z, quanteda::docnames(z) == b.name)
-  b.author = quanteda::docvars(b, "author")
+  score <- quanteda.textstats::textstat_simil(a, b, method = "cosine") |>
+    suppressMessages() |>
+    as.numeric()
 
-  score <- quanteda.textstats::textstat_simil(a, b, method = "cosine") |> suppressMessages() |> as.numeric()
+  results <- data.frame()
+  results[1, "Q"] <- a.name
+  results[1, "K"] <- b.name
 
-  results = data.frame()
-  results[1,"Q"] = a.name
-  results[1,"K"] = b.name
-
-  if(a.author == b.author){
-
-    results[1,"target"] = TRUE
-
-  }else{
-
-    results[1,"target"] = FALSE
-
+  if (a.author == b.author) {
+    results[1, "target"] <- TRUE
+  } else {
+    results[1, "target"] <- FALSE
   }
 
-  results[1,"score"] = round(score, 3)
+  results[1, "score"] <- round(score, 3)
 
   return(results)
-
 }
