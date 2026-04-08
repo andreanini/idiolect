@@ -48,8 +48,10 @@
 <span>  remove_numbers <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  lowercase <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  n <span class="op">=</span> <span class="fl">9</span>,</span>
+<span>  cross_boundaries <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  coefficient <span class="op">=</span> <span class="st">"simpson"</span>,</span>
 <span>  features <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  progress <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  cores <span class="op">=</span> <span class="cn">NULL</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
@@ -90,12 +92,20 @@
 <dd><p>The order or size of the n-grams being extracted. Default is 9.</p></dd>
 
 
+<dt id="arg-cross-boundaries">cross_boundaries<a class="anchor" aria-label="anchor" href="#arg-cross-boundaries"></a></dt>
+<dd><p>A logical value. If FALSE (default), then n-grams will not cross sentence boundaries (end of sentence punctuation marks or line breaks).</p></dd>
+
+
 <dt id="arg-coefficient">coefficient<a class="anchor" aria-label="anchor" href="#arg-coefficient"></a></dt>
 <dd><p>The coefficient to use to compare texts, one of: "simpson" (default), "phi", "jaccard", "kulczynski", or "cole".</p></dd>
 
 
 <dt id="arg-features">features<a class="anchor" aria-label="anchor" href="#arg-features"></a></dt>
 <dd><p>Logical with default FALSE. If TRUE then the result table will contain the features in the overlap that are unique for that overlap in the corpus. If only two texts are present then this will return the n-grams in common.</p></dd>
+
+
+<dt id="arg-progress">progress<a class="anchor" aria-label="anchor" href="#arg-progress"></a></dt>
+<dd><p>If TRUE (default), a progress bar is displayed.</p></dd>
 
 
 <dt id="arg-cores">cores<a class="anchor" aria-label="anchor" href="#arg-cores"></a></dt>
@@ -121,7 +131,7 @@ Nini, Andrea. 2023. A Theory of Linguistic Individuality for Authorship Analysis
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">Q</span> <span class="op">&lt;-</span> <span class="va">enron.sample</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">5</span><span class="op">:</span><span class="fl">6</span><span class="op">)</span><span class="op">]</span></span></span>
 <span class="r-in"><span><span class="va">K</span> <span class="op">&lt;-</span> <span class="va">enron.sample</span><span class="op">[</span><span class="op">-</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">5</span><span class="op">:</span><span class="fl">6</span><span class="op">)</span><span class="op">]</span></span></span>
-<span class="r-in"><span><span class="fu">ngram_tracing</span><span class="op">(</span><span class="va">Q</span>, <span class="va">K</span>, coefficient <span class="op">=</span> <span class="st">'phi'</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">ngram_tracing</span><span class="op">(</span><span class="va">Q</span>, <span class="va">K</span>, coefficient <span class="op">=</span> <span class="st">"phi"</span>, progress <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                    Q          K target  score</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1     Kevin_h_Mail_2    Kevin_h   TRUE  0.032</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 2  Kimberly_w_Mail_3    Kevin_h  FALSE  0.030</span>

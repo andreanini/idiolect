@@ -15,9 +15,11 @@ delta(
   remove_numbers = TRUE,
   lowercase = TRUE,
   n = 1,
+  cross_boundaries = FALSE,
   trim = TRUE,
   threshold = 150,
   features = FALSE,
+  progress = TRUE,
   cores = NULL
 )
 ```
@@ -62,6 +64,12 @@ delta(
 
   The order or size of the n-grams being extracted. Default is 1.
 
+- cross_boundaries:
+
+  A logical value. If FALSE (default), then n-grams will not cross
+  sentence boundaries (end of sentence punctuation marks or line
+  breaks).
+
 - trim:
 
   A logical value. If TRUE (default) then only the most frequent tokens
@@ -76,6 +84,10 @@ delta(
 
   Logical with default FALSE. If TRUE, then the output will contain the
   features used.
+
+- progress:
+
+  If TRUE (default), a progress bar is displayed.
 
 - cores:
 

@@ -13,6 +13,7 @@ vectorize(
   remove_numbers,
   lowercase,
   n,
+  cross_boundaries,
   weighting,
   trim,
   threshold
@@ -53,6 +54,11 @@ vectorize(
 
   The order or size of the n-grams being extracted.
 
+- cross_boundaries:
+
+  A logical value. If FALSE, then n-grams will not cross sentence
+  boundaries (end of sentence punctuation marks or line breaks).
+
 - weighting:
 
   The type of weighting to use, "rel" for relative frequencies,
@@ -85,6 +91,17 @@ to run a standard analysis do not need use this function.
 ``` r
 mycorpus <- quanteda::corpus("The cat sat on the mat.")
 quanteda::docvars(mycorpus, "author") <- "author1"
-matrix <- vectorize(mycorpus, tokens = "character", remove_punct = FALSE, remove_symbols = TRUE,
-remove_numbers = TRUE, lowercase = TRUE, n = 5, weighting = "rel", trim = TRUE, threshold = 1500)
+matrix <- vectorize(
+input = mycorpus,
+tokens = "character",
+remove_punct = FALSE,
+remove_symbols = TRUE,
+remove_numbers = TRUE,
+lowercase = TRUE,
+n = 5,
+cross_boundaries = FALSE,
+weighting = "rel",
+trim = TRUE,
+threshold = 1500
+)
 ```

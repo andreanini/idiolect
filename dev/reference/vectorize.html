@@ -47,6 +47,7 @@
 <span>  <span class="va">remove_numbers</span>,</span>
 <span>  <span class="va">lowercase</span>,</span>
 <span>  <span class="va">n</span>,</span>
+<span>  <span class="va">cross_boundaries</span>,</span>
 <span>  <span class="va">weighting</span>,</span>
 <span>  <span class="va">trim</span>,</span>
 <span>  <span class="va">threshold</span></span>
@@ -85,6 +86,10 @@
 <dd><p>The order or size of the n-grams being extracted.</p></dd>
 
 
+<dt id="arg-cross-boundaries">cross_boundaries<a class="anchor" aria-label="anchor" href="#arg-cross-boundaries"></a></dt>
+<dd><p>A logical value. If FALSE, then n-grams will not cross sentence boundaries (end of sentence punctuation marks or line breaks).</p></dd>
+
+
 <dt id="arg-weighting">weighting<a class="anchor" aria-label="anchor" href="#arg-weighting"></a></dt>
 <dd><p>The type of weighting to use, "rel" for relative frequencies, "tf-idf", or "boolean".</p></dd>
 
@@ -110,8 +115,19 @@
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">mycorpus</span> <span class="op">&lt;-</span> <span class="fu">quanteda</span><span class="fu">::</span><span class="fu"><a href="https://quanteda.io/reference/corpus.html" class="external-link">corpus</a></span><span class="op">(</span><span class="st">"The cat sat on the mat."</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu">quanteda</span><span class="fu">::</span><span class="fu"><a href="https://quanteda.io/reference/docvars.html" class="external-link">docvars</a></span><span class="op">(</span><span class="va">mycorpus</span>, <span class="st">"author"</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="st">"author1"</span></span></span>
-<span class="r-in"><span><span class="va">matrix</span> <span class="op">&lt;-</span> <span class="fu">vectorize</span><span class="op">(</span><span class="va">mycorpus</span>, tokens <span class="op">=</span> <span class="st">"character"</span>, remove_punct <span class="op">=</span> <span class="cn">FALSE</span>, remove_symbols <span class="op">=</span> <span class="cn">TRUE</span>,</span></span>
-<span class="r-in"><span>remove_numbers <span class="op">=</span> <span class="cn">TRUE</span>, lowercase <span class="op">=</span> <span class="cn">TRUE</span>, n <span class="op">=</span> <span class="fl">5</span>, weighting <span class="op">=</span> <span class="st">"rel"</span>, trim <span class="op">=</span> <span class="cn">TRUE</span>, threshold <span class="op">=</span> <span class="fl">1500</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">matrix</span> <span class="op">&lt;-</span> <span class="fu">vectorize</span><span class="op">(</span></span></span>
+<span class="r-in"><span>input <span class="op">=</span> <span class="va">mycorpus</span>,</span></span>
+<span class="r-in"><span>tokens <span class="op">=</span> <span class="st">"character"</span>,</span></span>
+<span class="r-in"><span>remove_punct <span class="op">=</span> <span class="cn">FALSE</span>,</span></span>
+<span class="r-in"><span>remove_symbols <span class="op">=</span> <span class="cn">TRUE</span>,</span></span>
+<span class="r-in"><span>remove_numbers <span class="op">=</span> <span class="cn">TRUE</span>,</span></span>
+<span class="r-in"><span>lowercase <span class="op">=</span> <span class="cn">TRUE</span>,</span></span>
+<span class="r-in"><span>n <span class="op">=</span> <span class="fl">5</span>,</span></span>
+<span class="r-in"><span>cross_boundaries <span class="op">=</span> <span class="cn">FALSE</span>,</span></span>
+<span class="r-in"><span>weighting <span class="op">=</span> <span class="st">"rel"</span>,</span></span>
+<span class="r-in"><span>trim <span class="op">=</span> <span class="cn">TRUE</span>,</span></span>
+<span class="r-in"><span>threshold <span class="op">=</span> <span class="fl">1500</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>

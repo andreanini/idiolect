@@ -68,7 +68,7 @@
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/andreanini/idiolect" class="external-link">idiolect</a></span><span class="op">)</span></span>
 <span><span class="co">#&gt; Loading required package: quanteda</span></span>
-<span><span class="co">#&gt; Package version: 4.3.1</span></span>
+<span><span class="co">#&gt; Package version: 4.4</span></span>
 <span><span class="co">#&gt; Unicode version: 15.1</span></span>
 <span><span class="co">#&gt; ICU version: 74.2</span></span>
 <span><span class="co">#&gt; Parallel computing: disabled</span></span>
@@ -305,8 +305,18 @@ of words and punctuation marks or characters. For example, the
 text can be vectorised into the relative frequencies of its words using
 this code.</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/vectorize.html">vectorize</a></span><span class="op">(</span><span class="va">Q</span>, tokens <span class="op">=</span> <span class="st">"word"</span>, remove_punct <span class="op">=</span> <span class="cn">FALSE</span>, remove_symbols <span class="op">=</span> <span class="cn">TRUE</span>, remove_numbers <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span>          lowercase <span class="op">=</span> <span class="cn">TRUE</span>, n <span class="op">=</span> <span class="fl">1</span>, weighting <span class="op">=</span> <span class="st">"rel"</span>, trim <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/vectorize.html">vectorize</a></span><span class="op">(</span></span>
+<span>  input <span class="op">=</span> <span class="va">Q</span>, </span>
+<span>  tokens <span class="op">=</span> <span class="st">"word"</span>, </span>
+<span>  remove_punct <span class="op">=</span> <span class="cn">FALSE</span>, </span>
+<span>  remove_symbols <span class="op">=</span> <span class="cn">TRUE</span>, </span>
+<span>  remove_numbers <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  lowercase <span class="op">=</span> <span class="cn">TRUE</span>, </span>
+<span>  n <span class="op">=</span> <span class="fl">1</span>, </span>
+<span>  cross_boundaries <span class="op">=</span> <span class="cn">FALSE</span>, </span>
+<span>  weighting <span class="op">=</span> <span class="st">"rel"</span>, </span>
+<span>  trim <span class="op">=</span> <span class="cn">FALSE</span></span>
+<span><span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span>max_nfeat <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Document-feature matrix of: 1 document, 136 features (0.00% sparse) and 2 docvars.</span></span>
 <span><span class="co">#&gt;                    features</span></span>
@@ -316,8 +326,19 @@ this code.</p>
 <p>or, as the most frequent 1000 character 4-grams relative frequencies,
 for example, using</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/vectorize.html">vectorize</a></span><span class="op">(</span><span class="va">Q</span>, tokens <span class="op">=</span> <span class="st">"character"</span>, remove_punct <span class="op">=</span> <span class="cn">FALSE</span>, remove_symbols <span class="op">=</span> <span class="cn">TRUE</span>, remove_numbers <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span>          lowercase <span class="op">=</span> <span class="cn">TRUE</span>, n <span class="op">=</span> <span class="fl">4</span>, weighting <span class="op">=</span> <span class="st">"rel"</span>, trim <span class="op">=</span> <span class="cn">TRUE</span>, threshold <span class="op">=</span> <span class="fl">1000</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/vectorize.html">vectorize</a></span><span class="op">(</span></span>
+<span>  input <span class="op">=</span> <span class="va">Q</span>, </span>
+<span>  tokens <span class="op">=</span> <span class="st">"character"</span>, </span>
+<span>  remove_punct <span class="op">=</span> <span class="cn">FALSE</span>, </span>
+<span>  remove_symbols <span class="op">=</span> <span class="cn">TRUE</span>, </span>
+<span>  remove_numbers <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  lowercase <span class="op">=</span> <span class="cn">TRUE</span>, </span>
+<span>  n <span class="op">=</span> <span class="fl">4</span>, </span>
+<span>  cross_boundaries <span class="op">=</span> <span class="cn">FALSE</span>, </span>
+<span>  weighting <span class="op">=</span> <span class="st">"rel"</span>, </span>
+<span>  trim <span class="op">=</span> <span class="cn">TRUE</span>, </span>
+<span>  threshold <span class="op">=</span> <span class="fl">1000</span></span>
+<span><span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span>max_nfeat <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Document-feature matrix of: 1 document, 1,094 features (0.00% sparse) and 2 docvars.</span></span>
 <span><span class="co">#&gt;                    features</span></span>

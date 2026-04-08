@@ -19,6 +19,7 @@ impostors(
   m = 100,
   n = 25,
   features = FALSE,
+  progress = TRUE,
   cores = NULL
 )
 ```
@@ -81,6 +82,10 @@ impostors(
   A logical value indicating whether the important features should be
   retrieved or not. The default is FALSE. This only applies to the RBI
   algorithm.
+
+- progress:
+
+  If TRUE (default), a progress bar is displayed.
 
 - cores:
 

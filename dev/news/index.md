@@ -19,6 +19,20 @@
   chunks of sentences for which the total length is equal or greater
   than the one specified.
 
+- [`vectorize()`](https://andreanini.github.io/idiolect/dev/reference/vectorize.md)
+  and two functions that call it
+  ([`delta()`](https://andreanini.github.io/idiolect/dev/reference/delta.md)
+  and
+  [`ngram_tracing()`](https://andreanini.github.io/idiolect/dev/reference/ngram_tracing.md))
+  now have a new argument called ‘cross_boundaries’. If FALSE, n-grams
+  do not cross sentence boundaries (which was the default behaviour in
+  previous versions). This change simply means that the user can now
+  choose to cross sentence boundaries when making n-grams if they wish.
+  The behaviour of these functions is therefore also now clearer.
+
+- the progres bar is now optional for all authorship analysis functions
+  (but default is set to TRUE).
+
 ## idiolect 1.2.0
 
 CRAN release: 2026-02-28

@@ -38,6 +38,8 @@
 <li><p><code><a href="../reference/contentmask.html">contentmask()</a></code> also accepts sentence-tokenised corpora (the outputs of <code><a href="../reference/tokenize_sents.html">tokenize_sents()</a></code>) as input, this option also allowing parallel processing.</p></li>
 <li><p><code><a href="../reference/chunk_texts.html">chunk_texts()</a></code> now outputs texts that keep the same spaces present in the original and no longer outputs texts with spaces around the punctuation marks.</p></li>
 <li><p><code><a href="../reference/chunk_texts.html">chunk_texts()</a></code> now also accepts tokens objects as input and in that case returns chunks of sentences for which the total length is equal or greater than the one specified.</p></li>
+<li><p><code><a href="../reference/vectorize.html">vectorize()</a></code> and two functions that call it (<code><a href="../reference/delta.html">delta()</a></code> and <code><a href="../reference/ngram_tracing.html">ngram_tracing()</a></code>) now have a new argument called ‘cross_boundaries’. If FALSE, n-grams do not cross sentence boundaries (which was the default behaviour in previous versions). This change simply means that the user can now choose to cross sentence boundaries when making n-grams if they wish. The behaviour of these functions is therefore also now clearer.</p></li>
+<li><p>the progres bar is now optional for all authorship analysis functions (but default is set to TRUE).</p></li>
 </ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="1.2.0" id="idiolect-120">idiolect 1.2.0<a class="anchor" aria-label="anchor" href="#idiolect-120"></a></h2><p class="text-muted">CRAN release: 2026-02-28</p>

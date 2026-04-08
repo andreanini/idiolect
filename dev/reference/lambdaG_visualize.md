@@ -18,6 +18,7 @@ lambdaG_visualize(
   scale = "absolute",
   negative = FALSE,
   order.by = "importance",
+  progress = TRUE,
   cores = NULL
 )
 ```
@@ -79,6 +80,10 @@ lambdaG_visualize(
   A string indicating the order of the output. If "importance" (default)
   then the output is ordered by sentence \\\lambda_G\\ in descending
   order, otherwise the text is displayed and ordered as it appears.
+
+- progress:
+
+  If TRUE (default), a progress bar is displayed.
 
 - cores:
 

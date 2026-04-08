@@ -15,8 +15,10 @@ ngram_tracing(
   remove_numbers = TRUE,
   lowercase = TRUE,
   n = 9,
+  cross_boundaries = FALSE,
   coefficient = "simpson",
   features = FALSE,
+  progress = TRUE,
   cores = NULL
 )
 ```
@@ -63,6 +65,12 @@ ngram_tracing(
 
   The order or size of the n-grams being extracted. Default is 9.
 
+- cross_boundaries:
+
+  A logical value. If FALSE (default), then n-grams will not cross
+  sentence boundaries (end of sentence punctuation marks or line
+  breaks).
+
 - coefficient:
 
   The coefficient to use to compare texts, one of: "simpson" (default),
@@ -74,6 +82,10 @@ ngram_tracing(
   the features in the overlap that are unique for that overlap in the
   corpus. If only two texts are present then this will return the
   n-grams in common.
+
+- progress:
+
+  If TRUE (default), a progress bar is displayed.
 
 - cores:
 
@@ -118,7 +130,7 @@ Cambridge University Press.
 ``` r
 Q <- enron.sample[c(5:6)]
 K <- enron.sample[-c(5:6)]
-ngram_tracing(Q, K, coefficient = 'phi')
+ngram_tracing(Q, K, coefficient = "phi", progress = TRUE)
 #>                    Q          K target  score
 #> 1     Kevin_h_Mail_2    Kevin_h   TRUE  0.032
 #> 2  Kimberly_w_Mail_3    Kevin_h  FALSE  0.030

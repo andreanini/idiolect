@@ -39,7 +39,15 @@
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">lambdaG</span><span class="op">(</span><span class="va">q.data</span>, <span class="va">k.data</span>, <span class="va">ref.data</span>, N <span class="op">=</span> <span class="fl">10</span>, r <span class="op">=</span> <span class="fl">30</span>, cores <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">lambdaG</span><span class="op">(</span></span>
+<span>  <span class="va">q.data</span>,</span>
+<span>  <span class="va">k.data</span>,</span>
+<span>  <span class="va">ref.data</span>,</span>
+<span>  N <span class="op">=</span> <span class="fl">10</span>,</span>
+<span>  r <span class="op">=</span> <span class="fl">30</span>,</span>
+<span>  progress <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  cores <span class="op">=</span> <span class="cn">NULL</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -64,6 +72,10 @@
 
 <dt id="arg-r">r<a class="anchor" aria-label="anchor" href="#arg-r"></a></dt>
 <dd><p>The number of iterations. Default is 30.</p></dd>
+
+
+<dt id="arg-progress">progress<a class="anchor" aria-label="anchor" href="#arg-progress"></a></dt>
+<dd><p>If TRUE (default), a progress bar is displayed.</p></dd>
 
 
 <dt id="arg-cores">cores<a class="anchor" aria-label="anchor" href="#arg-cores"></a></dt>

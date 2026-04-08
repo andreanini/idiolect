@@ -3,7 +3,7 @@
 ``` r
 library(idiolect)
 #> Loading required package: quanteda
-#> Package version: 4.3.1
+#> Package version: 4.4
 #> Unicode version: 15.1
 #> ICU version: 74.2
 #> Parallel computing: disabled
@@ -219,8 +219,18 @@ $Q$ text can be vectorised into the relative frequencies of its words
 using this code.
 
 ``` r
-vectorize(Q, tokens = "word", remove_punct = FALSE, remove_symbols = TRUE, remove_numbers = TRUE,
-          lowercase = TRUE, n = 1, weighting = "rel", trim = FALSE) |> 
+vectorize(
+  input = Q, 
+  tokens = "word", 
+  remove_punct = FALSE, 
+  remove_symbols = TRUE, 
+  remove_numbers = TRUE,
+  lowercase = TRUE, 
+  n = 1, 
+  cross_boundaries = FALSE, 
+  weighting = "rel", 
+  trim = FALSE
+) |> 
   print(max_nfeat = 3)
 #> Document-feature matrix of: 1 document, 136 features (0.00% sparse) and 2 docvars.
 #>                    features
@@ -233,8 +243,19 @@ or, as the most frequent 1000 character 4-grams relative frequencies,
 for example, using
 
 ``` r
-vectorize(Q, tokens = "character", remove_punct = FALSE, remove_symbols = TRUE, remove_numbers = TRUE,
-          lowercase = TRUE, n = 4, weighting = "rel", trim = TRUE, threshold = 1000) |> 
+vectorize(
+  input = Q, 
+  tokens = "character", 
+  remove_punct = FALSE, 
+  remove_symbols = TRUE, 
+  remove_numbers = TRUE,
+  lowercase = TRUE, 
+  n = 4, 
+  cross_boundaries = FALSE, 
+  weighting = "rel", 
+  trim = TRUE, 
+  threshold = 1000
+) |> 
   print(max_nfeat = 3)
 #> Document-feature matrix of: 1 document, 1,094 features (0.00% sparse) and 2 docvars.
 #>                    features

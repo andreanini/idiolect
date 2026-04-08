@@ -9,7 +9,15 @@ with the "algorithm" parameter set to "POSnoise".
 ## Usage
 
 ``` r
-lambdaG(q.data, k.data, ref.data, N = 10, r = 30, cores = NULL)
+lambdaG(
+  q.data,
+  k.data,
+  ref.data,
+  N = 10,
+  r = 30,
+  progress = TRUE,
+  cores = NULL
+)
 ```
 
 ## Arguments
@@ -40,6 +48,10 @@ lambdaG(q.data, k.data, ref.data, N = 10, r = 30, cores = NULL)
 - r:
 
   The number of iterations. Default is 30.
+
+- progress:
+
+  If TRUE (default), a progress bar is displayed.
 
 - cores:
 

@@ -48,9 +48,11 @@
 <span>  remove_numbers <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  lowercase <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  n <span class="op">=</span> <span class="fl">1</span>,</span>
+<span>  cross_boundaries <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  trim <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  threshold <span class="op">=</span> <span class="fl">150</span>,</span>
 <span>  features <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  progress <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  cores <span class="op">=</span> <span class="cn">NULL</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
@@ -91,6 +93,10 @@
 <dd><p>The order or size of the n-grams being extracted. Default is 1.</p></dd>
 
 
+<dt id="arg-cross-boundaries">cross_boundaries<a class="anchor" aria-label="anchor" href="#arg-cross-boundaries"></a></dt>
+<dd><p>A logical value. If FALSE (default), then n-grams will not cross sentence boundaries (end of sentence punctuation marks or line breaks).</p></dd>
+
+
 <dt id="arg-trim">trim<a class="anchor" aria-label="anchor" href="#arg-trim"></a></dt>
 <dd><p>A logical value. If TRUE (default) then only the most frequent tokens are kept.</p></dd>
 
@@ -101,6 +107,10 @@
 
 <dt id="arg-features">features<a class="anchor" aria-label="anchor" href="#arg-features"></a></dt>
 <dd><p>Logical with default FALSE. If TRUE, then the output will contain the features used.</p></dd>
+
+
+<dt id="arg-progress">progress<a class="anchor" aria-label="anchor" href="#arg-progress"></a></dt>
+<dd><p>If TRUE (default), a progress bar is displayed.</p></dd>
 
 
 <dt id="arg-cores">cores<a class="anchor" aria-label="anchor" href="#arg-cores"></a></dt>
