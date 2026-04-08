@@ -4,7 +4,15 @@
 \alias{lambdaG}
 \title{Apply the LambdaG algorithm}
 \usage{
-lambdaG(q.data, k.data, ref.data, N = 10, r = 30, cores = NULL)
+lambdaG(
+  q.data,
+  k.data,
+  ref.data,
+  N = 10,
+  r = 30,
+  progress = TRUE,
+  cores = NULL
+)
 }
 \arguments{
 \item{q.data}{The questioned or disputed data as a \code{quanteda} tokens object with the tokens being sentences (e.g. the output of \code{\link[=tokenize_sents]{tokenize_sents()}}).}
@@ -16,6 +24,8 @@ lambdaG(q.data, k.data, ref.data, N = 10, r = 30, cores = NULL)
 \item{N}{The order of the model. Default is 10.}
 
 \item{r}{The number of iterations. Default is 30.}
+
+\item{progress}{If TRUE (default), a progress bar is displayed.}
 
 \item{cores}{The number of cores to use for parallel processing (the default is one).}
 }

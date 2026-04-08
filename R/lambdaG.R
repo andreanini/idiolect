@@ -7,6 +7,7 @@
 #' @param ref.data The reference dataset as a `quanteda` tokens object with the tokens being sentences (e.g. the output of [tokenize_sents()]). This can be the same object as `k.data`.
 #' @param N The order of the model. Default is 10.
 #' @param r The number of iterations. Default is 30.
+#' @param progress If TRUE (default), a progress bar is displayed.
 #' @param cores The number of cores to use for parallel processing (the default is one).
 #'
 #' @references Nini, A., Halvani, O., Graner, L., Gherardi, V., Ishihara, S. Authorship Verification based on the Likelihood Ratio of Grammar Models. https://arxiv.org/abs/2403.08462v1
@@ -20,7 +21,12 @@
 #' lambdaG(q.data, k.data, ref.data)
 #'
 #' @export
-lambdaG <- function(q.data, k.data, ref.data, N = 10, r = 30, cores = NULL){
+lambdaG <- function(q.data, k.data, ref.data, N = 10, r = 30, progress = TRUE, cores = NULL){
+
+  if(progress == FALSE){
+    opb <- pbapply::pboptions(type="none")
+    on.exit(pbapply::pboptions(opb))
+  }
 
   q.list <- quanteda::docnames(q.data)
   k.list <- quanteda::docvars(k.data, "author") |> unique()

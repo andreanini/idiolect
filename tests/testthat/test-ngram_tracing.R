@@ -5,7 +5,7 @@ test_that("ngram tracing works", {
   known <- quanteda::corpus_subset(corpus, texttype == "known")
 
   # n-gram tracing from corpus
-  results.corpus <- ngram_tracing(unknown[1:5], known[1:5], features = T)
+  results.corpus <- ngram_tracing(unknown[1:5], known[1:5], features = T, progress = F)
 
   # n-gram tracing from dfm
   d <- vectorize(c(unknown[1:5], known[1:5]),
@@ -14,10 +14,10 @@ test_that("ngram tracing works", {
     weighting = "boolean", trim = F
   )
 
-  results.dfm <- ngram_tracing(d[1:5, ], d[6:10, ], features = T)
+  results.dfm <- ngram_tracing(d[1:5, ], d[6:10, ], features = T, progress = F)
 
   # n-gram tracing on only two texts with features activated
-  results.two <- ngram_tracing(unknown[1], known[1], features = T)
+  results.two <- ngram_tracing(unknown[1], known[1], features = T, progress = F)
 
   expect_identical(results.corpus, results.dfm)
   expect_snapshot(results.corpus)

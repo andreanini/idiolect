@@ -15,6 +15,7 @@ lambdaG_visualize(
   scale = "absolute",
   negative = FALSE,
   order.by = "importance",
+  progress = TRUE,
   cores = NULL
 )
 }
@@ -38,6 +39,8 @@ lambdaG_visualize(
 \item{negative}{Logical. If TRUE then negative values of \eqn{\lambda_G} are color-coded in blue, otherwise (default) only the positive values of \eqn{\lambda_G} are displayed in red. This only applies to HTML output.}
 
 \item{order.by}{A string indicating the order of the output. If "importance" (default) then the output is ordered by sentence \eqn{\lambda_G} in descending order, otherwise the text is displayed and ordered as it appears.}
+
+\item{progress}{If TRUE (default), a progress bar is displayed.}
 
 \item{cores}{The number of cores to use for parallel processing (the default is one).}
 }

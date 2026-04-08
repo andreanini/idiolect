@@ -14,6 +14,7 @@
 #' @param n The order or size of the n-grams being extracted. Default is 9.
 #' @param cross_boundaries A logical value. If FALSE (default), then n-grams will not cross sentence boundaries (end of sentence punctuation marks or line breaks).
 #' @param coefficient The coefficient to use to compare texts, one of: "simpson" (default), "phi", "jaccard", "kulczynski", or "cole".
+#' @param progress If TRUE (default), a progress bar is displayed.
 #' @param cores The number of cores to use for parallel processing (the default is one).
 #' @param features Logical with default FALSE. If TRUE then the result table will contain the features in the overlap that are unique for that overlap in the corpus. If only two texts are present then this will return the n-grams in common.
 #'
@@ -26,10 +27,10 @@
 #' @examples
 #' Q <- enron.sample[c(5:6)]
 #' K <- enron.sample[-c(5:6)]
-#' ngram_tracing(Q, K, coefficient = "phi")
+#' ngram_tracing(Q, K, coefficient = "phi", progress = TRUE)
 #'
 #' @export
-ngram_tracing <- function(q.data, k.data, tokens = "character", remove_punct = FALSE, remove_symbols = TRUE, remove_numbers = TRUE, lowercase = TRUE, n = 9, cross_boundaries = FALSE, coefficient = "simpson", features = FALSE, cores = NULL) {
+ngram_tracing <- function(q.data, k.data, tokens = "character", remove_punct = FALSE, remove_symbols = TRUE, remove_numbers = TRUE, lowercase = TRUE, n = 9, cross_boundaries = FALSE, coefficient = "simpson", features = FALSE, progress = TRUE, cores = NULL) {
   if (quanteda::is.corpus(q.data) & quanteda::is.corpus(k.data)) {
     df <- vectorize(c(q.data, k.data),
       tokens = tokens, remove_punct = remove_punct,
@@ -47,6 +48,11 @@ ngram_tracing <- function(q.data, k.data, tokens = "character", remove_punct = F
 
   tests <- expand.grid(q.list, k.list, stringsAsFactors = FALSE) |>
     dplyr::rename(Q = Var1, K = Var2)
+
+  if(progress == FALSE){
+    opb <- pbapply::pboptions(type="none")
+    on.exit(pbapply::pboptions(opb))
+  }
 
   results <- pbapply::pbapply(tests, 1, similarity, df, k.data, coefficient, features, cl = cores)
 

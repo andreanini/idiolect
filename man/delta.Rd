@@ -17,6 +17,7 @@ delta(
   trim = TRUE,
   threshold = 150,
   features = FALSE,
+  progress = TRUE,
   cores = NULL
 )
 }
@@ -44,6 +45,8 @@ delta(
 \item{threshold}{A numeric value indicating how many most frequent tokens to keep if trim = TRUE. The default is 150.}
 
 \item{features}{Logical with default FALSE. If TRUE, then the output will contain the features used.}
+
+\item{progress}{If TRUE (default), a progress bar is displayed.}
 
 \item{cores}{The number of cores to use for parallel processing (the default is one).}
 }

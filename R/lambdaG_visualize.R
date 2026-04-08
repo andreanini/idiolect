@@ -12,6 +12,7 @@
 #' @param scale A string indicating what scale to use to colour-code the text file. If "absolute" (default) then the raw \eqn{\lambda_G} is used; if "relative", then the z-score of \eqn{\lambda_G} over the Q data is used instead, thus showing relative importance.
 #' @param negative Logical. If TRUE then negative values of \eqn{\lambda_G} are color-coded in blue, otherwise (default) only the positive values of \eqn{\lambda_G} are displayed in red. This only applies to HTML output.
 #' @param order.by A string indicating the order of the output. If "importance" (default) then the output is ordered by sentence \eqn{\lambda_G} in descending order, otherwise the text is displayed and ordered as it appears.
+#' @param progress If TRUE (default), a progress bar is displayed.
 #' @param cores The number of cores to use for parallel processing (the default is one).
 #'
 #' @references Nini, A., Halvani, O., Graner, L., Gherardi, V., Ishihara, S. Authorship Verification based on the Likelihood Ratio of Grammar Models. https://arxiv.org/abs/2403.08462v1
@@ -25,7 +26,12 @@
 #' outputs$table
 #'
 #' @export
-lambdaG_visualize <- function(q.data, k.data, ref.data, N = 10, r = 30, output = "html", print = "", scale = "absolute", negative = FALSE, order.by = "importance", cores = NULL){
+lambdaG_visualize <- function(q.data, k.data, ref.data, N = 10, r = 30, output = "html", print = "", scale = "absolute", negative = FALSE, order.by = "importance", progress = TRUE, cores = NULL){
+
+  if(progress == FALSE){
+    opb <- pbapply::pboptions(type="none")
+    on.exit(pbapply::pboptions(opb))
+  }
 
   if(length(unique(quanteda::docvars(k.data, "author"))) != 1){
 

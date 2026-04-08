@@ -16,6 +16,7 @@ ngram_tracing(
   cross_boundaries = FALSE,
   coefficient = "simpson",
   features = FALSE,
+  progress = TRUE,
   cores = NULL
 )
 }
@@ -42,6 +43,8 @@ ngram_tracing(
 
 \item{features}{Logical with default FALSE. If TRUE then the result table will contain the features in the overlap that are unique for that overlap in the corpus. If only two texts are present then this will return the n-grams in common.}
 
+\item{progress}{If TRUE (default), a progress bar is displayed.}
+
 \item{cores}{The number of cores to use for parallel processing (the default is one).}
 }
 \value{
@@ -57,7 +60,7 @@ N-gram tracing was originally proposed by Grieve et al (2019). Nini (2023) then 
 \examples{
 Q <- enron.sample[c(5:6)]
 K <- enron.sample[-c(5:6)]
-ngram_tracing(Q, K, coefficient = "phi")
+ngram_tracing(Q, K, coefficient = "phi", progress = TRUE)
 
 }
 \references{

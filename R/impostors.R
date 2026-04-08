@@ -18,6 +18,7 @@
 #' @param m The *m* parameter for the IM algorithm. Not used by other algorithms. The default is 100.
 #' @param n The *n* parameter for the IM algorithm. Not used by other algorithms. The default is 25.
 #' @param features A logical value indicating whether the important features should be retrieved or not. The default is FALSE. This only applies to the RBI algorithm.
+#' @param progress If TRUE (default), a progress bar is displayed.
 #' @param cores The number of cores to use for parallel processing (the default is one).
 #'
 #' @references Kestemont, Mike, Justin Stover, Moshe Koppel, Folgert Karsdorp & Walter Daelemans. 2016. Authenticating the writings of Julius Caesar. Expert Systems With Applications 63. 86–96. https://doi.org/10.1016/j.eswa.2016.06.029.
@@ -42,7 +43,13 @@
 #' impostors(Q, K, imps, algorithm = "KGI")
 #'
 #' @export
-impostors <- function(q.data, k.data, cand.imps, algorithm = "RBI", coefficient = "minmax", k = 300, m = 100, n = 25, features = FALSE, cores = NULL) {
+impostors <- function(q.data, k.data, cand.imps, algorithm = "RBI", coefficient = "minmax", k = 300, m = 100, n = 25, features = FALSE, progress = TRUE, cores = NULL) {
+
+  if(progress == FALSE){
+    opb <- pbapply::pboptions(type="none")
+    on.exit(pbapply::pboptions(opb))
+  }
+
   q.list <- quanteda::docnames(q.data)
   k.list <- quanteda::docvars(k.data, "author") |> unique()
 

@@ -14,6 +14,7 @@
 #' @param trim A logical value. If TRUE (default) then only the most frequent tokens are kept.
 #' @param threshold A numeric value indicating how many most frequent tokens to keep if trim = TRUE. The default is 150.
 #' @param features Logical with default FALSE. If TRUE, then the output will contain the features used.
+#' @param progress If TRUE (default), a progress bar is displayed.
 #' @param cores The number of cores to use for parallel processing (the default is one).
 #'
 #' @references Evert, Stefan, Thomas Proisl, Fotis Jannidis, Isabella Reger, Steffen Pielström, Christof Schöch & Thorsten Vitt. 2017. Understanding and explaining Delta measures for authorship attribution. Digital Scholarship in the Humanities 32. ii4–ii16. https://doi.org/10.1093/llc/fqx023.
@@ -27,7 +28,7 @@
 #' delta(Q, K)
 #'
 #' @export
-delta <- function(q.data, k.data, tokens = "word", remove_punct = FALSE, remove_symbols = TRUE, remove_numbers = TRUE, lowercase = TRUE, n = 1, cross_boundaries = FALSE, trim = TRUE, threshold = 150, features = FALSE, cores = NULL) {
+delta <- function(q.data, k.data, tokens = "word", remove_punct = FALSE, remove_symbols = TRUE, remove_numbers = TRUE, lowercase = TRUE, n = 1, cross_boundaries = FALSE, trim = TRUE, threshold = 150, features = FALSE, progress = TRUE, cores = NULL) {
   if (quanteda::is.corpus(q.data) & quanteda::is.corpus(k.data)) {
     d <- vectorize(c(q.data, k.data),
       tokens = tokens, remove_punct = remove_punct,
@@ -48,6 +49,11 @@ delta <- function(q.data, k.data, tokens = "word", remove_punct = FALSE, remove_
 
   z <- scale(d) |> quanteda::as.dfm()
   quanteda::docvars(z) <- quanteda::docvars(d)
+
+  if(progress == FALSE){
+    opb <- pbapply::pboptions(type="none")
+    on.exit(pbapply::pboptions(opb))
+  }
 
   results <- pbapply::pbapply(tests, 1, cosine_delta, z, cl = cores)
 

@@ -14,6 +14,7 @@ impostors(
   m = 100,
   n = 25,
   features = FALSE,
+  progress = TRUE,
   cores = NULL
 )
 }
@@ -35,6 +36,8 @@ impostors(
 \item{n}{The \emph{n} parameter for the IM algorithm. Not used by other algorithms. The default is 25.}
 
 \item{features}{A logical value indicating whether the important features should be retrieved or not. The default is FALSE. This only applies to the RBI algorithm.}
+
+\item{progress}{If TRUE (default), a progress bar is displayed.}
 
 \item{cores}{The number of cores to use for parallel processing (the default is one).}
 }
