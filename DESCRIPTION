@@ -24,6 +24,7 @@ Imports:
     pbapply,
     pROC,
     proxy,
+    proxyC,
     quanteda.textstats,
     spacyr,
     stringr

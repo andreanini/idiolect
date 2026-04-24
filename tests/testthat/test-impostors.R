@@ -91,6 +91,23 @@ test_that("KGI works", {
   testthat::expect_lt(results.corpus[2, 4], 0.01)
   testthat::expect_equal(results.dfm[2, 4], 0.01)
 })
+test_that("KGI fjaccard similarity matches the fJaccard distance it replaces", {
+  # Guards against any future drift between proxyC::simil(method = "fjaccard")
+  # and the original proxy::dist(method = "fJaccard") used by KGI: distance
+  # must equal 1 - similarity, and the selection rule used in KGI
+  # (min distance vs max similarity) must pick the same winner.
+  set.seed(1)
+  a <- matrix(runif(12), nrow = 3)
+  b <- matrix(runif(4), nrow = 1)
+  dfm.a <- quanteda::as.dfm(a)
+  dfm.b <- quanteda::as.dfm(b)
+
+  simil <- proxyC::simil(dfm.a, dfm.b, method = "fjaccard") |> as.matrix()
+  dist  <- proxy::dist(x = a, y = b, method = "fJaccard") |> as.matrix()
+
+  testthat::expect_equal(as.numeric(simil), 1 - as.numeric(dist))
+  testthat::expect_equal(which.max(simil), which.min(dist))
+})
 test_that("IM works", {
   set.seed(10)
 
