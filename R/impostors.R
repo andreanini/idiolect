@@ -302,13 +302,13 @@ KGI <- function(x, qs, candidates, cand.imps) {
     # reducing imps
     f.i <- quanteda::dfm_match(cons.imps.f, s)
 
-    k.dist <- proxy::dist(x = as.matrix(f.k), y = as.matrix(f.q), method = "fJaccard")
-    min.k <- min(k.dist)
+    k.simil <- proxyC::simil(f.k, f.q, method = "fjaccard")
+    max.k <- max(k.simil)
 
-    i.dist <- proxy::dist(x = as.matrix(f.i), y = as.matrix(f.q), method = "fJaccard")
-    min.i <- min(i.dist)
+    i.simil <- proxyC::simil(f.i, f.q, method = "fjaccard")
+    max.i <- max(i.simil)
 
-    if (min.k < min.i) {
+    if (max.k > max.i) {
       score <- score + 0.01
     }
   }

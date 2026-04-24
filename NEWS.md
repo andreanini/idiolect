@@ -1,5 +1,7 @@
 # idiolect (development version)
 
+* `impostors()` with the `KGI` algorithm now uses `proxyC::simil()` with the `fjaccard` method instead of `proxy::dist()` with `fJaccard`, since the fuzzy Jaccard coefficient is now available in `proxyC` (on which `quanteda` is based).
+
 * associated Journal of Open Source Software paper now published and should be used as reference.
 
 * `contentmask()` also accepts sentence-tokenised corpora (the outputs of `tokenize_sents()`) as input, this option also allowing parallel processing.
