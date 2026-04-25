@@ -29,12 +29,21 @@ create_corpus <- function(path, encoding = "UTF-8") {
   }
 
   #### main function ####
-  corpus <- readtext::readtext(
-    file = paste0(path, "/*.txt"),
-    docvarsfrom = "filenames", docvarnames = c("author", "textname"),
-    encoding = encoding
-  ) |>
-    quanteda::corpus()
+  filepaths <- file.path(path, filenames)
+
+  texts <- sapply(filepaths, \(f) {
+    con <- file(f, encoding = encoding)
+    on.exit(close(con))
+    paste(readLines(con, warn = FALSE), collapse = "\n")
+  })
+  names(texts) <- filenames
+
+  parts <- stringr::str_match(filenames, "(.+)_(.+)\\.txt")
+
+  corpus <- quanteda::corpus(
+    texts,
+    docvars = data.frame(author = parts[, 2], textname = parts[, 3])
+  )
 
   return(corpus)
 }
