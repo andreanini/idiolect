@@ -36,7 +36,7 @@ specified.
 ## Examples
 
 ``` r
-corpus <- quanteda::corpus(c("The cat sat on the mat", "The dog sat on the chair"))
+corpus <- quanteda::corpus(c("The cat sat on the mat", "The dog sat on the big chair"))
 quanteda::docvars(corpus, "author") <- c("A", "B")
 chunk_texts(corpus, size = 2)
 #> Corpus consisting of 6 documents and 1 docvar.
@@ -56,7 +56,7 @@ chunk_texts(corpus, size = 2)
 #> "sat on"
 #> 
 #> text2.3 :
-#> "the chair"
+#> "the big"
 #> 
 
 sentences <- quanteda::tokens(corpus, "sentence")
@@ -66,7 +66,7 @@ chunk_texts(sentences, size = 6)
 #> [1] "The cat sat on the mat"
 #> 
 #> text2.1 :
-#> [1] "The dog sat on the chair"
+#> [1] "The dog sat on the big chair"
 #> 
 chunk_texts(sentences, size = 2)
 #> Tokens consisting of 2 documents and 1 docvar.
@@ -74,9 +74,13 @@ chunk_texts(sentences, size = 2)
 #> [1] "The cat sat on the mat"
 #> 
 #> text2.1 :
-#> [1] "The dog sat on the chair"
+#> [1] "The dog sat on the big chair"
 #> 
-try(chunk_texts(sentences, size = 7))
-#> Error in chunk_texts(sentences, size = 7) : 
-#>   No chunks of the size specified are available
+chunk_texts(sentences, size = 7)
+#> Tokens consisting of 1 document and 1 docvar.
+#> text2.1 :
+#> [1] "The dog sat on the big chair"
+#> 
+chunk_texts(sentences, size = 8)
+#> Tokens consisting of 0 documents.
 ```

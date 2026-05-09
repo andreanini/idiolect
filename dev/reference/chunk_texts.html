@@ -61,7 +61,7 @@
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">corpus</span> <span class="op">&lt;-</span> <span class="fu">quanteda</span><span class="fu">::</span><span class="fu"><a href="https://quanteda.io/reference/corpus.html" class="external-link">corpus</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"The cat sat on the mat"</span>, <span class="st">"The dog sat on the chair"</span><span class="op">)</span><span class="op">)</span></span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">corpus</span> <span class="op">&lt;-</span> <span class="fu">quanteda</span><span class="fu">::</span><span class="fu"><a href="https://quanteda.io/reference/corpus.html" class="external-link">corpus</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"The cat sat on the mat"</span>, <span class="st">"The dog sat on the big chair"</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu">quanteda</span><span class="fu">::</span><span class="fu"><a href="https://quanteda.io/reference/docvars.html" class="external-link">docvars</a></span><span class="op">(</span><span class="va">corpus</span>, <span class="st">"author"</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"A"</span>, <span class="st">"B"</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu">chunk_texts</span><span class="op">(</span><span class="va">corpus</span>, size <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Corpus consisting of 6 documents and 1 docvar.</span>
@@ -81,7 +81,7 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> "sat on"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> text2.3 :</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> "the chair"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> "the big"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">sentences</span> <span class="op">&lt;-</span> <span class="fu">quanteda</span><span class="fu">::</span><span class="fu"><a href="https://quanteda.io/reference/tokens.html" class="external-link">tokens</a></span><span class="op">(</span><span class="va">corpus</span>, <span class="st">"sentence"</span><span class="op">)</span></span></span>
@@ -91,7 +91,7 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "The cat sat on the mat"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> text2.1 :</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "The dog sat on the chair"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "The dog sat on the big chair"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span><span class="fu">chunk_texts</span><span class="op">(</span><span class="va">sentences</span>, size <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Tokens consisting of 2 documents and 1 docvar.</span>
@@ -99,11 +99,15 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "The cat sat on the mat"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> text2.1 :</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "The dog sat on the chair"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "The dog sat on the big chair"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-in"><span><span class="kw"><a href="https://rdrr.io/r/base/try.html" class="external-link">try</a></span><span class="op">(</span><span class="fu">chunk_texts</span><span class="op">(</span><span class="va">sentences</span>, size <span class="op">=</span> <span class="fl">7</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Error in chunk_texts(sentences, size = 7) : </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   No chunks of the size specified are available</span>
+<span class="r-in"><span><span class="fu">chunk_texts</span><span class="op">(</span><span class="va">sentences</span>, size <span class="op">=</span> <span class="fl">7</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Tokens consisting of 1 document and 1 docvar.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> text2.1 :</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "The dog sat on the big chair"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-in"><span><span class="fu">chunk_texts</span><span class="op">(</span><span class="va">sentences</span>, size <span class="op">=</span> <span class="fl">8</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Tokens consisting of 0 documents.</span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
