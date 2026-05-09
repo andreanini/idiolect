@@ -18,13 +18,14 @@ Either a \code{quanteda} corpus object or a \code{quanteda} tokens object contai
 This function can be used to chunk a dataset in order to control sample sizes.
 }
 \examples{
-corpus <- quanteda::corpus(c("The cat sat on the mat", "The dog sat on the chair"))
+corpus <- quanteda::corpus(c("The cat sat on the mat", "The dog sat on the big chair"))
 quanteda::docvars(corpus, "author") <- c("A", "B")
 chunk_texts(corpus, size = 2)
 
 sentences <- quanteda::tokens(corpus, "sentence")
 chunk_texts(sentences, size = 6)
 chunk_texts(sentences, size = 2)
-try(chunk_texts(sentences, size = 7))
+chunk_texts(sentences, size = 7)
+chunk_texts(sentences, size = 8)
 
 }

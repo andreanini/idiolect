@@ -8,14 +8,15 @@
 #' @return Either a `quanteda` corpus object or a `quanteda` tokens object containing sentences, depending on the input, where each text is a chunk of the size requested. If the input was a corpus object, then the function divides each unit of the corpus in chunks of the length specified. If the input was a tokens object then the function combines sentences together until the chunk is equal or greater than the size specified.
 #'
 #' @examples
-#' corpus <- quanteda::corpus(c("The cat sat on the mat", "The dog sat on the chair"))
+#' corpus <- quanteda::corpus(c("The cat sat on the mat", "The dog sat on the big chair"))
 #' quanteda::docvars(corpus, "author") <- c("A", "B")
 #' chunk_texts(corpus, size = 2)
 #'
 #' sentences <- quanteda::tokens(corpus, "sentence")
 #' chunk_texts(sentences, size = 6)
 #' chunk_texts(sentences, size = 2)
-#' try(chunk_texts(sentences, size = 7))
+#' chunk_texts(sentences, size = 7)
+#' chunk_texts(sentences, size = 8)
 #'
 #' @export
 chunk_texts <- function(input, size) {
@@ -47,14 +48,13 @@ chunk_texts <- function(input, size) {
           }
         }
       }
-      if (length(samples) == 0) {
-        stop("No chunks of the size specified are available")
-      }
       samples.toks <- as.tokens(samples)
-      docnames(samples.toks) <- paste0(docnames(text), ".", 1:length(samples.toks))
-      dv <- docvars(text)
-      for (z in 1:length(dv)) {
-        docvars(samples.toks, names(dv[z])) <- dv[[z]]
+      if (length(samples) != 0) {
+        docnames(samples.toks) <- paste0(docnames(text), ".", 1:length(samples.toks))
+        dv <- docvars(text)
+        for (z in 1:length(dv)) {
+          docvars(samples.toks, names(dv[z])) <- dv[[z]]
+        }
       }
       if (q == 1) {
         output <- samples.toks
