@@ -685,7 +685,7 @@ function is used again by using the validation results as calibration
 data
 
 ``` r
-q.llr <- calibrate_LLR(res, q.res, latex = T)
+q.llr <- calibrate_LLR(q.res, res, latex = T)
 q.llr$`Verbal label`
 #> [1] "Moderate support for $H_p$"
 strwrap(q.llr$Interpretation)

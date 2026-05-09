@@ -5,6 +5,16 @@
 - associated Journal of Open Source Software paper now published and
   should be used as reference.
 
+- [`calibrate_LLR()`](https://andreanini.github.io/idiolect/dev/reference/calibrate_LLR.md)
+  changed argument position to make it more compatible with the tidy
+  approach. Now the data to calibrate is the first argument while the
+  calibration dataset is the second argument.
+
+- The calibration dataset is now optional for
+  [`calibrate_LLR()`](https://andreanini.github.io/idiolect/dev/reference/calibrate_LLR.md).
+  If absent, the calibration is done leave-one-out. This is useful to
+  see the LLRs when testing a method on a training dataset.
+
 - [`contentmask()`](https://andreanini.github.io/idiolect/dev/reference/contentmask.md)
   also accepts sentence-tokenised corpora (the outputs of
   [`tokenize_sents()`](https://andreanini.github.io/idiolect/dev/reference/tokenize_sents.md))
@@ -30,7 +40,7 @@
   choose to cross sentence boundaries when making n-grams if they wish.
   The behaviour of these functions is therefore also now clearer.
 
-- the progres bar is now optional for all authorship analysis functions
+- the progress bar is now optional for all authorship analysis functions
   (but default is set to TRUE).
 
 ## idiolect 1.2.0

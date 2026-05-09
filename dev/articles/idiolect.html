@@ -757,7 +757,7 @@ distributions at the horizontal axis corresponding to the score of
 <p>To perform this calibration the <code><a href="../reference/calibrate_LLR.html">calibrate_LLR()</a></code> function
 is used again by using the validation results as calibration data</p>
 <div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">q.llr</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/calibrate_LLR.html">calibrate_LLR</a></span><span class="op">(</span><span class="va">res</span>, <span class="va">q.res</span>, latex <span class="op">=</span> <span class="cn">T</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="va">q.llr</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/calibrate_LLR.html">calibrate_LLR</a></span><span class="op">(</span><span class="va">q.res</span>, <span class="va">res</span>, latex <span class="op">=</span> <span class="cn">T</span><span class="op">)</span></span>
 <span><span class="va">q.llr</span><span class="op">$</span><span class="va">`Verbal label`</span></span>
 <span><span class="co">#&gt; [1] "Moderate support for $H_p$"</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/strwrap.html" class="external-link">strwrap</a></span><span class="op">(</span><span class="va">q.llr</span><span class="op">$</span><span class="va">Interpretation</span><span class="op">)</span></span>
