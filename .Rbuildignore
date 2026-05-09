@@ -11,3 +11,5 @@
 ^CRAN-SUBMISSION$
 ^JOSS-paper$
 ^revdep$
+^\.positai$
+^\.claude$
