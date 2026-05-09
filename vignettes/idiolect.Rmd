@@ -299,7 +299,7 @@ density_plot(res, q = q.res$score)
 To perform this calibration the `calibrate_LLR()` function is used again by using the validation results as calibration data
 
 ```{r}
-q.llr <- calibrate_LLR(res, q.res, latex = T)
+q.llr <- calibrate_LLR(q.res, res, latex = T)
 q.llr$`Verbal label`
 strwrap(q.llr$Interpretation)
 ```

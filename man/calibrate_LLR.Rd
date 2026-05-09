@@ -4,12 +4,12 @@
 \alias{calibrate_LLR}
 \title{Calibrate scores into Log-Likelihood Ratios}
 \usage{
-calibrate_LLR(calibration.dataset, dataset, latex = FALSE)
+calibrate_LLR(dataset, calibration.dataset = NULL, latex = FALSE)
 }
 \arguments{
-\item{calibration.dataset}{A data frame containing the calibration dataset, typically the output of an authorship analysis function like \code{\link[=impostors]{impostors()}}.}
+\item{dataset}{A data frame containing the scores that have to be calibrated into LLRs. This is typically the result of applying a function like \code{\link[=impostors]{impostors()}} to the Q texts.}
 
-\item{dataset}{A data frame containing the scores that have to be calibrated into LLRs using the calibration dataset. This is typically the result of applying a function like \code{\link[=impostors]{impostors()}} to the Q texts.}
+\item{calibration.dataset}{A data frame containing the calibration dataset, typically the output of an authorship analysis function like \code{\link[=impostors]{impostors()}}. If absent, then the dataset is calibrated using leave-one-out.}
 
 \item{latex}{A logical value. If FALSE (default), then the hypothesis labels are printed as plain text (Hp/Hd). If TRUE the labels are written to be read in LaTeX ($H_p$/$H_d$).}
 }
@@ -17,12 +17,14 @@ calibrate_LLR(calibration.dataset, dataset, latex = FALSE)
 The function returns a data frame with the LLRs (base 10), as well as the verbal label according to Marquis et al (2016) and a verbal interpretation of the results.
 }
 \description{
-This function is used to transform the scores returned by any of the authorship analysis functions into a Log-Likelihood Ratio (LLR).
+This function is used to transform the scores returned by any of the authorship analysis functions into a Log-Likelihood Ratio (LLR) using the logistic regression calibration method.
 }
 \examples{
 calib <- data.frame(score = c(0.5, 0.2, 0.8, 0.01, 0.6), target = c(TRUE, FALSE, TRUE, FALSE, TRUE))
 q <- data.frame(score = c(0.6, 0.002))
-calibrate_LLR(calib, q)
+calibrate_LLR(q, calib)
+
+calibrate_LLR(calib)
 
 }
 \references{
