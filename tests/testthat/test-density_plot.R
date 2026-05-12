@@ -6,7 +6,7 @@ test_that("density plotting works", {
 
   p = density_plot(res, fake.q)
 
-  expect_true(ggplot2::is.ggplot(p))
+  expect_true(ggplot2::is_ggplot(p))
   expect_error(print(p), NA)
 
 })
