@@ -29,6 +29,10 @@
   chunks of sentences for which the total length is equal or greater
   than the one specified.
 
+- [`posterior()`](https://andreanini.github.io/idiolect/dev/reference/posterior.md)
+  accepts now optionally also accepts prior probabilities as input from
+  the user.
+
 - [`vectorize()`](https://andreanini.github.io/idiolect/dev/reference/vectorize.md)
   and two functions that call it
   ([`delta()`](https://andreanini.github.io/idiolect/dev/reference/delta.md)

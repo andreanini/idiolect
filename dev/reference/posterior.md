@@ -7,7 +7,7 @@ probabilities for the prosecution hypothesis.
 ## Usage
 
 ``` r
-posterior(LLR)
+posterior(LLR, prior = NULL)
 ```
 
 ## Arguments
@@ -16,6 +16,12 @@ posterior(LLR)
 
   One single numeric value corresponding to a Log-Likelihood Ratio (base
   10).
+
+- prior:
+
+  A prior probability or a vector or prior probabilities (for the
+  prosecution hypothesis). If missing then a range of prior
+  probabilities is provided.
 
 ## Value
 
@@ -58,36 +64,17 @@ posterior(LLR = 1.8)
 #> 10                0.8      4            1.8  63.1 252.       
 #> 11                0.9      9            1.8  63.1 568.       
 #> # ℹ 1 more variable: prosecution_post_probs <dbl>
-posterior(LLR = -0.5)
-#> # A tibble: 11 × 6
-#>    prosecution_prior_probs prior_odds   LLR    LR   post_odds
-#>                      <dbl>      <dbl> <dbl> <dbl>       <dbl>
-#>  1                0.000001 0.00000100  -0.5 0.316 0.000000316
-#>  2                0.01     0.0101      -0.5 0.316 0.00319    
-#>  3                0.1      0.111       -0.5 0.316 0.0351     
-#>  4                0.2      0.25        -0.5 0.316 0.0791     
-#>  5                0.3      0.429       -0.5 0.316 0.136      
-#>  6                0.4      0.667       -0.5 0.316 0.211      
-#>  7                0.5      1           -0.5 0.316 0.316      
-#>  8                0.6      1.5         -0.5 0.316 0.474      
-#>  9                0.7      2.33        -0.5 0.316 0.738      
-#> 10                0.8      4           -0.5 0.316 1.26       
-#> 11                0.9      9           -0.5 0.316 2.85       
-#> # ℹ 1 more variable: prosecution_post_probs <dbl>
-posterior(LLR = 4)
-#> # A tibble: 11 × 6
-#>    prosecution_prior_probs prior_odds   LLR    LR  post_odds
-#>                      <dbl>      <dbl> <dbl> <dbl>      <dbl>
-#>  1                0.000001 0.00000100     4 10000     0.0100
-#>  2                0.01     0.0101         4 10000   101.    
-#>  3                0.1      0.111          4 10000  1111.    
-#>  4                0.2      0.25           4 10000  2500     
-#>  5                0.3      0.429          4 10000  4286.    
-#>  6                0.4      0.667          4 10000  6667.    
-#>  7                0.5      1              4 10000 10000     
-#>  8                0.6      1.5            4 10000 15000     
-#>  9                0.7      2.33           4 10000 23333.    
-#> 10                0.8      4              4 10000 40000     
-#> 11                0.9      9              4 10000 90000     
-#> # ℹ 1 more variable: prosecution_post_probs <dbl>
+posterior(LLR = -0.5, prior = 0.9)
+#> # A tibble: 1 × 6
+#>   prosecution_prior_pr…¹ prior_odds   LLR    LR post_odds prosecution_post_probs
+#>                    <dbl>      <dbl> <dbl> <dbl>     <dbl>                  <dbl>
+#> 1                    0.9          9  -0.5 0.316      2.85                  0.740
+#> # ℹ abbreviated name: ¹​prosecution_prior_probs
+posterior(LLR = -0.5, prior = c(0.1, 0.9))
+#> # A tibble: 2 × 6
+#>   prosecution_prior_pr…¹ prior_odds   LLR    LR post_odds prosecution_post_probs
+#>                    <dbl>      <dbl> <dbl> <dbl>     <dbl>                  <dbl>
+#> 1                    0.1      0.111  -0.5 0.316    0.0351                 0.0339
+#> 2                    0.9      9      -0.5 0.316    2.85                   0.740 
+#> # ℹ abbreviated name: ¹​prosecution_prior_probs
 ```

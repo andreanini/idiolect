@@ -39,7 +39,7 @@
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">posterior</span><span class="op">(</span><span class="va">LLR</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">posterior</span><span class="op">(</span><span class="va">LLR</span>, prior <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -48,6 +48,10 @@
 
 <dl><dt id="arg-llr">LLR<a class="anchor" aria-label="anchor" href="#arg-llr"></a></dt>
 <dd><p>One single numeric value corresponding to a Log-Likelihood Ratio (base 10).</p></dd>
+
+
+<dt id="arg-prior">prior<a class="anchor" aria-label="anchor" href="#arg-prior"></a></dt>
+<dd><p>A prior probability or a vector or prior probabilities (for the prosecution hypothesis). If missing then a range of prior probabilities is provided.</p></dd>
 
 </dl></div>
     <div class="section level2">
@@ -89,38 +93,19 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span>                0.8      4            1.8  63.1 252.       </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">11</span>                0.9      9            1.8  63.1 568.       </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 1 more variable: prosecution_post_probs &lt;dbl&gt;</span></span>
-<span class="r-in"><span><span class="fu">posterior</span><span class="op">(</span>LLR <span class="op">=</span> <span class="op">-</span><span class="fl">0.5</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 11 × 6</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    prosecution_prior_probs prior_odds   LLR    LR   post_odds</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                      <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span>                0.000<span style="text-decoration: underline;">001</span> 0.000<span style="text-decoration: underline;">001</span>00  -<span style="color: #BB0000;">0.5</span> 0.316 0.000<span style="text-decoration: underline;">000</span>316</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span>                0.01     0.010<span style="text-decoration: underline;">1</span>      -<span style="color: #BB0000;">0.5</span> 0.316 0.003<span style="text-decoration: underline;">19</span>    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span>                0.1      0.111       -<span style="color: #BB0000;">0.5</span> 0.316 0.035<span style="text-decoration: underline;">1</span>     </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span>                0.2      0.25        -<span style="color: #BB0000;">0.5</span> 0.316 0.079<span style="text-decoration: underline;">1</span>     </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span>                0.3      0.429       -<span style="color: #BB0000;">0.5</span> 0.316 0.136      </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span>                0.4      0.667       -<span style="color: #BB0000;">0.5</span> 0.316 0.211      </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span>                0.5      1           -<span style="color: #BB0000;">0.5</span> 0.316 0.316      </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span>                0.6      1.5         -<span style="color: #BB0000;">0.5</span> 0.316 0.474      </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span>                0.7      2.33        -<span style="color: #BB0000;">0.5</span> 0.316 0.738      </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span>                0.8      4           -<span style="color: #BB0000;">0.5</span> 0.316 1.26       </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">11</span>                0.9      9           -<span style="color: #BB0000;">0.5</span> 0.316 2.85       </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 1 more variable: prosecution_post_probs &lt;dbl&gt;</span></span>
-<span class="r-in"><span><span class="fu">posterior</span><span class="op">(</span>LLR <span class="op">=</span> <span class="fl">4</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 11 × 6</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    prosecution_prior_probs prior_odds   LLR    LR  post_odds</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                      <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span>                0.000<span style="text-decoration: underline;">001</span> 0.000<span style="text-decoration: underline;">001</span>00     4 <span style="text-decoration: underline;">10</span>000     0.010<span style="text-decoration: underline;">0</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span>                0.01     0.010<span style="text-decoration: underline;">1</span>         4 <span style="text-decoration: underline;">10</span>000   101.    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span>                0.1      0.111          4 <span style="text-decoration: underline;">10</span>000  <span style="text-decoration: underline;">1</span>111.    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span>                0.2      0.25           4 <span style="text-decoration: underline;">10</span>000  <span style="text-decoration: underline;">2</span>500     </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span>                0.3      0.429          4 <span style="text-decoration: underline;">10</span>000  <span style="text-decoration: underline;">4</span>286.    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span>                0.4      0.667          4 <span style="text-decoration: underline;">10</span>000  <span style="text-decoration: underline;">6</span>667.    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span>                0.5      1              4 <span style="text-decoration: underline;">10</span>000 <span style="text-decoration: underline;">10</span>000     </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span>                0.6      1.5            4 <span style="text-decoration: underline;">10</span>000 <span style="text-decoration: underline;">15</span>000     </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span>                0.7      2.33           4 <span style="text-decoration: underline;">10</span>000 <span style="text-decoration: underline;">23</span>333.    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span>                0.8      4              4 <span style="text-decoration: underline;">10</span>000 <span style="text-decoration: underline;">40</span>000     </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">11</span>                0.9      9              4 <span style="text-decoration: underline;">10</span>000 <span style="text-decoration: underline;">90</span>000     </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 1 more variable: prosecution_post_probs &lt;dbl&gt;</span></span>
+<span class="r-in"><span><span class="fu">posterior</span><span class="op">(</span>LLR <span class="op">=</span> <span class="op">-</span><span class="fl">0.5</span>, prior <span class="op">=</span> <span class="fl">0.9</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 1 × 6</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   prosecution_prior_pr…¹ prior_odds   LLR    LR post_odds prosecution_post_probs</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>                  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span>                    0.9          9  -<span style="color: #BB0000;">0.5</span> 0.316      2.85                  0.740</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ abbreviated name: ¹​prosecution_prior_probs</span></span>
+<span class="r-in"><span><span class="fu">posterior</span><span class="op">(</span>LLR <span class="op">=</span> <span class="op">-</span><span class="fl">0.5</span>, prior <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.1</span>, <span class="fl">0.9</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 2 × 6</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   prosecution_prior_pr…¹ prior_odds   LLR    LR post_odds prosecution_post_probs</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>                  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span>                    0.1      0.111  -<span style="color: #BB0000;">0.5</span> 0.316    0.035<span style="text-decoration: underline;">1</span>                 0.033<span style="text-decoration: underline;">9</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span>                    0.9      9      -<span style="color: #BB0000;">0.5</span> 0.316    2.85                   0.740 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ abbreviated name: ¹​prosecution_prior_probs</span></span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
