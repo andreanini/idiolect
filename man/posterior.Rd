@@ -4,10 +4,12 @@
 \alias{posterior}
 \title{Posterior prosecution probabilities and odds}
 \usage{
-posterior(LLR)
+posterior(LLR, prior = NULL)
 }
 \arguments{
 \item{LLR}{One single numeric value corresponding to a Log-Likelihood Ratio (base 10).}
+
+\item{prior}{A prior probability or a vector or prior probabilities (for the prosecution hypothesis). If missing then a range of prior probabilities is provided.}
 }
 \value{
 A data frame containing some simulated prior probabilities/odds for the prosecution and the resulting posterior probabilities/odds after the LLR.
@@ -18,7 +20,7 @@ This function takes as input a value of the Log-Likelihood Ratio and returns a t
 \examples{
 posterior(LLR = 0)
 posterior(LLR = 1.8)
-posterior(LLR = -0.5)
-posterior(LLR = 4)
+posterior(LLR = -0.5, prior = 0.9)
+posterior(LLR = -0.5, prior = c(0.1, 0.9))
 
 }
