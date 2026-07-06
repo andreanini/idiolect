@@ -190,7 +190,7 @@ of the `spacyr` package and of the default model can be done as follows:
 
 ``` r
 install.packages("spacyr")
-spacyr::install_spacy()
+spacyr::spacy_install()
 ```
 
 ### Data labelling
@@ -745,8 +745,8 @@ greater than 0.4.
 
 ## Acknowledgements
 
-I would like to thank Shunichi Ishihara and Marie Bojsen-Møller for
-helpful comments on the first draft of this vignette.
+I would like to thank Marie Bojsen-Møller, Tanya Karoli Christensen and
+Shunichi Ishihara for helpful comments on this vignette.
 
 ## References
 
