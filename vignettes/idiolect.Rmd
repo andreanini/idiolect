@@ -92,7 +92,7 @@ If the installation did not start automatically, then the installation of the `s
 
 ```{r eval=FALSE, include=TRUE}
 install.packages("spacyr")
-spacyr::install_spacy()
+spacyr::spacy_install()
 ```
 
 ## Data labelling
@@ -325,6 +325,6 @@ The table shows that the present evidence could change the probability that $H_p
 
 # Acknowledgements
 
-I would like to thank Shunichi Ishihara and Marie Bojsen-Møller for helpful comments on the first draft of this vignette.
+I would like to thank Marie Bojsen-Møller, Tanya Karoli Christensen and Shunichi Ishihara for helpful comments on this vignette.
 
 # References
