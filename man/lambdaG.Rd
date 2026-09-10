@@ -10,6 +10,8 @@ lambdaG(
   ref.data,
   N = 10,
   r = 30,
+  sqrt.correction = FALSE,
+  hapax.correction = FALSE,
   progress = TRUE,
   cores = NULL
 )
@@ -24,6 +26,10 @@ lambdaG(
 \item{N}{The order of the model. Default is 10.}
 
 \item{r}{The number of iterations. Default is 30.}
+
+\item{sqrt.correction}{If TRUE, the square root corrected LambdaG score is also returned.}
+
+\item{hapax.correction}{If TRUE, the hapax corrected LambdaG score is also returned.}
 
 \item{progress}{If TRUE (default), a progress bar is displayed.}
 

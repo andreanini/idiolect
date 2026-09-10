@@ -7,6 +7,8 @@
 #' @param ref.data The reference dataset as a `quanteda` tokens object with the tokens being sentences (e.g. the output of [tokenize_sents()]). This can be the same object as `k.data`.
 #' @param N The order of the model. Default is 10.
 #' @param r The number of iterations. Default is 30.
+#' @param sqrt.correction If TRUE, the square root corrected LambdaG score is also returned.
+#' @param hapax.correction If TRUE, the hapax corrected LambdaG score is also returned.
 #' @param progress If TRUE (default), a progress bar is displayed.
 #' @param cores The number of cores to use for parallel processing (the default is one).
 #'
@@ -21,7 +23,7 @@
 #' lambdaG(q.data, k.data, ref.data)
 #'
 #' @export
-lambdaG <- function(q.data, k.data, ref.data, N = 10, r = 30, progress = TRUE, cores = NULL){
+lambdaG <- function(q.data, k.data, ref.data, N = 10, r = 30, sqrt.correction = FALSE, hapax.correction = FALSE, progress = TRUE, cores = NULL){
 
   if(progress == FALSE){
     opb <- pbapply::pboptions(type="none")
@@ -45,7 +47,19 @@ lambdaG <- function(q.data, k.data, ref.data, N = 10, r = 30, progress = TRUE, c
 
   }
 
-  results <- pbapply::pbapply(tests, 1, apply_lambdaG, q.data, k.data, ref.data, N, r, cl = cores)
+  results <- pbapply::pbapply(
+    tests,
+    1,
+    apply_lambdaG,
+    q.data,
+    k.data,
+    ref.data,
+    N,
+    r,
+    sqrt.correction,
+    hapax.correction,
+    cl = cores
+  )
 
   results.table = list_to_df(results)
 
@@ -53,20 +67,28 @@ lambdaG <- function(q.data, k.data, ref.data, N = 10, r = 30, progress = TRUE, c
 
 }
 
-apply_lambdaG <- function(x, q.data, k.data, ref.data, N, r){
+apply_lambdaG <- function(x, q.data, k.data, ref.data, N, r, sqrt.correction, hapax.correction){
 
   q.name <- as.character(x["Q"])
   q.author <- quanteda::tokens_subset(q.data, quanteda::docnames(q.data) == q.name) |> docvars("author")
   q.sents <- quanteda::tokens_subset(q.data, quanteda::docnames(q.data) == q.name) |> as.character()
 
   candidate.name <- as.character(x["K"])
-  k.sents <- quanteda::tokens_subset(k.data, author == candidate.name &
-                                       quanteda::docnames(k.data) != q.name) |> as.character()
+  k.sents <- k.data |>
+    quanteda::tokens_subset(
+      author == candidate.name & quanteda::docnames(k.data) != q.name
+    ) |>
+    as.character()
 
-  ref.sents <- quanteda::tokens_subset(ref.data, author != candidate.name &
-                                         author != q.author) |> as.character()
+  ref.sents <- ref.data |>
+    quanteda::tokens_subset(
+      author != candidate.name & author != q.author
+    ) |>
+    as.character()
 
-  k.g <- k.sents |> kgrams::kgram_freqs(N = N) |> kgrams::language_model(smoother = "kn", D = 0.75)
+  k.g <- k.sents |>
+    kgrams::kgram_freqs(N = N) |>
+    kgrams::language_model(smoother = "kn", D = 0.75)
 
   k.probs <- kgrams::probability(q.sents, k.g)
 
@@ -108,6 +130,35 @@ apply_lambdaG <- function(x, q.data, k.data, ref.data, N, r){
   }
 
   results[1,"score"] = round(lambda, 3)
+
+  if(sqrt.correction == TRUE){
+
+    qtokens <- quanteda::corpus(q.sents) |>
+      ntoken() |>
+      sum()
+
+    results[1,"lambdaG_sqrt"] = round(lambda/sqrt(qtokens), 3)
+
+  }
+
+  if(hapax.correction == TRUE){
+
+    qcorpus <- quanteda::corpus(q.sents)
+
+    qtokens <- qcorpus |>
+      ntoken() |>
+      sum()
+
+    freqlist <- qcorpus |>
+      tokens() |>
+      dfm(tolower = F) |>
+      featfreq()
+
+    hapaxes <- length(freqlist[freqlist == 1])
+
+    results[1,"lambdaG_hapax"] = round(lambda * hapaxes/qtokens, 3)
+
+  }
 
   return(results)
 
