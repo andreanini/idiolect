@@ -29,6 +29,10 @@
   chunks of sentences for which the total length is equal or greater
   than the one specified.
 
+- [`lambdaG()`](https://andreanini.github.io/idiolect/dev/reference/lambdaG.md)
+  now also includes the square root and hapax corrections. THIS IS NOT
+  WELL DOCUMENTED YET.
+
 - [`posterior()`](https://andreanini.github.io/idiolect/dev/reference/posterior.md)
   accepts now optionally also accepts prior probabilities as input from
   the user.

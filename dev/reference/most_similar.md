@@ -43,7 +43,8 @@ text3 <- "Violence is the last refuge of the incompetent"
 c <- quanteda::corpus(c(text1, text2, text3))
 d <- quanteda::tokens(c) |> quanteda::dfm() |> quanteda::dfm_weight(scheme = "prop")
 most_similar(d[1,], d[-1,], coefficient = "minmax", n = 1)
-#> Document-feature matrix of: 1 document, 13 features (61.54% sparse) and 0 docvars.
+#> Document-feature matrix of: 1 document, 13 features (61.54% sparse) and 0
+#> docvars.
 #>        features
 #> docs          the cat       sat        on mat       dog     chair violence is
 #>   text2 0.3333333   0 0.1666667 0.1666667   0 0.1666667 0.1666667        0  0

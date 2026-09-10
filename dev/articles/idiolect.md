@@ -3,7 +3,7 @@
 ``` r
 library(idiolect)
 #> Loading required package: quanteda
-#> Package version: 4.4
+#> Package version: 4.5.0
 #> Unicode version: 15.1
 #> ICU version: 74.2
 #> Parallel computing: disabled
@@ -232,7 +232,8 @@ vectorize(
   trim = FALSE
 ) |> 
   print(max_nfeat = 3)
-#> Document-feature matrix of: 1 document, 136 features (0.00% sparse) and 2 docvars.
+#> Document-feature matrix of: 1 document, 136 features (0.00% sparse) and 2
+#> docvars.
 #>                    features
 #> docs                      they        also      have
 #>   Kimberly_w_Mail_3 0.00289296 0.009643202 0.0192864
@@ -257,7 +258,8 @@ vectorize(
   threshold = 1000
 ) |> 
   print(max_nfeat = 3)
-#> Document-feature matrix of: 1 document, 1,094 features (0.00% sparse) and 2 docvars.
+#> Document-feature matrix of: 1 document, 1,094 features (0.00% sparse) and 2
+#> docvars.
 #>                    features
 #> docs                        they         hey          ey a
 #>   Kimberly_w_Mail_3 0.0009771987 0.0009771987 0.0003257329

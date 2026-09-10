@@ -15,6 +15,8 @@ lambdaG(
   ref.data,
   N = 10,
   r = 30,
+  sqrt.correction = FALSE,
+  hapax.correction = FALSE,
   progress = TRUE,
   cores = NULL
 )
@@ -48,6 +50,14 @@ lambdaG(
 - r:
 
   The number of iterations. Default is 30.
+
+- sqrt.correction:
+
+  If TRUE, the square root corrected LambdaG score is also returned.
+
+- hapax.correction:
+
+  If TRUE, the hapax corrected LambdaG score is also returned.
 
 - progress:
 
